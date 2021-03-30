@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>board</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>springweb</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -10,11 +10,12 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  <!-- .do 마지막 url을 통해서 front컨트롤러 호출 -->
+  <!-- .do 마지막 url을 통해서 front 컨트롤러 호출 -->
   <servlet-mapping>
   	<servlet-name>dispatcher</servlet-name>
   	<url-pattern>*.do</url-pattern>
   </servlet-mapping>
+  
   <!-- 해당 servlet에 대한 선언 
   	front컨트롤러와 연동하는 컨테이너 설정 파일
   dispatcher-servlet.xml
@@ -23,10 +24,10 @@
   	<servlet-name>dispatcher</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
   </servlet>
-  <!-- 요청값에 대한 encoding을 spring의 filter로 처리 -->
+  <!-- 요청 값에 대한 encoding을 spring의 filter로 처리 -->
   <filter-mapping>
-  	<filter-name>encodingFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+	<filter-name>encodingFilter</filter-name>  
+	<url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
   	<filter-name>encodingFilter</filter-name>
@@ -36,9 +37,4 @@
   		<param-value>utf-8</param-value>
   	</init-param>
   </filter>
-  
-  
 </web-app>
-
-
-

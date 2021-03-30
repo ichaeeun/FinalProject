@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/p"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+      http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+      
+   <context:property-placeholder 
+      location="classpath:/resource/properties/info"/>   
+   <context:component-scan base-package="pms">
+      <context:include-filter type="annotation" 
+         expression="org.springframework.stereotype.Controller"/>
+      <context:include-filter type="annotation" 
+         expression="org.springframework.stereotype.Service"/>
+      <context:include-filter type="annotation" 
+         expression="org.springframework.stereotype.Repository"/>
+   </context:component-scan>
+
+   <!-- 
+   driver dburl user pas
+   1. 연결 후, 자원해제 메서드 정의 : destroy-method="close"
+   
+   # database 접속 처리
+    -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+       destroy-method="close">
+       <property name="driverClassName" value="${driver}"/>
+       <property name="url" value="${dburl}"/>
+       <property name="username" value="${user}"/>
+       <property name="password" value="${pass}"/>
+    </bean>
+   <!-- 
+   2. mybatis 공통 xml 파일 설정.
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+       <!-- BasicDataSource 연결객체의 정보를 mybatis에 할당 처리 -->
+       <property name="dataSource" ref="dataSource"/>
+       <!-- 공통 mybatis xml파일 설정 -->
+       <property name="configLocation" 
+          value="classpath:resource/mybatis.Spring.xml"/>
+    </bean>
+    <!-- 
+    3. 사용할 DAO 인터페이스 폴드 위치 지정..
+     -->
+     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="pms.dashboard.dao"></property>
+     </bean>
+     
+     
+     <bean id="btnViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+     		<property name="order" value="0" />
+     </bean>
+     <!-- 2. jsp 처리를 위한 뷰 등록 -->
+     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     	<!--
+     		접두어/접미어(생략)
+     			"WEB-INF\\views\\a02_mvc\\a03_empDeptList.jsp";
+     			접두어 : WEB-INF\\views, 접미어 :  .jsp 설정하면
+     			controller의 메소드의 리턴값으로
+     			return "a02_mvc\\a03_empDeptList";
+     	-->	
+     			<property name="prefix" value="WEB-INF\\views\\" />
+     			<property name="suffix" value=".jsp" />
+     			<property name="contentType" value="text/html; charset=UTF-8"/>
+     			<property name="order" value="1"/>
+     </bean>
+     <!--
+     	# viewresolver 의 우선순위를 설정하는 것은 bean이름으로 등록된 것을 먼저 search 하고,
+     	 그 다음 내용이 bean에 등록되지 않았다면 jsp호출하여 처리한다는 의미
+     -->
+     <!-- 1. json viewer ( return "pageJsonReport" )  
+     		ArrayList/객체형의 모델데이터를 json 형식의 문자열로 변환처리-->
+     <bean id="pageJsonReport" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+     	<property name="contentType" value="text/html;charset=utf-8"/>
+     </bean>
+     <!-- 2. 파일업로드뷰 viewer -->
+     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+     <!-- 3. 파일다운로드뷰 viewer -->
+     <bean id="downloadviewer" class="pms.util.FileDownloadViewer"/>
+     <!-- 4. 엑셀뷰 viewer -->
+     <!-- 5. pdf뷰 viewer -->
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
