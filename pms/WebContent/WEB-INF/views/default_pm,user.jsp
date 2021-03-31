@@ -659,15 +659,14 @@
                             <li class="menu-title mt-2">Apps</li>
 
                             <li>
-                                <a href="apps-chat.html">
+                                <a href="${path}/main.do?method=apps_chat">
                                     <i class="ri-message-2-line"></i>
                                     <span> Chat </span>
                                 </a>
                             </li>
 
-                            
                             <li>
-                                <a href="apps-calendar.html">
+                                <a href="${path}/main.do?method=calendar">
                                     <i class="ri-calendar-2-line"></i>
                                     <span> Calendar </span>
                                 </a>
@@ -678,34 +677,12 @@
                                     <span> Gantt </span>
                                 </a>
                             </li>
-                            
 
                             <li>
-                                <a href="apps-companies.html">
-                                    <i class="ri-building-4-line"></i>
-                                    <span> Companies </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#sidebarTasks" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                                <a href="${path}/main.do?method=main">
                                     <i class="ri-task-line"></i>
                                     <span> Tasks </span>
-                                    <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="sidebarTasks">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="task-list.html">List</a>
-                                        </li>
-                                        <li>
-                                            <a href="task-details.html">Details</a>
-                                        </li>
-                                        <li>
-                                            <a href="task-kanban-board.html">Kanban Board</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
 
                             
@@ -719,17 +696,17 @@
                                 <div class="collapse" id="sidebarContacts">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="contacts-list.html">Members List</a>
+                                            <a href="${path}/main.do?method=contacts_list">Members List</a>
                                         </li>
                                         <li>
-                                            <a href="contacts-profile.html">Profile</a>
+                                            <a href="${path}/main.do?method=contacts_profile">Profile</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
                             <li>
-                                <a href="apps-file-manager.html">
+                                <a href="${path}/main.do?method=file_manager">
                                     <i class="ri-folders-line"></i>
                                     <span> File Manager </span>
                                 </a>

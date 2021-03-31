@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ceo Template</title>
+<title>Calendar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -20,7 +20,14 @@
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <!-- App favicon -->
 <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+<!-- Plugin css -->
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.css" rel="stylesheet" type="text/css" />
 
+	
 <!-- App css -->
 <link href="${path}/Admin/dist/assets/css/default/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
 <link href="${path}/Admin/dist/assets/css/default/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
@@ -319,7 +326,7 @@
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                 <span class="pro-user-name ms-1">
-                                    ${mem.id} <i class="mdi mdi-chevron-down"></i> 
+                                    ${mem.id}<i class="mdi mdi-chevron-down"></i> 
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -647,12 +654,53 @@
                                         <li>
                                             <a href="index.html">ALL</a>
                                         </li>
-                                        <li>
+                                       <li>
                                             <a href="dashboard-crm.html">Individual</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
+
+                            
+
+                            <li class="menu-title mt-2">Apps</li>
+
+                            <li>
+                                <a href="${path}/main.do?method=apps_chat">
+                                    <i class="ri-message-2-line"></i>
+                                    <span> Chat </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="${path}/main.do?method=calendar">
+                                    <i class="ri-calendar-2-line"></i>
+                                    <span> Calendar </span>
+                                </a>
+                            </li>
+							<li>
+                                <a href="apps-calendar.html">
+                                    <i class="ri-calendar-2-line"></i>
+                                    <span> Gantt </span>
+                                </a>
+                            </li>
+                            
+
+                            <li>
+                                <a href="apps-companies.html">
+                                    <i class="ri-building-4-line"></i>
+                                    <span> Companies </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="${path}/main.do?method=main">
+                                    <i class="ri-task-line"></i>
+                                    <span> Tasks </span>
+                                </a>
+                            </li>
+
+                            
 
                             <li>
                                 <a href="#sidebarContacts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarContacts">
@@ -671,15 +719,13 @@
                                     </ul>
                                 </div>
                             </li>
-							<li>
-                                <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
-                                    <i class="ri-mail-line"></i>
-                                    <span> 마음의편지 </span>
+
+                            <li>
+                                <a href="${path}/main.do?method=file_manager">
+                                    <i class="ri-folders-line"></i>
+                                    <span> File Manager </span>
                                 </a>
                             </li>
-
-                            
-                            
                         </ul>
 
                     </div>
@@ -693,7 +739,7 @@
             </div>
             <!-- Left Sidebar End -->
 
-            <!-- ============================================================== -->
+             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
 
@@ -702,17 +748,17 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        
+
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">CRM</h4>
+                                    <h4 class="page-title">Calendar</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                                            <li class="breadcrumb-item active">CRM</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                            <li class="breadcrumb-item active">Calendar</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -721,407 +767,116 @@
                         <!-- end page title --> 
 
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-12">
+
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Campaign Sent</h5>
-                                                <h3 class="my-2 py-1"><span data-plugin="counterup">865</span></h3>
-                                                <p class="mb-0 text-muted">
-                                                    <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
-                                                    <span class="text-nowrap">Since last month</span>  
-                                                </p>
-                                            </div>
-                                            <div class="avatar-sm">
-                                                <span class="avatar-title bg-soft-primary rounded">
-                                                    <i class="ri-stack-line font-20 text-primary"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">New Leads</h5>
-                                                <h3 class="my-2 py-1"><span data-plugin="counterup">384</span></h3>
-                                                <p class="mb-0 text-muted">
-                                                    <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 3.27%</span>
-                                                    <span class="text-nowrap">Since last month</span>  
-                                                </p>
-                                            </div>
-                                            <div class="avatar-sm">
-                                                <span class="avatar-title bg-soft-primary rounded">
-                                                    <i class="ri-slideshow-2-line font-20 text-primary"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">Deals</h5>
-                                                <h3 class="my-2 py-1"><span data-plugin="counterup">34,521</span></h3>
-                                                <p class="mb-0 text-muted">
-                                                    <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
-                                                    <span class="text-nowrap">Since last month</span>  
-                                                </p>
-                                            </div>
-                                            <div class="avatar-sm">
-                                                <span class="avatar-title bg-soft-primary rounded">
-                                                    <i class="ri-hand-heart-line font-20 text-primary"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Booked Revenue</h5>
-                                                <h3 class="my-2 py-1">$<span data-plugin="counterup">89,357</span></h3>
-                                                <p class="mb-0 text-muted">
-                                                    <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 34.61%</span>
-                                                    <span class="text-nowrap">Since last month</span>  
-                                                </p>
-                                            </div>
-                                            <div class="avatar-sm">
-                                                <span class="avatar-title bg-soft-primary rounded">
-                                                    <i class="ri-money-dollar-box-line font-20 text-primary"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-
-                        <div class="row">
-                            <div class="col-xl-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <h4 class="header-title">Campaigns</h4>
-                                            <div class="btn-group mb-2">
-                                                <button type="button" class="btn btn-xs btn-light active">Today</button>
-                                                <button type="button" class="btn btn-xs btn-light">Weekly</button>
-                                                <button type="button" class="btn btn-xs btn-light">Monthly</button>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3" dir="ltr">
-                                            <div id="campaigns-chart" class="apex-charts" data-colors="#f7b84b,#1abc9c,#3bafda"></div>
-                                        </div>
-                                        <div class="row text-center mt-2">
-                                            <div class="col-sm-4">
-                                                <h4 class="fw-normal mt-3">
-                                                    <span>6,510</span>
-                                                </h4>
-                                                <p class="text-muted mb-0 mb-2"><i class="mdi mdi-checkbox-blank-circle text-warning"></i> Total Sent</p>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <h4 class="fw-normal mt-3">
-                                                    <span>3,487</span>
-                                                </h4>
-                                                <p class="text-muted mb-0 mb-2"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Reached</p>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <h4 class="fw-normal mt-3">
-                                                    <span>1,568</span>
-                                                </h4>
-                                                <p class="text-muted mb-0 mb-2"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> Opened</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-
-                            <div class="col-xl-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <h4 class="header-title">Revenue</h4>
-                                            <div class="btn-group mb-2">
-                                                <button type="button" class="btn btn-xs btn-light active">Today</button>
-                                                <button type="button" class="btn btn-xs btn-light">Weekly</button>
-                                                <button type="button" class="btn btn-xs btn-light">Monthly</button>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-4 text-center">
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Current Month</p>
-                                                <h4><i class="fe-arrow-up text-success me-1"></i>$1.4k</h4>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Previous Month</p>
-                                                <h4><i class="fe-arrow-down text-danger me-1"></i>$15k</h4>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Target</p>
-                                                <h4><i class="fe-arrow-down text-danger me-1"></i>$7.8k</h4>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mt-3" dir="ltr">
-                                            <div id="revenue-chart" class="apex-charts" data-colors="#3bafda,#ced4dc"></div>
-                                        </div>
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="dropdown float-end">
-                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                            </div>
-                                        </div>
-                                        <h4 class="header-title mb-3">Top Performing</h4>
-
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-nowrap table-centered mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>User</th>
-                                                        <th>Leads</th>
-                                                        <th>Deals</th>
-                                                        <th>Tasks</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 mt-0 mb-1 fw-normal">Jeremy Young</h5>
-                                                            <span class="text-muted font-13">Senior Sales Executive</span>
-                                                        </td>
-                                                        <td>187</td>
-                                                        <td>154</td>
-                                                        <td>49</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 mt-0 mb-1 fw-normal">Thomas Krueger</h5>
-                                                            <span class="text-muted font-13">Senior Sales Executive</span>
-                                                        </td>
-                                                        <td>235</td>
-                                                        <td>127</td>
-                                                        <td>83</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 mt-0 mb-1 fw-normal">Pete Burdine</h5>
-                                                            <span class="text-muted font-13">Senior Sales Executive</span>
-                                                        </td>
-                                                        <td>365</td>
-                                                        <td>148</td>
-                                                        <td>62</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 mt-0 mb-1 fw-normal">Mary Nelson</h5>
-                                                            <span class="text-muted font-13">Senior Sales Executive</span>
-                                                        </td>
-                                                        <td>753</td>
-                                                        <td>159</td>
-                                                        <td>258</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 mt-0 mb-1 fw-normal">Kevin Grove</h5>
-                                                            <span class="text-muted font-13">Senior Sales Executive</span>
-                                                        </td>
-                                                        <td>458</td>
-                                                        <td>126</td>
-                                                        <td>73</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- end table-responsive-->
-
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div>
-                            <!-- end col-->
-
-                            <div class="col-xl-7">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="dropdown float-end">
-                                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-vertical"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                                        <div class="row">
+                                            <div class="col-xl-3">
+                                                <div class="d-grid">
+                                                    <button class="btn btn-lg font-16 btn-primary" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> Create New Event</button>
+                                                </div>
+                                                <div id="external-events">
+                                                    <br>
+                                                    <p class="text-muted">Drag and drop your event or click in the calendar</p>
+                                                    <div class="external-event bg-success" data-class="bg-success">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>New Theme Release
+                                                    </div>
+                                                    <div class="external-event bg-info" data-class="bg-info">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>My Event
+                                                    </div>
+                                                    <div class="external-event bg-warning" data-class="bg-warning">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Meet manager
+                                                    </div>
+                                                    <div class="external-event bg-danger" data-class="bg-danger">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Create New theme
                                                     </div>
                                                 </div>
-                                                <h4 class="header-title mb-4">Recent Leads</h4>
-        
-                                                <div class="d-flex">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-warning float-end">Cold lead</span>
-                                                        <h5 class="mt-0 mb-1">Risa Pearson</h5>
-                                                        <span class="text-muted font-13">richard.john@mail.com</span>
-                                                    </div>
+
+
+                                                <div class="mt-5 d-none d-xl-block">
+                                                    <h5 class="text-center">How It Works ?</h5>
+    
+                                                    <ul class="ps-3">
+                                                        <li class="text-muted mb-3">
+                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                        </li>
+                                                        <li class="text-muted mb-3">
+                                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage.
+                                                        </li>
+                                                        <li class="text-muted mb-3">
+                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                        </li>
+                                                    </ul>
                                                 </div>
-        
-                                                <div class="d-flex mt-3">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-danger float-end">Lost lead</span>
-                                                        <h5 class="mt-0 mb-1">Margaret D. Evans</h5>
-                                                        <span class="text-muted font-13">margaret.evans@rhyta.com</span>
-                                                    </div>
+    
+                                            </div> <!-- end col-->
+
+                                            <div class="col-xl-9">
+                                                <div class="mt-4 mt-xl-0">
+                                                    <div id="calendar"></div>
                                                 </div>
-        
-                                                <div class="d-flex mt-3">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-success float-end">Won lead</span>
-                                                        <h5 class="mt-0 mb-1">Bryan J. Luellen</h5>
-                                                        <span class="text-muted font-13">bryuellen@dayrep.com</span>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="d-flex mt-3">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-warning float-end">Cold lead</span>
-                                                        <h5 class="mt-0 mb-1">Kathryn S. Collier</h5>
-                                                        <span class="text-muted font-13">collier@jourrapide.com</span>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="d-flex mt-3">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-warning float-end">Cold lead</span>
-                                                        <h5 class="mt-0 mb-1">Timothy Kauper</h5>
-                                                        <span class="text-muted font-13">thykauper@rhyta.com</span>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="d-flex mt-3">
-                                                    <img class="avatar-sm align-self-center me-3 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="Generic placeholder image">
-                                                    <div class="flex-1">
-                                                        <span class="badge badge-soft-success float-end">Won lead</span>
-                                                        <h5 class="mt-0 mb-1">Zara Raws</h5>
-                                                        <span class="text-muted font-13">austin@dayrep.com</span>
-                                                    </div>
-                                                </div>
-                                                   
+                                            </div> <!-- end col -->
+
+                                        </div>  <!-- end row -->
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+
+                                <!-- Add New Event MODAL -->
+                                <div class="modal fade" id="event-modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header py-3 px-4 border-bottom-0 d-block">
+                                                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="modal-title">Event</h5>
                                             </div>
-                                            <!-- end card-body -->
-                                        </div>
-                                        <!-- end card-->
-                                    </div>
-                                    <!-- end col -->  
-                                    
-                                    <div class="col-lg-6">
-                                        <!-- Todo-->
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="dropdown float-end">
-                                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-vertical"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="header-title mb-3">Todo</h4>
-        
-                                                <div class="todoapp">
+                                            <div class="modal-body px-4 pb-4 pt-0">
+                                                <form class="needs-validation" name="event-form" id="form-event" novalidate>
                                                     <div class="row">
-                                                        <div class="col">
-                                                            <h5 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h5>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <a href="" class="float-end btn btn-light btn-sm" id="btn-archive">Archive</a>
-                                                        </div>
-                                                    </div>
-        
-                                                    <div style="max-height: 292px;" data-simplebar>
-                                                        <ul class="list-group list-group-flush todo-list" id="todo-list"></ul>
-                                                    </div>
-        
-                                                    <form name="todo-form" id="todo-form" class="needs-validation mt-3" novalidate>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" 
-                                                                    placeholder="Add new todo" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter your task name
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-auto d-grid">
-                                                                <button class="btn btn-primary btn-md width-sm waves-effect waves-light" type="submit" id="todo-btn-submit">Add</button>
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">Event Name</label>
+                                                                <input class="form-control" placeholder="Insert Event Name"
+                                                                    type="text" name="title" id="event-title" required />
+                                                                <div class="invalid-feedback">Please provide a valid event name</div>
                                                             </div>
                                                         </div>
-                                                    </form>
-                                                </div> <!-- end .todoapp-->
-        
-                                            </div> <!-- end card-body -->
-                                        </div> <!-- end card-->
-        
-                                    </div><!-- end col --> 
-                                </div><!-- end row-->
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">Category</label>
+                                                                <select class="form-control form-select" name="category"
+                                                                    id="event-category" required>
+                                                                    <option value="bg-danger" selected>Danger</option>
+                                                                    <option value="bg-success">Success</option>
+                                                                    <option value="bg-primary">Primary</option>
+                                                                    <option value="bg-info">Info</option>
+                                                                    <option value="bg-dark">Dark</option>
+                                                                    <option value="bg-warning">Warning</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">Please select a valid event category</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6">
+                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
+                                                        </div>
+                                                        <div class="col-6 text-end">
+                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div> <!-- end modal-content-->
+                                    </div> <!-- end modal dialog-->
+                                </div>
+                                <!-- end modal-->
                             </div>
-                            <!-- end col-->
-                        </div>
-                        <!-- end row-->
+                            <!-- end col-12 -->
+                        </div> <!-- end row -->
                         
-                    </div> <!-- container -->
+                    </div> <!-- container-fluid -->
 
                 </div> <!-- content -->
 
@@ -1549,17 +1304,18 @@
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- Apex js-->
-        <script src="${path}/Admin/dist/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <!-- plugin js -->
         <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/interaction/main.min.js"></script>
 
-        <!-- TODO js-->
-        <script src="${path}/Admin/dist/assets/js/pages/jquery.todo.js"></script>
+        <!-- Calendar init -->
+        <script src="${path}/Admin/dist/assets/js/pages/calendar.init.js"></script>
 
-        <!-- Dashboard init-->
-        <script src="${path}/Admin/dist/assets/js/pages/dashboard-crm.init.js"></script>
-        
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
         
