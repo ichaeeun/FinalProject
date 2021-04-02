@@ -7,7 +7,7 @@
    	-->
    <typeAliases>
    		<typeAlias alias="dash" type="pms.dashboard.dto.DashBoard"/>
-      	<typeAlias alias="login" type="pms.dashboard.dto.Login"/>
+      	<typeAlias alias="member" type="pms.dashboard.dto.Member"/>
       
    </typeAliases>
    <!-- 3. sql이 저장되는 mapper.xml 등록 
