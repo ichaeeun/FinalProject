@@ -44,5 +44,15 @@ public class DashBoardController {
 		
 		return "main";
 	}
+	// http://localhost:7080/pms/main.do?method=riskBoard
+	@RequestMapping(params="method=riskBoard")
+	public String riskform() {
+		return"riskBoard";
+	}
+	// http://localhost:7080/pms/main.do?method=riskBoardCreate
+	@RequestMapping(params="method=riskBoardCreate")
+	public String riskformCreate() {
+		return"riskBoardCreate";
+	}
 
 }
