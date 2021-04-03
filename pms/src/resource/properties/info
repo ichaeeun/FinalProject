@@ -2,9 +2,9 @@
 # db정보를 변경할 때 여기서 통일적으로 변경하면 된다
 driver=oracle.jdbc.driver.OracleDriver
 dburl=jdbc:oracle:thin:@localhost:1521:xe
-user = scott
+user2 = scott
 pass = tiger
 # driver dnurl user pass
 # 파일 서버 정보
-upload=C:/Users/주인/eclipse-workspace/springweb/WebContent/z01_upload/
-tmpUpload=C:/Users/주인/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/springweb/z01_upload/
+#upload=C:/Users/주인/eclipse-workspace/springweb/WebContent/z01_upload/
+#tmpUpload=C:/Users/주인/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/springweb/z01_upload/

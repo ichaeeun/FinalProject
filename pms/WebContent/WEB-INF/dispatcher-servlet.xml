@@ -42,7 +42,7 @@
        destroy-method="close">
        <property name="driverClassName" value="${driver}"/>
        <property name="url" value="${dburl}"/>
-       <property name="username" value="${user}"/>
+       <property name="username" value="${user2}"/>
        <property name="password" value="${pass}"/>
     </bean>
    <!-- 
@@ -92,7 +92,7 @@
      <!-- 2. 파일업로드뷰 viewer -->
      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
      <!-- 3. 파일다운로드뷰 viewer -->
-     <bean id="downloadviewer" class="pms.util.FileDownloadViewer"/>
+  <!--    <bean id="downloadviewer" class="pms.util.FileDownloadViewer"/> -->
      <!-- 4. 엑셀뷰 viewer -->
      <!-- 5. pdf뷰 viewer -->
 </beans>

@@ -11,30 +11,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Calendar</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
-<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
-<!-- App favicon -->
-<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
-
-<!-- App css -->
-<link href="${path}/Admin/dist/assets/css/default/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
-<link href="${path}/Admin/dist/assets/css/default/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-
-<!-- icons -->
-<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
-<script src="${path}/a00_com/jquery.min.js"></script>
-<script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
+<title>Insert title here</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
+		<!-- App css -->
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<!-- icons -->
+		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 <%--
  
@@ -570,21 +560,21 @@
                 <div class="logo-box">
                     <a href="index.html" class="logo logo-dark text-center">
                         <span class="logo-sm">
-                            <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
+                            <img src="${path }/a00_com/assets/images/logo-sm-dark.png" alt="" height="24">
                             <!-- <span class="logo-lg-text-light">Minton</span> -->
                         </span>
                         <span class="logo-lg">
-                            <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
+                            <img src="${path }/a00_com/assets/images/logo-dark.png" alt="" height="20">
                             <!-- <span class="logo-lg-text-light">M</span> -->
                         </span>
                     </a>
 
                     <a href="index.html" class="logo logo-light text-center">
                         <span class="logo-sm">
-                            <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
+                            <img src="${path }/a00_com/assets/images/logo-sm.png" alt="" height="24">
                         </span>
                         <span class="logo-lg">
-                            <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
+                            <img src="${path }/a00_com/assets/images/logo-light.png" alt="" height="20">
                         </span>
                     </a>
                 </div>
@@ -593,11 +583,11 @@
 
                     <!-- User box -->
                     <div class="user-box text-center">
-                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
+                        <img src="${path }/a00_com/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
                             class="rounded-circle avatar-md">
                         <div class="dropdown">
                             <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block"
-                                data-bs-toggle="dropdown">${mem.id}</a>
+                                data-bs-toggle="dropdown">Nik Patel</a>
                             <div class="dropdown-menu user-pro-dropdown">
 
                                 <!-- item-->
@@ -636,91 +626,65 @@
 
                             <li class="menu-title">Navigation</li>
                 
-                            <li>
-                                <a href="#sidebarDashboards" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarDashboards" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
-                                    <span class="badge bg-success rounded-pill float-end">3</span>
-                                    <span> Dashboards </span>
+                          
+
+
+                            <li class="menu-title mt-2">Apps</li>
+							<li>
+                                <a href="apps-chat.html">
+                                    <i class="ri-message-2-line"></i>
+                                    <span> Chat </span>
                                 </a>
-                                <div class="collapse" id="sidebarDashboards">
+                            </li>
+							
+                            <li>
+                                <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                                    <i class="ri-mail-line"></i>
+                                    <span> 공지,요청 </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarEmail">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="index.html">ALL</a>
+                                            <a href="email-inbox.html">공지</a>
                                         </li>
-                                       <li>
-                                            <a href="dashboard-crm.html">Individual</a>
+                                        <li>
+                                            <a href="email-read.html">인력 요청</a>
+                                        </li>
+                                        <li>
+                                            <a href="email-templates.html">기타</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
-                            
-
-                            <li class="menu-title mt-2">Apps</li>
-
-                            <li>
-                                <a href="${path}/main.do?method=apps_chat">
-                                    <i class="ri-message-2-line"></i>
-                                    <span> Chat </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="${path}/main.do?method=calendar">
-                                    <i class="ri-calendar-2-line"></i>
-                                    <span> Calendar </span>
-                                </a>
-                            </li>
-							<li>
-                                <a href="apps-calendar.html">
-                                    <i class="ri-calendar-2-line"></i>
-                                    <span> Gantt </span>
-                                </a>
-                            </li>
-                            
-
                             <li>
                                 <a href="apps-companies.html">
                                     <i class="ri-building-4-line"></i>
-                                    <span> Companies </span>
+                                    <span> 사원 관리 </span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="${path}/main.do?method=main">
-                                    <i class="ri-task-line"></i>
-                                    <span> Tasks </span>
-                                </a>
-                            </li>
-
-                            
+                           
 
                             <li>
                                 <a href="#sidebarContacts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarContacts">
                                     <i class="ri-profile-line"></i>
-                                    <span> Contacts </span>
+                                    <span> 일단 그냥 놔둠 </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="sidebarContacts">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="${path}/main.do?method=contacts_list">Members List</a>
+                                            <a href="contacts-list.html">Members List</a>
                                         </li>
                                         <li>
-                                            <a href="${path}/main.do?method=contacts_profile">Profile</a>
+                                            <a href="contacts-profile.html">Profile</a>
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
-
-                            <li>
-                                <a href="${path}/main.do?method=file_manager">
-                                    <i class="ri-folders-line"></i>
-                                    <span> File Manager </span>
-                                </a>
-                            </li>
+                            </li>                                  
                         </ul>
-
                     </div>
                     <!-- End Sidebar -->
 
@@ -763,174 +727,45 @@
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xl img-thumbnail"
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xl img-thumbnail"
                                         alt="profile-image">
 
-                                        <h4 class="mt-3 mb-0">Nik G. Patel</h4>
-                                        <p class="text-muted">@webdesigner</p>
-
-                                        <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
-                                        <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button>
-
+                                        <h4 class="mt-3 mb-0">홍길동</h4>
+                                        <p class="text-muted">PM</p>
                                         <div class="text-start mt-3">
-                                            <h4 class="font-13 text-uppercase">About Me :</h4>
-                                            <p class="text-muted font-13 mb-3">
-                                                Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
-                                                1500s, when an unknown printer took a galley of type.
-                                            </p>
-
                                             <div class="table-responsive">
                                                 <table class="table table-borderless table-sm">
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row">Full Name :</th>
-                                                            <td class="text-muted">Nik G. Patel</td>
+                                                            <th scope="row">이름 :</th>
+                                                            <td class="text-muted">홍길동</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Mobile :</th>
+                                                            <th scope="row">연락처 :</th>
                                                             <td class="text-muted">(123) 123 1234</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Email :</th>
-                                                            <td class="text-muted">user@email.domain</td>
+                                                            <th scope="row">이메일 :</th>
+                                                            <td class="text-muted">hong@gmail.com</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Location :</th>
-                                                            <td class="text-muted">USA</td>
+                                                            <th scope="row">거주지역 :</th>
+                                                            <td class="text-muted">서울</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-
-                                        <ul class="social-list list-inline mb-0">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i
-                                                        class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i
-                                                        class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-info text-info"><i
-                                                        class="mdi mdi-twitter"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i
-                                                        class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div> <!-- end card-box -->
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="header-title">Skills</h4>
-                                        <p class="sub-header mb-3">Everyone realizes why a new common language would be desirable</p>
-
-                                        <div class="pt-1">
-                                            <h6 class="text-uppercase mt-0">HTML5 <span class="float-end">90%</span></h6>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                                    <span class="visually-hidden">90% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-2 pt-1">
-                                            <h6 class="text-uppercase">PHP <span class="float-end">67%</span></h6>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%">
-                                                    <span class="visually-hidden">67% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-2 pt-1">
-                                            <h6 class="text-uppercase">WordPress <span class="float-end">48%</span></h6>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%">
-                                                    <span class="visually-hidden">48% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-2 pt-1">
-                                            <h6 class="text-uppercase">Laravel <span class="float-end">95%</span></h6>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">
-                                                    <span class="visually-hidden">95% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-2 pt-1">
-                                            <h6 class="text-uppercase">ReactJs <span class="float-end">72%</span></h6>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%">
-                                                    <span class="visually-hidden">72% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-box-->
 
                             </div> <!-- end col-->
 
                             <div class="col-lg-8 col-xl-8">
                                 <div class="card">
-                                    <div class="card-body">
-                                        <ul class="nav nav-pills navtab-bg">
-                                            <li class="nav-item">
-                                                <a href="#about-me" data-bs-toggle="tab" aria-expanded="true" class="nav-link active ms-0">
-                                                    <i class="mdi mdi-face-profile me-1"></i>About Me
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                                    <i class="mdi mdi-cog me-1"></i>Settings
-                                                </a>
-                                            </li>
-                                        </ul>
-    
+                                    <div class="card-body">                                      
                                         <div class="tab-content">
-                                            
-                                            <div class="tab-pane show active" id="about-me">
-    
-                                                <h5 class="mb-4 text-uppercase">Experience</h5>
-    
-                                                <ul class="list-unstyled timeline-sm">
-                                                    <li class="timeline-sm-item">
-                                                        <span class="timeline-sm-date">2015 - 19</span>
-                                                        <h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-                                                        <p>websitename.com</p>
-                                                        <p class="text-muted mt-2">Everyone realizes why a new common language
-                                                            would be desirable: one could refuse to pay expensive translators.
-                                                            To achieve this, it would be necessary to have uniform grammar,
-                                                            pronunciation and more common words.</p>
-    
-                                                    </li>
-                                                    <li class="timeline-sm-item">
-                                                        <span class="timeline-sm-date">2012 - 15</span>
-                                                        <h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-                                                        <p>Software Inc.</p>
-                                                        <p class="text-muted mt-2">If several languages coalesce, the grammar
-                                                            of the resulting language is more simple and regular than that of
-                                                            the individual languages. The new common language will be more
-                                                            simple and regular than the existing European languages.</p>
-                                                    </li>
-                                                    <li class="timeline-sm-item">
-                                                        <span class="timeline-sm-date">2010 - 12</span>
-                                                        <h5 class="mt-0 mb-1">Graphic Designer</h5>
-                                                        <p>Coderthemes LLP</p>
-                                                        <p class="text-muted mt-2 mb-0">The European languages are members of
-                                                            the same family. Their separate existence is a myth. For science
-                                                            music sport etc, Europe uses the same vocabulary. The languages
-                                                            only differ in their grammar their pronunciation.</p>
-                                                    </li>
-                                                </ul>
-    
+                                            <div class="tab-pane show active" id="about-me" style="height:100%">
                                                 <h5 class="mb-3 mt-5 text-uppercase">Projects</h5>
                                                 <div class="table-responsive">
                                                     <table class="table table-borderless table-nowrap mb-0">
@@ -1560,10 +1395,10 @@
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
 
-        <!-- Vendor js -->
+        <!— Vendor js —>
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- App js -->
+        <!— App js —>
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
         
     </body>

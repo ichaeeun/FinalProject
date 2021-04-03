@@ -49,6 +49,7 @@ public class DashBoardController {
 		
 		return "main";
 	}
+
 	
 	// 추가 코드(장승태)(시작)
 	// http://localhost:3030/pms/main.do?method=done_project
@@ -61,4 +62,17 @@ public class DashBoardController {
 		return "done_project";
 	}
 	// 추가 코드(장승태)(끝)
+
+	// http://localhost:7080/pms/main.do?method=riskBoard
+	@RequestMapping(params="method=riskBoard")
+	public String riskform() {
+		return"riskBoard";
+	}
+	// http://localhost:7080/pms/main.do?method=riskBoardCreate
+	@RequestMapping(params="method=riskBoardCreate")
+	public String riskformCreate() {
+		return"riskBoardCreate";
+	}
+
+
 }
