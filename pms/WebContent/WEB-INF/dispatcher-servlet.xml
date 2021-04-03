@@ -42,7 +42,7 @@
        destroy-method="close">
        <property name="driverClassName" value="${driver}"/>
        <property name="url" value="${dburl}"/>
-       <property name="username" value="${user}"/>
+       <property name="username" value="${user2}"/>
        <property name="password" value="${pass}"/>
     </bean>
    <!-- 
