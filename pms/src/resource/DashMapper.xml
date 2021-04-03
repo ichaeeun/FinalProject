@@ -9,7 +9,26 @@
 		select * from pms_member where id = #{id}
 							and pass = #{pass}
 	</select>
-
+	<!-- 코드 추가 -->
+	<select id="totCnt" resultType="int" parameterType="pms_projectSch">
+		select count(*)
+		from pms_project
+		where project_name like '%'||#{project_name}||'%'
+	</select>
+	<resultMap type="pms_project" id="pms_projectMap"/>
+	<select id="pms_projectList" resultMap="pms_projectMap"
+		parameterType="pms_projectSch">
+		SELECT *
+		FROM (
+			select rownum cnt, a.*
+			from pms_project a
+			where project_name like '%'||#{project_name}||'%'
+			order by project_no desc
+		)
+		WHERE cnt BETWEEN #{start} AND #{end}
+		
+	</select>
+	
 
 </mapper>  
  

@@ -1,5 +1,9 @@
 package pms.dashboard.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.dashboard.dto.Member;
+import pms.dashboard.dto.pms_projectSch;
 import pms.dashboard.service.DashboardService;
 
 @Controller
@@ -44,5 +49,16 @@ public class DashBoardController {
 		
 		return "main";
 	}
-
+	
+	// 추가 코드(장승태)(시작)
+	// http://localhost:3030/pms/main.do?method=done_project
+	@RequestMapping(params="method=done_project")
+	public String pms_projectList(@ModelAttribute("sch") pms_projectSch sch, 
+			Model d, HttpServletRequest request) {
+		
+		
+		d.addAttribute("boardList", service.pms_projectList(sch));
+		return "done_project";
+	}
+	// 추가 코드(장승태)(끝)
 }

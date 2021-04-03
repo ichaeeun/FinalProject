@@ -8,7 +8,9 @@
    <typeAliases>
    		<typeAlias alias="dash" type="pms.dashboard.dto.DashBoard"/>
       	<typeAlias alias="member" type="pms.dashboard.dto.Member"/>
-      
+      	<!-- 코드추가 -->
+      	<typeAlias alias="pms_project" type="pms.dashboard.dto.pms_project"/>
+      	<typeAlias alias="pms_projectsch" type="pms.dashboard.dto.pms_projectSch"/>
    </typeAliases>
    <!-- 3. sql이 저장되는 mapper.xml 등록 
    		4. 주로 업무단위 dao단위 하나의 mapper.xml을 만든다
