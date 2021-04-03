@@ -5,9 +5,9 @@
    
 <mapper namespace="pms.dashboard.dao.DashboardDao">
 	
-	<select id="IsMem" resultType="login" parameterType="login">
-		select * from tes where id = #{id}
-							and pw = #{pw}
+	<select id="IsMem" resultType="member" parameterType="member">
+		select * from pms_member where id = #{id}
+							and pass = #{pass}
 	</select>
 
 

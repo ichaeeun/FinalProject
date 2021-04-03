@@ -37,12 +37,18 @@
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
 <%--
- 
+          pno number primary key, 
+         id varchar2(50),
+         pass varchar2(50),
+         name varchar2(50),
+         email varchar2(100),
+         part varchar2(50),			-- 부서
+         auth varchar2(50)
  
 --%>
 	var proc = "${proc}";
 	if(proc == "true"){
-		  alert("${mem.id}님 반갑습니다.");
+		  alert("${mem.name}"+" ${mem.part}"+"님 반갑습니다.");
 		  location.href="${path}/main.do?method=main";
 	} else if(proc == "false") {
 		  alert("로그인 정보가 없습니다.");
@@ -81,7 +87,7 @@
                                     <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
                                 </div>
 
-                                <form:form modelAttribute="login" action="${path}/main.do?method=login" method="post">
+                                <form:form modelAttribute="member" action="${path}/main.do?method=login" method="post">
 
                                     <div class="mb-2">
                                         <label for="accountId" class="form-label">ID</label>
@@ -91,7 +97,7 @@
                                     <div class="mb-2">
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group input-group-merge">
-                                            <form:input type="password" path="pw" class="form-control" placeholder="Enter your password"/>
+                                            <form:input type="password" path="pass" class="form-control" placeholder="Enter your password"/>
                                             
                                             <div class="input-group-text" data-password="false">
                                                 <span class="password-eye"></span>

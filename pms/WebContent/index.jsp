@@ -22,6 +22,7 @@
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <link rel="stylesheet" 
    href="${path}/a00_com/a00_com.css">
+   
 <style>
 
 </style>
