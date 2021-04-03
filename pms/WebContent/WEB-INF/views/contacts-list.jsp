@@ -1,52 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import ="java.util.*"
+    import="java.util.*"
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="form"
+		uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Calendar</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
-<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
-<!-- App favicon -->
-<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+<title>Insert title here</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
+		<!-- App css -->
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<!-- icons -->
+		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<!-- App css -->
-<link href="${path}/Admin/dist/assets/css/default/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
-<link href="${path}/Admin/dist/assets/css/default/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-
-<!-- icons -->
-<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
-<script src="${path}/a00_com/jquery.min.js"></script>
-<script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
-<%--
- 
- 
---%>
 
-   $(document).ready(function(){
-      
-   });
 </script>
 </head>
-<body class="loading">
+   <body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -100,7 +85,7 @@
                                             <!-- item-->
                                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                                 <div class="d-flex">
-                                                    <img class="d-flex me-2 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+                                                    <img class="d-flex me-2 rounded-circle" src="${path }/a00_com/assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
                                                     <div>
                                                         <h5 class="m-0 font-14">Erwin E. Brown</h5>
                                                         <span class="font-12 mb-0">UI Designer</span>
@@ -111,7 +96,7 @@
                                             <!-- item-->
                                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                                 <div class="d-flex">
-                                                    <img class="d-flex me-2 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+                                                    <img class="d-flex me-2 rounded-circle" src="${path }/a00_com/assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
                                                     <div>
                                                         <h5 class="m-0 font-14">Jacob Deo</h5>
                                                         <span class="font-12 mb-0">Developer</span>
@@ -152,19 +137,19 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/github.png" alt="Github">
+                                                <img src="${path }/a00_com/assets/images/brands/github.png" alt="Github">
                                                 <span>GitHub</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/dribbble.png" alt="dribbble">
+                                                <img src="${path }/a00_com/assets/images/brands/dribbble.png" alt="dribbble">
                                                 <span>Dribbble</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/slack.png" alt="slack">
+                                                <img src="${path }/a00_com/assets/images/brands/slack.png" alt="slack">
                                                 <span>Slack</span>
                                             </a>
                                         </div>
@@ -173,19 +158,19 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/g-suite.png" alt="G Suite">
+                                                <img src="${path }/a00_com/assets/images/brands/g-suite.png" alt="G Suite">
                                                 <span>G Suite</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/bitbucket.png" alt="bitbucket">
+                                                <img src="${path }/a00_com/assets/images/brands/bitbucket.png" alt="bitbucket">
                                                 <span>Bitbucket</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="${path}/Admin/dist/assets/images/brands/dropbox.png" alt="dropbox">
+                                                <img src="${path }/a00_com/assets/images/brands/dropbox.png" alt="dropbox">
                                                 <span>Dropbox</span>
                                             </a>
                                         </div>
@@ -197,28 +182,28 @@
     
                         <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
                             <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="${path}/Admin/dist/assets/images/flags/us.jpg" alt="user-image" height="14">
+                                <img src="${path }/a00_com/assets/images/flags/us.jpg" alt="user-image" height="14">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="${path}/Admin/dist/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    <img src="${path }/a00_com/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="${path}/Admin/dist/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    <img src="${path }/a00_com/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="${path}/Admin/dist/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    <img src="${path }/a00_com/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="${path}/Admin/dist/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    <img src="${path }/a00_com/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                                 </a>
     
                             </div>
@@ -257,7 +242,7 @@
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                            <img src="${path }/a00_com/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
                                         <p class="notify-details">Mario Drummond</p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Hi, How are you? What about our next meeting</small>
@@ -267,7 +252,7 @@
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                            <img src="${path }/a00_com/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
                                         <p class="notify-details">Karen Robinson</p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Wow ! this admin looks good and awesome design</small>
@@ -317,9 +302,9 @@
     
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                <img src="${path }/a00_com/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                 <span class="pro-user-name ms-1">
-                                    ${mem.id}<i class="mdi mdi-chevron-down"></i> 
+                                    Nik Patel <i class="mdi mdi-chevron-down"></i> 
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -375,21 +360,21 @@
                     <div class="logo-box">
                         <a href="index.html" class="logo logo-dark text-center">
                             <span class="logo-sm">
-                                <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
+                                <img src="${path }/a00_com/assets/images/logo-sm-dark.png" alt="" height="24">
                                 <!-- <span class="logo-lg-text-light">Minton</span> -->
                             </span>
                             <span class="logo-lg">
-                                <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
+                                <img src="${path }/a00_com/assets/images/logo-dark.png" alt="" height="20">
                                 <!-- <span class="logo-lg-text-light">M</span> -->
                             </span>
                         </a>
 
                         <a href="index.html" class="logo logo-light text-center">
                             <span class="logo-sm">
-                                <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
+                                <img src="${path }/a00_com/assets/images/logo-sm.png" alt="" height="24">
                             </span>
                             <span class="logo-lg">
-                                <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
+                                <img src="${path }/a00_com/assets/images/logo-light.png" alt="" height="20">
                             </span>
                         </a>
                     </div>
@@ -570,21 +555,21 @@
                 <div class="logo-box">
                     <a href="index.html" class="logo logo-dark text-center">
                         <span class="logo-sm">
-                            <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
+                            <img src="${path }/a00_com/assets/images/logo-sm-dark.png" alt="" height="24">
                             <!-- <span class="logo-lg-text-light">Minton</span> -->
                         </span>
                         <span class="logo-lg">
-                            <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
+                            <img src="${path }/a00_com/assets/images/logo-dark.png" alt="" height="20">
                             <!-- <span class="logo-lg-text-light">M</span> -->
                         </span>
                     </a>
 
                     <a href="index.html" class="logo logo-light text-center">
                         <span class="logo-sm">
-                            <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
+                            <img src="${path }/a00_com/assets/images/logo-sm.png" alt="" height="24">
                         </span>
                         <span class="logo-lg">
-                            <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
+                            <img src="${path }/a00_com/assets/images/logo-light.png" alt="" height="20">
                         </span>
                     </a>
                 </div>
@@ -593,11 +578,11 @@
 
                     <!-- User box -->
                     <div class="user-box text-center">
-                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
+                        <img src="${path }/a00_com/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
                             class="rounded-circle avatar-md">
                         <div class="dropdown">
                             <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block"
-                                data-bs-toggle="dropdown">${mem.id}</a>
+                                data-bs-toggle="dropdown">Nik Patel</a>
                             <div class="dropdown-menu user-pro-dropdown">
 
                                 <!-- item-->
@@ -636,91 +621,65 @@
 
                             <li class="menu-title">Navigation</li>
                 
-                            <li>
-                                <a href="#sidebarDashboards" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarDashboards" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
-                                    <span class="badge bg-success rounded-pill float-end">3</span>
-                                    <span> Dashboards </span>
+                          
+
+
+                            <li class="menu-title mt-2">Apps</li>
+							<li>
+                                <a href="apps-chat.html">
+                                    <i class="ri-message-2-line"></i>
+                                    <span> Chat </span>
                                 </a>
-                                <div class="collapse" id="sidebarDashboards">
+                            </li>
+							
+                            <li>
+                                <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                                    <i class="ri-mail-line"></i>
+                                    <span> 공지,요청 </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarEmail">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="index.html">ALL</a>
+                                            <a href="email-inbox.html">공지</a>
                                         </li>
-                                       <li>
-                                            <a href="dashboard-crm.html">Individual</a>
+                                        <li>
+                                            <a href="email-read.html">인력 요청</a>
+                                        </li>
+                                        <li>
+                                            <a href="email-templates.html">기타</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
-                            
-
-                            <li class="menu-title mt-2">Apps</li>
-
-                            <li>
-                                <a href="${path}/main.do?method=apps_chat">
-                                    <i class="ri-message-2-line"></i>
-                                    <span> Chat </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="${path}/main.do?method=calendar">
-                                    <i class="ri-calendar-2-line"></i>
-                                    <span> Calendar </span>
-                                </a>
-                            </li>
-							<li>
-                                <a href="apps-calendar.html">
-                                    <i class="ri-calendar-2-line"></i>
-                                    <span> Gantt </span>
-                                </a>
-                            </li>
-                            
-
                             <li>
                                 <a href="apps-companies.html">
                                     <i class="ri-building-4-line"></i>
-                                    <span> Companies </span>
+                                    <span> 사원 관리 </span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="${path}/main.do?method=main">
-                                    <i class="ri-task-line"></i>
-                                    <span> Tasks </span>
-                                </a>
-                            </li>
-
-                            
+                           
 
                             <li>
                                 <a href="#sidebarContacts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarContacts">
                                     <i class="ri-profile-line"></i>
-                                    <span> Contacts </span>
+                                    <span> 일단 그냥 놔둠 </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="sidebarContacts">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="${path}/main.do?method=contacts_list">Members List</a>
+                                            <a href="contacts-list.html">Members List</a>
                                         </li>
                                         <li>
-                                            <a href="${path}/main.do?method=contacts_profile">Profile</a>
+                                            <a href="contacts-profile.html">Profile</a>
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
-
-                            <li>
-                                <a href="${path}/main.do?method=file_manager">
-                                    <i class="ri-folders-line"></i>
-                                    <span> File Manager </span>
-                                </a>
-                            </li>
+                            </li>                                  
                         </ul>
-
                     </div>
                     <!-- End Sidebar -->
 
@@ -732,7 +691,7 @@
             </div>
             <!-- Left Sidebar End -->
 
-             <!-- ============================================================== -->
+            <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
 
@@ -745,8 +704,27 @@
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box">
-                                    <h4 class="page-title">Members List</h4>
+                                <div class="page-title-box page-title-box-alt">
+                                        <ul class="nav nav-pills navtab-bg nav-justified">
+                                            <li class="nav-item">
+                                                <a href="#home1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+                                                    <span class="d-none d-sm-inline-block">전체인원</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#profile1" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+                                                    <span class="d-none d-sm-inline-block">가용인원</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#messages1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
+                                                    <span class="d-none d-sm-inline-block">프로젝트별 인원</span>
+                                                </a>
+                                            </li>
+                                        </ul>         
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
@@ -761,14 +739,14 @@
 
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add New</a>
+                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
                             </div>
                             <div class="col-sm-8">
                                 <div>
                                     <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
                                         <div class="d-flex align-items-start flex-wrap me-2">
-                                            <label for="membersearch-input" class="visually-hidden">Search</label>
-                                            <input type="search" class="form-control" id="membersearch-input" placeholder="Search...">
+                                            <label for="membersearch-input" class="visually-hidden">검색</label>
+                                            <input type="search" class="form-control" id="membersearch-input" placeholder="검색">
                                         </div>
                                         <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
                                     </form>
@@ -794,22 +772,12 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
 
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Denver Barker</a></h4>
-                                        <p class="text-muted">@Founder <span> | </span> <span> <a href="#" class="text-pink">websitename.com</a> </span></p>
+                                        <h4 class="mt-3 mb-1"><a href="${path }/main.do?method=contacts_profile" class="text-dark">홍길동</a></h4>
+                                        <p class="text-muted">PM <span> | </span> <span> <a href="#" class="text-pink">hong@gmail.com</a> </span></p>
 
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
+
     
                                     </div>
                                 </div> <!-- end card -->
@@ -837,20 +805,32 @@
                                             </div>
                                         </div>
 
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Robert McBride</a></h4>
-                                        <p class="text-muted">@Webdesigner <span> | </span> <span> <a href="#" class="text-pink">abcweb.com</a> </span></p>
+                                        <h4 class="mt-3 mb-1"><a href="${path }/main.do?method=contacts_profile" class="text-dark">박길동</a></h4>
+                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">park@gmail.com</a> </span></p>
 
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                            <div class="col-xl-3 col-sm-6">
+                                <div class="text-center card">
+                                    <div class="card-body">
+                                        
+                                        <div class="dropdown float-end">
+                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-20"></i>
+                                            </a>
+                                            
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                        <img src="${path }/a00_com/assets/images/users/avatar-4.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+
+                                        <h4 class="mt-3 mb-1"><a href="${path }/main.do?method=contacts_profile" class="text-dark">김길동</a></h4>
+                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">kim@gmail.com</a> </span></p>
+
     
                                     </div>
                                 </div> <!-- end card -->
@@ -870,206 +850,11 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-5.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
 
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Peter White</a></h4>
-                                        <p class="text-muted">@Webdesigner <span> | </span> <span> <a href="#" class="text-pink">mywebs.com</a> </span></p>
+                                        <h4 class="mt-3 mb-1"><a href="${path }/main.do?method=contacts_profile" class="text-dark">이길동</a></h4>
+                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">lee@gmail.com</a> </span></p>
 
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Ronald Myrick</a></h4>
-                                        <p class="text-muted">@Director <span> | </span> <span> <a href="#" class="text-pink">profileq.com</a> </span></p>
-
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Paul Halpern</a></h4>
-                                        <p class="text-muted">@Manager <span> | </span> <span> <a href="#" class="text-pink">coolweb.com</a> </span></p>
-
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Ricky Atwell</a></h4>
-                                        <p class="text-muted">@Programmer <span> | </span> <span> <a href="#" class="text-pink">supported.com</a> </span></p>
-
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <div class="avatar-xl mx-auto mt-1">
-                                            <div class="avatar-title bg-light rounded-circle">
-                                                <i class="mdi mdi-account h1 m-0 text-body"></i>
-                                            </div>
-                                        </div>
-
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">James Richards</a></h4>
-                                        <p class="text-muted">@Webdeveloper <span> | </span> <span> <a href="#" class="text-pink">website.com</a> </span></p>
-
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="contacts-profile.html" class="text-dark">Charles Martinez</a></h4>
-                                        <p class="text-muted">@Webdesigner <span> | </span> <span> <a href="#" class="text-pink">demosite.com.com</a> </span></p>
-
-                                        <ul class="social-list list-inline mt-4 mb-2">
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="mdi mdi-facebook"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                            </li>
-                                        </ul>
     
                                     </div>
                                 </div> <!-- end card -->
@@ -1080,7 +865,7 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <div>
-                                    <h5 class="font-14 text-body">Showing Page 2 Of 12</h5>
+                                    <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -1089,10 +874,10 @@
                                         <li class="page-item disabled">
                                             <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
                                         </li>
-                                        <li class="page-item">
+                                        <li class="page-item active">
                                             <a href="#" class="page-link">1</a>
                                         </li>
-                                        <li class="page-item active">
+                                        <li class="page-item">
                                             <a href="#" class="page-link">2</a>
                                         </li>
                                         <li class="page-item">
@@ -1212,7 +997,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
@@ -1227,7 +1012,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
@@ -1242,7 +1027,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
@@ -1261,7 +1046,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
@@ -1276,7 +1061,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
@@ -1291,7 +1076,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
@@ -1306,7 +1091,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
@@ -1321,7 +1106,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
@@ -1336,7 +1121,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/a00_com/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
@@ -1540,10 +1325,10 @@
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor js -->
-        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+        <script src="${path }/a00_com/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+        <script src="${path }/a00_com/assets/js/app.min.js"></script>
         
     </body>
 </html>
