@@ -35,7 +35,7 @@
 	<!-- icons -->
 	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 </head>
-	<body class="loading">
+   <body class="loading" data-layout-mode="detached" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -51,7 +51,7 @@
                                 <div class="app-search-box dropdown">
                                     <div class="input-group">
                                         <input type="search" class="form-control" placeholder="Search..." id="top-search">
-                            
+                           
                                         <button class="btn" type="submit">
                                             <i class="fe-search"></i>
                                         </button>
@@ -585,8 +585,8 @@
                         <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
                             class="rounded-circle avatar-md">
                         <div class="dropdown">
-                            <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block"
-                                data-bs-toggle="dropdown">Nik Patel</a>
+                            <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block fw-medium"
+                                data-bs-toggle="dropdown">Nikhil Patel</a>
                             <div class="dropdown-menu user-pro-dropdown">
 
                                 <!-- item-->
@@ -627,7 +627,7 @@
                 
                             <li>
                                 <a href="#sidebarDashboards" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarDashboards" class="waves-effect">
-                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <i class="ri-dashboard-line"></i>
                                     <span class="badge bg-success rounded-pill float-end">3</span>
                                     <span> Dashboards </span>
                                 </a>
@@ -648,17 +648,17 @@
 
                             <li>
                                 <a href="#sidebarLayouts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarLayouts">
-                                    <i class="mdi mdi-cellphone-link"></i>
+                                    <i class="ri-layout-line"></i>
                                     <span> Layouts </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="sidebarLayouts">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="layouts-horizontal.html">Horizontal</a>
+                                            <a href="layouts-vertical.html">Vertical</a>
                                         </li>
                                         <li>
-                                            <a href="layouts-detached.html">Detached</a>
+                                            <a href="layouts-horizontal.html">Horizontal</a>
                                         </li>
                                         <li>
                                             <a href="layouts-two-column.html">Two Column Menu</a>
@@ -674,14 +674,14 @@
 
                             <li>
                                 <a href="apps-chat.html">
-                                    <i class="mdi mdi-forum-outline"></i>
+                                    <i class="ri-message-2-line"></i>
                                     <span> Chat </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
-                                    <i class="mdi mdi-cart-outline"></i>
+                                    <i class="ri-shopping-cart-2-line"></i>
                                     <span class="badge bg-danger float-end">New</span>
                                     <span> Ecommerce </span>
                                 </a>
@@ -723,14 +723,14 @@
 
                             <li>
                                 <a href="apps-calendar.html">
-                                    <i class="mdi mdi-calendar"></i>
+                                    <i class="ri-calendar-2-line"></i>
                                     <span> Calendar </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
-                                    <i class="mdi mdi-email-outline"></i>
+                                    <i class="ri-mail-line"></i>
                                     <span> Email </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -751,14 +751,14 @@
 
                             <li>
                                 <a href="apps-companies.html">
-                                    <i class="mdi mdi-domain"></i>
+                                    <i class="ri-building-4-line"></i>
                                     <span> Companies </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#sidebarTasks" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
-                                    <i class="mdi mdi-briefcase-check-outline"></i>
+                                    <i class="ri-task-line"></i>
                                     <span> Tasks </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -779,14 +779,14 @@
 
                             <li>
                                 <a href="apps-tickets.html">
-                                    <i class="mdi mdi-lifebuoy"></i>
+                                    <i class="ri-customer-service-2-line"></i>
                                     <span> Tickets </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#sidebarContacts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarContacts">
-                                    <i class="mdi mdi-book-account-outline"></i>
+                                    <i class="ri-profile-line"></i>
                                     <span> Contacts </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -804,7 +804,7 @@
 
                             <li>
                                 <a href="apps-file-manager.html">
-                                    <i class="mdi mdi-folder-star-outline"></i>
+                                    <i class="ri-folders-line"></i>
                                     <span> File Manager </span>
                                 </a>
                             </li>
@@ -813,7 +813,7 @@
 
                             <li>
                                 <a href="#sidebarAuth" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarAuth">
-                                    <i class="mdi mdi-account-circle-outline"></i>
+                                    <i class="ri-shield-user-line"></i>
                                     <span> Auth Pages </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -867,7 +867,7 @@
 
                             <li>
                                 <a href="#sidebarExpages" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarExpages">
-                                    <i class="mdi mdi-text-box-multiple-outline"></i>
+                                    <i class="ri-pages-line"></i>
                                     <span> Extra Pages </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -920,7 +920,7 @@
 
                             <li>
                                 <a href="#sidebarBaseui" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarBaseui">
-                                    <i class="mdi mdi-black-mesa"></i>
+                                    <i class="ri-pencil-ruler-2-line"></i>
                                     <span> Base UI </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -989,7 +989,7 @@
 
                             <li>
                                 <a href="#sidebarExtendedui" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarExtendedui">
-                                    <i class="mdi mdi-layers-outline"></i>
+                                    <i class="ri-stack-line"></i>
                                     <span class="badge bg-info float-end">Hot</span>
                                     <span> Extended UI </span>
                                 </a>
@@ -1019,14 +1019,14 @@
 
                             <li>
                                 <a href="widgets.html">
-                                    <i class="mdi mdi-gift-outline"></i>
+                                    <i class="ri-honour-line"></i>
                                     <span> Widgets </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#sidebarIcons" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarIcons">
-                                    <i class="mdi mdi-bullseye"></i>
+                                    <i class="ri-markup-line"></i>
                                     <span> Icons </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1056,7 +1056,7 @@
 
                             <li>
                                 <a href="#sidebarForms" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarForms">
-                                    <i class="mdi mdi-bookmark-multiple-outline"></i>
+                                    <i class="ri-eraser-line"></i>
                                     <span> Forms </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1095,7 +1095,7 @@
 
                             <li>
                                 <a href="#sidebarTables" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTables">
-                                    <i class="mdi mdi-table"></i>
+                                    <i class="ri-table-line"></i>
                                     <span> Tables </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1125,7 +1125,7 @@
 
                             <li>
                                 <a href="#sidebarCharts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarCharts">
-                                    <i class="mdi mdi-poll"></i>
+                                    <i class="ri-bar-chart-line"></i>
                                     <span> Charts </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1164,7 +1164,7 @@
 
                             <li>
                                 <a href="#sidebarMaps" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarMaps">
-                                    <i class="mdi mdi-map-outline"></i>
+                                    <i class="ri-map-pin-line"></i>
                                     <span> Maps </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1185,7 +1185,7 @@
 
                             <li>
                                 <a href="#sidebarMultilevel" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarMultilevel">
-                                    <i class="mdi mdi-share-variant"></i>
+                                    <i class="ri-share-line"></i>
                                     <span> Multi Level </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -1264,105 +1264,157 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">리스크</h4>
+                                    <h4 class="page-title">리스크 상세</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Product List</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
+                                            <li class="breadcrumb-item active">Task Detail</li>
                                         </ol>
                                     </div>
                                 </div>
                             </div>
                         </div>     
-                        <!-- end page title --> 
-
-                        <div class="row">
-                            <div class="col-lg-12">
+                        <!-- end page title -->
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row mb-2">
-                                            <div class="col-sm-6">
-                                                <a href="${path}/main.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
+                                        <div class="dropdown float-end">
+                                            <a href="#" class="dropdown-toggle arrow-none text-muted"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class='mdi mdi-dots-horizontal font-18'></i>
+                                            </a>
+                                        
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">
+                                                    <i class='mdi mdi-attachment me-1'></i>Attachment
+                                                </a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">
+                                                    <i class='mdi mdi-pencil-outline me-1'></i>Edit
+                                                </a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">
+                                                    <i class='mdi mdi-content-copy me-1'></i>Mark as Duplicate
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item text-danger">
+                                                    <i class='mdi mdi-delete-outline me-1'></i>Delete
+                                                </a>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="float-sm-end">
-                                                    
-                                                    <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                                    
-                                                </div>
-                                            </div><!-- end col-->
                                         </div>
-                                        <!-- end row -->
-                
-                                        <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="all" style="width: 20px;">
-                                                            <div class="form-check mb-0 font-16">
-                                                                <input class="form-check-input" type="checkbox" id="productlistCheck">
-                                                                <label class="form-check-label" for="productlistCheck">&nbsp;</label>
-                                                            </div>
-                                                        </th>
-                                                        <th class="all">번호</th>
-                                                        <th>제목</th>
-                                                        <th>프로젝트 이름</th>
-                                                        <th>리스크 카테고리</th>
-                                                        <th>등록일</th>
-                                                        <th>리스크 상태</th>
-                                                        <th>작성자</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check mb-0 font-16">
-                                                                <input class="form-check-input" type="checkbox" id="productlistCheck1">
-                                                                <label class="form-check-label" for="productlistCheck1">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                           1
-                                                        </td>
-                                                        <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/main.do?method=riskDetail" class="text-dark">[기타]그렇게 좋은 날씨는 아닙니다.</a></h5>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/main.do?method=riskDetail" class="text-dark">신세계 프로젝트</a></h5>
-                                                        </td>
-                                                        <td>
-                                                            [결제]
-                                                        </td>
-                                                        <td>
-                                                            09 Mar, 2020
-                                                        </td>
-                                                        <td>
-                                                            <div>
-                                                                완료
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div>
+                                        <p class="text-primary">#MN2048</p>
+                                        <h4 class="mb-1">그렇게 좋은 날씨는 아닙니다.</h4>
+                                        <div class="text-muted">
+                                             <div class="row">
+                                                <div class="col-lg-4 col-sm-6">
+                                                    <div class="d-flex align-items-start mt-3">
+                                                        <div class="me-2 align-self-center">
+                                                            <i class="ri-hashtag h2 m-0 text-muted"></i>
+                                                        </div>
+                                                        <div class="flex-1 overflow-hidden">
+                                                            <p class="mb-1">ID</p>
+                                                            <h5 class="mt-0 text-truncate">
+                                                                #MN2048
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-6">
+                                                    <div class="d-flex align-items-start mt-3">
+                                                        <div class="me-2 align-self-center">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle">
+                                                        </div>
+                                                        <div class="flex-1 overflow-hidden">
+                                                            <p class="mb-1">작성자</p>
+                                                            <h5 class="mt-0 text-truncate">
                                                                 이중구
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <div>
+                                                <p class="mb-1">내용</p>
+                                                <h5 class="mt-0 text-truncate">저는 그렇게 좋은 날씨라고 생각하지 않았습니다.
+                                                그렇게 딱 좋은 날씨도 아니였습니다. 대본 수정 부탁드리겠습니다.</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        <!-- end row -->
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h5 class="header-title mb-3">첨부 파일</h5>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                 <div class="mt-4 mt-md-0">
+                                                    <div class="card border mb-2">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="avatar-sm">
+                                                                        <span class="avatar-title badge-soft-primary text-primary rounded">
+                                                                            ZIP
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="javascript:void(0);" class="text-muted fw-semibold">신세계 대본.zip</a>
+                                                                    <p class="mb-0 font-12">2.3 MB</p>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="javascript:void(0);" class="btn btn-link font-16 text-muted">
+                                                                        <i class="ri-download-2-line"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                    <!-- 복붙해야할부분 -->
-                                                </tbody>
-                                            </table>
+                                                        </div>
+                                                    </div><!-- Preview -->
+                                                    <div class="dropzone-previews mt-2" id="file-previews"></div>
+                                                 </div>
+                                            </div>
+                                        </div>
+                        <!-- file preview template -->
+                        <div class="d-none" id="uploadPreviewTemplate">
+                            <div class="card mb-2 shadow-none border">
+                                <div class="p-2">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+                                        </div>
+                                        <div class="col ps-0">
+                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
+                                            <p class="mb-0" data-dz-size></p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <!-- Button -->
+                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+                                                <i class="fe-x"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- end row -->
-
-                        
-                    </div> <!-- container -->
-
+                    </div> <!-- container-fluid -->
+		                <div class="row">
+		         			<div>
+			                	<div class="p-2">
+				              		<ul class="pager wizard mb-0 list-inline text-end mt-3">
+				             			<li class="previous list-inline-item">
+				                             <!-- 작성화면 전으로 돌아가는 버튼 -->
+											<a href="${path}/main.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+				       					</li>
+				                	</ul>
+				                </div>
+				        	</div>
+						</div>
                 </div> <!-- content -->
-
                 <!-- Footer Start -->
                 <footer class="footer">
                     <div class="container-fluid">
@@ -1526,7 +1578,7 @@
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
                                         <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The languages only differ in their grammar</p>
+                                            <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1678,19 +1730,6 @@
                                 <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
                             </div>
 
-                            <!-- Width -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Width</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="width" value="fluid" id="fluid-check" checked>
-                                <label class="form-check-label" for="fluid-check">Fluid</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="width" value="boxed" id="boxed-check">
-                                <label class="form-check-label" for="boxed-check">Boxed</label>
-                            </div>
-                   
-
                             <!-- Topbar -->
                             <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Topbar</h6>
                             <div class="form-check form-switch mb-1">
@@ -1702,20 +1741,6 @@
                                 <input class="form-check-input" type="checkbox" name="topbar-color" value="light" id="lighttopbar-check">
                                 <label class="form-check-label" for="lighttopbar-check">Light</label>
                             </div>
-
-
-                            <!-- Menu positions -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Menus Positon <small>(Leftsidebar and Topbar)</small></h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="menus-position" value="fixed" id="fixed-check" checked>
-                                <label class="form-check-label" for="fixed-check">Fixed</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="menus-position" value="scrollable" id="scrollable-check">
-                                <label class="form-check-label" for="scrollable-check">Scrollable</label>
-                            </div>
-
 
                             <!-- Left Sidebar-->
                             <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Color</h6>
@@ -1787,18 +1812,14 @@
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- third party js -->
-        <script src="${path}/Admin/dist/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
-        <!-- third party js ends -->
+        <!-- Plugins js -->
+        <script src="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.js"></script>
 
-        <script src="${path}/Admin/dist/assets/js/pages/product-list.init.js"></script>
+        <!-- Init js-->
+        <script src="${path}/Admin/dist/assets/js/pages/form-fileuploads.init.js"></script>
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-        
-    </body>
+ 
+</body>
 </html>

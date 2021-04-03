@@ -1264,7 +1264,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">리스크</h4>
+                                    <h4 class="page-title">리스크 현황</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
@@ -1281,18 +1281,6 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row mb-2">
-                                            <div class="col-sm-6">
-                                                <a href="${path}/main.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="float-sm-end">
-                                                    
-                                                    <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                                    
-                                                </div>
-                                            </div><!-- end col-->
-                                        </div>
                                         <!-- end row -->
                 
                                         <div class="table-responsive">

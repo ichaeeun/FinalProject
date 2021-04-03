@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >	
         <!-- App favicon -->
-        <link rel="shortcut icon" href="../assets/images/favicon.ico">
+        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
 
         
         <!-- Plugins css-->
@@ -94,7 +94,7 @@
                                             <!-- item-->
                                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                                 <div class="d-flex">
-                                                    <img class="d-flex me-2 rounded-circle" src="../assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+                                                    <img class="d-flex me-2 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
                                                     <div>
                                                         <h5 class="m-0 font-14">Erwin E. Brown</h5>
                                                         <span class="font-12 mb-0">UI Designer</span>
@@ -105,7 +105,7 @@
                                             <!-- item-->
                                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                                 <div class="d-flex">
-                                                    <img class="d-flex me-2 rounded-circle" src="../assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+                                                    <img class="d-flex me-2 rounded-circle" src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
                                                     <div>
                                                         <h5 class="m-0 font-14">Jacob Deo</h5>
                                                         <span class="font-12 mb-0">Developer</span>
@@ -146,19 +146,19 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/github.png" alt="Github">
+                                                <img src="${path}/Admin/dist/assets/images/brands/github.png" alt="Github">
                                                 <span>GitHub</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/dribbble.png" alt="dribbble">
+                                                <img src="${path}/Admin/dist/assets/images/brands/dribbble.png" alt="dribbble">
                                                 <span>Dribbble</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/slack.png" alt="slack">
+                                                <img src="${path}/Admin/dist/assets/images/brands/slack.png" alt="slack">
                                                 <span>Slack</span>
                                             </a>
                                         </div>
@@ -167,19 +167,19 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/g-suite.png" alt="G Suite">
+                                                <img src="${path}/Admin/dist/assets/images/brands/g-suite.png" alt="G Suite">
                                                 <span>G Suite</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/bitbucket.png" alt="bitbucket">
+                                                <img src="${path}/Admin/dist/assets/images/brands/bitbucket.png" alt="bitbucket">
                                                 <span>Bitbucket</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#">
-                                                <img src="../assets/images/brands/dropbox.png" alt="dropbox">
+                                                <img src="${path}/Admin/dist/assets/images/brands/dropbox.png" alt="dropbox">
                                                 <span>Dropbox</span>
                                             </a>
                                         </div>
@@ -191,28 +191,28 @@
     
                         <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
                             <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="../assets/images/flags/us.jpg" alt="user-image" height="14">
+                                <img src="${path}/Admin/dist/assets/images/flags/us.jpg" alt="user-image" height="14">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="../assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    <img src="${path}/Admin/dist/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="../assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    <img src="${path}/Admin/dist/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="../assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    <img src="${path}/Admin/dist/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                                 </a>
     
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">
-                                    <img src="../assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    <img src="${path}/Admin/dist/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                                 </a>
     
                             </div>
@@ -251,7 +251,7 @@
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="../assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
                                         <p class="notify-details">Mario Drummond</p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Hi, How are you? What about our next meeting</small>
@@ -261,7 +261,7 @@
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="../assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
                                         <p class="notify-details">Karen Robinson</p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Wow ! this admin looks good and awesome design</small>
@@ -311,7 +311,7 @@
     
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                 <span class="pro-user-name ms-1">
                                     Nik Patel <i class="mdi mdi-chevron-down"></i> 
                                 </span>
@@ -369,21 +369,21 @@
                     <div class="logo-box">
                         <a href="index.html" class="logo logo-dark text-center">
                             <span class="logo-sm">
-                                <img src="../assets/images/logo-sm-dark.png" alt="" height="24">
+                                <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
                                 <!-- <span class="logo-lg-text-light">Minton</span> -->
                             </span>
                             <span class="logo-lg">
-                                <img src="../assets/images/logo-dark.png" alt="" height="20">
+                                <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
                                 <!-- <span class="logo-lg-text-light">M</span> -->
                             </span>
                         </a>
 
                         <a href="index.html" class="logo logo-light text-center">
                             <span class="logo-sm">
-                                <img src="../assets/images/logo-sm.png" alt="" height="24">
+                                <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
                             </span>
                             <span class="logo-lg">
-                                <img src="../assets/images/logo-light.png" alt="" height="20">
+                                <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
                             </span>
                         </a>
                     </div>
@@ -564,21 +564,21 @@
                 <div class="logo-box">
                     <a href="index.html" class="logo logo-dark text-center">
                         <span class="logo-sm">
-                            <img src="../assets/images/logo-sm-dark.png" alt="" height="24">
+                            <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
                             <!-- <span class="logo-lg-text-light">Minton</span> -->
                         </span>
                         <span class="logo-lg">
-                            <img src="../assets/images/logo-dark.png" alt="" height="20">
+                            <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
                             <!-- <span class="logo-lg-text-light">M</span> -->
                         </span>
                     </a>
 
                     <a href="index.html" class="logo logo-light text-center">
                         <span class="logo-sm">
-                            <img src="../assets/images/logo-sm.png" alt="" height="24">
+                            <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
                         </span>
                         <span class="logo-lg">
-                            <img src="../assets/images/logo-light.png" alt="" height="20">
+                            <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
                         </span>
                     </a>
                 </div>
@@ -587,7 +587,7 @@
 
                     <!-- User box -->
                     <div class="user-box text-center">
-                        <img src="../assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
+                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"
                             class="rounded-circle avatar-md">
                         <div class="dropdown">
                             <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block"
@@ -1366,7 +1366,7 @@
                                                     <ul class="pager wizard mb-0 list-inline text-end mt-3">
                                                         <li class="previous list-inline-item">
                                                         <!-- 작성화면 전으로 돌아가는 버튼 -->
-                                                            <button type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</button>
+                                                            <a href="${path}/main.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
                                                         </li>
                                                         <li class="next list-inline-item">
                                                             <button type="button" class="btn btn-success">파일 첨부<i class="mdi mdi-arrow-right ms-1"></i></button>
@@ -1565,7 +1565,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="../assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
@@ -1580,7 +1580,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="../assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
@@ -1595,7 +1595,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="../assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
@@ -1614,7 +1614,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="../assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
@@ -1629,7 +1629,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="../assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
@@ -1644,7 +1644,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="../assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
@@ -1659,7 +1659,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="../assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
@@ -1674,7 +1674,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="../assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
@@ -1689,7 +1689,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="../assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>

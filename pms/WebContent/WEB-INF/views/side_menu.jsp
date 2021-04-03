@@ -59,7 +59,7 @@
                 </li>
                 </c:if>
  				<li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                    <a href="${path}/main.do?method=riskBoard" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
                         <i class="ri-profile-line"></i>
                         <span> 리스크 현황 </span>
                     </a>
@@ -108,7 +108,7 @@
 	                                <a href="ecommerce-products.html">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="ecommerce-products-grid.html">리스크 요청</a>
+	                                <a href="${path}/main.do?method=riskRequest">리스크 요청</a>
 	                            </li>
 	                            
 	                        </ul>
@@ -158,7 +158,7 @@
                                 <a href="ecommerce-products.html">테스크 요청</a>
                             </li>
                             <li>
-                                <a href="ecommerce-products-grid.html">리스크 요청</a>
+                                <a href="${path}/main.do?method=riskRequest">리스크 요청</a>
                             </li>
                             
                         </ul>
