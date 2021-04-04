@@ -69,9 +69,8 @@
                                     <h4 class="page-title">리스크 현황</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Product List</li>
+                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
+                                            <li class="breadcrumb-item active">리스크 요청</li>
                                         </ol>
                                     </div>
                                 </div>

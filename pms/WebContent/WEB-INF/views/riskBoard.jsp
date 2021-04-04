@@ -68,9 +68,8 @@
                                     <h4 class="page-title">리스크</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Product List</li>
+                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
+                                            <li class="breadcrumb-item active">리스크 보드</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -82,6 +81,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
+                            			<c:if test="${mem.auth == 'wk'}">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
                                                 <a href="${path}/main.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
@@ -94,6 +94,7 @@
                                                 </div>
                                             </div><!-- end col-->
                                         </div>
+                          				</c:if>
                                         <!-- end row -->
                 
                                         <div class="table-responsive">
