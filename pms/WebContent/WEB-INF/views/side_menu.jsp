@@ -59,7 +59,7 @@
                 </li>
                 </c:if>
  				<li>
-                    <a href="${path}/main.do?method=riskBoard" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                    <a href="${path}/main.do?method=riskBoard"aria-expanded="false" aria-controls="sidebarEmail">
                         <i class="ri-profile-line"></i>
                         <span> 리스크 현황 </span>
                     </a>

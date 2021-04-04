@@ -52,7 +52,7 @@ public class DashBoardController {
 
 	
 	// 추가 코드(장승태)(시작)
-	// http://localhost:3030/pms/main.do?method=done_project
+	// http://localhost:7080/pms/main.do?method=done_project
 	@RequestMapping(params="method=done_project")
 	public String pms_projectList(@ModelAttribute("sch") pms_projectSch sch, 
 			Model d, HttpServletRequest request) {
