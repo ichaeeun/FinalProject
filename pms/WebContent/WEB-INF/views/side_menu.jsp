@@ -14,13 +14,178 @@
 	
             <ul id="side-menu">
                 <li class="menu-title">Navigation</li>
+                <c:if test="${mem.auth == 'ceo'}">
+                <li>
+                	<a href="${path }/main.do?method=main">
+                        <span> Dashboards </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#sidebarTasks"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                        <span> 프로젝트 </span>  
+                    </a>
+                    <div class="collapse" id="sidebarTasks">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+		                           <span id="list"> 진행 프로젝트 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+                           			<span> 완료 프로젝트 </span>
+                       			</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+ 				<li>
+                    <a href="${path }/manpower.do?method=contacts_list">
+                        <span> 인력 현황 </span>
+                    </a>
+                </li>  
+ 				<li>
+                    <a href="${path }/main.do?method=riskBoard">
+                        <span> 리스크 현황 </span>
+                    </a>
+                </li>                                              
+                </c:if>
+                
+                <c:if test="${mem.auth == 'hp'}">
+                <li>
+                	<a href="${path }/main.do?method=main">
+                        <span> Dashboards </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#sidebarTasks"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                        <span> 프로젝트 </span>  
+                    </a>
+                    <div class="collapse" id="sidebarTasks">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+		                           <span id="list"> 진행 프로젝트 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+                           			<span> 완료 프로젝트 </span>
+                       			</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+ 				<li>
+                    <a href="${path }/manpower.do?method=contacts_list">
+                        <span> 인력 현황 </span>
+                    </a>
+                </li>  
+ 				<li>
+                    <a href="${path }/main.do?method=riskBoard">
+                        <span> 리스크 현황 </span>
+                    </a>
+                </li>                  
+                </c:if>
+                
+                <c:if test="${mem.auth == 'pm' }">
+                <li>
+                    <a href="#sidebarTasks"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                        <span> 프로젝트 </span>  
+                    </a>
+                    <div class="collapse" id="sidebarTasks">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+		                           <span id="list"> 진행 프로젝트 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+                           			<span> 완료 프로젝트 </span>
+                       			</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+ 				<li>
+                    <a href="${path }/manpower.do?method=contacts_list">
+                        <span> 인력 현황 </span>
+                    </a>
+                </li> 
+	                <li>
+	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
+	                        <span> 요청 관리 </span>
+	                        <span class="menu-arrow"></span>
+	                    </a>
+	                    <div class="collapse" id="sidebarEcommerce">
+	                        <ul class="nav-second-level">
+	                            <li>
+	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
+	                            </li>
+	                            <li>
+	                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
+	                            </li>
+	                        </ul>
+	                    </div>
+	                </li>                                                
+                </c:if>
+                
+                <c:if test="${mem.auth == 'wk' }">
+                <li>
+                    <a href="${path }/task.do?method=list">
+                        <span> My Task </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#sidebarTasks"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                        <span> 프로젝트 </span>  
+                    </a>
+                    <div class="collapse" id="sidebarTasks">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+		                           <span id="list"> 진행 프로젝트 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/main.do?method=done_project">
+                           			<span> 완료 프로젝트 </span>
+                       			</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+ 	                <li>
+	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
+	                        <span> 요청 현황 </span>
+	                        <span class="menu-arrow"></span>
+	                    </a>
+	                    <div class="collapse" id="sidebarEcommerce">
+	                        <ul class="nav-second-level">
+	                            <li>
+	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
+	                            </li>
+	                            <li>
+	                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
+	                            </li>
+	                        </ul>
+	                    </div>
+	                </li>                  
+                </c:if>
+                
+                
+                
+                <!--
 				<c:if test="${mem.auth == 'ceo' || mem.auth == 'hp'}">
                 <li>
-                	<a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                	<a href="${path }/main.do?method=main" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
                     	<i class="ri-dashboard-line"></i>
                         <span> Dashboards </span>
                     </a>
                 </li>
+                </c:if>
+
                 <li>
                     <a href="#sidebarTasks" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                         <i class="ri-task-line"></i>
@@ -30,36 +195,31 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                            <span> 완료 프로젝트 </span>
                        			</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <c:if test="${mem.auth == 'ceo'}">
+                
+                <c:if test="${mem.auth == 'ceo' || mem.auth == 'hr' || mem.auth == 'pm'}">
  				<li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                    <a href="${path }/main.do?method=main" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
                         <i class="ri-shield-user-line"></i>
                         <span> 인력 현황 </span>
                     </a>
                 </li>
                 </c:if>
-                <c:if test="${mem.auth == 'hp'}">
+                
+                <c:if test="${mem.auth == 'ceo' || mem.auth == 'hr'}">
  				<li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
-                        <i class="ri-shield-user-line"></i>
-                        <span> 인력 관리 </span>
-                    </a>
-                </li>
-                </c:if>
- 				<li>
-                    <a href="${path}/main.do?method=riskBoard" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                    <a href="${path }/main.do?method=riskBoard" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
                         <i class="ri-profile-line"></i>
                         <span> 리스크 현황 </span>
                     </a>
@@ -76,13 +236,13 @@
 	                    <div class="collapse" id="sidebarTasks">
 	                    	<ul class="nav-second-level">
 	                            <li>
-	                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+	                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
 	                           <span id="list"> 진행 프로젝트 </span>
 	                       </a>
 	                       	
 	                            </li>
 	                            <li>
-	                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+	                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
 	                           <span> 완료 프로젝트 </span>
 	                       </a>
 	                            </li>
@@ -91,7 +251,7 @@
 	                    </div>
 	                </li>
 	    			<li>
-	                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+	                    <a href="${path }/manpower.do?method=contacts_list" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
 	                        <i class="ri-shield-user-line"></i>
 	                        <span> 인력 관리 </span>
 	                    </a>
@@ -105,10 +265,10 @@
 	                    <div class="collapse" id="sidebarEcommerce">
 	                        <ul class="nav-second-level">
 	                            <li>
-	                                <a href="ecommerce-products.html">테스크 요청</a>
+	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path}/main.do?method=riskRequest">리스크 요청</a>
+	                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
 	                            </li>
 	                            
 	                        </ul>
@@ -118,7 +278,7 @@
                 
                 <c:if test="${mem.auth == 'wk'}">
                 <li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
+                    <a href="${path }/task.do?method=list" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
                         <i class="ri-task-line"></i>
                         <span> My Task </span>
                     </a>
@@ -132,13 +292,13 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                            <span id="list"> 진행 프로젝트 </span>
                        </a>
                        	
                             </li>
                             <li>
-                                <a href="#sidebarTasks2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
+                                <a href="${path }/main.do?method=done_project" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                            <span> 완료 프로젝트 </span>
                        </a>
                             </li>
@@ -155,16 +315,17 @@
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="ecommerce-products.html">테스크 요청</a>
+                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
                             </li>
                             <li>
-                                <a href="${path}/main.do?method=riskRequest">리스크 요청</a>
+                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
                             </li>
                             
                         </ul>
                     </div>
                 </li>
                 </c:if>
+                  -->  
             </ul>
 
         </div>      

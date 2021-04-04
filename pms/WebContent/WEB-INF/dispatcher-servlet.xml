@@ -59,7 +59,7 @@
     3. 사용할 DAO 인터페이스 폴드 위치 지정..
      -->
      <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="pms.dashboard.dao"></property>
+        <property name="basePackage" value="pms.dao"></property>
      </bean>
      
      

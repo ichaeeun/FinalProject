@@ -51,7 +51,7 @@
 	
 	                            <div class="custom-accordion">
 	                                <div class="mt-4">
-	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">All Tasks <span class="text-muted">(08)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
+	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">오늘의 할일 <span class="text-muted">(08)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
 	                                    <div class="collapse show" id="taskcollapse1">
 	                                        <div class="table-responsive mt-3">
 	                                            <table class="table table-centered table-nowrap table-borderless table-sm">
@@ -222,7 +222,7 @@
 	                                </div>
 	
 	                                <div class="mt-4">
-	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse2" class="text-dark d-block" data-bs-toggle="collapse">My Tasks <span class="text-muted">(05)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
+	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse2" class="text-dark d-block" data-bs-toggle="collapse">마감임박 <span class="text-muted">(05)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
 	                                    <div class="collapse show" id="taskcollapse2">
 	                                        <div class="table-responsive mt-3">
 	                                            <table class="table table-centered table-nowrap table-borderless table-sm">

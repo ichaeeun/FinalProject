@@ -1,62 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import ="java.util.*"
+    import="java.util.*"
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="form"
+		uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>완료한 프로젝트 페이지</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
-<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
-<!-- App favicon -->
-<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
-<!-- Plugin css -->
-<link href="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.css" rel="stylesheet" type="text/css" />
-<link href="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.css" rel="stylesheet" type="text/css" />
-<link href="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.css" rel="stylesheet" type="text/css" />
-<link href="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.css" rel="stylesheet" type="text/css" />
-<link href="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.css" rel="stylesheet" type="text/css" />
+<title>Insert title here</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
+		<!-- App css -->
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<!-- icons -->
+		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-	
-<!-- App css -->
-<link href="${path}/Admin/dist/assets/css/default/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
-<link href="${path}/Admin/dist/assets/css/default/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-<link href="${path}/Admin/dist/assets/css/default/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-
-<!-- icons -->
-<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
-<script src="${path}/a00_com/jquery.min.js"></script>
-<script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
-<%--
- 
- 
---%>
 
-   $(document).ready(function(){
-      
-   });
-   function goPage(page){
+$(document).ready(function(){
+   
+});
+function goPage(page){
 		$("[name=curPage]").val(page);
 		$("form").submit();
 	};
 </script>
 </head>
+
 <body class="loading">
 
         <!-- Begin page -->
@@ -86,13 +68,13 @@
                                     <div class="card-body">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
-                                                <a href="#" class="btn btn-info mb-2">오버뷰</a>
-                                                <a href="#" class="btn btn-info mb-2">대시보드</a>
-                                                <a href="#" class="btn btn-info mb-2">간트</a>
-                                                <a href="#" class="btn btn-info mb-2">캘린더</a>
-                                                <a href="#" class="btn btn-info mb-2">태스크리스트</a>
-                                                <a href="#" class="btn btn-info mb-2">활동로그</a>
-                                                <a href="#" class="btn btn-info mb-2">리스크</a>
+                                                <a href="${path }/task.do?method=view" class="btn btn-info mb-2">오버뷰</a>
+                                                <a href="${path}/" class="btn btn-info mb-2">대시보드</a>
+                                                <a href="${path}/main.do?method=gantt" class="btn btn-info mb-2">간트</a>
+                                                <a href="${path}/main.do?method=gantt" class="btn btn-info mb-2">캘린더</a>
+                                                <a href="${path}/task.do?method=list" class="btn btn-info mb-2">태스크리스트</a>
+                                                <a href="${path}/task.do?method=log" class="btn btn-info mb-2">활동로그</a>
+                                                <a href="${path}/main.do?method=riskBoard" class="btn btn-info mb-2">리스크</a>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="float-sm-end">
