@@ -9,20 +9,10 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-=======
-<html lang="en">
-	<head>
-        <meta charset="utf-8" />
-        <c:if test="${mem.auth == 'ceo' }"><title>최고경영자</title></c:if>
-		<c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
-		<c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
-		<c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
->>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -30,19 +20,10 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
 		<!-- App css -->
-<<<<<<< HEAD
 		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
 		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
 		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-=======
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-
->>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 		<!-- icons -->
 		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
@@ -54,20 +35,9 @@
 
         <!-- Begin page -->
         <div id="wrapper">
-<<<<<<< HEAD
             <jsp:include page="top.jsp" flush="false"/>
             <!-- ========== Left Sidebar Start ========== -->         
             <jsp:include page="side.jsp" flush="false"/>
-=======
-
-            <!-- Topbar Start -->
-			<jsp:include page="top.jsp"></jsp:include>
-            <!-- end Topbar -->
-
-            <!-- ========== Left Sidebar Start ========== -->
-			<jsp:include page="side.jsp"></jsp:include>
-            <!-- Left Sidebar End -->
->>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
@@ -86,9 +56,9 @@
                                     <h4 class="page-title">리스크 작성 페이지</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
-                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=riskBoard">리스크 보드</a></li>
-                                            <li class="breadcrumb-item active">리스크 작성</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                                            <li class="breadcrumb-item active">Create Product</li>
                                         </ol>
                                     </div>
                                 </div>

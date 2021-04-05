@@ -124,7 +124,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
+	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -167,9 +167,9 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskRequest">리스크 요청</a>
+	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
 	                            </li>
-	                        </ul>
+	                        </ul>s
 	                    </div>
 	                </li>                  
                 </c:if>
@@ -219,18 +219,7 @@
                 
                 <c:if test="${mem.auth == 'ceo' || mem.auth == 'hr'}">
  				<li>
-<<<<<<< HEAD
                     <a href="${path }/main.do?method=riskBoard" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
-=======
-                    <a href="#sidebarEmail" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEmail">
-                        <i class="ri-shield-user-line"></i>
-                        <span> 인력 관리 </span>
-                    </a>
-                </li>
-                </c:if>
- 				<li>
-                    <a href="${path}/main.do?method=riskBoard"aria-expanded="false" aria-controls="sidebarEmail">
->>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
                         <i class="ri-profile-line"></i>
                         <span> 리스크 현황 </span>
                     </a>
