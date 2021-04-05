@@ -79,6 +79,7 @@
         <div id="wrapper">
 
             <jsp:include page="top.jsp" flush="false"/>
+           
 
             <!-- ========== Left Sidebar Start ========== -->
             
@@ -96,9 +97,56 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-
+						<div class="row">
+							<div class="col-xl-12">
+								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
+						            <li class="nav-item">
+						                      <a href="${path }/task.do?method=view"  class="nav-link">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+						                    <span class="d-none d-sm-inline-block">오버뷰</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="${path}/task.do?method=list" class="nav-link active">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="#"  class="nav-link">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+						                    <span class="d-none d-sm-inline-block">대시보드</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="${path}/main.do?method=gantt"  class="nav-link">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
+						                    <span class="d-none d-sm-inline-block">간트차트</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="#"  class="nav-link">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                    <span class="d-none d-sm-inline-block">캘린더</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="${path}/task.do?method=log"  class="nav-link">
+						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                    <span class="d-none d-sm-inline-block">활동로그</span>
+						                </a>
+						            </li>
+						            <li class="nav-item">
+						                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+						                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                           <span class="d-none d-sm-inline-block">리스크</span>
+						                </a>
+						            </li>
+						         </ul> 
+							</div>
+						</div>
                         <!-- start page title -->
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
                                     <h4 class="page-title"><a href="#"><button class="btn btn-purple btn-sm">PMS Project</button></a>&nbsp;&nbsp;&nbsp;Task Detail</h4>
@@ -111,13 +159,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>     
+                        </div>      -->
                         <!-- end page title --> 
 
                         <div class="row">
                             <div class="col-xl-8">
                                 <div class="card">
                                     <div class="card-body">
+                                    <h4 class="page-title">Task Detail&nbsp;&nbsp;&nbsp;<a href="${path }/task.do?method=view"><button class="btn btn-soft-primary btn-sm">${detail.project_name }</button></a></h4>
                                         <div class="dropdown float-end">
                                             <a href="#" class="dropdown-toggle arrow-none text-muted"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,17 +198,17 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <p class="text-primary" id="taskId1">#MN2048</p>
-                                        <span class="badge badge-soft-danger p-1" id="taskPriority">High</span>
-                                        <h4 class="mb-1">태스크 세부사항 화면 구현</h4>
+                                        <p class="text-primary" id="taskId1">#${detail.task_no }</p>
+                                        <span class="badge badge-soft-danger p-1" id="taskPriority">${detail.task_priority }</span>
+                                        <h4 class="mb-1">${detail.task_name }</h4>
                                         
                                         <div class="mt-4">
                                         <h5>Description:</h5>
-                                                <p class="text-muted" id="taskContent">태스크리스트에서 각 태스크 클릭 시 나오는 세부사항 화면을 구현한다. </p>
+                                                <p class="text-muted" id="taskContent">${detail.task_content } </p>
                                         </div>
                                         <div class="text-muted">
                                              <div class="row">
-                                                <div class="col-lg-4 col-sm-6">
+                                                <div class="col-lg-3 col-sm-6">
                                                     <div class="d-flex align-items-start mt-3">
                                                         <div class="me-2 align-self-center">
                                                             <i class="ri-hashtag h2 m-0 text-muted"></i>
@@ -167,12 +216,12 @@
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">태스크ID</p>
                                                             <h5 class="mt-0 text-truncate" id="taskId2">
-                                                                #MN2048
+                                                                ${detail.task_no }
                                                             </h5>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-sm-6">
+                                                <div class="col-lg-3 col-sm-6">
                                                     <div class="d-flex align-items-start mt-3">
                                                         <div class="me-2 align-self-center">
                                                             <img src="${path }/Admin/dist/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle">
@@ -180,20 +229,33 @@
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">담당자</p>
                                                             <h5 class="mt-0 text-truncate" id="pname">
-                                                                홍길동
+                                                                ${detail.name }
                                                             </h5>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-sm-6">
+                                                <div class="col-lg-3 col-sm-6">
                                                     <div class="d-flex align-items-start mt-3">
                                                         <div class="me-2 align-self-center">
                                                             <i class="ri-calendar-event-line h2 m-0 text-muted"></i>
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1">기한</p>
+                                                            <p class="mb-1">시작일</p>
                                                             <h5 class="mt-0 text-truncate" id="dueDate">
-                                                                2021-04-10 
+                                                                ${detail.startdte }
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div class="d-flex align-items-start mt-3">
+                                                        <div class="me-2 align-self-center">
+                                                            <i class="ri-calendar-event-line h2 m-0 text-muted"></i>
+                                                        </div>
+                                                        <div class="flex-1 overflow-hidden">
+                                                            <p class="mb-1">종료일</p>
+                                                            <h5 class="mt-0 text-truncate" id="dueDate">
+                                                                ${detail.enddte }
                                                             </h5>
                                                         </div>
                                                     </div>
