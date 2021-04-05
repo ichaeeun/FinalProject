@@ -27,7 +27,9 @@
 
 		<!-- icons -->
 		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<script>
 
+</script>
     </head>
 
     <body class="loading">
@@ -78,9 +80,11 @@
                                             <div class="card-body">
                                                 <!-- cta -->
                                                 <div class="row">
+                                                	<c:if test="${mem.auth == 'pm' }">
                                                     <div class="col-sm-3">
                                                         <a href="#" class="btn btn-primary waves-effect waves-light"><i class='fe-plus me-1'></i>할일 추가</a>
                                                     </div>
+                                                    </c:if>
                                                     <div class="col-sm-9">
                                                         <div class="float-sm-end mt-3 mt-sm-0">
                                                             <div class="d-flex align-items-start flex-wrap">
@@ -138,7 +142,7 @@
                                                                                     <label class="form-check-label" for="tasktodayCheck01">#MN2045</label>
                                                                                 </div>
                                                                             </td>
-                                                                            <td>IOS App home page</td>
+                                                                            <td onclick="location.href='${path}/taskdetail.do?method=list'">IOS App home page</td>
                                                                             <td>
                                                                                 <div>
                                                                                     <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Houston Fritz" />

@@ -85,9 +85,11 @@
                         <!-- end page title --> 
 
                         <div class="row mb-2">
+                        	<c:if test="${mem.auth == 'hp' }">
                             <div class="col-sm-4">
                                 <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
                             </div>
+                            </c:if>
                             <div class="col-sm-8">
                                 <div>
                                     <form class="d-flex align-items-start flex-wrap justify-content-sm-end">

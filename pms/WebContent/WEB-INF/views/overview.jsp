@@ -43,7 +43,7 @@
         <div id="wrapper">
 
             <!-- Topbar Start -->
-            <jsp:include page="top.jsp"></jsp:include>
+             <jsp:include page="top.jsp"></jsp:include>
             <!-- end Topbar -->
 
             <!-- ========== Left Sidebar Start ========== -->
@@ -57,10 +57,10 @@
             <div class="content-page">
                 <div class="content">
 
-                    <!-- Start Content-->
+                    <!-- Start Content -->
                     <div class="container-fluid">
 
-                        <!-- start page title -->
+                    <!--  start page title -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </div>     
-                        <!-- end page title --> 
+                        <!-- end page title  -->
 
                         <div class="row">
                             <div class="col-12">
@@ -853,7 +853,7 @@
 
                 </div> <!-- content -->
 
-                <!-- Footer Start -->
+             <!-- Footer Start -->
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="row">
@@ -905,4 +905,27 @@
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
         
     </body>
+</html>
+						</div>
+					</div>
+		<!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="javascript:void(0);">About Us</a>
+                            <a href="javascript:void(0);">Help</a>
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+	</div>
+	</body>
 </html>

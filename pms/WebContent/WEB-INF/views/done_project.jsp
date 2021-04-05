@@ -69,9 +69,9 @@ function goPage(page){
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
                                                 <a href="${path }/task.do?method=view" class="btn btn-info mb-2">오버뷰</a>
-                                                <a href="${path}/" class="btn btn-info mb-2">대시보드</a>
+                                                <%-- <a href="${path}/" class="btn btn-info mb-2">대시보드</a> --%>
                                                 <a href="${path}/main.do?method=gantt" class="btn btn-info mb-2">간트</a>
-                                                <a href="${path}/main.do?method=gantt" class="btn btn-info mb-2">캘린더</a>
+                                                <%-- <a href="${path}/main.do?method=data" class="btn btn-info mb-2">캘린더</a> --%>
                                                 <a href="${path}/task.do?method=list" class="btn btn-info mb-2">태스크리스트</a>
                                                 <a href="${path}/task.do?method=log" class="btn btn-info mb-2">활동로그</a>
                                                 <a href="${path}/main.do?method=riskBoard" class="btn btn-info mb-2">리스크</a>

@@ -12,357 +12,855 @@
 	<body> 
 	    <div class="row">
 	        <div class="col-lg-12">
-	            <div class="row">
-	                <div class="col">
-	                    <div class="card">
-	                        <div class="card-body">
-	                            <!-- cta -->
-	                            <div class="row">
-	                                <div class="col-sm-3">
-	                                    <a href="#" class="btn btn-primary waves-effect waves-light"><i class='fe-plus me-1'></i>Add New</a>
-	                                </div>
-	                                <div class="col-sm-9">
-	                                    <div class="float-sm-end mt-3 mt-sm-0">
-	                                        <div class="d-flex align-items-start flex-wrap">
-	                                            <div class="mb-3 mb-sm-0 me-sm-2">
-	                                                <form>
-	                                                    <div class="position-relative">
-	                                                        <input type="text" class="form-control" placeholder="Search...">
-	                                                    </div>
-	                                                </form>
-	                                            </div>
-	                                            <div class="dropdown">
-	                                                <button class="btn btn-light dropdown-toggle" type="button"
-	                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-	                                                    aria-expanded="false">
-	                                                    <i class="mdi mdi-filter-variant"></i>
-	                                                </button>
-	                                                <div class="dropdown-menu dropdown-menu-end">
-	                                                    <a class="dropdown-item" href="#">Due Date</a>
-	                                                    <a class="dropdown-item" href="#">Added Date</a>
-	                                                    <a class="dropdown-item" href="#">Assignee</a>
-	                                                </div>
-	                                            </div>
-	                                        </div>
-	                                        
-	                                    </div>
-	                                </div>
-	                            </div>
-	
-	                            <div class="custom-accordion">
-	                                <div class="mt-4">
-	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">All Tasks <span class="text-muted">(08)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
-	                                    <div class="collapse show" id="taskcollapse1">
-	                                        <div class="table-responsive mt-3">
-	                                            <table class="table table-centered table-nowrap table-borderless table-sm">
-	                                                <thead class="table-light">
-	                                                    <tr class="">
-	                                                        <th scope="col">
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="tasktodayCheck">
-	                                                                <label class="form-check-label" for="tasktodayCheck">Task ID</label>
-	                                                            </div>
-	                                                        </th>
-	                                                        <th scope="col">Tasks</th>
-	                                                        <th scope="col">Assign to</th>
-	                                                        <th scope="col">Due Date</th>
-	                                                        <th scope="col">Task priority</th>
-	                                                        <th scope="col" style="width: 85px;">Action</th>
-	                                                    </tr>
-	                                                </thead>
-	                                                <tbody>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="tasktodayCheck01">
-	                                                                <label class="form-check-label" for="tasktodayCheck01">#MN2045</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>IOS App home page</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Houston Fritz" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Today 10am</td>
-	                                                        <td><span class="badge badge-soft-danger p-1">High</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="tasktodayCheck02">
-	                                                                <label class="form-check-label" for="tasktodayCheck02">#MN2044</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Topnav layout design</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Glenn Lynch" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Today 04pm</td>
-	                                                        <td><span class="badge badge-soft-info p-1">Medium</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="tasktodayCheck03">
-	                                                                <label class="form-check-label" for="tasktodayCheck03">#MN2043</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Invite user to a project</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Robert Hebert" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Today 02pm</td>
-	                                                        <td><span class="badge badge-soft-danger p-1">High</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="tasktodayCheck04">
-	                                                                <label class="form-check-label" for="tasktodayCheck04">#MN2042</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Write a release note</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Darnell McCormick" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Today 06pm</td>
-	                                                        <td><span class="badge badge-soft-success p-1">Low</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                </tbody>
-	                                            </table>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	
-	                                <div class="mt-4">
-	                                    <h5 class="position-relative mb-0"><a href="#taskcollapse2" class="text-dark d-block" data-bs-toggle="collapse">My Tasks <span class="text-muted">(05)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
-	                                    <div class="collapse show" id="taskcollapse2">
-	                                        <div class="table-responsive mt-3">
-	                                            <table class="table table-centered table-nowrap table-borderless table-sm">
-	                                                <thead class="table-light">
-	                                                    <tr class="">
-	                                                        <th scope="col">
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="taskupcomingCheck">
-	                                                                <label class="form-check-label" for="taskupcomingCheck">Task ID</label>
-	                                                            </div>
-	                                                        </th>
-	                                                        <th scope="col">Tasks</th>
-	                                                        <th scope="col">Assign to</th>
-	                                                        <th scope="col">Due Date</th>
-	                                                        <th scope="col">Task priority</th>
-	                                                        <th scope="col" style="width: 85px;">Action</th>
-	                                                    </tr>
-	                                                </thead>
-	                                                <tbody>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="taskupcomingCheck01">
-	                                                                <label class="form-check-label" for="taskupcomingCheck01">#MN2050</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Enable analytics tracking</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Donald Mealy" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>May 27, 2020</td>
-	                                                        <td><span class="badge badge-soft-danger p-1">High</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="taskupcomingCheck02">
-	                                                                <label class="form-check-label" for="taskupcomingCheck02">#MN2049</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Kanban board design</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Shelton Garza" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>No Due Date</td>
-	                                                        <td><span class="badge badge-soft-info p-1">Medium</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>
-	                                                            <div class="form-check">
-	                                                                <input class="form-check-input" type="checkbox" id="taskupcomingCheck03">
-	                                                                <label class="form-check-label" for="taskupcomingCheck03">#MN2048</label>
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>Code HTML email template</td>
-	                                                        <td>
-	                                                            <div>
-	                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" lt="image" class="avatar-sm img-thumbnail rounded-circle" title="Adrian Key" />
-	                                                            </div>
-	                                                        </td>
-	                                                        <td>June 08, 2020</td>
-	                                                        <td><span class="badge badge-soft-danger p-1">High</span></td>
-	                                                        <td>
-	                                                            <ul class="list-inline table-action m-0">
-	                                                                <li class="list-inline-item"> 
-	                                                                    <a href="javascript:void(0);" class="action-icon px-1"> <i class="mdi mdi-square-edit-outline"></i></a>
-	                                                                </li>
-	                                                                <li class="list-inline-item"> 
-	                                                                    <div class="dropdown">
-	                                                                        <a class="action-icon px-1 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                                            <i class="mdi mdi-dots-vertical"></i>
-	                                                                        </a>
-	                                                                    
-	                                                                        <div class="dropdown-menu dropdown-menu-end">
-	                                                                        <a class="dropdown-item" href="#">Action</a>
-	                                                                        <a class="dropdown-item" href="#">Another action</a>
-	                                                                        <a class="dropdown-item" href="#">Something else here</a>
-	                                                                        </div>
-	                                                                    </div>
-	                                                                </li>
-	                                                            </ul>
-	                                                        </td>
-	                                                    </tr>
-	                                                </tbody>
-	                                            </table>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	
-	                            </div>
-	                            
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+                       <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="project-body">
+                                                    <div class="py-1">
+                                                        <i class="fe-archive font-24"></i>
+                                                        <h3 class="text-warning">프로젝트 명</h3>
+                                                        <p class="text-uppercase mb-1 font-13 fw-medium">
+                                                        프로젝트 관리 소프트웨어는 리소스 도구를 계획, 조직, 관리하는 것을 도와주고 리소스 추산치를 만드는 소프트웨어이다.<br>
+                                                        프로젝트 관리 시스템은 프로젝트의 정량적인 성과 및 진행 지표를 체계적으로 관리하기 위한 것이다. 
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100 table01" cellspacing="0" id="tickets-table">
+                                            <thead class="bg-light">
+                                            <tr>
+                                                <th class="fw-medium">ID</th>
+                                                <th class="fw-medium">팀원명</th>
+                                                <th class="fw-medium">태스크</th>
+                                                <th class="fw-medium">책임자</th>
+                                                <th class="fw-medium">중요도</th>
+                                                <th class="fw-medium">상태</th>
+                                                <th class="fw-medium">생성일</th>
+                                                <th class="fw-medium">마감기한</th>
+                                                <th class="fw-medium">Action</th>
+                                            </tr>
+                                            </thead>
+    
+                                            <tbody class="font-14">
+                                                <tr>
+                                                    <td><b>#1256</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">George A. Lianes</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Support for theme
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Low</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        2017/04/28
+                                                    </td>
+    
+                                                    <td>
+                                                        2017/04/28
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#2542</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Jose D. Delacruz</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        New submission on your website
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-warning">Medium</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Closed</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        2008/04/25
+                                                    </td>
+    
+                                                    <td>
+                                                        2008/04/25
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#320</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Phyllis K. Maciel</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Verify your new email address!
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        2017/04/20
+                                                    </td>
+    
+                                                    <td>
+                                                        2017/04/25
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#1254</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Margeret V. Ligon</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Your application has been received!
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Closed</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>태스크 할당</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>닫기</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>팀원 제거</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#1020</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Erwin E. Brown</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        A new rating has been received
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-warning">Medium</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Closed</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        2013/08/11
+                                                    </td>
+    
+                                                    <td>
+                                                        2013/08/30
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                               <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>태스크 할당</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>닫기</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>팀원 제거</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#854</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">William L. Trent</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Your Profile has been accepted
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#9501</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Amy R. Barnaby</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Homeworth for your property increased
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Low</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#3652</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Jessica T. Phillips</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Item Support Message sent
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-warning">Medium</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Closed</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#9852</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Debra J. Wilson</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Your item has been updated!
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#3652</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Luke J. Sain</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Your password has been reset
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Low</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#1352</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Karen R. Doyle</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Question regarding your Bootstrap Theme
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#3562</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Freddie J. Plourde</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Security alert for my account
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Low</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#3658</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Darrell J. Cook</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Christopher S. Ahmad
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-warning">Medium</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Closed</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#2251</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Mark C. Diaz</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Verify your new email address!
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-danger">High</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <td><b>#3654</b></td>
+                                                    <td>
+                                                        <a href="javascript: void(0);" class="text-dark">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                            <span class="ms-2">Robert K. Joseph</span>
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        Support for theme
+                                                    </td>
+    
+                                                    <td>
+                                                        <a href="javascript: void(0);">
+                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
+                                                        </a>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-secondary text-light">Low</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        <span class="badge bg-success">Open</span>
+                                                    </td>
+    
+                                                    <td>
+                                                        01/04/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        21/05/2017
+                                                    </td>
+    
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <a href="#" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>Close</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                                <a class="dropdown-item" href="#"><i class="mdi mdi-star me-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        
+                        <!-- end row -->
+                        
+                        <!-- start row -->
+                        <!-- end row -->
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+ <%--                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Right Sidebar -->
+        <jsp:include page="right.jsp"></jsp:include>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- Vendor js -->
+        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+
+        <!-- third party js -->
+        <script src="${path}/Admin/dist/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+        <!-- third party js ends -->
+
+        <script src="${path}/Admin/dist/assets/js/pages/tickets.init.js"></script>
+
+        <!-- App js -->
+        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+        
     </body>
+</html> --%>
+						</div>
+					</div>
+		<!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="javascript:void(0);">About Us</a>
+                            <a href="javascript:void(0);">Help</a>
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+	</div>
+	</body>
 </html>

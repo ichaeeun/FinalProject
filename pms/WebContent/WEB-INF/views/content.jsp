@@ -39,7 +39,7 @@
                         	<jsp:include page="content_hp.jsp" flush="false"/>
 						</c:if>
 						<c:if test="${mem.auth == 'pm' }">
-                        	<jsp:include page="overview.jsp" flush="false"/>
+                        	<jsp:include page="content_pm.jsp" flush="false"/>
 						</c:if>
 						<c:if test="${mem.auth == 'wk' }">
                         	<jsp:include page="content_wk.jsp" flush="false"/>

@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
 <meta charset="UTF-8">
 <title>Insert title here</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,18 +27,56 @@
 		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 		<!-- icons -->
 		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+=======
+	<meta charset="utf-8" />
+	<c:if test="${mem.auth == 'ceo' }"><title>최고경영자</title></c:if>
+	<c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
+	<c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
+	<c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+	<meta content="Coderthemes" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+	<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >	
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+>>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 
 <script type="text/javascript">
 
+<<<<<<< HEAD
 </script>
+=======
+	<!-- App css -->
+	<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+	<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+	<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+	<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+	<!-- icons -->
+	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+>>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 </head>
 	<body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
+<<<<<<< HEAD
             <jsp:include page="top.jsp" flush="false"/>
             <!-- ========== Left Sidebar Start ========== -->         
             <jsp:include page="side.jsp" flush="false"/>
+=======
+
+            <!-- Topbar Start -->
+			<jsp:include page="top.jsp"></jsp:include>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+			<jsp:include page="side.jsp"></jsp:include>
+            <!-- Left Sidebar End -->
+>>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
@@ -56,9 +95,8 @@
                                     <h4 class="page-title">리스크</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Product List</li>
+                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
+                                            <li class="breadcrumb-item active">리스크 보드</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -70,6 +108,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
+                            			<c:if test="${mem.auth == 'wk'}">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
                                                 <a href="${path}/main.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
@@ -82,6 +121,7 @@
                                                 </div>
                                             </div><!-- end col-->
                                         </div>
+                          				</c:if>
                                         <!-- end row -->
                 
                                         <div class="table-responsive">

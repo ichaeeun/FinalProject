@@ -18,9 +18,11 @@
 	                        <div class="card-body">
 	                            <!-- cta -->
 	                            <div class="row">
+	                            	<c:if test="${mem.auth == 'wk' }">
 	                                <div class="col-sm-3">
 	                                    <a href="#" class="btn btn-primary waves-effect waves-light"><i class='fe-plus me-1'></i>Add New</a>
 	                                </div>
+	                                </c:if>
 	                                <div class="col-sm-9">
 	                                    <div class="float-sm-end mt-3 mt-sm-0">
 	                                        <div class="d-flex align-items-start flex-wrap">
