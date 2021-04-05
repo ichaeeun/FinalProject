@@ -73,8 +73,8 @@ public class DashboardService {
 		      ArrayList<Task> t = new ArrayList<Task>();
 		      t = dao.getTask(project);
 		      for(int i=0;i<t.size();i++) {
-		         System.out.println(t.get(i).getStart());
-		         System.out.println(t.get(i).getEnd());
+		         System.out.println(t.get(i).getStartdte());
+		         System.out.println(t.get(i).getEnddte());
 		      }
 		      
 		      return dao.getTask(project);
@@ -88,8 +88,8 @@ public class DashboardService {
 		      
 		      for(int j=0;j<task.size();j++) {
 		         try {
-		            Date start = df.parse(task.get(j).getStart());
-		            Date end = df.parse(task.get(j).getEnd());
+		            Date start = df.parse(task.get(j).getStartdte());
+		            Date end = df.parse(task.get(j).getEnddte());
 		            str.add(df.format(start));
 		            long calDateDay = end.getTime() - start.getTime();
 		            long calDateDays = calDateDay / (24*60*60*1000);
@@ -122,10 +122,10 @@ public class DashboardService {
 //		      ArrayList<Integer> duration = new ArrayList<Integer>(); 
 		      int duration = 0;
 		         try {
-		            System.out.println(task.getStart());
-		            System.out.println(task.getEnd());
-		            Date start = df.parse(task.getStart());
-		            Date end = df.parse(task.getEnd());
+		            System.out.println(task.getStartdte());
+		            System.out.println(task.getEnddte());
+		            Date start = df.parse(task.getStartdte());
+		            Date end = df.parse(task.getEnddte());
 		            
 		            long calDateDay = end.getTime() - start.getTime();
 		            long calDateDays = calDateDay / (24*60*60*1000);
@@ -138,7 +138,7 @@ public class DashboardService {
 		         }
 
 		         Gantt g = new Gantt(task.getTask_no(),
-		               task.getStart(),
+		               task.getStartdte(),
 		               duration,
 		               task.getTask_content(),
 		               0,task.getTask_no(),

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+   
+<mapper namespace="pms.dao.TaskDetailDao">
+<!-- SELECT a.* , b.name, c.project_name
+FROM project_task a, pms_member b, pms_project c
+WHERE a.task_no = 1000
+AND a.project_no = c.project_no
+AND a.pno = b.pno; -->
+	<!-- public Task taskDetail(int task_no);  -->
+	<select id="taskDetail" resultType="task" parameterType="int">
+		SELECT a.* , b.name, c.project_name
+		FROM project_task a, pms_member b, pms_project c
+		WHERE a.task_no = #{task_no}
+		AND a.project_no = c.project_no
+		AND a.pno = b.pno
+	</select>
+	
+
+</mapper>  
+ 
