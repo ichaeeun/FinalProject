@@ -467,9 +467,8 @@
         <!-- Right Sidebar -->
         <jsp:include page="right.jsp"></jsp:include>        
         <!-- /Right-bar -->
-
+        
         <!-- Right bar overlay-->
-
 
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>

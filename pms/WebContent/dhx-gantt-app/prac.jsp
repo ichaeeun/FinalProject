@@ -51,6 +51,6 @@ function doRelease(connection) {
 }
 </script>
 </head>
-<body
+<body>
 </body>
 </html>
