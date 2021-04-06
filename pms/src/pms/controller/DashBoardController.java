@@ -64,26 +64,6 @@ public class DashBoardController {
 	}
 	// 추가 코드(장승태)(끝)
 
-	// http://localhost:7080/pms/main.do?method=riskBoard
-	@RequestMapping(params="method=riskBoard")
-	public String riskform() {
-		return"riskBoard";
-	}
-	// http://localhost:7080/pms/main.do?method=riskBoardCreate
-	@RequestMapping(params="method=riskBoardCreate")
-	public String riskformCreate() {
-		return"riskBoardCreate";
-	}
-	// http://localhost:7080/pms/main.do?method=riskDetail
-	@RequestMapping(params="method=riskDetail")
-	public String riskdetail() {
-		return"risk_detail";
-	}
-	// http://localhost:7080/pms/main.do?method=riskRequest
-	@RequestMapping(params="method=riskRequest")
-	public String riskrequest() {
-		return"risk_request";
-	}
 	   // http://localhost:7080/pms/main.do?method=gantt
     @RequestMapping(params="method=gantt")
     public String gantt() {

@@ -2,6 +2,7 @@ package pms.dao;
 
 import java.util.ArrayList;
 
+
 import org.springframework.stereotype.Repository;
 
 import pms.dto.Member;
@@ -18,6 +19,6 @@ public interface DashboardDao {
 	public int totCnt(pms_projectSch sch);
 	public ArrayList<pms_project> pms_projectList(pms_projectSch sch);
 	   // 간트
-	   public ArrayList<Task> getTask(Project project); 
+	public ArrayList<Task> getTask(Project project);
 
 }

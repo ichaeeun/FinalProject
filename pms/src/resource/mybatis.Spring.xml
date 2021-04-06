@@ -12,8 +12,10 @@
       	<typeAlias alias="pms_project" type="pms.dto.pms_project"/>
       	<typeAlias alias="pms_projectsch" type="pms.dto.pms_projectSch"/>
 
-      	<typeAlias alias="log" type="pms.dto.log"/>
+      	<typeAlias alias="log" type="pms.dto.Log"/>
       	<typeAlias alias="task" type="pms.dto.Task"/>
+      	
+      	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
 
    </typeAliases>
    <!-- 3. sql이 저장되는 mapper.xml 등록 
@@ -21,6 +23,8 @@
    -->
    <mappers>
       <mapper resource="resource/DashMapper.xml"/>
+
+      <mapper resource="resource/RiskMapper.xml"/>
 
       <mapper resource="resource/ViewMapper.xml"/>
 

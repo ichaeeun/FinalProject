@@ -45,7 +45,7 @@
                     </a>
                 </li>  
  				<li>
-                    <a href="${path }/main.do?method=riskBoard">
+                    <a href="${path }/risk.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                                              
@@ -82,7 +82,7 @@
                     </a>
                 </li>  
  				<li>
-                    <a href="${path }/main.do?method=riskBoard">
+                    <a href="${path }/risk.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                  
@@ -124,7 +124,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/risk.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -167,7 +167,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/risk.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>s
 	                    </div>

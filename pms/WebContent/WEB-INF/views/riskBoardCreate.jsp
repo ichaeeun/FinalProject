@@ -150,7 +150,7 @@
                                                     <ul class="pager wizard mb-0 list-inline text-end mt-3">
                                                         <li class="previous list-inline-item">
                                                         <!-- 작성화면 전으로 돌아가는 버튼 -->
-                                                            <a href="${path}/main.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+                                                            <a href="${path}/risk.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
                                                         </li>
                                                         <li class="next list-inline-item">
                                                             <button type="button" class="btn btn-success">파일 첨부<i class="mdi mdi-arrow-right ms-1"></i></button>
