@@ -16,7 +16,7 @@ public class RiskController {
 	// http://localhost:7080/pms/risk.do?method=riskBoard
 	@RequestMapping(params="method=riskBoard")
 	public String riskform(Model d) {
-		d.addAttribute("risklisk", service.rBoard());
+		d.addAttribute("risklist", service.rBoard());
 		return "riskBoard";
 	}
 	// http://localhost:7080/pms/risk.do?method=riskDetail

@@ -18,14 +18,20 @@
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="${path }/Admin/dist/assets/images/favicon.ico">
+        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+        <!-- Plugins css-->
+        <link href="${path}/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
+        
 		<!-- App css -->
-		<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 		<!-- icons -->
-		<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 
