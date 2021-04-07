@@ -4,7 +4,9 @@ public class Log {
 	private int pno;
 	private String name;
 	private int project_no;
+	private int task_no;
 	private String regdte;
+	private String task_name;
 	
 	public Log() {
 		super();
@@ -42,5 +44,22 @@ public class Log {
 	public void setRegdte(String regdte) {
 		this.regdte = regdte;
 	}
+
+	public int getTask_no() {
+		return task_no;
+	}
+
+	public void setTask_no(int task_no) {
+		this.task_no = task_no;
+	}
+
+	public String getTask_name() {
+		return task_name;
+	}
+
+	public void setTask_name(String task_name) {
+		this.task_name = task_name;
+	}
+
 
 }

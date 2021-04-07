@@ -14,7 +14,6 @@
 
       	<typeAlias alias="log" type="pms.dto.Log"/>
       	<typeAlias alias="task" type="pms.dto.Task"/>
-      	
       	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
 
    </typeAliases>
@@ -23,12 +22,8 @@
    -->
    <mappers>
       <mapper resource="resource/DashMapper.xml"/>
-
       <mapper resource="resource/RiskMapper.xml"/>
-
       <mapper resource="resource/ViewMapper.xml"/>
-
       <mapper resource="resource/TaskDetailMapper.xml"/>
-
    </mappers>
 </configuration>

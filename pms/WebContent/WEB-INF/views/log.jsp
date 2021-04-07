@@ -9,10 +9,13 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <title>Datatables | Minton - Admin & Dashboard Template</title>
+        <title>활동로그</title>
+        <style type="text/css">
+        #basic-datatable_filter { display:none!important; }
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -97,22 +100,13 @@
                                                 </tr>
                                             </thead>                                      
                                             <tbody>
+                                            <c:forEach var="log" items="${LogList}">                                          
                                                 <tr>
-                                                	<td>2021/04/03</td>
-                                                    <td>Tiger Nixon 님의 태스크 완료 승인 되었습니다.</td>											
+                                                	<td>${log.regdte}</td>
+                                                    <td>${log.name}님의 ${log.task_name} 태스크를 생성했습니다.</td>											
                                                 </tr>
-                                                <tr>
-                                                	<td>2021/04/02</td>
-                                                    <td>Garrett Winters 님에게 태스크가 할당되었습니다.</td>                                                 
-                                                </tr>
-                                                <tr>
-                                                	<td>2021/04/01</td>
-                                                    <td>Ashton Cox 님이 프로젝트에 추가되었습니다.</td>                                                 
-                                                </tr>
-                                                <tr>
-                                                	<td>2021/04/04</td>
-                                                    <td>Cedric Kelly 님이 프로젝트에서 나가셨습니다.</td>
-                                                </tr>
+                                                
+                                            </c:forEach>                                               
                                             </tbody>
                                         </table>
 
