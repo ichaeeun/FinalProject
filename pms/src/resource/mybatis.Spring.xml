@@ -11,10 +11,11 @@
       	<!-- 코드추가 -->
       	<typeAlias alias="pms_project" type="pms.dto.pms_project"/>
       	<typeAlias alias="pms_projectsch" type="pms.dto.pms_projectSch"/>
+      	<typeAlias alias="proadd" type="pms.dto.ProjectAdd"/>
 
       	<typeAlias alias="log" type="pms.dto.Log"/>
       	<typeAlias alias="task" type="pms.dto.Task"/>
-      	
+      	<typeAlias alias="comment" type="pms.dto.Comment"/>
       	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
 
    </typeAliases>
@@ -23,13 +24,12 @@
    -->
    <mappers>
       <mapper resource="resource/DashMapper.xml"/>
-
+      <mapper resource="resource/ManMapper.xml"/>
       <mapper resource="resource/RiskMapper.xml"/>
-
       <mapper resource="resource/ViewMapper.xml"/>
-
       <mapper resource="resource/TaskDetailMapper.xml"/>
 
       <mapper resource="resource/ProjectMapper.xml"/>
+
    </mappers>
 </configuration>

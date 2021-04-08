@@ -1,49 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="java.util.*"
-%>
+    import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>overview</title>
+        <style type="text/css">
+        .project-body { text-align:left!important; }
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
-        <!-- Plugins css-->
-        <link href="${path}/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
-        <link href="${path}/Admin/dist/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
-        <link href="${path}/Admin/dist/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
-        
-		<!-- App css -->
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-		<!-- icons -->
-		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
+        <!-- third party css -->
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+      <!-- App css -->
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-</script>
-</head>
-	<body class="loading">
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+      <!-- icons -->
+      <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
+		<script src="${path}/a00_com/jquery.min.js"></script>
+		<script src="${path}/a00_com/popper.min.js"></script>
+		<script src="${path}/a00_com/bootstrap.min.js"></script>
+		<script src="${path}/a00_com/jquery-ui.js"></script>
+	  <script>
+	  	$(document).ready(function(){	
+			
+		  	
+	  	})
+	  </script>
+    </head>
+
+<body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
-            <jsp:include page="top.jsp" flush="false"/>
-            <!-- ========== Left Sidebar Start ========== -->         
-            <jsp:include page="side.jsp" flush="false"/>
+
+            <!-- Topbar Start -->
+             <jsp:include page="top.jsp"></jsp:include>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+         <jsp:include page="side.jsp"></jsp:include>
+            <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
@@ -58,206 +73,141 @@
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">리스크 작성 페이지</h4>
+                                <div class="page-title-box page-title-box-alt">       
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Create Product</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
+                                            <li class="breadcrumb-item active">Members List</li>
                                         </ol>
                                     </div>
                                 </div>
                             </div>
                         </div>     
                         <!-- end page title --> 
-                        
+
+                        <div class="row mb-2">
+                        	<c:if test="${mem.auth == 'hp' }">
+                            <div class="col-sm-4">
+                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
+                            </div>
+                            </c:if>
+                            <div class="col-sm-8">
+                                <div>
+                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
+                                        <div class="d-flex align-items-start flex-wrap me-2">
+                                            <label for="membersearch-input" class="visually-hidden">검색</label>
+                                            <input type="search" class="form-control" id="membersearch-input" placeholder="검색">
+                                        </div>
+                                        <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
+                                    </form>
+                                    
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row -->
+						
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
+                        	<form id="hiddenFrm" method="post">
+                        		<input type="hidden" name="proc"/>
+                        	</form>
+                        	
+                        
+                        	<c:forEach var="mem" items="${memList2 }">
+                            <div class="col-xl-3 col-sm-6">
+                                <div class="text-center card">
                                     <div class="card-body">
                                         
-                                        <div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
-                                            <ul class="twitter-bs-wizard-nav mb-2">
-                                                <li class="nav-item">
-                                                    <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="number">01</span>
-                                                        <span class="d-none d-sm-inline">리스크 작성</span>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#product-img" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="number">02</span>
-                                                        <span class="d-none d-sm-inline">파일첨부</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content twitter-bs-wizard-tab-content">
-                                                <div class="tab-pane" id="general-info">
-                                                    <h4 class="header-title">리스크 작성 형식</h4>
-                                                    <p class="sub-header">내용을 모두 채워주세요.</p>
-
-                                                    <div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="mb-3">
-                                                                    <label for="product-name" class="form-label">제목 <span class="text-danger">*</span></label>
-                                                                    <input type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요">
-                                                            	</div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
-                                                            <div id="snow-editor" style="height: 200px;"></div> <!-- end Snow-editor-->
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="mb-3">
-                                                                    <label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
-                                                                    <select class="form-control select2" id="product-category">
-                                                                        <option>Select</option>
-                                                                            <option value="SH1">결제</option>
-                                                                            <option value="SH2">커뮤니케이션</option>
-                                                                            <option value="SH3">프로젝트 기간</option>
-                                                                            <option value="SH4">기타</option>                       
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="mb-2">어떻게 써먹지 <span class="text-danger">*</span></label>
-                                                            <br/>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
-                                                                <label for="inlineRadio1"> Online </label>
-                                                            </div>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                                                <label for="inlineRadio2"> Offline </label>
-                                                            </div>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio3" value="option3" name="radioInline">
-                                                                <label for="inlineRadio3"> Draft </label>
-                                                            </div>
-                                                        </div>
-                    
-                                                   <!-- 
-                                                   		<div>
-                                                            <label class="form-label">Comment</label>
-                                                            <textarea class="form-control" rows="3" placeholder="Please enter comment"></textarea>
-                                                        </div>
-                                                         -->
-                                                    </div>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                        <!-- 작성화면 전으로 돌아가는 버튼 -->
-                                                            <a href="${path}/risk.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
-                                                        </li>
-                                                        <li class="next list-inline-item">
-                                                            <button type="button" class="btn btn-success">파일 첨부<i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-pane" id="product-img">
-                                                    <h4 class="header-title">Product Images</h4>
-                                                    <p class="sub-header">Upload product image</p>
-
-                                                    <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                                        data-upload-preview-template="#uploadPreviewTemplate">
-                                                        <div class="fallback">
-                                                            <input name="file" type="file" multiple />
-                                                        </div>
-                
-                                                        <div class="dz-message needsclick">
-                                                            <div class="mb-3">
-                                                                <i class="h1 text-muted ri-upload-cloud-2-line"></i>
-                                                            </div>
-                                                            <h3>Drop files here or click to upload.</h3>
-                                                            <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-                                                                <strong>not</strong> actually uploaded.)</span>
-                                                        </div>
-                                                    </form>
-                
-                                                    <!-- Preview -->
-                                                    <div class="dropzone-previews mt-3" id="file-previews"></div>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                            <button type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
-                                                        </li>
-                                                        <li class="next list-inline-item">
-                                                            <button type="button" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-pane" id="metadata">
-                                                    <h4 class="header-title">Meta Data</h4>
-                                                    <p class="sub-header">Fill all information below</p>
-
-                                                    <form>
-                                                        <div class="mb-3">
-                                                            <label for="product-meta-title" class="form-label">Meta title</label>
-                                                            <input type="text" class="form-control" id="product-meta-title" placeholder="Enter title">
-                                                        </div>
-                    
-                                                        <div class="mb-3">
-                                                            <label for="product-meta-keywords" class="form-label">Meta Keywords</label>
-                                                            <input type="text" class="form-control" id="product-meta-keywords" placeholder="Enter keywords">
-                                                        </div>
-                    
-                                                        <div>
-                                                            <label for="product-meta-description" class="form-label">Meta Description </label>
-                                                            <textarea class="form-control" rows="5" id="product-meta-description" placeholder="Please enter description"></textarea>
-                                                        </div>
-                                                    </form>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                            <button type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> Edit Information </button>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <button type="submit" class="btn btn-success">Publish Product <i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <div class="dropdown float-end">
+                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-20"></i>
+                                            </a>
                                             
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
                                         </div>
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+
+                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                            </c:forEach>
+
+                        	<c:if test="${param == 'availMan'}">
+                        	<c:forEach var="mem" items="${memList2 }">
+                            <div class="col-xl-3 col-sm-6">
+                                <div class="text-center card">
+                                    <div class="card-body">
+                                        
+                                        <div class="dropdown float-end">
+                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-20"></i>
+                                            </a>
+                                            
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+
+                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                            </c:forEach>
+                            </c:if>                            
+                                           
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <div>
+                                    <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="float-sm-end">
+                                    <ul class="pagination pagination-rounded mb-sm-0">
+                                        <li class="page-item disabled">
+                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <!-- end row -->
-
-                        <!-- file preview template -->
-                        <div class="d-none" id="uploadPreviewTemplate">
-                            <div class="card mt-1 mb-0 shadow-none border">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                        </div>
-                                        <div class="col ps-0">
-                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                            <p class="mb-0" data-dz-size></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Button -->
-                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                <i class="fe-x"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
-                    </div> <!-- container -->
+                        
+                    </div> <!-- container-fluid -->
 
                 </div> <!-- content -->
 
@@ -355,7 +305,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
@@ -370,7 +320,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
@@ -385,7 +335,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
@@ -404,7 +354,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
@@ -419,7 +369,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
@@ -434,7 +384,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
@@ -449,7 +399,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
@@ -464,7 +414,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
@@ -479,7 +429,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
@@ -683,27 +633,10 @@
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor js -->
-        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
-
-        <!-- Plugins js-->
-        <script src="${path}/Admin/dist/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-
-        <!-- Plugins js -->
-        <script src="${path}/Admin/dist/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Select2 js-->
-        <script src="${path}/Admin/dist/assets/libs/select2/js/select2.min.js"></script>
-        <!-- Dropzone file uploads-->
-        <script src="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${path}/Admin/dist/assets/js/pages/form-fileuploads.init.js"></script>
-
-        <!-- Init js -->
-        <script src="${path}/Admin/dist/assets/js/pages/add-product.init.js"></script>
+        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
         
     </body>
 </html>

@@ -1,43 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="java.util.*"
-%>
+    import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>overview</title>
+        <style type="text/css">
+        .project-body { text-align:left!important; }
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
-		<!-- App css -->
-		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-		<!-- icons -->
-		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
 
-<script type="text/javascript">
+        <!-- third party css -->
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+      <!-- App css -->
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-</script>
-</head>
-   <body class="loading">
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+      <!-- icons -->
+      <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
+		<script src="${path}/a00_com/jquery.min.js"></script>
+		<script src="${path}/a00_com/popper.min.js"></script>
+		<script src="${path}/a00_com/bootstrap.min.js"></script>
+		<script src="${path}/a00_com/jquery-ui.js"></script>
+	  <script>
+	  	$(document).ready(function(){	
+			
+		  	
+	  	})
+	  </script>
+    </head>
+
+<body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
-            <jsp:include page="top.jsp" flush="false"/>
-            <!-- ========== Left Sidebar Start ========== -->         
-            <jsp:include page="side.jsp" flush="false"/>
+
+            <!-- Topbar Start -->
+             <jsp:include page="top.jsp"></jsp:include>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+         <jsp:include page="side.jsp"></jsp:include>
+            <!-- Left Sidebar End -->
+
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
@@ -51,27 +73,7 @@
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">
-                                        <ul class="nav nav-pills navtab-bg nav-justified">
-                                            <li class="nav-item">
-                                                <a href="#home1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
-                                                    <span class="d-none d-sm-inline-block">전체인원</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#profile1" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
-                                                    <span class="d-none d-sm-inline-block">가용인원</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#messages1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
-                                                    <span class="d-none d-sm-inline-block">프로젝트별 인원</span>
-                                                </a>
-                                            </li>
-                                        </ul>         
+                                <div class="page-title-box page-title-box-alt">  
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
@@ -104,8 +106,14 @@
                             </div><!-- end col-->
                         </div>
                         <!-- end row -->
-
+						
                         <div class="row">
+                        	<form id="hiddenFrm" method="post">
+                        		<input type="hidden" name="proc"/>
+                        	</form>
+                        	
+                        
+                        	<c:forEach var="mem" items="${memList }">
                             <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
                                     <div class="card-body">
@@ -121,17 +129,18 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
 
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">홍길동</a></h4>
-                                        <p class="text-muted">PM <span> | </span> <span> <a href="#" class="text-pink">hong@gmail.com</a> </span></p>
-
-
-    
+                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
+                            </c:forEach>
 
+                        	<c:if test="${param == 'availMan'}">
+                        	<c:forEach var="mem" items="${memList2 }">
                             <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
                                     <div class="card-body">
@@ -147,67 +156,17 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
 
-                                        <div class="avatar-xl mx-auto mt-1">
-                                            <div class="avatar-title bg-light rounded-circle">
-                                                <i class="mdi mdi-account h1 m-0 text-body"></i>
-                                            </div>
-                                        </div>
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">박길동</a></h4>
-                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">park@gmail.com</a> </span></p>
-
+                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-4.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">김길동</a></h4>
-                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">kim@gmail.com</a> </span></p>
-
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-5.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">이길동</a></h4>
-                                        <p class="text-muted">개발자 <span> | </span> <span> <a href="#" class="text-pink">lee@gmail.com</a> </span></p>
-
-    
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
+                            </c:forEach>
+                            </c:if>                            
+                                           
                         </div>
                         <!-- end row -->
 
@@ -346,7 +305,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
@@ -361,7 +320,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
@@ -376,7 +335,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
@@ -395,7 +354,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
@@ -410,7 +369,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
@@ -425,7 +384,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
@@ -440,7 +399,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
@@ -455,7 +414,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
@@ -470,7 +429,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path }/a00_com/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path }/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
@@ -674,10 +633,10 @@
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor js -->
-        <script src="${path }/a00_com/assets/js/vendor.min.js"></script>
+        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="${path }/a00_com/assets/js/app.min.js"></script>
+        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
         
     </body>
 </html>

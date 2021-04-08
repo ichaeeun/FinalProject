@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -43,17 +44,54 @@
  
  
 --%>
-   $(document).ready(function(){
-
-		$("#addSubtaskBtn").click(function(){
-			var addTask_taskName = $("#addTask_taskName").val();
-			var addTask_pName = $("#addTask_pName").val();
-			var addTask_taskPriority = $("#addTask_taskPriority").val();
-			var addTask_taskDate=$("#addTask_taskDate").val();
-			var addTask_taskContent=$("#addTask_taskContent").val();
+   $(document).ready(function(){ 
+	   	$("#insertComment").click(function(){
+	 	  	var commentlength = $("#commentlength").text();
+	 	  	commentlength++;
+	   		var inscom = commentVal();
+	   		var name = "${mem.name}";
+	   		var today = new Date().toLocaleTimeString();
+	   		console.log(inscom);
+	   		var show="";
+	   		show+="<div class='d-flex align-items-start mt-3'>";
+	   		show+="<div class='flex-1'>";
+            show+=" <h5 class='mt-0'>"+name+"<small class='text-muted fw-normal float-end'>"+today;
+            show+="<div class='action-icon px-1' id='deleteComment'><i class='fe-x-square'></i></div></small></h5>";
+            show+=inscom.content+"<br/></div><br></div>";
+            $("#commentlength").text(commentlength);
+	   		$("#appendComment").append(show);
+	   		
+   			$.ajax({
+				  type:"post",
+				  url:"taskdetail.do?method=insertComment",
+				  data:inscom,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  	console.log(data);
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			});
+   			
+   			$("#insertComment_content").val("");
+	   	});
+	  
+	   
+	<%--   console.log($("label[for = 'tasktodayCheck1001']").text()); --%>
+		$("#addSubtaskBtn").click(function(){ //  서브태스크 추가 화면단 처리 
+			var sublengththis = $("#sublength").text();	// 서브태스크 갯수 
+			var tasknextval = "${taskcurrval}";	// 현재 task_no sequence 받아옴 
+			var addTask_taskName = $("#addTask_task_name").val();
+			var addTask_pName = $("#addTask_name option:checked").text();
+			var addTask_taskPriority = $("#addTask_task_priority").val();
+			var addTask_taskDate=$("#addTask_enddte").val();
+			var addTask_taskContent=$("#addTask_task_content").val();
 			var show="";
 			show+="<tr>";
-            show+="<td><div class='form-check'> <input class='form-check-input' type='checkbox' id='tasktodayCheck01'> <div id='subtaskId'><label class='form-check-label' for='tasktodayCheck01'>#MN2045</label></div>  </div></td>";
+            show+="<td><div class='form-check'> <input class='form-check-input' type='checkbox' id='tasktodayCheck01'> <div id='subtaskId'><label class='form-check-label' for='tasktodayCheck01'>"+tasknextval+"</label></div>  </div></td>";
 			show+="<td id='subtaskName'>"+addTask_taskName+"</td>";
             show+="<td id='subtaskpName'>"+addTask_pName+" </td>";
             show+=" <td>"+addTask_taskDate+"</td>"; 
@@ -61,7 +99,7 @@
             	show+=" <td><span class='badge badge-soft-danger p-1' id='subtaskPriority'>"+addTask_taskPriority+"</span></td>";
             }
             if(addTask_taskPriority=="Medium"){
-            	show+=" <td><span class='badge badge-soft-info p-1' id='subtaskPriority'>"+addTask_taskPriority+"</span></td>";
+            	show+=" <td><span class='badge badge-soft-primary p-1' id='subtaskPriority'>"+addTask_taskPriority+"</span></td>";
             }
             if(addTask_taskPriority=="Low"){
             	show+=" <td><span class='badge badge-soft-success p-1' id='subtaskPriority'>"+addTask_taskPriority+"</span></td>";
@@ -69,8 +107,178 @@
             
             show+=" <td>  <ul class='list-inline table-action m-0'>  <li class='list-inline-item'>  <a href='javascript:void(0);' class='action-icon px-1'><div data-bs-toggle='modal' data-bs-target='#updateTaskModal'> <i class='mdi mdi-square-edit-outline'></i></div></a> </li><li class='list-inline-item'>  <a href='javascript:void(0);' class='action-icon px-1 text-danger'> <div data-bs-toggle='modal' data-bs-target='#danger-alert-modal'><i class='mdi mdi-delete-outline me-1'></i></div></a> </li></ul> </td></tr>";
           	$("#subtaskTableBody").append(show);
+          	$("#sublength").text(Number(sublengththis)+1);
+          	
+			var sch = taskVal();
+			console.log(sch);
+			$.ajax({
+				  type:"post",
+				  url:"taskdetail.do?method=insert",
+				  data:sch,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  	console.log(data);
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+          	
 		});
+	    
+		
+		/* $("#addSubtaskBtn").click(function(){ // 서브태스크추가 DB ajax 
+			
+		}); */
+		
+		$("#updateTaskBtn").click(function(){
+			var updateTask_task_priority = $("#updateTask_task_priority").val();
+			var updateTask_task_name = $("#updateTask_task_name").val();
+			var updateTask_name = $("#updateTask_name option:checked").text();
+			var updateTask_task_priority = $("#updateTask_task_priority").val();
+			var updateTask_startdte = $("#updateTask_startdte").val();
+			var updateTask_enddte = $("#updateTask_enddte").val();
+			var updateTask_task_content = $("#updateTask_task_content").val();
+			$("#task_priority").text(updateTask_task_priority);
+			$("#task_name").text(updateTask_task_name);
+			$("#task_content").text(updateTask_task_content);
+			$("#name").text(updateTask_name);
+			$("#enddte").text(updateTask_enddte);
+			$("#startdte").text(updateTask_startdte);
+			var task_priority_or = "${detail.task_priority}";
+			var task_priority = document.getElementById('task_priority');
+			if(task_priority_or=='High'){
+				if(updateTask_task_priority=='Medium') {
+					task_priority.classList.remove('badge-soft-danger');
+					task_priority.classList.add('badge-soft-primary');
+				}
+				if(updateTask_task_priority=='Low') {
+					task_priority.classList.remove('badge-soft-danger');
+					task_priority.classList.add('badge-soft-success');
+				}
+			}
+			if(task_priority_or=='Medium'){
+				if(updateTask_task_priority=='High') {
+					task_priority.classList.remove('badge-soft-primary');
+					task_priority.classList.add('badge-soft-danger');
+				}
+				if(updateTask_task_priority=='Low') {
+					task_priority.classList.remove('badge-soft-primary');
+					task_priority.classList.add('badge-soft-success');
+				}
+			}
+			if(task_priority_or=='Low'){
+				if(updateTask_task_priority=='Medium') {
+					task_priority.classList.remove('badge-soft-success');
+					task_priority.classList.add('badge-soft-primary');
+				}
+				if(updateTask_task_priority=='High') {
+					task_priority.classList.remove('badge-soft-success');
+					task_priority.classList.add('badge-soft-danger');
+				}
+			}
+			var upt = updateTaskVal();
+			$.ajax({
+				  type:"post",
+				  url:"taskdetail.do?method=update",
+				  data:upt,
+				  dataType:"json",
+				  success:function(data){
+					  // data.모델명
+					  if(data.success=="Y")
+					  	console.log(data);
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+			
+			
+		});
+		
+		var task_parent_no = "${detail.task_no }";
+		var project_no = "${detail.project_no }";
+		
+		
+		function taskVal(){  // 서브태스크 추가 모달창 input값 받아오기 
+			 var sch = {};
+			 sch.task_name=$("#addTask_task_name").val();
+			 sch.task_priority=$("#addTask_task_priority").val();
+			 sch.startdte=$("#addTask_startdte").val();
+			 sch.enddte=$("#addTask_enddte").val();
+			 sch.task_parent_no = Number(task_parent_no);  
+			 sch.project_no= Number(project_no); 
+			 sch.pno = Number($("#addTask_name").val());
+			 return sch;
+		 }
+		
+		
+		
+		 var task_no = "${detail.task_no}";
+		 function updateTaskVal(){
+			var upt={};
+			upt.task_priority = $("#updateTask_task_priority").val();
+			upt.task_name = $("#updateTask_task_name").val();
+			upt.pno = $("#updateTask_name").val();
+			upt.startdte = $("#updateTask_startdte").val();
+			upt.enddte = $("#updateTask_enddte").val();
+			upt.task_content = $("#updateTask_task_content").val();
+			upt.task_no = Number(task_no);
+			return upt; 
+		 }
+		 
+		 function commentVal(){
+			   var inscom={};
+			   inscom.pno=4; //임시  "${mem.pno}";
+			   inscom.content= $("#insertComment_content").val();
+			   inscom.task_no=task_no;
+			   return inscom;
+		 }
+		/*  subtaskTableBody tr[0].td[0].div.div.label
+		 $.each(arr, function (index, item) {
+			 
+		 }); */
+		 var sublength = $("#sublength").text();
+		 console.log(sublength);
+		 var subarr=[];
+		 for(var i=0;i<sublength;i++){
+			 console.log($("#subtaskTableBody > tr:eq("+i+") > td> div> div> label").text());
+			 subarr.push($("#subtaskTableBody > tr:eq("+i+") > td> div> div> label").text());
+		 }
+		 console.log(subarr);
+		// console.log($("#subtaskTableBody.tr.eq(0).td.eq(0).text()");
+		// updateSub_task_no updateSub_task_name updateSub_name updateSub_task_priority updateSub_startdte updateSub_enddte
+		var arr=[];
+		for(var i=0;i<sublength;i++){
+			var sch = {};
+			sch.task_no= $("#updateSub_task_no"+subarr[i]).val();
+			sch.task_name = $("#updateSub_task_name"+subarr[i]).val();
+			sch.name=$("#updateSub_name"+subarr[i]).val();
+			sch.task_priority=$("#updateSub_task_priority"+subarr[i]).val();
+			sch.startdte=$("#updateSub_startdte"+subarr[i]).val();
+			sch.enddte=$("#updateSub_enddte"+subarr[i]).val();
+			arr.push(sch); 
+		}
+		console.log(arr);
+		for(var idx=0;idx<sublength;idx++){
+			$("#updateSubtaskBtn"+subarr[idx]).click(function(){
+				var arr=[];
+				var sch = {};
+				sch.task_no= $("#updateSub_task_no"+subarr[idx]).val();
+				sch.task_name = $("#updateSub_task_name"+subarr[idx]).val();
+				sch.name=$("#updateSub_name"+subarr[idx]).val();
+				sch.task_priority= $("#updateSub_task_priority"+subarr[idx]).val();
+				sch.startdte= $("#updateSub_startdte"+subarr[idx]).val();
+				sch.enddte=$("#updateSub_enddte"+subarr[idx]).val();
+				arr.push(sch); 
+				console.log(arr[idx]);
+			});
+		}
    });
+    
 </script>
 </head>
  <body class="loading">
@@ -98,47 +306,51 @@
                     <!-- Start Content-->
                     <div class="container-fluid">
 						<div class="row">
+							
+						 <%--   <div class="row" style="padding-top:10px;">
+							<a href="${path }/task.do?method=view"><button class="btn btn-soft-primary btn-md">${detail.project_name }</button></a>
+							</div> --%>
 							<div class="col-xl-12">
-								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
+								 <ul class="nav nav-tabs nav-bordered" style="padding-top:5px;">
 						            <li class="nav-item">
 						                      <a href="${path }/task.do?method=view"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
 						                    <span class="d-none d-sm-inline-block">오버뷰</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="${path}/task.do?method=list" class="nav-link active">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
 						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="#"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class="bx bxs-dashboard"></i></span>
 						                    <span class="d-none d-sm-inline-block">대시보드</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="${path}/main.do?method=gantt"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="#"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class="bx bx-calendar"></i></span>
 						                    <span class="d-none d-sm-inline-block">캘린더</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="${path}/task.do?method=log"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                    <span class="d-inline-block d-sm-none"><i class="bx bx-comment-dots"></i></span>
 						                    <span class="d-none d-sm-inline-block">활동로그</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
 						                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
-						                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
 						                           <span class="d-none d-sm-inline-block">리스크</span>
 						                </a>
 						            </li>
@@ -170,7 +382,7 @@
                                         <div class="dropdown float-end">
                                             <a href="#" class="dropdown-toggle arrow-none text-muted"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class='mdi mdi-dots-horizontal font-18'></i>
+                                                <i class='fe-menu font-18'></i>
                                             </a>
                                         
                                             <div class="dropdown-menu dropdown-menu-end">
@@ -184,7 +396,7 @@
                                                 </a>
                                                 <!-- item-->
                                                 <a href="javascript:void(0);" class="dropdown-item">
-                                                    <div data-bs-toggle="modal" data-bs-target="#addSubTaskModal"><i class='mdi mdi-briefcase-plus me-1'></i>세부태스크 추가</div>
+                                                    <div data-bs-toggle="modal" data-bs-target="#addSubTaskModal"><i class='mdi mdi-briefcase-plus me-1'></i>서브태스크 추가</div>
                                                 </a>
                                                 <div class="dropdown-divider"></div>
                                                  <!-- item-->
@@ -199,12 +411,19 @@
                                             </div>
                                         </div>
                                         <p class="text-primary" id="taskId1">#${detail.task_no }</p>
-                                        <span class="badge badge-soft-danger p-1" id="taskPriority">${detail.task_priority }</span>
-                                        <h4 class="mb-1">${detail.task_name }</h4>
-                                        
+                                        <c:if test="${detail.task_priority=='High'}">
+                                        <span class="badge badge-soft-danger p-1" id="task_priority">${detail.task_priority }</span>
+                                        </c:if>
+                                        <c:if test="${detail.task_priority=='Medium'}">
+                                        <span class="badge badge-soft-primary p-1" id="task_priority">${detail.task_priority }</span>
+                                        </c:if>
+                                        <c:if test="${detail.task_priority=='Low'}">
+                                        <span class="badge badge-soft-success p-1" id="task_priority">${detail.task_priority }</span>
+                                        </c:if>
+                                        <h4 class="mb-1" id="task_name">${detail.task_name }</h4>
                                         <div class="mt-4">
                                         <h5>Description:</h5>
-                                                <p class="text-muted" id="taskContent">${detail.task_content } </p>
+                                                <p class="text-muted" id="task_content">${detail.task_content } </p>
                                         </div>
                                         <div class="text-muted">
                                              <div class="row">
@@ -228,7 +447,7 @@
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">담당자</p>
-                                                            <h5 class="mt-0 text-truncate" id="pname">
+                                                            <h5 class="mt-0 text-truncate" id="name">
                                                                 ${detail.name }
                                                             </h5>
                                                         </div>
@@ -241,7 +460,7 @@
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">시작일</p>
-                                                            <h5 class="mt-0 text-truncate" id="dueDate">
+                                                            <h5 class="mt-0 text-truncate" id="startdte">
                                                                 ${detail.startdte }
                                                             </h5>
                                                         </div>
@@ -254,7 +473,7 @@
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">종료일</p>
-                                                            <h5 class="mt-0 text-truncate" id="dueDate">
+                                                            <h5 class="mt-0 text-truncate" id="enddte">
                                                                 ${detail.enddte }
                                                             </h5>
                                                         </div>
@@ -265,7 +484,7 @@
 
                                         <div class="mt-4">
                                             <div class="mt-4">
-                                            	<h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">세부태스크 <span class="text-muted">(04)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
+                                            	<h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">서브태스크 <span class="text-muted">(<c:if test="${fn:length(subdetail)<10}">0</c:if><span id="sublength">${fn:length(subdetail)}</span>)</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
                                                 <div class="collapse show" id="taskcollapse1">
                                                             <div class="table-responsive mt-3">
                                                                 <table class="table table-centered table-nowrap table-borderless table-sm">
@@ -285,23 +504,34 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody id="subtaskTableBody">
-                                                                        <tr>
-                                                                            <td>
+                                                                    	<c:forEach var="sub" items="${subdetail }">
+                                                                    		 <tr> 
+                                                                            <td> 
                                                                                 <div class="form-check">
-                                                                                    <input class="form-check-input" type="checkbox" id="tasktodayCheck01">
-                                                                                    <div id="subtaskId"><label class="form-check-label" for="tasktodayCheck01">#MN2045</label></div>
+                                                                                    <input class="form-check-input" type="checkbox" id="tasktodayCheck${sub.task_no }">
+                                                                                    <div id="subtaskId"><label class="form-check-label" for="tasktodayCheck${sub.task_no }">${sub.task_no }</label></div>
                                                                                 </div>
                                                                             </td>
-                                                                            <td id="subtaskName">세부태스크 리스트 만들기</td>
+                                                                            <td id="subtaskName">${sub.task_name }</td>
                                                                             <td id="subtaskpName">
-                                                                                	홍길동
+                                                                                	${sub.name }
                                                                             </td>
-                                                                            <td>2021-04-10</td>
-                                                                            <td><span class="badge badge-soft-danger p-1" id="subtaskPriority">High</span></td>
+                                                                            <td>${sub.enddte }</td>
+                                                                            <td>
+                                                                            	<c:if test="${sub.task_priority=='High' }">
+                                                                            	<span class="badge badge-soft-danger p-1" id="subtaskPriority">${sub.task_priority }</span>
+                                                                            	</c:if>
+                                                                            	<c:if test="${sub.task_priority=='Medium' }">
+                                                                            	<span class="badge badge-soft-primary p-1" id="subtaskPriority">${sub.task_priority }</span>
+                                                                            	</c:if>
+                                                                            	<c:if test="${sub.task_priority=='Low' }">
+                                                                            	<span class="badge badge-soft-success p-1" id="subtaskPriority">${sub.task_priority }</span>
+                                                                            	</c:if>
+                                                                            </td>
                                                                             <td>
                                                                                 <ul class="list-inline table-action m-0">
-                                                                                    <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#updateTaskModal"> <i class="mdi mdi-square-edit-outline"></i></div></a>
+                                                                                    <li class="list-inline-item"> 	
+                                                                                        <a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#updateSubtaskModal${sub.task_no }"> <i class="mdi mdi-square-edit-outline"></i></div></a>
                                                                                     </li>
                                                                                     <li class="list-inline-item"> 
                                                                                         <a href="javascript:void(0);" class="action-icon px-1 text-danger"> <div data-bs-toggle="modal" data-bs-target="#danger-alert-modal"><i class='mdi mdi-delete-outline me-1'></i></div></a>
@@ -309,84 +539,7 @@
                                                                                 </ul>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-check">
-                                                                                    <input class="form-check-input" type="checkbox" id="tasktodayCheck02">
-                                                                                    <label class="form-check-label" for="tasktodayCheck02">#MN2044</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>커멘트창 만들기</td>
-                                                                            <td>
-                                                                                <div>
-                                                                                	홍길동
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>2021-04-15</td>
-                                                                            <td><span class="badge badge-soft-info p-1">Medium</span></td>
-                                                                            <td>
-                                                                                <ul class="list-inline table-action m-0">
-                                                                                    <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#updateTaskModal"><i class="mdi mdi-square-edit-outline"></i></div></a>
-                                                                                    </li>
-                                                                                     <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1 text-danger"> <div data-bs-toggle="modal" data-bs-target="#danger-alert-modal"><i class='mdi mdi-delete-outline me-1'></i></div></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-check">
-                                                                                    <input class="form-check-input" type="checkbox" id="tasktodayCheck03">
-                                                                                    <label class="form-check-label" for="tasktodayCheck03">#MN2043</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>태스크 수정삭제 기능 구현</td>
-                                                                            <td>
-                                                                                <div>
-                                                                                	김길동
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>2021-04-20</td>
-                                                                            <td><span class="badge badge-soft-danger p-1">High</span></td>
-                                                                            <td>
-                                                                                <ul class="list-inline table-action m-0">
-                                                                                    <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#updateTaskModal"><i class="mdi mdi-square-edit-outline"></i></div></a>
-                                                                                    </li>
-                                                                                     <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1 text-danger"> <div data-bs-toggle="modal" data-bs-target="#danger-alert-modal"><i class='mdi mdi-delete-outline me-1'></i></div></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-check">
-                                                                                    <input class="form-check-input" type="checkbox" id="tasktodayCheck04">
-                                                                                    <label class="form-check-label" for="tasktodayCheck04">#MN2042</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>첨부파일 업로드 처리하기</td>
-                                                                            <td>
-                                                                                <div>
-                                                                                	김길동
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>2021-04-25</td>
-                                                                            <td><span class="badge badge-soft-success p-1">Low</span></td>
-                                                                            <td>
-                                                                                <ul class="list-inline table-action m-0">
-                                                                                    <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#updateTaskModal"><i class="mdi mdi-square-edit-outline"></i></div></a>
-                                                                                    </li>
-                                                                                     <li class="list-inline-item"> 
-                                                                                        <a href="javascript:void(0);" class="action-icon px-1 text-danger"> <div data-bs-toggle="modal" data-bs-target="#danger-alert-modal"><i class='mdi mdi-delete-outline me-1'></i></div></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </td>
-                                                                        </tr>
+                                                                    	</c:forEach>
                                                                      </tbody>
                                                                 </table>
                                                             </div>
@@ -482,65 +635,47 @@
                                     <div class="card-body">
 
 
-                                        <h4 class="mb-4 mt-0 font-16">Comments (5)</h4>
-
+                                        <h4 class="mb-4 mt-0 font-16">Comments(<span id="commentlength">${fn:length(comment) }</span>)</h4>
                                         <div class="clerfix"></div>
-                                        
-                                        <div class="d-flex">
-                                            <img class="me-2 rounded-circle" src="${path }/Admin/dist/assets/images/users/avatar-3.jpg"
-                                                alt="Generic placeholder image" height="32">
-                                            <div class="flex-1">
-                                                <h5 class="mt-0">김길동<small class="text-muted fw-normal float-end">5 hours ago</small></h5>
-                                                태스크 디비 설계 해주세요 
-                                                <br/>
-                                            </div>
-                                        </div>
-
+                                        <div id="appendComment">
+                                         <jsp:useBean id="today" class="java.util.Date"/> 
+                                         <fmt:formatDate value="${today }" pattern="yyyy-MM-dd" var="todayDate"/>
+                                        <c:forEach var="comm" items="${comment }">
+									    <%-- 현재날짜의 고유값 가져오기 : 1970.1.1  --%>
+									<%--     <fmt:formatDate value="${today}" pattern="yyyyMMdd" var="toFmt"/>
+									    <fmt:formatDate value="${comm.regdte }" pattern="yyyyMMdd" var="regdte"/> --%>
+									    <fmt:parseDate value="${comm.regdte }" pattern="yyyy-MM-dd HH:mm:ss" var="commregdte"/>
+									    <fmt:formatDate value="${commregdte }"  pattern="yyyy-MM-dd" var="commregdteDate"/>
+									    <fmt:formatDate value="${commregdte }"  pattern="HH:mm:ss" var="commregdteTime"/>
                                         <div class="d-flex align-items-start mt-3">
-                                            <img class="me-2 rounded-circle" src="${path }/Admin/dist/assets/images/users/avatar-5.jpg"
-                                                alt="Generic placeholder image" height="32">
+                                            <%-- <img class="me-2 rounded-circle" src="${path }/Admin/dist/assets/images/users/avatar-2.jpg"
+                                                alt="Generic placeholder image" height="32"> --%>
                                             <div class="flex-1">
-                                                <h5 class="mt-0">강길동 <small class="text-muted fw-normal float-end">1 day ago</small></h5>
-                                                잘하셨네요
-
+                                                <h5 class="mt-0">${comm.name } <small class="text-muted fw-normal float-end">
+                                                	<c:if test="${todayDate==commregdteDate}">${commregdteTime }</c:if>
+                                                	<c:if test="${todayDate!=commregdteDate }">${commregdteDate}</c:if>
+                                                <c:if test="${mem.pno==comm.pno }"><div class="action-icon px-1" id="deleteComment"><i class="fe-x-square"></i></div></c:if></small></h5>
+                                                ${comm.content } 
                                                 <br/>
                                             </div>
+                                            <br>
                                         </div>
-										<div class="d-flex align-items-start mt-3">
-                                            <img class="me-2 rounded-circle" src="${path }/Admin/dist/assets/images/users/avatar-6.jpg"
-                                                alt="Generic placeholder image" height="32">
-                                            <div class="flex-1">
-                                                <h5 class="mt-0">이길동 <small class="text-muted fw-normal float-end">1 day ago</small></h5>
-                                                굿잡
+                                        </c:forEach>
+                                        </div>
 
-                                                <br/>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-start mt-3">
-                                            <img class="me-2 rounded-circle" src="${path }/Admin/dist/assets/images/users/avatar-6.jpg"
-                                                alt="Generic placeholder image" height="32">
-                                            <div class="flex-1">
-                                                <h5 class="mt-0">이길동 <small class="text-muted fw-normal float-end">1 day ago</small></h5>
-                                                소스코드 올려주세요
-
-                                                <br/>
-                                            </div>
-                                        </div>
                                         <!-- <div class="text-center mt-2">
                                             <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                                         </div> -->
 
                                         <div class="border rounded mt-4">
-                                            <form action="#" class="comment-area-box">
-                                                <textarea rows="3" class="form-control border-0 resize-none" placeholder="Your comment..."></textarea>
+                                           <%--  <form action="#" class="comment-area-box"> --%>
+                                                <textarea rows="3" class="form-control border-0 resize-none" placeholder="Your comment..." id="insertComment_content"></textarea>
                                                 <div class="p-2 bg-light d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <!-- <a href="#" class="btn btn-sm px-1 btn-light"><i class='mdi mdi-upload'></i></a>
-                                                        <a href="#" class="btn btn-sm px-1 btn-light"><i class='mdi mdi-at'></i></a> -->
                                                     </div>
-                                                    <button type="submit" class="btn btn-sm btn-success"><i class="fe-send me-1"></i>Submit</button>
+                                                    <button type="button" class="btn btn-sm btn-success" id="insertComment"><i class="fe-send me-1"></i>Submit</button>
                                                 </div>
-                                            </form>
+                                            <%-- </form> --%>
                                         </div> <!-- end .border-->
 
                                     </div> <!-- end card-body-->
@@ -577,72 +712,156 @@
 
                 </div> <!-- content -->
 
+				<!--  서브태스크 수정 모달  -->
+				<c:forEach var="sub" items="${subdetail }">
+					 <form method="post" action="${path }/taskdetail.do?method=updateSub">
+						<div class="modal fade" id="updateSubtaskModal${sub.task_no}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		                    <div class="modal-dialog modal-lg">
+		                        <div class="modal-content">
+		                            <div class="modal-header">
+		                                <h4 class="modal-title" id="myLargeModalLabel">[#${sub.task_no}] 태스크 수정</h4>
+		                                <input type="hidden" value="${sub.task_no }" id="updateSub_task_no${sub.task_no}" name="task_no"/>
+		                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                            </div>
+		                            <div class="modal-body">
+		                            	<div class="row">
+		                                    <div class="col-md-12">
+		                                        <div class="mb-3">
+		                                            <label for="updateSubtask_task_name" class="form-label">태스크</label>
+		                                            <input type="text" class="form-control" name="task_name" id="updateSub_task_name${sub.task_no}" value="${sub.task_name }">
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="row">
+		                                    <div class="col-md-6">
+		                                        <div class="mb-3">
+		                                             <label for="updateSubtask_name" class="form-label">담당자</label>
+		                                            <select class="form-control" id="updateSub_name${sub.task_no}" name="name">
+		                                            	  <option value="${sub.pno}">${sub.name}</option>
+		                                            	<c:forEach var="showm" items="${showMember }">
+		                                                   <option value="${showm.pno }">${showm.name }</option>
+		                                                 </c:forEach>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="col-md-6">
+		                                        <div class="mb-3">
+		                                            <label for="updateSubtask_task_priority" class="form-label">중요도</label>
+		                                            <select class="form-control" id="updateSub_task_priority${sub.task_no}" name="task_priority">
+		                                            	<option value="High" <c:if test="${sub.task_priority=='High'}">selected</c:if>>High</option>
+		                                            	<option value="Medium" <c:if test="${sub.task_priority=='Medium'}">selected</c:if>>Medium</option>
+		                                            	<option value="Low" <c:if test="${sub.task_priority=='Low'}">selected</c:if>>Low</option>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="col-md-6">
+		                                        <div class="mb-3">
+		                                            <label for="updateSubtask_startdte" class="form-label">시작일</label>
+		                                            <input type="date" class="form-control" name="startdte" id="updateSub_startdte${sub.task_no}" value="${sub.startdte}">
+		                                        </div> 
+		                                    </div>
+		                                    <div class="col-md-6">
+		                                        <div class="mb-3">
+		                                            <label for="updateSubtask_enddte" class="form-label">종료일</label>
+		                                            <input type="date" class="form-control" name="enddte" id="updateSub_enddte${sub.task_no}" value="${sub.enddte}">
+		                                        </div> 
+		                                    </div>
+		                                </div>
+		                            </div>
+		                             <div class="modal-footer">
+		                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
+		                                <%--data-bs-dismiss="modal" --%>
+		                                <input type="submit" class="btn btn-info waves-effect waves-light"  id="updateSubtaskBtn${sub.task_no}" value="수정"/>
+		                            </div>
+		                        </div><!-- /.modal-content -->
+		                    </div><!-- /.modal-dialog -->
+		                </div><!-- /.modal -->
+						</form>
+				 
+				</c:forEach>
+				
 
+
+
+
+				<!--  태스크 수정 모달  -->
 				 <!--  Modal content for the Large example -->
                 <div class="modal fade" id="updateTaskModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myLargeModalLabel">[#MN2048] 태스크 수정</h4>
+                                <h4 class="modal-title" id="myLargeModalLabel">[#${detail.task_no}] 태스크 수정</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                             	<div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="field-1" class="form-label">태스크</label>
-                                            <input type="text" class="form-control" id="field-1" value="태스크 세부사항 화면구현">
+                                            <label for="updateTask_task_name" class="form-label">태스크</label>
+                                            <input type="text" class="form-control" id="updateTask_task_name" value="${detail.task_name }">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="field-4" class="form-label">담당자</label>
-                                            <input type="text" class="form-control" id="field-4" value="홍길동">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="field-5" class="form-label">중요도</label>
-                                            <select class="form-control" id="field-5">
-                                            	<option value="High">High</option>
-                                            	<option value="Medium">Medium</option>
-                                            	<option value="Low">Low</option>
+                                             <label for="updateTask_name" class="form-label">담당자</label>
+                                            <select class="form-control" id="updateTask_name">
+                                            	  <option value="${detail.pno}">${detail.name}</option>
+                                            	<c:forEach var="showm" items="${showMember }">
+                                                   <option value="${showm.pno }">${showm.name }</option>
+                                                 </c:forEach>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="field-4" class="form-label">기한</label>
-                                            <input type="date" class="form-control" id="date1" value="2021-04-20">
+                                            <label for="updateTask_task_priority" class="form-label">중요도</label>
+                                            <select class="form-control" id="updateTask_task_priority">
+                                            	<option value="High" <c:if test="${detail.task_priority=='High'}">selected</c:if>>High</option>
+                                            	<option value="Medium" <c:if test="${detail.task_priority=='Medium'}">selected</c:if>>Medium</option>
+                                            	<option value="Low" <c:if test="${detail.task_priority=='Low'}">selected</c:if>>Low</option>
+                                            </select>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="updateTask_startdte" class="form-label">시작일</label>
+                                            <input type="date" class="form-control" id="updateTask_startdte" value="${detail.startdte}">
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="updateTask_enddte" class="form-label">종료일</label>
+                                            <input type="date" class="form-control" id="updateTask_enddte" value="${detail.enddte}">
+                                        </div> 
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3 no-margin">
-                                            <label for="field-7" class="form-label">태스크 내용</label>
-                                            <textarea class="form-control" id="field-7">태스크리스트에서 각 태스크 클릭 시 나오는 세부사항 화면을 구현한다.</textarea>
+                                            <label for="updateTask_task_content" class="form-label">태스크 내용</label>
+                                            <textarea class="form-control" id="updateTask_task_content">${detail.task_content}</textarea>
                                         </div>
                                     </div>
                                 </div>            
                             </div>
                              <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
-                                <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal">수정</button>
+                                <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateTaskBtn">수정</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
 				
+				
+				<!-- 서브태스크 추가 모달  -->
 				 <!--  Modal content for the Large example   tabindex="-1"-->
-                <div class="modal fade" id="addSubTaskModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-
+                <div class="modal fade" id="addSubTaskModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myLargeModalLabel">세부태스크 추가</h4>
+                                <h4 class="modal-title" id="myLargeModalLabel">서브태스크 추가</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -650,43 +869,46 @@
                             	<div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="field-1" class="form-label">태스크</label>
-                                            <input type="text" class="form-control" id="addTask_taskName" placeholder="태스크명">
+                                            <label for="addTask_task_name" class="form-label">태스크</label>
+                                            <input type="text" class="form-control" id="addTask_task_name" placeholder="태스크명">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="field-4" class="form-label">담당자</label>
-                                            <input type="text" class="form-control" id="addTask_pName" placeholder="홍길동">
+                                            <label for="addTask_name" class="form-label">담당자</label>
+                                            <select class="form-control" id="addTask_name">
+                                            	  <option value="">사원선택</option>
+                                            	<c:forEach var="showm" items="${showMember }">
+                                                   <option value="${showm.pno }">${showm.name }</option>
+                                                 </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="field-5" class="form-label">중요도</label>
-                                            <select class="form-control" id="addTask_taskPriority">
+                                            <label for="addTask_task_priority" class="form-label">중요도</label>
+                                            <select class="form-control" id="addTask_task_priority">
                                             	<option value="High">High</option>
                                             	<option value="Medium">Medium</option>
                                             	<option value="Low">Low</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="field-4" class="form-label">기한</label>
-                                            <input type="date" class="form-control" id="addTask_taskDate">
+                                            <label for="addTask_startdte" class="form-label">시작일</label>
+                                            <input type="date" class="form-control" id="addTask_startdte">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="addTask_enddte" class="form-label">종료일</label>
+                                            <input type="date" class="form-control" id="addTask_enddte">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-3 no-margin">
-                                            <label for="field-7" class="form-label">태스크 내용</label>
-                                            <textarea class="form-control" id="addTask_taskContent" placeholder="태스크 설명"></textarea>
-                                        </div>
-                                    </div>
-                                </div>   
                                <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
                                 <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="addSubtaskBtn">추가</button>
@@ -695,7 +917,6 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-				
 				
 				 <!-- Info Alert Modal -->
                 <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
