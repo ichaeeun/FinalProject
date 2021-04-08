@@ -37,6 +37,19 @@
 
 	<!-- icons -->
 	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<script src="${path}/a00_com/jquery.min.js"></script>
+	<script src="${path}/a00_com/popper.min.js"></script>
+	<script src="${path}/a00_com/bootstrap.min.js"></script>
+	<script src="${path}/a00_com/jquery-ui.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var proc="${proc}";
+		if(proc=="insert"){
+			alert("PM 리스크 요청페이지로 전송되었습니다.");
+		};
+
+	});
+</script>
 </head>
 	<body class="loading">
 
@@ -75,8 +88,7 @@
                                 </div>
                             </div>
                         </div>     
-                        <!-- end page title --> 
-
+                        <!-- end page title -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
@@ -112,7 +124,7 @@
                                                         <th>등록일</th>
                                                         <th>리스크 상태</th>
                                                         <th>작성자</th>
-                                                        <th>작성자</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -125,7 +137,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                           ${rl.risk_no}
+                                                 			${rl.risk_no}
                                                         </td>
                                                         <td>   
                                                             <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_title}</a></h5>
@@ -134,25 +146,22 @@
                                                             <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_content}</a></h5>
                                                         </td>
                                                         <td>
-                                                            ${rl.risk_parent_no}
+                                                   			${rl.risk_parent_no}
                                                         </td>
                                                         <td>
-                                                            ${rl.regdte}
+                                                            <fmt:formatDate value="${rl.regdte}"/>
                                                         </td>
                                                         <td>
                                                             <div>
-                                                                ${rl.risk_category}
+                                                   				${rl.risk_category}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div>
-                                                                ${rl.risk_title}
+                                                     			${rl.risk_title}
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div>
-                                                                ${rl.risk_status}
-                                                            </div>
                                                         </td>
                                                     </tr>
                                               		</c:forEach>
@@ -165,12 +174,8 @@
                             </div>
                         </div>
                         <!-- end row -->
-
-                        
                     </div> <!-- container -->
-
                 </div> <!-- content -->
-
                 <!-- Footer Start -->
                 <footer class="footer">
                     <div class="container-fluid">

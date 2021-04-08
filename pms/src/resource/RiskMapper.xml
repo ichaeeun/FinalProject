@@ -8,6 +8,16 @@
 	<resultMap type="riskboard" id="riskMap"/>
 	<select id="rBoard" resultMap="riskMap">
 		select * from riskboard
+		where risk_status='승인'
+		order by risk_no
 	</select>
+	<!-- public void insertBoard(RiskBoard insert); -->
+	<insert id="insertBoard" parameterType="riskboard">
+		INSERT INTO riskboard values(
+			riskBoard_seq.nextval,#{risk_title},
+			#{risk_content},#{risk_category},
+			0,sysdate,'미승인')
+	</insert>
+
 </mapper>  
  

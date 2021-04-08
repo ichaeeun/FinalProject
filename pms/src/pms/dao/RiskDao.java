@@ -9,4 +9,6 @@ import pms.dto.RiskBoard;
 @Repository
 public interface RiskDao {
 	public ArrayList<RiskBoard> rBoard();
+	public void insertBoard(RiskBoard insert);
+	
 }

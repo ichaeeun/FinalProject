@@ -32,9 +32,23 @@
 		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 		<!-- icons -->
 		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
+		<script src="${path}/a00_com/jquery.min.js"></script>
+		<script src="${path}/a00_com/popper.min.js"></script>
+		<script src="${path}/a00_com/bootstrap.min.js"></script>
+		<script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		$("#mainBtn").click(function(){
+			location.href="${path}/risk.do?method=riskBoard";
+		});
+		
+		$("#sndBtn").click(function(){
+			$("[name=risk_content]").val( $("#snow-editor").text());
+			$("[name=risk_writer]").val("${mem.name}");
+			$("#riskboard").submit();
+		});
 
+	});
 </script>
 </head>
 	<body class="loading">
@@ -62,9 +76,9 @@
                                     <h4 class="page-title">리스크 작성 페이지</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                            <li class="breadcrumb-item active">Create Product</li>
+                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
+                                            <li class="breadcrumb-item"><a href="${path}/risk.do?method=riskBoard">리스크 목록</a></li>
+                                            <li class="breadcrumb-item active">리스크 작성</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -81,14 +95,7 @@
                                             <ul class="twitter-bs-wizard-nav mb-2">
                                                 <li class="nav-item">
                                                     <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="number">01</span>
                                                         <span class="d-none d-sm-inline">리스크 작성</span>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#product-img" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="number">02</span>
-                                                        <span class="d-none d-sm-inline">파일첨부</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -97,133 +104,63 @@
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
 
+                                             <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert" method="post" enctype="multipart/form-data">
+ 	                                            <input type="hidden" name="risk_writer" />
                                                     <div>
-                                                        
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="product-name" class="form-label">제목 <span class="text-danger">*</span></label>
-                                                                    <input type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요">
+                                                                    <form:input path="risk_title" type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요"/>
                                                             	</div>
                                                             </div>
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
-                                                            <div id="snow-editor" style="height: 200px;"></div> <!-- end Snow-editor-->
+             <!-- form: <--이걸로 하는 방법을 모름-->         	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
+                                                            <div id="snow-editor" style="height: 200px;">
                                                         </div>
-                                                        
+                                                        <input type="hidden" name="risk_content" />
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
-                                                                    <select class="form-control select2" id="product-category">
-                                                                        <option>Select</option>
-                                                                            <option value="SH1">결제</option>
-                                                                            <option value="SH2">커뮤니케이션</option>
-                                                                            <option value="SH3">프로젝트 기간</option>
-                                                                            <option value="SH4">기타</option>                       
-                                                                    </select>
+                                                                    <form:select path="risk_category" class="form-control select2" id="product-category">
+                                                                        <option value="결제">결제</option>
+                                                                        <option value="커뮤니케이션">커뮤니케이션</option>
+                                                                        <option value="프로젝트 기간">프로젝트 기간</option>
+                                                                        <option value="기타">기타</option>                       
+                                                                    </form:select>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="mb-2">어떻게 써먹지 <span class="text-danger">*</span></label>
-                                                            <br/>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
-                                                                <label for="inlineRadio1"> Online </label>
-                                                            </div>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                                                <label for="inlineRadio2"> Offline </label>
-                                                            </div>
-                                                            <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio3" value="option3" name="radioInline">
-                                                                <label for="inlineRadio3"> Draft </label>
-                                                            </div>
-                                                        </div>
-                    
-                                                   <!-- 
-                                                   		<div>
-                                                            <label class="form-label">Comment</label>
-                                                            <textarea class="form-control" rows="3" placeholder="Please enter comment"></textarea>
-                                                        </div>
-                                                         -->
                                                     </div>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                        <!-- 작성화면 전으로 돌아가는 버튼 -->
-                                                            <a href="${path}/risk.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
-                                                        </li>
-                                                        <li class="next list-inline-item">
-                                                            <button type="button" class="btn btn-success">파일 첨부<i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-pane" id="product-img">
-                                                    <h4 class="header-title">Product Images</h4>
-                                                    <p class="sub-header">Upload product image</p>
-
+                                                    <!--  
+                                                   	<div class="tab-pane" id="product-img">
+                                                    <h4 class="header-title">첨부 파일</h4>
+                                                    <p class="sub-header">참고해야할 파일을 올려주세요</p>
                                                     <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
                                                         data-upload-preview-template="#uploadPreviewTemplate">
                                                         <div class="fallback">
                                                             <input name="file" type="file" multiple />
                                                         </div>
-                
-                                                        <div class="dz-message needsclick">
-                                                            <div class="mb-3">
-                                                                <i class="h1 text-muted ri-upload-cloud-2-line"></i>
-                                                            </div>
-                                                            <h3>Drop files here or click to upload.</h3>
-                                                            <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-                                                                <strong>not</strong> actually uploaded.)</span>
-                                                        </div>
                                                     </form>
+                                                    -->
+                                                    
                 
                                                     <!-- Preview -->
-                                                    <div class="dropzone-previews mt-3" id="file-previews"></div>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                            <button type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
-                                                        </li>
-                                                        <li class="next list-inline-item">
-                                                            <button type="button" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-pane" id="metadata">
-                                                    <h4 class="header-title">Meta Data</h4>
-                                                    <p class="sub-header">Fill all information below</p>
-
-                                                    <form>
-                                                        <div class="mb-3">
-                                                            <label for="product-meta-title" class="form-label">Meta title</label>
-                                                            <input type="text" class="form-control" id="product-meta-title" placeholder="Enter title">
-                                                        </div>
-                    
-                                                        <div class="mb-3">
-                                                            <label for="product-meta-keywords" class="form-label">Meta Keywords</label>
-                                                            <input type="text" class="form-control" id="product-meta-keywords" placeholder="Enter keywords">
-                                                        </div>
-                    
-                                                        <div>
-                                                            <label for="product-meta-description" class="form-label">Meta Description </label>
-                                                            <textarea class="form-control" rows="5" id="product-meta-description" placeholder="Please enter description"></textarea>
-                                                        </div>
-                                                    </form>
-
-                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                        <li class="previous list-inline-item">
-                                                            <button type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> Edit Information </button>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <button type="submit" class="btn btn-success">Publish Product <i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                        </li>
-                                                    </ul>
+	                                       			<div class="dropzone-previews mt-3" id="file-previews"></div>
+	                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
+	                                                        <li class="previous list-inline-item">
+	                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
+	                                                        </li>
+	                                                        <li class="next list-inline-item">
+	                                                            <button type="button" id="sndBtn" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
+	                                                        </li>
+	                                                    </ul>
+	                                                </div>
+                                                </form:form>
+                                                
                                                 </div>
                                             </div>
                                             

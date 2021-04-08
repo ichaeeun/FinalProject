@@ -1,10 +1,13 @@
 package pms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import pms.dto.RiskBoard;
 import pms.service.RiskService;
 
 @Controller
@@ -24,11 +27,24 @@ public class RiskController {
 	public String riskdetail() {
 		return"risk_detail";
 	}
+	
+	
 	// http://localhost:7080/pms/risk.do?method=riskBoardCreate
 	@RequestMapping(params="method=riskBoardCreate")
-	public String riskformCreate() {
+	public String riskformCreate(@ModelAttribute("riskboard") RiskBoard b) {
 		return"riskBoardCreate";		
 	}
+	// http://localhost:7080/pms/risk.do?method=insert
+	@RequestMapping(params = "method=insert")
+	public String insertBoard(RiskBoard insert, Model d) {
+		service.insertBoard(insert);
+		d.addAttribute("proc","insert");
+		d.addAttribute("risklist",service.rBoard());
+		return "riskBoard";
+	}
+	
+	
+	
 	// http://localhost:7080/pms/risk.do?method=riskRequest
 	@RequestMapping(params="method=riskRequest")
 	public String riskrequest() {

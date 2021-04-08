@@ -143,7 +143,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/risk.do?method=riskRequest">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -186,7 +186,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/risk.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>s
 	                    </div>
