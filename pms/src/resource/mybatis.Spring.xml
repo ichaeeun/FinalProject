@@ -30,5 +30,6 @@
 
       <mapper resource="resource/TaskDetailMapper.xml"/>
 
+      <mapper resource="resource/ProjectMapper.xml"/>
    </mappers>
 </configuration>

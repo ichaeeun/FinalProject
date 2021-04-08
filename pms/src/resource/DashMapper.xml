@@ -16,7 +16,7 @@
 		select * from pms_member where id = #{id}
 							and pass = #{pass}
 	</select>
-	<!-- 코드 추가 -->
+	<!-- 코드 추가 
 	<select id="totCnt" resultType="int" parameterType="pms_projectSch">
 		select count(*)
 		from pms_project
@@ -35,7 +35,7 @@
 		WHERE cnt BETWEEN #{start} AND #{end}
 		
 	</select>
-	
+	-->
 
 </mapper>  
  

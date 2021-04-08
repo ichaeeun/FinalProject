@@ -11,49 +11,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+        <meta charset="utf-8" />
+        <title>Products List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
+        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+
+        <!-- third party css -->
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
 		<!-- App css -->
-		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path }/a00_com/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
 		<!-- icons -->
-		<link href="${path }/a00_com/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
+    </head>
 
-$(document).ready(function(){
-   
-});
-function goPage(page){
-		$("[name=curPage]").val(page);
-		$("form").submit();
-	};
-</script>
-</head>
-
-<body class="loading">
+<body class="loading" data-layout-mode="detached" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
         <!-- Begin page -->
         <div id="wrapper">
 
             <!-- Topbar Start -->
-            <jsp:include page="top.jsp" flush="false"/>
+            <jsp:include page="top.jsp"/>
             <!-- end Topbar -->
 
             <!-- ========== Left Sidebar Start ========== -->
             <jsp:include page="side.jsp" flush="false"/>
             <!-- Left Sidebar End -->
 
-             <!-- ============================================================== -->
-            <!-- Start Page Content here(완료한 프로젝트 테이블로 출력) -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
             <!-- ============================================================== -->
 
             <div class="content-page">
@@ -61,20 +58,31 @@ function goPage(page){
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-			
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box page-title-box-alt">
+                                    <h4 class="page-title">프로젝트 리스트</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                                            <li class="breadcrumb-item active">Products List</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title --> 
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
-                                                <a href="${path }/task.do?method=view" class="btn btn-info mb-2">오버뷰</a>
-                                                <%-- <a href="${path}/" class="btn btn-info mb-2">대시보드</a> --%>
-                                                <a href="${path}/main.do?method=gantt" class="btn btn-info mb-2">간트</a>
-                                                <%-- <a href="${path}/main.do?method=data" class="btn btn-info mb-2">캘린더</a> --%>
-                                                <a href="${path}/task.do?method=list" class="btn btn-info mb-2">태스크리스트</a>
-                                                <a href="${path}/task.do?method=log" class="btn btn-info mb-2">활동로그</a>
-                                                <a href="${path}/main.do?method=riskBoard" class="btn btn-info mb-2">리스크</a>
+                                                <a href="#" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>프로젝트 추가</a>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="float-sm-end">
@@ -85,10 +93,7 @@ function goPage(page){
                                             </div><!-- end col-->
                                         </div>
                                         <!-- end row -->
-                                        
-                						<!-- ================================ -->
-                						<!-- 테이블 관련 코드 시작 -->
-                						<!-- ================================ -->
+                
                                         <div class="table-responsive">
                                             <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">
@@ -100,29 +105,21 @@ function goPage(page){
                                                             </div>
                                                         </th>
                                                         <th class="all">프로젝트명</th>
+                                                        <th>프로젝트번호</th>
                                                         <th>시작일</th>
                                                         <th>종료일</th>
                                                         <th>담당PM</th>
+                                                        <th>Quantity</th>
                                                         <th>현재상태</th>
-                                                        <th>Action</th>
+                                                        <th style="width: 85px;">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <form:form modelAttribute="sch" method="post">
-                                                <div class="input-group-prepend">
-									  		<span class="btn btn-info">총 : ${sch.count} 건</span>
-									  		
-									  	</div>
-	                                                <%--현재 클릭한 페이지번호 --%>
-											     	<form:hidden path="curPage"/>
-													<form:input path="project_name" placeholder="제목" />
-											
-													<button class="btn btn-success" type="submit">Search</button>
-
-                                                </form:form>
-                                                
-                                                
+                                                <!-- ---------------------------------------------------- -->
+                                                <!-- 테이블 몸통 시작(데이터베이스에 있는 목록 출력) -->
+                                                <!-- ---------------------------------------------------- -->
                                                 <tbody>
-                                                <c:forEach var="bd" items="${boardList}">
+                                                
+                                                	<c:forEach var="bd" items="${boardList}">
                                                     <tr>
                                                         <td>
                                                             <div class="form-check font-16 mb-0">
@@ -133,12 +130,25 @@ function goPage(page){
                                                         <td>
                                                             <h5 class="m-0 d-inline-block align-middle"><a href="#" class="text-dark">${bd.project_name}</a></h5>
                                                         </td>
-                                                        <td>${bd.start1}</td>
-                                                        <td>${bd.end1}</td>
-                                                        <td>${bd.pm_pno}</td>
+                                                        <td>
+                                                            ${bd.project_no}
+                                                        </td>
+                                                        <td>
+                                                            ${bd.start1}
+                                                        </td>
+                                                        <td>
+                                                            ${bd.end1}
+                                                        </td>
+                                                        <td>
+                                                            ${bd.pm_pno}
+                                                        </td>
+                                                        <td>
+                                                            @@
+                                                        </td>
                                                         <td>
                                                             <span class="badge badge-soft-success">${bd.project_status}</span>
                                                         </td>
+                    
                                                         <td>
                                                             <ul class="list-inline table-action m-0">
                                                                 <li class="list-inline-item"> 
@@ -153,14 +163,15 @@ function goPage(page){
                                                             </ul>
                                                         </td>
                                                     </tr>
-                                                    </c:forEach>
+													</c:forEach>
+                                                    
+
                                                 </tbody>
+                                            	<!-- ---------------------------------------------------- -->
+                                                <!-- 테이블 몸통 끝-->
+                                                <!-- ---------------------------------------------------- -->
                                             </table>
                                         </div>
-                                    	<!-- ================================ -->
-                						<!-- 테이블 관련 코드 끝 -->
-                						<!-- ================================ -->
-                						
                                     </div>
                                 </div>
                             </div>
@@ -169,36 +180,34 @@ function goPage(page){
 
                         
                     </div> <!-- container -->
-                <!-- ===================== -->    
-				<!-- 페이지 번호 관련 코드 start -->
-			<ul class="pagination justify-content-center"> 
-			  	<li class="page-item">
-			  	<!-- 이전(previous)을 클릭시, 기본적으로 현재블럭의 시작번호 -1로 처리되게 한다. -->
-			  	<a class="page-link" 
-			  		href="javascript:goPage(${sch.startBlock-1})">Previous</a>
-			  	</li>
-			  	<!-- 블럭은 시작블럭과 마지막 블럭번호를 반복문으로 수행하게 한다. -->
-			  	<c:forEach var="cnt" begin="${sch.startBlock}" 
-			  						 end="${sch.endBlock}">
-			  		<!-- 클릭한 현재 페이지번호와 반복되는 페이지 번호가 같으면 active 클래스 적용 -->
-			  		<li class="page-item ${sch.curPage==cnt?'active':''}">
-				  		<a class="page-link" 
-				  		href="javascript:goPage(${cnt})">${cnt}</a></li>
-			  	</c:forEach>
-			  	<li class="page-item">
-			  	<!-- 다음(next)을 클릭시, 현재블럭의 마지막번호 +1로 처리되게 한다. -->
-			  	<a class="page-link" 
-			  		href="javascript:goPage(${sch.endBlock+1})">Next</a>
-			  	</li>
-		  	</ul>
-		  	<!-- 페이징 번호 관련 코드 end -->
-		  	<!-- =================== -->
+
                 </div> <!-- content -->
 
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
             </div>
-			<!-- ============================================================== -->
+            <!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
+
+
         </div>
         <!-- END wrapper -->
 
@@ -212,17 +221,15 @@ function goPage(page){
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- plugin js -->
-        <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/interaction/main.min.js"></script>
+        <!-- third party js -->
+        <script src="${path}/Admin/dist/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+        <!-- third party js ends -->
 
-        <!-- Calendar init -->
-        <script src="${path}/Admin/dist/assets/js/pages/calendar.init.js"></script>
+        <script src="${path}/Admin/dist/assets/js/pages/product-list.init.js"></script>
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>

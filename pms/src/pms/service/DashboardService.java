@@ -27,7 +27,7 @@ public class DashboardService {
 		return dao.IsMem(member);
 	}
 	// 코드 추가
-	public ArrayList<pms_project> pms_projectList(pms_projectSch sch){
+	/*public ArrayList<pms_project> pms_projectList(pms_projectSch sch){
 		if(sch.getProject_name()==null) sch.setProject_name("");
 		// 1. 데이터 총건수 할당.
 		sch.setCount(dao.totCnt(sch));
@@ -69,7 +69,7 @@ public class DashboardService {
 		
 		return dao.pms_projectList(sch);
 		
-	}
+	}*/
 	   public ArrayList<Task> getTask(Project project) {
 		      ArrayList<Task> t = new ArrayList<Task>();
 		      t = dao.getTask(project);
