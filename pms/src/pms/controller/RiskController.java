@@ -22,6 +22,12 @@ public class RiskController {
 		d.addAttribute("risklist", service.rBoard());
 		return "riskBoard";
 	}
+	// http://localhost:7080/pms/risk.do?method=riskRequest
+	@RequestMapping(params="method=riskRequest")
+	public String riskrequest(Model d) {
+		d.addAttribute("requestlist",service.rBoard_request());
+		return"risk_request";		
+	}
 	// http://localhost:7080/pms/risk.do?method=riskDetail
 	@RequestMapping(params="method=riskDetail")
 	public String riskdetail() {
@@ -42,13 +48,6 @@ public class RiskController {
 		d.addAttribute("risklist",service.rBoard());
 		return "riskBoard";
 	}
-	
-	
-	
-	// http://localhost:7080/pms/risk.do?method=riskRequest
-	@RequestMapping(params="method=riskRequest")
-	public String riskrequest() {
-		return"risk_request";		
-	}
+
 
 }

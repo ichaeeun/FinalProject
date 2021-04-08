@@ -7,10 +7,24 @@
 <mapper namespace="pms.dao.RiskDao">
 	<resultMap type="riskboard" id="riskMap"/>
 	<select id="rBoard" resultMap="riskMap">
-		select * from riskboard
-		where risk_status='승인'
-		order by risk_no
+		SELECT rownum rnum, b.* from(
+			SELECT * FROM RISKBOARD 
+			where risk_status='승인'
+			ORDER BY risk_no
+			) b
+		ORDER BY rnum
+
 	</select>
+	
+	<select id="rBoard_request" resultMap="riskMap">
+		SELECT rownum rnum, b.* from(
+			SELECT * FROM RISKBOARD 
+			where risk_status='미승인'
+			ORDER BY risk_no
+			) b
+		ORDER BY rnum
+	</select>
+	
 	<!-- public void insertBoard(RiskBoard insert); -->
 	<insert id="insertBoard" parameterType="riskboard">
 		INSERT INTO riskboard values(

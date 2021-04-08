@@ -120,7 +120,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                               	<c:forEach var="rl" items="${risklist}">
+                                               	<c:forEach var="rl" items="${requestlist}">
                                                     <tr>
                                                         <td>
                                                             <div class="form-check mb-0 font-16">
@@ -129,7 +129,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                 			${rl.risk_no}
+                                                 			${rl.rnum}
                                                         </td>
                                                         <td>   
                                                             <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_title}</a></h5>

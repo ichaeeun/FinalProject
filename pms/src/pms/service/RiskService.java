@@ -16,6 +16,9 @@ public class RiskService {
 	public ArrayList<RiskBoard> rBoard(){
 		return dao.rBoard();
 	}
+	public ArrayList<RiskBoard> rBoard_request(){
+		return dao.rBoard_request();
+	}
 	
 	public void insertBoard(RiskBoard insert) {
 		dao.insertBoard(insert);

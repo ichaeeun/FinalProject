@@ -137,7 +137,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                 			${rl.risk_no}
+                                                 			${rl.rnum}
                                                         </td>
                                                         <td>   
                                                             <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_title}</a></h5>

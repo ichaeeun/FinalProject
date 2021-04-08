@@ -2,6 +2,7 @@ package pms.dto;
 import java.util.Date;
 
 public class RiskBoard {
+	private int rnum;
 	private int risk_no;	
 	private String risk_title;
 	private String risk_content;
@@ -14,6 +15,15 @@ public class RiskBoard {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	public String getRisk_title() {
 		return risk_title;
 	}
