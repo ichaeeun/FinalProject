@@ -11,6 +11,9 @@
     <head>
         <meta charset="utf-8" />
         <title>Tasks List</title>
+        <style type="text/css">
+        table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -76,164 +79,129 @@ $(document).ready(function(){
                         </div>     
                         <!-- end page title --> 
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- cta -->
-                                                <div class="row">
-                                                	<c:if test="${mem.auth == 'pm' }">
-                                                    <div class="col-sm-3">
-                                                        <a href="#" class="btn btn-primary waves-effect waves-light"><i class='fe-plus me-1'></i>할일 추가</a>
-                                                    </div>
-                                                    </c:if>
-                                                    <div class="col-sm-9">
-                                                        <div class="float-sm-end mt-3 mt-sm-0">
-                                                            <div class="d-flex align-items-start flex-wrap">
-                                                                <div class="mb-3 mb-sm-0 me-sm-2">
-                                                                    <form>
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="form-control" placeholder="Search...">
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-light dropdown-toggle" type="button"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <i class="mdi mdi-filter-variant"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a class="dropdown-item" href="#">Due Date</a>
-                                                                        <a class="dropdown-item" href="#">Added Date</a>
-                                                                        <a class="dropdown-item" href="#">Assignee</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Tasks List</h4>
+                                        <p class="sub-header">
+                                            현재 프로젝트의 전체 태스크 리스트 입니다.
+                                        </p>
+    
+                                        <div class="mb-2">
+                                            <div class="row row-cols-lg-auto g-2 align-items-center">
+                                                <div class="col-12">
+                                                    <div>
+                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
+                                                            <option value="">Show all</option>
+                                                            <option value="High">High</option>
+                                                            <option value="Medium">Medium</option>
+                                                            <option value="Low">Low</option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="custom-accordion">
-                                                    <div class="mt-4">
-                                                        <h5 class="position-relative mb-0"><a href="#taskcollapse1" class="text-dark d-block" data-bs-toggle="collapse">오늘의 할일 <span class="text-muted">(${TaskList.size()})</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
-                                                        <div class="collapse show" id="taskcollapse1">
-                                                            <div class="table-responsive mt-3">
-                                                                <table class="table table-centered table-nowrap table-borderless table-sm">
-                                                                    <thead class="table-light">
-                                                                        <tr class="">
-                                                                            <th scope="col">
-                                                                                <div class="form-check">
-                                                                                    <label class="form-check-label" for="tasktodayCheck">Task ID</label>
-                                                                                </div>
-                                                                            </th>
-                                                                            <th scope="col">Tasks</th>
-                                                                            <th scope="col">Assign to</th>
-                                                                            <th scope="col">Due Date</th>
-                                                                            <th scope="col">Task priority</th>                                                                  
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <c:forEach var="task" items="${TaskList}">                    
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-check">
-                                                                                    <label class="form-check-label" for="tasktodayCheck01">${task.task_no}</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td onclick="location.href='${path}/taskdetail.do?method=list'">${task.task_name }</td>
-                                                                            <td>
-                                                                            ${task.name}
-                                                                            </td>
-                                                                            <td>${task.enddte}</td>
-                                                                            <td>
-                                                                            <c:choose>    
-                                                                            <c:when test="${task.task_priority eq 'High'}">
-                                                                            	<span class="badge badge-soft-danger p-1">
-                                                                            </c:when>
-                                                                            <c:when test="${task.task_priority eq 'Medium'}">
-                                                                            	<span class="badge badge-soft-success p-1">
-                                                                            </c:when>
-                                                                            <c:otherwise>
-                                                                            	<span class="badge badge-soft-info p-1">
-                                                                            </c:otherwise>
-                                                                        	</c:choose>	
-                                                                        	${task.task_priority}</span></td> 
-                                                                        </tr>
-                                                                       </c:forEach>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mt-4">
-                                                        <h5 class="position-relative mb-0"><a href="#taskcollapse2" class="text-dark d-block" data-bs-toggle="collapse">마감 임박<span class="text-muted">(${TaskList.size()})</span> <i class="mdi mdi-chevron-down accordion-arrow"></i></a></h5>
-                                                        <div class="collapse show" id="taskcollapse2">
-                                                            <div class="table-responsive mt-3">
-                                                                <table class="table table-centered table-nowrap table-borderless table-sm">
-                                                                    <thead class="table-light">
-                                                                        <tr class="">
-                                                                            <th scope="col">
-                                                                                <div class="form-check">      
-                                                                                    <label class="form-check-label" for="taskupcomingCheck">Task ID</label>
-                                                                                </div>
-                                                                            </th>
-                                                                            <th scope="col">Tasks</th>
-                                                                            <th scope="col">Assign to</th>
-                                                                            <th scope="col">Due Date</th>
-                                                                            <th scope="col">Task priority</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    
-                                                                  		<c:forEach var="task" items="${TaskList2}" begin="0" end="4">                    
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-check">
-                                                                                    <label class="form-check-label" for="tasktodayCheck01">${task.task_no}</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            
-                                                                            <td onclick="location.href='${path}/taskdetail.do?method=list'">${task.task_name }</td>
-                                                                            
-                                                                            <td>
-                                                                            ${task.name}
-                                                                                
-                                                                            </td>
-                                                                            <td>${task.enddte}</td>
-																			<td>
-                                                                            <c:choose>    
-                                                                            <c:when test="${task.task_priority eq 'High'}">
-                                                                            	<span class="badge badge-soft-danger p-1">
-                                                                            </c:when>
-                                                                            <c:when test="${task.task_priority eq 'Medium'}">
-                                                                            	<span class="badge badge-soft-success p-1">
-                                                                            </c:when>
-                                                                            <c:otherwise>
-                                                                            	<span class="badge badge-soft-info p-1">
-                                                                            </c:otherwise>
-                                                                        	</c:choose>	
-                                                                        	${task.task_priority}</span></td> 
-                                                                        </tr>
-                                                                       </c:forEach>
-                                                                  
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                               
+                                                <div class="col-12">
+                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
                                                 </div>
-                                                
                                             </div>
                                         </div>
+                                        
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                <thead>
+                                                <tr>
+                                                	<th>Task ID</th>
+                                                    <th data-toggle="true">Tasks</th>
+                                                    <th>Assign to</th>
+                                                    <th data-hide="phone, tablet">Due Date</th>
+                                                    <th data-hide="phone, tablet">Task priority</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach var="task" items="${TaskList}">          
+                                                <tr  onclick="location.href='${path}/taskdetail.do?method=list'">
+                                                	<td>${task.task_no}</td>
+                                                    <td>${task.task_name}</td>
+                                                    <td>${task.name}</td>
+                                                    <td>${task.enddte}</td>                                             
+                                                      <td>
+                                                      <c:choose>    
+                                                      <c:when test="${task.task_priority eq 'High'}">
+                                                      	<span class="badge label-table badge-soft-danger p-1">
+                                                      </c:when>
+                                                      <c:when test="${task.task_priority eq 'Medium'}">
+                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      </c:when>
+                                                      <c:otherwise>
+                                                      	<span class="badge label-table badge-soft-info p-1">
+                                                      </c:otherwise>
+                                                  	</c:choose>	
+                                                  	${task.task_priority}</span></td> 
+                                                </tr>
+                                            </c:forEach>                                                                   
+                                                </tbody>
+                                                <tfoot>
+                                                <tr class="active">
+                                                    <td colspan="10">
+                                                        <div>
+                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div> <!-- end .table-responsive-->
                                     </div>
-                                </div>
-                            </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                                              <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">마감 임박</h4>
+                                        <p class="sub-header">
+                                            시한이 얼마 남지 않은 태스크 입니다.
+                                        </p>
+
+                                        <table class="tablesaw table mb-0" data-tablesaw-sortable data-tablesaw-sortable-switch>
+                                            <thead>
+                                            <tr>
+                                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Task ID</th>
+                                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col data-tablesaw-priority="3">Tasks</th>
+                                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Assign to</th>
+                                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Due Date</th>
+                                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">Task priority</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                          <c:forEach var="task" items="${TaskList2}">          
+                                                <tr  onclick="location.href='${path}/taskdetail.do?method=list'">
+                                                	<td>${task.task_no}</td>
+                                                    <td>${task.task_name}</td>
+                                                    <td>${task.name}</td>
+                                                    <td>${task.enddte}</td>                                             
+                                                      <td>
+                                                      <c:choose>    
+                                                      <c:when test="${task.task_priority eq 'High'}">
+                                                      	<span class="badge label-table badge-soft-danger p-1">
+                                                      </c:when>
+                                                      <c:when test="${task.task_priority eq 'Medium'}">
+                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      </c:when>
+                                                      <c:otherwise>
+                                                      	<span class="badge label-table badge-soft-info p-1">
+                                                      </c:otherwise>
+                                                  	</c:choose>	
+                                                  	${task.task_priority}</span></td> 
+                                                </tr>
+                                            </c:forEach>                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col-->
                         </div>
                         <!-- end row -->
                         
@@ -278,9 +246,11 @@ $(document).ready(function(){
 
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
-
+        <!-- Footable js -->
+        <script src="${path}/Admin/dist/assets/libs/footable/footable.all.min.js"></script>
+        <!-- Init js -->
+        <script src="${path}/Admin/dist/assets/js/pages/foo-tables.init.js"></script>
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-        
     </body>
 </html>

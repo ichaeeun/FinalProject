@@ -53,6 +53,7 @@ body {
   display: block; }
   .logo span.logo-lg {
     display: block; }
+ .logo span.logo-lg img{ height:70px!important; }
   .logo span.logo-sm {
     display: none; }
   .logo .logo-lg-text-dark {

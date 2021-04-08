@@ -334,21 +334,21 @@
                     <div class="logo-box">
                         <a href="${path}/main.do?method=main" class="logo logo-dark text-center">
                             <span class="logo-sm">
-                                <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="24">
+                                <img src="${path}/Admin/dist/assets/images/logo-sm-dark.png" alt="" height="70">
                                 <!-- <span class="logo-lg-text-light">Minton</span> -->
                             </span>
                             <span class="logo-lg">
-                                <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="20">
+                                <img src="${path}/Admin/dist/assets/images/logo-dark.png" alt="" height="70">
                                 <!-- <span class="logo-lg-text-light">M</span> -->
                             </span>
                         </a>
 
                         <a href="${path}/main.do?method=main" class="logo logo-light text-center">
                             <span class="logo-sm">
-                                <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="24">
+                                <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="70">
                             </span>
                             <span class="logo-lg">
-                                <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="20">
+                                <img src="${path}/Admin/dist/assets/images/logo-light.png" alt="" height="70">
                             </span>
                         </a>
                     </div>
