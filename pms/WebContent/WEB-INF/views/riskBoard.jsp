@@ -158,7 +158,7 @@
                                                         </td>
                                                         <td>
                                                             <div>
-                                                     			${rl.risk_title}
+                                                     			${mem.name}
                                                             </div>
                                                         </td>
                                                         <td>
