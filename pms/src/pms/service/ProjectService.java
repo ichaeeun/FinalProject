@@ -59,6 +59,11 @@ public class ProjectService {
 		return dao.pms_projectList(sch);
 		
 	}
-	
+	public pms_project getProject(int no) {
+		// 기본 정보 할당
+		pms_project pms_project = dao.getProject(no);
+		return pms_project;
+		
+	}
 	
 }

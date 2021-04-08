@@ -4,15 +4,13 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
    
 <mapper namespace="pms.dao.ProjectDao">
-	<!-- 코드 추가 -->
 	<select id="totCnt" resultType="int" parameterType="pms_projectSch">
 		select count(*)
 		from pms_project
 		where project_name like '%'||#{project_name}||'%'
 	</select>
 	<resultMap type="pms_project" id="pms_projectMap"/>
-	<select id="pms_projectList" resultMap="pms_projectMap"
-		parameterType="pms_projectSch">
+	<select id="pms_projectList" resultMap="pms_projectMap" parameterType="pms_projectSch">
 		SELECT *
 		FROM (
 			select rownum cnt, a.*
@@ -21,9 +19,13 @@
 			order by project_no desc
 		)
 		WHERE cnt BETWEEN #{start} AND #{end}
-		
 	</select>
-	
+	<!-- public pms_project getProject(int no); --><!-- 프로젝트번호로 프로젝트 상세정보 출력 -->
+	<select id="getProject" resultType="pms_project" parameterType="int">
+		SELECT *
+		FROM pms_project
+		WHERE project_no = #{NO}
+	</select>
 
 </mapper>  
  

@@ -68,13 +68,13 @@ function goPage(page){
 									<div class="card-body">
 										<ul class="nav nav-tabs nav-bordered" style="margin-top:10px;">
 								            <li class="nav-item">
-												<a href="${path }/task.do?method=view"  class="nav-link">
+												<a href="${path }/task.do?method=view"  class="nav-link active">
 													<span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
 													<span class="d-none d-sm-inline-block">오버뷰</span>
 												</a>
 											</li>
 											<li class="nav-item">
-												<a href="${path}/task.do?method=list" class="nav-link active">
+												<a href="${path}/task.do?method=list" class="nav-link">
 								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 								                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 								                </a>
@@ -114,6 +114,29 @@ function goPage(page){
 								</div>
                             </div>
 						</div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="project-body">
+                                                    <div class="py-1">
+                                                        <i class="fe-archive font-24"></i>
+                                                        <h3 class="text-warning">${pms_project.project_name}</h3>
+                                                        <p class="text-uppercase mb-1 font-13 fw-medium">
+                                                        프로젝트 관리 소프트웨어는 리소스 도구를 계획, 조직, 관리하는 것을 도와주고 리소스 추산치를 만드는 소프트웨어이다.<br>
+                                                        프로젝트 관리 시스템은 프로젝트의 정량적인 성과 및 진행 지표를 체계적으로 관리하기 위한 것이다. 
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- end row -->
                         
                     </div> <!-- container -->

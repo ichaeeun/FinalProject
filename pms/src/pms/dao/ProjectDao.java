@@ -12,4 +12,5 @@ public interface ProjectDao {
 	// (프로젝트 리스트 출력 코드)추가
 	public int totCnt(pms_projectSch sch);
 	public ArrayList<pms_project> pms_projectList(pms_projectSch sch);
+	public pms_project getProject(int no);
 }

@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="java.util.*"
-%>
+    import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -33,7 +31,16 @@
 
 		<!-- icons -->
 		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
+		
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});
+function goPage(page){
+		$("[name=curPage]").val(page);
+		$("form").submit();
+	};
+</script>
     </head>
 
 <body class="loading" data-layout-mode="detached" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
@@ -112,7 +119,7 @@
                                                         <th>시작일</th>
                                                         <th>종료일</th>
                                                         <th>담당PM</th>
-                                                        <th>Quantity</th>
+                                                        <th></th>
                                                         <th>현재상태</th>
                                                         <th style="width: 85px;">Action</th>
                                                     </tr>
@@ -120,6 +127,17 @@
                                                 <!-- ---------------------------------------------------- -->
                                                 <!-- 테이블 몸통 시작(데이터베이스에 있는 목록 출력) -->
                                                 <!-- ---------------------------------------------------- -->
+                                                <form:form modelAttribute="sch" method="post">
+                                                <div class="input-group-prepend">
+									  				<span class="btn btn-info">총 : ${sch.count} 건</span>
+									  			</div>
+	                                                <%--현재 클릭한 페이지번호 --%>
+											     	<form:hidden path="curPage"/>
+													<form:input path="project_name" placeholder="제목" />
+											
+													<button class="btn btn-success" type="submit">Search</button>
+
+                                                </form:form>
                                                 <tbody>
                                                 
                                                 	<c:forEach var="bd" items="${boardList}">
@@ -131,7 +149,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/project.do?method=project_detail" class="text-dark">${bd.project_name}</a></h5>
+                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/project.do?method=project_detail&no=${bd.project_no}" class="text-dark">${bd.project_name}</a></h5>
                                                         </td>
                                                         <td>
                                                             ${bd.project_no}
@@ -146,7 +164,7 @@
                                                             ${bd.pm_pno}
                                                         </td>
                                                         <td>
-                                                            @@
+                                                            
                                                         </td>
                                                         <td>
                                                         	<c:choose>
@@ -190,7 +208,28 @@
 
                         
                     </div> <!-- container -->
-
+					<!-- 페이지 번호 관련 코드 start -->
+			<ul class="pagination justify-content-center"> 
+			  	<li class="page-item">
+			  	<!-- 이전(previous)을 클릭시, 기본적으로 현재블럭의 시작번호 -1로 처리되게 한다. -->
+			  	<a class="page-link" 
+			  		href="javascript:goPage(${sch.startBlock-1})">Previous</a>
+			  	</li>
+			  	<!-- 블럭은 시작블럭과 마지막 블럭번호를 반복문으로 수행하게 한다. -->
+			  	<c:forEach var="cnt" begin="${sch.startBlock}" 
+			  						 end="${sch.endBlock}">
+			  		<!-- 클릭한 현재 페이지번호와 반복되는 페이지 번호가 같으면 active 클래스 적용 -->
+			  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+				  		<a class="page-link" 
+				  		href="javascript:goPage(${cnt})">${cnt}</a></li>
+			  	</c:forEach>
+			  	<li class="page-item">
+			  	<!-- 다음(next)을 클릭시, 현재블럭의 마지막번호 +1로 처리되게 한다. -->
+			  	<a class="page-link" 
+			  		href="javascript:goPage(${sch.endBlock+1})">Next</a>
+			  	</li>
+		  	</ul>
+		  	<!-- 페이징 번호 관련 코드 end -->
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
