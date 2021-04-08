@@ -17,7 +17,76 @@ AND a.pno = b.pno; -->
 		AND a.project_no = c.project_no
 		AND a.pno = b.pno
 	</select>
+	<!-- public ArrayList<Task> subtaskList(int task_no); -->
+	<select id="subtaskList" resultType="task" parameterType="int">
+		SELECT a.* , b.name
+		FROM project_task a, pms_member b
+		WHERE task_parent_no =#{task_no}
+		AND a.pno = b.pno
+		ORDER BY task_no
+	</select>
 	
-
+	<!-- public int taskcurrval(); --> <!--  현재 task_no sequnce번호 확인을 위한 sql -->
+	<select id="taskcurrval" resultType="int">
+		SELECT 
+		LAST_NUMBER
+		FROM 
+		USER_SEQUENCES 
+		WHERE 
+		SEQUENCE_NAME = 'TASK_NO_SEQ'
+	</select>
+	
+	<!-- public void insertSubtask(Task t); -->
+	<insert id="insertSubtask" parameterType="task">
+		INSERT INTO project_task 
+		values(#{pno},#{project_no},task_no_seq.nextval,#{task_name},'',#{task_priority},#{task_parent_no},
+			#{startdte},#{enddte},'진행중')
+	</insert>
+	
+	<!-- public ArrayList<Task> showMember(int task_no); -->
+	<select id="showMember" resultType="task" parameterType="int">
+		SELECT c.pno, c.name
+		FROM pms_member_project a, project_task b, pms_member c 
+		WHERE b.project_no = a.project_no 
+		AND b.task_no= #{task_no}
+		AND a.pno = c.pno
+		ORDER BY name
+	</select>
+	
+	<!-- public void updateTask(Task t); // 태스크 수정  -->
+	<update id="updateTask" parameterType="task">
+		UPDATE 	project_task 
+		SET task_name = #{task_name},
+			pno = #{pno},
+			task_content = #{task_content},
+			task_priority = #{task_priority},
+			startdte=#{startdte},
+			enddte = #{enddte}
+		WHERE task_no = #{task_no}
+	</update>
+	
+	<!-- public void updateSub(Task t); -->
+	<update id="updateSub" parameterType="task">
+		UPDATE project_task
+		SET task_name=#{task_name},
+			TASK_PRIORITY =#{task_priority},
+			startdte=#{enddte},
+			enddte=#{startdte}
+		WHERE task_no=#{task_no}
+	</update>
+	
+	
+	<!-- public ArrayList<Comment> commentList(); -->
+	<select id="commentList" resultType="comment">
+		SELECT a.*, b.name 
+		FROM task_comment a, pms_member b
+		WHERE a.pno = b.pno
+		ORDER BY regdte
+	</select>
+	
+	<!-- public void insertComment(Comment com); -->
+	<insert id="insertComment" parameterType="comment">
+		INSERT INTO task_comment values(#{task_no},#{content},to_char(sysdate,'yyyy-MM-dd hh:mm:ss'),#{pno})
+	</insert>
 </mapper>  
  
