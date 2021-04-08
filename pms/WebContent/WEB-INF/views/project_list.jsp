@@ -82,7 +82,10 @@
                                     <div class="card-body">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
+                                            <!-- 멤버의 권한이 pm 일때만 프로젝트 추가 버튼 활성화 -->
+                                            <c:if test="${mem.auth == 'pm'}">
                                                 <a href="#" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>프로젝트 추가</a>
+                                            </c:if>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="float-sm-end">
@@ -128,7 +131,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="#" class="text-dark">${bd.project_name}</a></h5>
+                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/project.do?method=project_detail" class="text-dark">${bd.project_name}</a></h5>
                                                         </td>
                                                         <td>
                                                             ${bd.project_no}
@@ -146,7 +149,14 @@
                                                             @@
                                                         </td>
                                                         <td>
-                                                            <span class="badge badge-soft-success">${bd.project_status}</span>
+                                                        	<c:choose>
+                                                            <c:when test="${bd.project_status == '완료'}">
+                                                            	<span class="badge badge-soft-success">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            	<span class="badge badge-soft-danger">
+                                                            </c:otherwise>
+                                                            </c:choose>${bd.project_status}</span>
                                                         </td>
                     
                                                         <td>

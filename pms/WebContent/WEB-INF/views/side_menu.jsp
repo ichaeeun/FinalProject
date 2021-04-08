@@ -27,12 +27,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -64,12 +64,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -96,12 +96,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_detail">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -144,12 +144,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/main.do?method=done_project">
+                                <a href="${path }/project.do?method=project_list">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>

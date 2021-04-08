@@ -21,12 +21,13 @@ public class ProjectController {
 	public String pms_projectList(@ModelAttribute("sch") pms_projectSch sch, 
 			Model d, HttpServletRequest request) {
 		d.addAttribute("boardList", service.pms_projectList(sch));
-		return "done_project";
+		return "project_list";
 	}
 	// http://localhost:7080/pms/project.do?method=project_detail
 	@RequestMapping(params="method=project_detail")
 	public String pms_project() {
 		return "project_detail";
 	}
+	
 	
 }

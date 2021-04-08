@@ -1,13 +1,13 @@
 package pms.dto;
 /*
 create table pms_project(			-- 오버뷰, PM의 프로젝트 생성
-		project_no number,	// 프로젝트번호
-        project_name varchar2(100),	// 프로젝트명
+		project_no number,				// 프로젝트번호
+        project_name varchar2(100),		// 프로젝트명
         project_content varchar2(500),	// 프로젝트내용
         start1 varchar2(200),			// 시작일
-        end1 varchar2(200),			// 종료일
+        end1 varchar2(200),				// 종료일
         pm_pno number,					// pm번호
-        project_status varchar2(50)	// 프로젝트 상태
+        project_status varchar2(50)		// 프로젝트 상태
 ); 
 */
 public class pms_project {
