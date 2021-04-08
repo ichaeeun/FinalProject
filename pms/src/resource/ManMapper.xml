@@ -3,8 +3,70 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="pms.dao.ManPowerDao">
-
+	<!-- public ArrayList<Member> memList1(); -->
+	<select id="memList1" resultType="member" >
+		SELECT * FROM pms_member
+	</select>
+	<!-- public ArrayList<Integer> pnoList(HashMap<String,String> hm); -->
+	<resultMap type="int" id="pnoMap"/>
+	<select id="pnoList" resultType="int" parameterType="hashmap">
+		select pno
+		from pms_member
+		where auth = #{pm} or auth = #{wk}
+	</select>
+	<!-- public ProjectAdd projectList(int pno); -->
+	<resultMap type="proadd" id="projectMap"/>
+	<select id="projectList" resultMap="projectMap" parameterType="int">
+		select project_no 
+		from pms_member_project
+		where pno = #{pno}
+	</select>
+	<!-- public String status(int project_no); -->
+	<select id="status" parameterType="int" resultType="String">
+		SELECT project_status FROM pms_project
+		WHERE PROJECT_NO=#{project_no}
+	</select>
+	<!-- public Member memPoss(int pno); -->
+	<select id="memPoss" parameterType="int" resultType="member">
+		select *
+		from pms_member
+		where pno = #{pno}
+	</select>
+	<!-- public ArrayList<Member> deptList(); -->
+	<select id="deptList" resultType="member">
+		SELECT DISTINCT part FROM PMS_MEMBER
+	</select>
+	<!-- public ArrayList<Member> memList3(String part); -->
+	<select id="memList3" resultType="member" parameterType="String">
+		SELECT * 
+		FROM PMS_MEMBER
+		WHERE part like '%'||#{part}||'%'
+	</select>
 </mapper>   
-
+<!-- 
+<task 요청 페이지>
+1. 각 task 클릭시 task_detail 화면으로 넘어간다. 
+	[승인] 버튼을 누르면 task status가 '승인' 으로 바뀐다.
+		또한 요청 페이지에서 사라진다. 
+	[거절] 버튼을 누르면 task status가 '거절' 로 바뀐다.
+		또한 요청 페이지에서 사라진다. 
+<인력관리 페이지>
+1. 조회 기능 구현 (가용인원, 전체인원, 프로젝트별 인원)
+	- pno(사원번호)가 pms_member_project에는 없고, pms_member에는 있으면 '가용인원'
+	- pms_member를 select * 하면 '전체인원'
+	- pno가 pms_member_project에 있으면, project_no 컬럼의 값을 기준으로 select를 나누어서, 출력
+2. 검색 기능 구현(이름, 프로젝트명)
+	- 조회 조건에 더하여, where name = 를 추가
+	- 조회 조건에 더하여, where project_no = 를 추가
+3. 인원 할당(insert) 기능 구현
+	- 가용인원일 때 할당 버튼을 만든다.
+	- 할당 버튼을 클릭하면, 팝업창 띄워서
+	- select로 프로젝트의 이름을 띄우기
+	- 프로젝트를 선택하면 해당 프로젝트에 대해서 insert가 된다. 
+		pm_member_project에`
+4. 상세 보기 기능 구현	 
+5. 페이징 처리	구현	
+6. 계정 생성 (insert) pms_member
+ -->
 
 

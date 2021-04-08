@@ -40,12 +40,31 @@
                     </div>
                 </li>
  				<li>
-                    <a href="${path }/manpower.do?method=contacts_list">
+                    <a href="#sidebarMans"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                         <span> 인력 현황 </span>
                     </a>
+                    <div class="collapse" id="sidebarMans">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list">
+		                           <span id="list"> 전체인원 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list2">
+                           			<span> 가용인원 </span>
+                       			</a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list3">
+                           			<span> 부서별인원 </span>
+                       			</a>
+                            </li>                            
+                        </ul>
+                    </div>                    
                 </li>  
  				<li>
-                    <a href="${path }/risk.do?method=riskBoard">
+                    <a href="${path }/main.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                                              
@@ -82,7 +101,7 @@
                     </a>
                 </li>  
  				<li>
-                    <a href="${path }/risk.do?method=riskBoard">
+                    <a href="${path }/main.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                  
@@ -124,7 +143,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/risk.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -167,7 +186,7 @@
 	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/risk.do?method=riskBoard">리스크 요청</a>
+	                                <a href="${path }/main.do?method=riskBoard">리스크 요청</a>
 	                            </li>
 	                        </ul>s
 	                    </div>
