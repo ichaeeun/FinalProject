@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import pms.dto.Member;
 import pms.dto.ProjectAdd;
+import pms.dto.pms_project;
 
 // pms.manpower.dao.ManPowerDao
 @Repository
 public interface ManPowerDao {
 	// 전체인원
-	public ArrayList<Member> memList1();
+	public ArrayList<Member> memList1(String name);
 	// 가용인원 - pno 가져오기
 	public ArrayList<Integer> pnoList(HashMap<String,String> hm);
 	// 가용인원 - 1명 참여 프로젝트 가져오기
@@ -25,6 +26,10 @@ public interface ManPowerDao {
 	public ArrayList<Member> deptList();
 	// 부서인원 - 최종 조회
 	public ArrayList<Member> memList3(String part);
+	
+	// 프로젝트넘버에 따른 프로젝트
+	public pms_project project(int project_no);
+	public ArrayList<ProjectAdd> projectpno(int pno);
 }
 
 

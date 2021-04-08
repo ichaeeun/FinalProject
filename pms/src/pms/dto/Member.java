@@ -16,7 +16,16 @@ public class Member {
 	private String name;
 	private String email;
 	private String part;
-	private String auth;
+	private String auth;	
+	
+	public Member() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Member(String name) {
+		super();
+		this.name = name;
+	}
 	public int getPno() {
 		return pno;
 	}

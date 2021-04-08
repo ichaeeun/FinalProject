@@ -3,12 +3,13 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="pms.dao.ManPowerDao">
-	<!-- public ArrayList<Member> memList1(); -->
-	<select id="memList1" resultType="member" >
+	<!-- public ArrayList<Member> memList1(String name); -->
+	<select id="memList1" resultType="member" parameterType="String">
 		SELECT * FROM pms_member
+		where name like '%'||#{name}||'%'
 	</select>
 	<!-- public ArrayList<Integer> pnoList(HashMap<String,String> hm); -->
-	<resultMap type="int" id="pnoMap"/>
+	<!-- <resultMap type="int" id="pnoMap"/> -->
 	<select id="pnoList" resultType="int" parameterType="hashmap">
 		select pno
 		from pms_member
@@ -42,6 +43,23 @@
 		FROM PMS_MEMBER
 		WHERE part like '%'||#{part}||'%'
 	</select>
+	<!-- public ArrayList<Member> memSearch1(Member sch); -->
+	<select id="memSearch1" resultType="member" parameterType="member">
+		SELECT * FROM PMS_MEMBER
+		WHERE name LIKE '%'||#{name}||'%'
+	</select>
+	<!-- public pms_project project(int project_no); -->
+	<select id="project" parameterType="int" resultType="pms_project">
+		SELECT * 
+		FROM PMS_PROJECT
+		WHERE project_no=#{project_no}
+	</select>
+	<!-- public ArrayList<ProjectAdd> projectpno(int pno); -->
+	<select id="projectpno" resultType="proadd" parameterType="int">
+		select * 
+		from pms_member_project
+		where pno = #{pno}
+	</select>
 </mapper>   
 <!-- 
 <task 요청 페이지>
@@ -63,8 +81,11 @@
 	- 할당 버튼을 클릭하면, 팝업창 띄워서
 	- select로 프로젝트의 이름을 띄우기
 	- 프로젝트를 선택하면 해당 프로젝트에 대해서 insert가 된다. 
-		pm_member_project에`
+		pm_member_project에 
 4. 상세 보기 기능 구현	 
+	- member의 pno가 같아야 함
+	- 왼쪽에는 pms_member에서 이름 등을 출력
+	- 오른쪽에는 project에서 project 리스트를 출력
 5. 페이징 처리	구현	
 6. 계정 생성 (insert) pms_member
  -->

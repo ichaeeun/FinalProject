@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="java.util.*"
-%>
+    import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -13,19 +12,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="${path }/Admin/dist/assets/images/favicon.ico">
-		<!-- App css -->
-		<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path }/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-		<!-- icons -->
-		<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+ <!-- App favicon -->
+<link rel="shortcut icon" href="${path }/Admin/dist/assets/images/favicon.ico">
+
+<!-- plugin css -->
+<link href="${path }/Admin/dist/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+ <!-- Plugins css -->
+ <link href="${path }/Admin/dist/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+
+<!-- App css -->
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+<link href="${path }/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+<link href="${path }/Admin/dist//assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<script src="${path}/a00_com/jquery.min.js"></script>
+<script src="${path}/a00_com/popper.min.js"></script>
+<script src="${path}/a00_com/jquery-ui.js"></script>
+
 
 <script type="text/javascript">
 
@@ -68,37 +80,39 @@
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card text-center">
+                                <c:forEach var="mem" items="${memDetail }">
                                     <div class="card-body">
                                         <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xl img-thumbnail"
                                         alt="profile-image">
 
-                                        <h4 class="mt-3 mb-0">홍길동</h4>
-                                        <p class="text-muted">PM</p>
+                                        <h4 class="mt-3 mb-0">${mem.name }</h4>
+                                        <p class="text-muted">${mem.part }</p>
                                         <div class="text-start mt-3">
                                             <div class="table-responsive">
                                                 <table class="table table-borderless table-sm">
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">이름 :</th>
-                                                            <td class="text-muted">홍길동</td>
+                                                            <td class="text-muted">${mem.name }</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">연락처 :</th>
-                                                            <td class="text-muted">(123) 123 1234</td>
+                                                            <th scope="row">아이디 :</th>
+                                                            <td class="text-muted">${mem.id }</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">이메일 :</th>
-                                                            <td class="text-muted">hong@gmail.com</td>
+                                                            <td class="text-muted">${mem.email }</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">거주지역 :</th>
-                                                            <td class="text-muted">서울</td>
+                                                            <th scope="row">부서 </th>
+                                                            <td class="text-muted">${mem.part }</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
+                                </c:forEach>    
                                 </div> <!-- end card-box -->
 
                             </div> <!-- end col-->
@@ -108,7 +122,7 @@
                                     <div class="card-body">                                      
                                         <div class="tab-content">
                                             <div class="tab-pane show active" id="about-me" style="height:100%">
-                                                <h5 class="mb-3 mt-5 text-uppercase">Projects</h5>
+                                                <h5 class="text-uppercase">Projects</h5>
                                                 <div class="table-responsive">
                                                     <table class="table table-borderless table-nowrap mb-0">
                                                         <thead class="table-light">
@@ -118,51 +132,18 @@
                                                                 <th>Start Date</th>
                                                                 <th>Due Date</th>
                                                                 <th>Status</th>
-                                                                <th>Clients</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                        <c:forEach var="pro" items="${proList }" varStatus="sts">
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>App design and development</td>
-                                                                <td>01/01/2015</td>
-                                                                <td>10/15/2018</td>
-                                                                <td><span class="badge bg-info">Work in Progress</span></td>
-                                                                <td>Halette Boivin</td>
+                                                                <td>${sts.count }</td>
+                                                                <td>${pro.project_name }</td>
+                                                                <td>${pro.start1 }</td>
+                                                                <td>${pro.end1 }</td>
+                                                                <td><span class="badge bg-info">${pro.project_status }</span></td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>Coffee detail page - Main Page</td>
-                                                                <td>21/07/2016</td>
-                                                                <td>12/05/2018</td>
-                                                                <td><span class="badge bg-success">Pending</span></td>
-                                                                <td>Durandana Jolicoeur</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Poster illustation design</td>
-                                                                <td>18/03/2018</td>
-                                                                <td>28/09/2018</td>
-                                                                <td><span class="badge bg-pink">Done</span></td>
-                                                                <td>Lucas Sabourin</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>Drinking bottle graphics</td>
-                                                                <td>02/10/2017</td>
-                                                                <td>07/05/2018</td>
-                                                                <td><span class="badge bg-danger">On Hold</span></td>
-                                                                <td>Donatien Brunelle</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5</td>
-                                                                <td>Landing page design - Home</td>
-                                                                <td>17/01/2017</td>
-                                                                <td>25/05/2021</td>
-                                                                <td><span class="badge bg-warning">Coming soon</span></td>
-                                                                <td>Karel Auberjo</td>
-                                                            </tr>
-    
+                                                        </c:forEach>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -732,6 +713,14 @@
 
             </div> <!-- end slimscroll-menu-->
         </div>
+        
+        
+        
+        
+
+        
+        
+        
         <!-- /Right-bar -->
 
         <!-- Right bar overlay-->
@@ -742,6 +731,6 @@
 
         <!— App js —>
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-        
+      
     </body>
 </html>

@@ -40,9 +40,14 @@
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
-	  	$(document).ready(function(){	
-			
-		  	
+	  	$(document).ready(function(){
+			$("[name=goDetail]").click(function(){
+				var ename=$(this).text();
+				var pno = $("[name=pno]").val();
+				alert(ename);
+				alert(pno);
+				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
+			});
 	  	})
 	  </script>
     </head>
@@ -89,17 +94,19 @@
                         <div class="row mb-2">
                         	<c:if test="${mem.auth == 'hp' }">
                             <div class="col-sm-4">
-                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
+                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up Modal</button>
                             </div>
                             </c:if>
                             <div class="col-sm-8">
                                 <div>
-                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
+                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end" 
+                                    	action="${path }/manpower.do?method=contacts_list" method="post">
                                         <div class="d-flex align-items-start flex-wrap me-2">
                                             <label for="membersearch-input" class="visually-hidden">검색</label>
-                                            <input type="search" class="form-control" id="membersearch-input" placeholder="검색">
+                                            <input type="search" class="form-control" name="name" id="membersearch-input" 
+                                            	value="" placeholder="이름 검색">
                                         </div>
-                                        <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
+                                        <button type="submit" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
                                     </form>
                                     
                                 </div>
@@ -113,7 +120,7 @@
                         	</form>
                         	
                         
-                        	<c:forEach var="mem" items="${memList }">
+                        	<c:forEach var="mem" items="${memList1 }">
                             <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
                                     <div class="card-body">
@@ -130,42 +137,17 @@
                                             </div>
                                         </div>
                                         <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+			                        	<form>
+			                        		<input type="hidden" name="pno" value="${mem.pno }"/>
+			                        	</form>
+                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
                                         <p class="text-muted">${mem.auth } <span> | </span> 
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
                             </c:forEach>
-
-                        	<c:if test="${param == 'availMan'}">
-                        	<c:forEach var="mem" items="${memList2 }">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            </c:forEach>
-                            </c:if>                            
+                         
                                            
                         </div>
                         <!-- end row -->
@@ -637,6 +619,72 @@
 
         <!-- App js -->
         <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
+
+
+                                        <!-- Signup modal content -->
+                                        <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+    
+                                                    <div class="modal-body">
+                                                        <div class="text-center mt-2 mb-4">
+                                                            <a href="index.html" class="text-success">
+                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
+                                                            </a>
+                                                        </div>
+    
+                                                        <form class="px-3" action="#">
+    
+                                                            <div class="mb-3">
+                                                                <label for="username" class="form-label">이름</label>
+                                                                <input class="form-control" type="email" id="name" name="name" required="" placeholder="이름">
+                                                            </div>
+    
+                                                            <div class="mb-3">
+                                                                <label for="emailaddress" class="form-label">이메일</label>
+                                                                <input class="form-control" type="email" id="email" name="email" required="">
+                                                            </div>
+    
+                                                            <div class="mb-3">
+                                                                <label for="password" class="form-label">아이디</label>
+                                                                <input class="form-control" type="email" required="" id="id" name="id" placeholder="Enter your password">
+                                                            </div>
+                                                             <div class="mb-3">
+                                                                <label for="password" class="form-label">비밀번호</label>
+                                                                <input class="form-control" type="password" required="" id="pass" name="pass" placeholder="Enter your password">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="password" class="form-label">부서</label>
+                                                                <select class="form-control" name="part" id="part">
+                                                                	<option>-- 부서 선택 --</option>
+                                                                </select>
+                                                            </div>   
+                                                            <div class="mb-3">
+                                                                <label for="password" class="form-label">직급</label>
+                                                                <select class="form-control" name="auth" id="auth">
+                                                                	<option>-- 직급 선택 --</option>
+                                                                </select>
+                                                            </div>                                                                                                                               
+                                                            <div class="mb-3">
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                                    <label class="form-check-label" for="exampleCheck1">I accept <a href="#">Terms and Conditions</a></label>
+                                                                </div> 
+                                                            </div>
+    
+                                                            <div class="mb-3 text-center">
+                                                                <button class="btn btn-primary" type="submit">계정 생성</button>
+                                                            </div>
+    
+                                                        </form>
+    
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+
+
+
         
     </body>
 </html>

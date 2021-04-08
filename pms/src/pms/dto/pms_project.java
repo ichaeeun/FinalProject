@@ -29,6 +29,10 @@ public class pms_project {
 		this.project_name = project_name;
 	}
 	
+	public pms_project(int project_no) {
+		super();
+		this.project_no = project_no;
+	}
 	public int getProject_no() {
 		return project_no;
 	}

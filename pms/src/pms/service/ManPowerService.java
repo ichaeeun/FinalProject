@@ -9,14 +9,15 @@ import org.springframework.stereotype.Service;
 import pms.dao.ManPowerDao;
 import pms.dto.Member;
 import pms.dto.ProjectAdd;
+import pms.dto.pms_project;
 
 @Service
 public class ManPowerService {
 	@Autowired(required=false)
 	private ManPowerDao dao;
 	
-	public ArrayList<Member> memList1(){
-		return dao.memList1();
+	public ArrayList<Member> memList1(String name){
+		return dao.memList1(name);
 	}
 	
 	public ArrayList<Integer> pnoList(HashMap<String,String> hm){
@@ -45,7 +46,12 @@ public class ManPowerService {
 	public ArrayList<Member> memList3(String part){
 		return dao.memList3(part);
 	}
-	
+	public pms_project project(int project_no) {
+		return dao.project(project_no);
+	}
+	public ArrayList<ProjectAdd> projectpno(int pno){
+		return dao.projectpno(pno);
+	}
 }
 
 

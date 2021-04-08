@@ -3,6 +3,17 @@ package pms.dto;
 public class ProjectAdd {
 	private int pno;
 	private int project_no;
+	
+	public ProjectAdd() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ProjectAdd(int pno) {
+		super();
+		this.pno = pno;
+	}
+
 	public int getPno() {
 		return pno;
 	}
