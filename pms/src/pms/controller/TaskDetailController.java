@@ -26,8 +26,28 @@ public class TaskDetailController {
 		d.addAttribute("detail",service.taskDetail(task_no));
 		d.addAttribute("subdetail",service.subtaskList(task_no));
 		d.addAttribute("taskcurrval",service.taskcurrval());
-		d.addAttribute("comment",service.commentList());
+		d.addAttribute("comment",service.commentList(task_no));
 		return "task_detail";
+	}
+	
+	// http://localhost:8080/pms/taskdetail.do?method=sub
+	@GetMapping(params="method=sub")
+	public String subtask(@RequestParam("task_no") int task_no, Model d) {
+		d.addAttribute("detail",service.taskDetail(task_no));
+		d.addAttribute("subdetail",service.subtaskList(task_no));
+		d.addAttribute("taskcurrval",service.taskcurrval());
+		d.addAttribute("comment",service.commentList(task_no));
+		return "subtaskList";
+	}
+	
+	// http://localhost:8080/pms/taskdetail.do?method=commentList
+	@GetMapping(params="method=commentList")
+	public String commentList(@RequestParam("task_no") int task_no, Model d) {
+		d.addAttribute("detail",service.taskDetail(task_no));
+		d.addAttribute("subdetail",service.subtaskList(task_no));
+		d.addAttribute("taskcurrval",service.taskcurrval());
+		d.addAttribute("comment",service.commentList(task_no));
+		return "commentList";
 	}
 	// http://localhost:8080/pms/taskdetail.do?method=insert
 	@RequestMapping(params="method=insert")
@@ -45,13 +65,28 @@ public class TaskDetailController {
 		return "pageJsonReport";
 	}
 	
+	
 	// taskdetail.do?method=updateSub
 	@RequestMapping(params="method=updateSub")
 	public String updateSub(Task t,Model d) {
 		service.updateSub(t);
 		d.addAttribute("success","Y");
-		return "forward:/taskdetail.do?method=list";
+		return "pageJsonReport";
 	}
+	
+	@RequestMapping(params="method=deleteSub")
+	public String deleteSub(@RequestParam("task_no") int task_no, Model d) {
+		service.deleteSub(task_no);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping(params="method=deleteTask")
+	public String deleteTask(@RequestParam("task_no")int task_no, Model d) {
+		service.deleteTask(task_no);
+		d.addAttribute("del","Y");
+		return "pageJsonReport";
+	}; // 태스크 삭제 
 	
 	@RequestMapping(params="method=insertComment")
 	public String insertComment(Comment com,Model d) {

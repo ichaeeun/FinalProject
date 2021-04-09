@@ -43,12 +43,19 @@ public class TaskDetailService {
 		return dao.showMember(task_no);
 	}
 	
-	public ArrayList<Comment> commentList(){
-		return dao.commentList();
+	public ArrayList<Comment> commentList(int task_no){
+		return dao.commentList(task_no);
 	}
 	
 	public void insertComment(Comment com) {
 		dao.insertComment(com);
 	}
 	
+	public void deleteSub(int task_no) {
+		dao.deleteSub(task_no);
+	}
+	
+	public void deleteTask(int task_no) {
+		dao.deleteTask(task_no);
+	}; // 태스크 삭제 
 }

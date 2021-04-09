@@ -18,6 +18,9 @@ public interface TaskDetailDao {
 	public void updateSub(Task t);
 	
 	public ArrayList<Task> showMember(int task_no); // 태스크 내에서 추가 시 해당태스크의 프로젝트 참여중인 멤버 select 박스 
-	public ArrayList<Comment> commentList();
+	public ArrayList<Comment> commentList(int task_no);
 	public void insertComment(Comment com);
+	
+	public void deleteSub(int task_no); // 서브태스크 삭제 
+	public void deleteTask(int task_no); // 태스크 삭제 
 }

@@ -39,7 +39,7 @@ AND a.pno = b.pno; -->
 	<!-- public void insertSubtask(Task t); -->
 	<insert id="insertSubtask" parameterType="task">
 		INSERT INTO project_task 
-		values(#{pno},#{project_no},task_no_seq.nextval,#{task_name},'',#{task_priority},#{task_parent_no},
+		values(#{pno},#{project_no},task_no_seq.nextval,#{task_name},'내용',#{task_priority},#{task_parent_no},
 			#{startdte},#{enddte},'진행중')
 	</insert>
 	
@@ -68,19 +68,21 @@ AND a.pno = b.pno; -->
 	<!-- public void updateSub(Task t); -->
 	<update id="updateSub" parameterType="task">
 		UPDATE project_task
-		SET task_name=#{task_name},
+		SET pno=#{pno},
+			task_name=#{task_name},
 			TASK_PRIORITY =#{task_priority},
-			startdte=#{enddte},
-			enddte=#{startdte}
+			startdte=#{startdte},
+			enddte=#{enddte}
 		WHERE task_no=#{task_no}
 	</update>
 	
 	
-	<!-- public ArrayList<Comment> commentList(); -->
-	<select id="commentList" resultType="comment">
+	<!-- public ArrayList<Comment> commentList(int task_no); -->
+	<select id="commentList" resultType="comment" parameterType="int">
 		SELECT a.*, b.name 
 		FROM task_comment a, pms_member b
 		WHERE a.pno = b.pno
+		AND task_no=#{task_no}
 		ORDER BY regdte
 	</select>
 	
@@ -88,5 +90,18 @@ AND a.pno = b.pno; -->
 	<insert id="insertComment" parameterType="comment">
 		INSERT INTO task_comment values(#{task_no},#{content},to_char(sysdate,'yyyy-MM-dd hh:mm:ss'),#{pno})
 	</insert>
+	
+	
+	<!-- public void deleteSub(int task_no); -->
+	<delete id="deleteSub" parameterType="int">
+		DELETE FROM project_task
+		WHERE task_no = #{task_no}
+	</delete>
+	
+	<!-- public void deleteTask(int task_no); // 태스크 삭제  -->
+	<delete id="deleteTask" parameterType="int">
+		DELETE FROM project_task
+		WHERE task_no = #{task_no}
+	</delete>
 </mapper>  
  
