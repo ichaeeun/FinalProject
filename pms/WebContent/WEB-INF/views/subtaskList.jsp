@@ -50,19 +50,20 @@
 						<tr class="upt">
 							<td>
 								<div class="form-check">
+									<input type="hidden" class="task_status" value="${sub.task_status }"/>
 									<input class="form-check-input" type="checkbox"
-										id="tasktodayCheck${sub.task_no }">
+										id="tasktodayCheck" <c:if test="${detail.task_status=='완료' }">disabled</c:if> <c:if test="${sub.task_status=='완료' }">checked</c:if>>
 									<div id="subtaskId">
 										<label class="form-check-label"
-											for="tasktodayCheck${sub.task_no }"><div class="task_no">${sub.task_no }</div></label>
+											for="tasktodayCheck"><div class="task_no">${sub.task_no }</div></label>
 									</div>
 								</div>
 							</td>
 							<td id="subtaskName" class="task_name">${sub.task_name }</td>
 							<input type="hidden" class="pno" value="${sub.pno }">
 							<td id="subtaskpName" class="name">${sub.name }</td>
-							<input type="hidden" class="startdte" value="${sub.startdte }"/>
-							<td class="enddte">${sub.enddte }</td>
+							<input type="hidden" class="startdte" value="${fn:substring(sub.startdte,0,10)}"/>
+							<td class="enddte">${fn:substring(sub.enddte,0,10)}</td>
 							<td ><c:if test="${sub.task_priority=='High' }">
 									<span class="badge badge-soft-danger p-1 task_priority" id="subtaskPriority">${sub.task_priority }</span>
 								</c:if> <c:if test="${sub.task_priority=='Medium' }">

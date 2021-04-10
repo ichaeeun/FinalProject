@@ -21,7 +21,7 @@ public class TaskDetailController {
 	private TaskDetailService service;
 	
 	// http://localhost:8080/pms/taskdetail.do?method=list
-	@GetMapping(params="method=list")
+	@GetMapping(params="method=list") // 태스크 디테일 화면 출력 
 	public String list(@RequestParam("task_no") int task_no, Model d) {
 		d.addAttribute("detail",service.taskDetail(task_no));
 		d.addAttribute("subdetail",service.subtaskList(task_no));
@@ -31,7 +31,7 @@ public class TaskDetailController {
 	}
 	
 	// http://localhost:8080/pms/taskdetail.do?method=sub
-	@GetMapping(params="method=sub")
+	@GetMapping(params="method=sub") // 서브 태스크 리스트 출력 
 	public String subtask(@RequestParam("task_no") int task_no, Model d) {
 		d.addAttribute("detail",service.taskDetail(task_no));
 		d.addAttribute("subdetail",service.subtaskList(task_no));
@@ -41,7 +41,7 @@ public class TaskDetailController {
 	}
 	
 	// http://localhost:8080/pms/taskdetail.do?method=commentList
-	@GetMapping(params="method=commentList")
+	@GetMapping(params="method=commentList") //커멘트 리스트 출력 
 	public String commentList(@RequestParam("task_no") int task_no, Model d) {
 		d.addAttribute("detail",service.taskDetail(task_no));
 		d.addAttribute("subdetail",service.subtaskList(task_no));
@@ -50,7 +50,7 @@ public class TaskDetailController {
 		return "commentList";
 	}
 	// http://localhost:8080/pms/taskdetail.do?method=insert
-	@RequestMapping(params="method=insert")
+	@RequestMapping(params="method=insert")  // 서브태스크 추가 
 	public String insertSubtask(Task t,Model d) {
 		System.out.println(t.getTask_name());
 		service.insertSubtask(t);
@@ -58,7 +58,7 @@ public class TaskDetailController {
 		return "pageJsonReport";
 	}
 	
-	@RequestMapping(params="method=update")
+	@RequestMapping(params="method=update")  // 태스크 수정 
 	public String updateTask(Task t,Model d) {
 		service.updateTask(t);
 		d.addAttribute("success","Y");
@@ -67,35 +67,75 @@ public class TaskDetailController {
 	
 	
 	// taskdetail.do?method=updateSub
-	@RequestMapping(params="method=updateSub")
+	@RequestMapping(params="method=updateSub")  // 서브태스크 수정 
 	public String updateSub(Task t,Model d) {
 		service.updateSub(t);
 		d.addAttribute("success","Y");
 		return "pageJsonReport";
 	}
 	
-	@RequestMapping(params="method=deleteSub")
+	@RequestMapping(params="method=deleteSub")  // 서브태스크 삭제 
 	public String deleteSub(@RequestParam("task_no") int task_no, Model d) {
 		service.deleteSub(task_no);
 		d.addAttribute("success","Y");
 		return "pageJsonReport";
 	}
 	
-	@RequestMapping(params="method=deleteTask")
+	@RequestMapping(params="method=deleteTask")  //태스크 삭제 
 	public String deleteTask(@RequestParam("task_no")int task_no, Model d) {
 		service.deleteTask(task_no);
 		d.addAttribute("del","Y");
 		return "pageJsonReport";
 	}; // 태스크 삭제 
 	
-	@RequestMapping(params="method=insertComment")
+	@RequestMapping(params="method=insertComment")  // 커멘트 추가 
 	public String insertComment(Comment com,Model d) {
 		service.insertComment(com);
 		d.addAttribute("success","Y");
 		return "pageJsonReport";
 	}
 	
-	@ModelAttribute("showMember")
+	@RequestMapping(params="method=deletecomm")  //커맨트 삭제 
+	public String deletecomm(@RequestParam("comment_no") int comment_no,Model d) {
+		System.out.println("##:"+comment_no);
+		service.deletecomm(comment_no);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping(params="method=requestApp")  // 승인 요청 
+	public String requestApp(@RequestParam("task_no")int task_no, Model d) {
+		service.requestApp(task_no);
+		d.addAttribute("request","Y");
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:8080/pms/taskdetail.do?method=approval
+	@RequestMapping(params="method=approval")  // 승인 
+	public String approval(@RequestParam("task_no")int task_no,Task t, Model d) {
+		service.approval(task_no);
+		d.addAttribute("approval","Y");
+		d.addAttribute("detail",service.taskDetail(task_no));
+		d.addAttribute("subdetail",service.subtaskList(task_no));
+		d.addAttribute("taskcurrval",service.taskcurrval());
+		d.addAttribute("comment",service.commentList(task_no));
+		return "task_detail";
+	}
+	// http://localhost:8080/pms/taskdetail.do?method=statusToDone
+	@RequestMapping(params="method=statusToDone") // 완료로 상태 변경 
+	public String statusToDone(@RequestParam("task_no") int task_no, Model d) { 
+		service.statusToDone(task_no);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
+	}; 
+	@RequestMapping(params="method=statusFromDone")// 진행으로 상태 변경 
+	public String statusFromDone(@RequestParam("task_no") int task_no, Model d) { 
+		service.statusFromDone(task_no);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
+	}; 
+	
+	@ModelAttribute("showMember")  //프로젝트 별 인원 공통 어트리뷰트 
 	public ArrayList<Task> showMember(@RequestParam("task_no") int task_no){
 		return service.showMember(task_no);
 	}

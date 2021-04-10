@@ -27,6 +27,9 @@
 		<jsp:useBean id="today" class="java.util.Date" />
 		<fmt:formatDate value="${today }" pattern="yyyy-MM-dd" var="todayDate" />
 		<c:forEach var="comm" items="${comment }">
+		  <div class="commList">
+			<input type="hidden" value="${comm.comment_no }" class="deletecomment_no"/>
+			<input type="hidden" value="${comm.task_no }" class="task_no"/>
 			<%-- 현재날짜의 고유값 가져오기 : 1970.1.1  --%>
 			<%--     <fmt:formatDate value="${today}" pattern="yyyyMMdd" var="toFmt"/>
 										    <fmt:formatDate value="${comm.regdte }" pattern="yyyyMMdd" var="regdte"/> --%>
@@ -46,8 +49,8 @@
 								test="${todayDate==commregdteDate}">${commregdteTime }</c:if> <c:if
 								test="${todayDate!=commregdteDate }">${commregdteDate}</c:if> <c:if
 								test="${mem.pno==comm.pno }">
-								<div class="action-icon px-1" id="deleteComment">
-									<i class="fe-x-square"></i>
+								<div class="action-icon px-1" >
+									<i class="fe-x-square deleteCommentBtn"></i>
 								</div>
 							</c:if></small>
 					</h5>
@@ -55,6 +58,7 @@
 				</div>
 				<br>
 			</div>
+		   </div>
 		</c:forEach>
 	</div>
 </body>

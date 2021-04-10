@@ -4,11 +4,19 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class Comment {
-     private int task_no;
-	 private String content;
-	 private String regdte;
-	 private int pno;
-	 private String name;
+	private int comment_no;
+    private int task_no;
+	private String content;
+	private String regdte;
+	private int pno;
+	private String name;
+	
+	public int getComment_no() {
+		return comment_no;
+	}
+	public void setComment_no(int comment_no) {
+		this.comment_no = comment_no;
+	}
 	public int getTask_no() {
 		return task_no;
 	}

@@ -58,4 +58,23 @@ public class TaskDetailService {
 	public void deleteTask(int task_no) {
 		dao.deleteTask(task_no);
 	}; // 태스크 삭제 
+	
+	public void deletecomm(int task_no) {
+		dao.deletecomm(task_no);
+	}
+	
+	public void requestApp(int task_no) { //태스크 승인 요청 
+		dao.requestApp(task_no);
+	}
+	
+	public void approval(int task_no) { // 태스크 완료 승인 .
+		dao.approval(task_no);
+	}
+	
+	public void statusToDone(int task_no) { // 완료로 상태 변경 
+		dao.statusToDone(task_no);
+	}; 
+	public void statusFromDone(int task_no) { // 진행으로 상태 변경 
+		dao.statusFromDone(task_no);
+	}; 
 }
