@@ -17,12 +17,15 @@
       	<typeAlias alias="task" type="pms.dto.Task"/>
       	<typeAlias alias="comment" type="pms.dto.Comment"/>
       	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
-
+      	
+      	<typeAlias alias="gantt" type="pms.dto.Gantt"/>
+      	
    </typeAliases>
    <!-- 3. sql이 저장되는 mapper.xml 등록 
    		4. 주로 업무단위 dao단위 하나의 mapper.xml을 만든다
    -->
    <mappers>
+   	  <mapper resource="resource/LoginMapper.xml"/>
       <mapper resource="resource/DashMapper.xml"/>
       <mapper resource="resource/ManMapper.xml"/>
       <mapper resource="resource/RiskMapper.xml"/>
@@ -30,6 +33,6 @@
       <mapper resource="resource/TaskDetailMapper.xml"/>
 
       <mapper resource="resource/ProjectMapper.xml"/>
-
+	  <mapper resource="resource/GanttMapper.xml"/>
    </mappers>
 </configuration>

@@ -19,7 +19,17 @@ public class pms_project {
 	private int pm_pno;
 	private String project_status;
 	
-	
+	public pms_project(int project_no, String project_name, String project_content, String start1, String end1,
+			int pm_pno, String project_status) {
+		super();
+		this.project_no = project_no;
+		this.project_name = project_name;
+		this.project_content = project_content;
+		this.start1 = start1;
+		this.end1 = end1;
+		this.pm_pno = pm_pno;
+		this.project_status = project_status;
+	}
 	public pms_project() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"
     import ="java.util.*"
 %>
+<%-- 
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+	response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+	response.setDateHeader("Expires", 0); // Proxies.
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
@@ -47,7 +52,11 @@
  
 --%>
 	var proc = "${proc}";
-	if(proc == "true"){
+	if(proc == "logout"){
+		alert("로그아웃되었습니다.");
+		location.href="${path}/main.do?method=loginform";
+	}
+	else if(proc == "true"){
 		  alert("${mem.name}"+" ${mem.part}"+"님 반갑습니다.");
 		  location.href="${path}/main.do?method=main";
 	} else if(proc == "false") {
