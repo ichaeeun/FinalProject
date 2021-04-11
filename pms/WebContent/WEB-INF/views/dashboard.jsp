@@ -89,13 +89,13 @@
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/task.do?method=list" class="nav-link active">
+							                <a href="${path}/task.do?method=list" class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/dashboard.do?method=list"  class="nav-link">
+							                <a href="${path}/dashboard.do?method=list"  class="nav-link active">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">대시보드</span>
 							                </a>

@@ -281,7 +281,7 @@
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/task.do?method=list" class="nav-link active">
+							                <a href="${path}/task.do?method=list" class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 							                </a>
@@ -293,7 +293,7 @@
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+							                <a href="${path}/gantt.do?method=gantt"  class="nav-link active">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
 							                    <span class="d-none d-sm-inline-block">간트차트</span>
 							                </a>
