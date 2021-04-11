@@ -60,6 +60,15 @@
 		from pms_member_project
 		where pno = #{pno}
 	</select>
+	<!-- public ArrayList<Member> authList(); -->
+	<select id="authList" resultType="member">
+		SELECT DISTINCT auth FROM PMS_MEMBER
+	</select>	
+	<!-- public void addMember(Member ins); -->
+	<insert id="addMember" parameterType="member">
+		INSERT INTO PMS_MEMBER 
+		values(pms_pno_seq.nextval,#{id},#{pass},#{name},#{email},#{part},#{auth})
+	</insert>
 </mapper>   
 <!-- 
 <task 요청 페이지>
@@ -82,12 +91,15 @@
 	- select로 프로젝트의 이름을 띄우기
 	- 프로젝트를 선택하면 해당 프로젝트에 대해서 insert가 된다. 
 		pm_member_project에 
-4. 상세 보기 기능 구현	 
+4. 상세 보기 기능 구현
 	- member의 pno가 같아야 함
 	- 왼쪽에는 pms_member에서 이름 등을 출력
 	- 오른쪽에는 project에서 project 리스트를 출력
 5. 페이징 처리	구현	
 6. 계정 생성 (insert) pms_member
+	- 부서와 직급 뿌리기 (part와 auth)
+	- 계정생성 버튼 누르면 insert로 pms_member에 추가하기
+	- 
  -->
 
 

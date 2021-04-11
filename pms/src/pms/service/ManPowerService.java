@@ -52,6 +52,15 @@ public class ManPowerService {
 	public ArrayList<ProjectAdd> projectpno(int pno){
 		return dao.projectpno(pno);
 	}
+	
+	public ArrayList<Member> authList(){
+		return dao.authList();
+	}
+	
+	public void addMember(Member ins) {
+		dao.addMember(ins);
+	}
+	
 }
 
 

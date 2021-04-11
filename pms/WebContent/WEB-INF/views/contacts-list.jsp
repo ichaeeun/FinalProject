@@ -10,7 +10,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>overview</title>
+        <title>인력조회</title>
         <style type="text/css">
         .project-body { text-align:left!important; }
         </style>
@@ -44,10 +44,11 @@
 			$("[name=goDetail]").click(function(){
 				var ename=$(this).text();
 				var pno = $("[name=pno]").val();
-				alert(ename);
-				alert(pno);
+				//alert(ename);
+				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});
+			
 	  	})
 	  </script>
     </head>
@@ -94,7 +95,7 @@
                         <div class="row mb-2">
                         	<c:if test="${mem.auth == 'hp' }">
                             <div class="col-sm-4">
-                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up Modal</button>
+                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
                             </div>
                             </c:if>
                             <div class="col-sm-8">
@@ -632,51 +633,50 @@
                                                                 <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
                                                             </a>
                                                         </div>
-    
-                                                        <form class="px-3" action="#">
-    
+
+    													<form:form class="px-3" action="${path }/manpower.do?method=add_member" method="post" 
+    														modelAttribute="member">
                                                             <div class="mb-3">
-                                                                <label for="username" class="form-label">이름</label>
-                                                                <input class="form-control" type="email" id="name" name="name" required="" placeholder="이름">
+                                                                <label for="name" class="form-label">이름</label>
+                                                                <form:input path="name" class="form-control" type="text" placeholder="이름"/>
                                                             </div>
     
                                                             <div class="mb-3">
-                                                                <label for="emailaddress" class="form-label">이메일</label>
-                                                                <input class="form-control" type="email" id="email" name="email" required="">
+                                                                <label for="email" class="form-label">이메일</label>
+                                                                <form:input path="email" class="form-control" type="email" placeholder="이메일"/>
                                                             </div>
     
                                                             <div class="mb-3">
-                                                                <label for="password" class="form-label">아이디</label>
-                                                                <input class="form-control" type="email" required="" id="id" name="id" placeholder="Enter your password">
+                                                                <label for="id" class="form-label">아이디</label>
+                                                                <form:input path="id" class="form-control" type="text" placeholder="아이디"/>
                                                             </div>
                                                              <div class="mb-3">
-                                                                <label for="password" class="form-label">비밀번호</label>
-                                                                <input class="form-control" type="password" required="" id="pass" name="pass" placeholder="Enter your password">
+                                                                <label for="pass" class="form-label">비밀번호</label>
+                                                                <form:input path="pass" class="form-control" type="password" placeholder="비밀번호"/>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="password" class="form-label">부서</label>
-                                                                <select class="form-control" name="part" id="part">
+                                                                <label for="part" class="form-label">부서</label>
+                                                                <form:select path="part" class="form-control">
                                                                 	<option>-- 부서 선택 --</option>
-                                                                </select>
+                                                                	<c:forEach var="part" items="${partList }">
+                                                                		<option value="${part.part }">${part.part }</option>
+                                                                	</c:forEach>
+                                                                </form:select>
                                                             </div>   
                                                             <div class="mb-3">
-                                                                <label for="password" class="form-label">직급</label>
-                                                                <select class="form-control" name="auth" id="auth">
+                                                                <label for="auth" class="form-label">직급</label>
+                                                                <form:select path="auth" class="form-control">
                                                                 	<option>-- 직급 선택 --</option>
-                                                                </select>
+                                                                	<c:forEach var="auth" items="${authList }">
+                                                                		<option value="${auth.auth }">${auth.auth }</option>
+                                                                	</c:forEach>                                                                	
+                                                                </form:select>
                                                             </div>                                                                                                                               
-                                                            <div class="mb-3">
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                                    <label class="form-check-label" for="exampleCheck1">I accept <a href="#">Terms and Conditions</a></label>
-                                                                </div> 
-                                                            </div>
-    
                                                             <div class="mb-3 text-center">
-                                                                <button class="btn btn-primary" type="submit">계정 생성</button>
+                                                                <input class="btn btn-primary" type="submit"/>
                                                             </div>
     
-                                                        </form>
+                                                        </form:form>
     
                                                     </div>
                                                 </div><!-- /.modal-content -->

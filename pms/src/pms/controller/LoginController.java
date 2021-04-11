@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.dto.Member;
 import pms.service.LoginService;
+import pms.service.ManPowerService;
 
 @Controller
 @RequestMapping("main.do")
@@ -18,7 +19,8 @@ public class LoginController {
 
 	@Autowired(required = false)
 	private LoginService service;
-	
+	@Autowired(required = false)
+	private ManPowerService mservice;
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
 		public String loginform(@ModelAttribute("member") Member member) {
@@ -52,8 +54,15 @@ public class LoginController {
 		
 		// http://localhost:7080/pms/main.do?method=main
 		@RequestMapping(params="method=main")
-		public String main(HttpSession session) {
-			
+		public String main(HttpSession session, @ModelAttribute("sch") Member sch, Model d) {
+			// 전체 인원
+			if (sch.getName() == null) sch.setName("");
+			// 부서 목록
+			d.addAttribute("partList", mservice.deptList());
+			// 권한 목록
+			d.addAttribute("authList", mservice.authList());		
+			d.addAttribute("memList1", mservice.memList1(sch.getName()));
+			d.addAttribute("member", new Member());
 			return "main";
 		}
 }

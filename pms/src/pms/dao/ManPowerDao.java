@@ -30,6 +30,11 @@ public interface ManPowerDao {
 	// 프로젝트넘버에 따른 프로젝트
 	public pms_project project(int project_no);
 	public ArrayList<ProjectAdd> projectpno(int pno);
+	
+	// 계정생성 - 권한 목록
+	public ArrayList<Member> authList();
+	// 계정생성 - insert
+	public void addMember(Member ins);
 }
 
 
