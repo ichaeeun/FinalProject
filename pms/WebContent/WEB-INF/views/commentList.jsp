@@ -44,15 +44,16 @@
 	                                                alt="Generic placeholder image" height="32"> --%>
 				<div class="flex-1">
 					<h5 class="mt-0">
-						<i class=" bx bx-face"></i>&nbsp;${comm.name } <small
-							class="text-muted fw-normal float-end"> <c:if
-								test="${todayDate==commregdteDate}">${commregdteTime }</c:if> <c:if
-								test="${todayDate!=commregdteDate }">${commregdteDate}</c:if> <c:if
-								test="${mem.pno==comm.pno }">
-								<div class="action-icon px-1" >
-									<i class="fe-x-square deleteCommentBtn"></i>
-								</div>
-							</c:if></small>
+						<i class=" bx bx-face"></i>&nbsp;${comm.name } 
+						<small class="text-muted fw-normal float-end"> 
+								<c:if test="${todayDate==commregdteDate}">${commregdteTime }</c:if> 
+								<c:if test="${todayDate!=commregdteDate }">${commregdteDate}</c:if> 
+								<c:if test="${mem.pno==comm.pno }">
+									<div class="action-icon px-1" >
+										<i class="fe-x-square deleteCommentBtn"></i>
+									</div>
+								</c:if>
+						</small>
 					</h5>
 					${comm.content } <br />
 				</div>

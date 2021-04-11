@@ -46,6 +46,12 @@
  
 --%>
    $(document).ready(function(){ 
+	   var mem = "${mem.id}";
+	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
+	   
+	   document.getElementById('addTask_startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
+	   document.getElementById('addTask_enddte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
+	   
 	   var approval = "${approval}";
 	   if(approval=="Y"){
 		   $("#success-alert-modal").modal("show");
@@ -76,16 +82,13 @@
 				alert("사원을 선택하세요");
 				return false;
 			} 
-			
+			/* 
 			var sublengththis = $("#sublength").text();	// 서브태스크 갯수 
-			
 			var addTask_taskName = $("#addTask_task_name").val();
 			var addTask_pName = $("#addTask_name option:checked").text();
 			var addTask_taskPriority = $("#addTask_task_priority").val();
 			var addTask_taskDate=$("#addTask_enddte").val();
-			var addTask_taskContent=$("#addTask_task_content").val();
-          	$("#sublength").text(Number(sublengththis)+1);
-            tasknextval++;
+			var addTask_taskContent=$("#addTask_task_content").val(); */
             
 			var sch = taskVal();
 			console.log(sch);
@@ -98,12 +101,6 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#addSubTaskModal").modal("hide");
-					  $("#addTask_task_name").val("");
-					  // 추가 후 모달 창 클리어 
-					  $("#addTask_name").val(""); 
-					  $("#addTask_task_priority").val("");
-					  $("#addTask_enddte").val("");
-					  $("#addTask_task_content").val("");
 					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
 				  },
 				  error:function(err){
@@ -111,7 +108,13 @@
 					  console.log(err);
 				  }
 			}); 
-			
+			 // 추가 후 모달 창 클리어 
+			  $("#addTask_task_name").val("");
+			  $("#addTask_name").val(""); 
+			  $("#addTask_task_priority").val("");
+			  $("#addTask_enddte").val(new Date().toISOString().substring(0, 10));
+			  $("#addTask_startdte").val(new Date().toISOString().substring(0, 10));
+			  $("#addTask_task_content").val("");
 		});
 	    
 		
@@ -227,7 +230,7 @@
 			 var startdte = item.find(".startdte").val();
 			 var task_priority = item.find(".task_priority").text();
 			// alert(task_no+" "+task_name+" "+name+" "+enddte+" "+task_priority+" ");
-//   updateSub_task_no  updateSub_task_name updateSub_name updateSub_task_priority updateSub_startdte updateSub_enddte	
+			//   updateSub_task_no  updateSub_task_name updateSub_name updateSub_task_priority updateSub_startdte updateSub_enddte	
 			 $("#updateSub_task_no").val(task_no);
 			 $("#noinmodal").text(task_no);
 			 $("#updateSub_task_name").val(task_name);

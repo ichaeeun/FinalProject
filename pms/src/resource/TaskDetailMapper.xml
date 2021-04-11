@@ -88,7 +88,8 @@ AND a.pno = b.pno; -->
 	
 	<!-- public void insertComment(Comment com); -->
 	<insert id="insertComment" parameterType="comment">
-		INSERT INTO task_comment values(task_comment_seq.nextval,#{task_no},#{content},to_char(sysdate,'yyyy-MM-dd HH:MI:SS'),#{pno})
+		INSERT INTO task_comment values(task_comment_seq.nextval,#{task_no},#{content},
+		to_char(sysdate,'yyyy-MM-dd HH:MI:SS'),#{pno})
 	</insert>
 	
 	
