@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
 <script type="text/javascript">
 	
 <%--
@@ -13,8 +14,9 @@
  
 --%>
 	//
-	$(document).ready(function() {
-
+	jQuery.noConflict(); 
+    jQuery(document).ready(function($) {
+		 $("time.timeago").timeago();
 	});
 </script>
 </head>
@@ -46,8 +48,9 @@
 					<h5 class="mt-0">
 						<i class=" bx bx-face"></i>&nbsp;${comm.name } 
 						<small class="text-muted fw-normal float-end"> 
-								<c:if test="${todayDate==commregdteDate}">${commregdteTime }</c:if> 
-								<c:if test="${todayDate!=commregdteDate }">${commregdteDate}</c:if> 
+								<time class="timeago" datetime="${comm.regdte }"></time>
+								<%-- <c:if test="${todayDate==commregdteDate}">${commregdteTime }</c:if> 
+								<c:if test="${todayDate!=commregdteDate }">${commregdteDate}</c:if>  --%>
 								<c:if test="${mem.pno==comm.pno }">
 									<div class="action-icon px-1" >
 										<i class="fe-x-square deleteCommentBtn"></i>

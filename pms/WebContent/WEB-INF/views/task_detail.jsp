@@ -38,14 +38,13 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
 
 <script type="text/javascript">
-<%--
- 
- 
---%>
-   $(document).ready(function(){ 
+
+	jQuery.noConflict(); 
+    jQuery(document).ready(function($){ 
+	   $("time.timeago").timeago();
 	   var mem = "${mem.id}";
 	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
 	   
@@ -397,36 +396,36 @@
 				  }
 			}); 
 		 });
+		 function commentVal(){
+			   var inscom={};
+			   inscom.pno="${mem.pno}"; //임시  "${mem.pno}";
+			   inscom.content= $("#insertComment_content").val();
+			   inscom.task_no="${detail.task_no}";
+			   return inscom;
+		  }
 		 
+		   function commentAjax(){
+			   var inscom = commentVal();
+			   console.log(inscom);
+			   $.ajax({
+					  type:"post",
+					  url:"taskdetail.do?method=insertComment",
+					  data:inscom,
+					  dataType:"json",
+					  success:function(data){
+						  if(data.success=="Y")
+						  	console.log(data);
+						  $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+					  },
+					  error:function(err){
+						  alert("에러발생: "+err);
+						  console.log(err);
+					  }
+				});
+				$("#insertComment_content").val("");
+		   }
    });
-   function commentVal(){
-	   var inscom={};
-	   inscom.pno="${mem.pno}"; //임시  "${mem.pno}";
-	   inscom.content= $("#insertComment_content").val();
-	   inscom.task_no="${detail.task_no}";
-	   return inscom;
-  }
- 
-   function commentAjax(){
-	   var inscom = commentVal();
-	   console.log(inscom);
-	   $.ajax({
-			  type:"post",
-			  url:"taskdetail.do?method=insertComment",
-			  data:inscom,
-			  dataType:"json",
-			  success:function(data){
-				  if(data.success=="Y")
-				  	console.log(data);
-				  $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
-			  },
-			  error:function(err){
-				  alert("에러발생: "+err);
-				  console.log(err);
-			  }
-		});
-		$("#insertComment_content").val("");
-   }
+  
 </script>
 </head>
  <body class="loading">
