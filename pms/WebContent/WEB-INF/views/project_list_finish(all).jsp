@@ -39,13 +39,13 @@
 	$(document).ready(function(){
 		
 		$("#insertProject").click(function(){
-			var sch = ProV();
+			var sch0 = ProV();
 			console.log("##등록할 데이터 확인 ##");
-			console.log(sch);
+			console.log(sch0);
 			$.ajax({
 				type:"post",
 				url:"project.do?method=project_insert",
-				data: sch,
+				data: sch0,
 				dataType: "json",
 				success:function(data){
 					if(data.success=="Y"){
@@ -66,14 +66,14 @@
 		<%--(project_no_seq.nextval, #{project_name},#{project_content},#{start1},#{end1},#{pm_pno}, #{project_status}) --%>
 		
 		function ProV(){
-			var sch = {};
-			sch.project_name = $("#project_name").val();
-			sch.project_content = $("#project_content").val();
-			sch.start1 = $("#start1").val();
-			sch.end1 = $("#end1").val();
-			sch.pm_pno = $("#pm_pno").val();
-			sch.project_status = $("#project_status").val();
-			return sch;
+			var sch0 = {};
+			sch0.project_name = $("#project_name").val();
+			sch0.project_content = $("#project_content").val();
+			sch0.start1 = $("#start1").val();
+			sch0.end1 = $("#end1").val();
+			sch0.pm_pno = $("#pm_pno").val();
+			sch0.project_status = $("#project_status").val();
+			return sch0;
 		}
 	
 });
@@ -143,10 +143,10 @@
                                         </div>
                                         <!-- end row --
 									 -->	
-										<form:form modelAttribute="sch" method="post">
-											<!-- 
+										<form:form modelAttribute="sch0" method="post">
+											<!--
 											<div class="input-group-prepend">
-									  			<span class="btn btn-info">총 : ${sch.count} 건</span>
+									  			<span class="btn btn-info">총 : ${sch0.count} 건</span>
 									  		</div>
 									  		 -->
                                         </form:form>
@@ -261,7 +261,7 @@
                                                 <!-- ---------------------------------------------------- -->
                                                 <tbody>
                                                 
-                                                	<c:forEach var="bd" items="${boardList}">
+                                                	<c:forEach var="bd" items="${boardList2}">
                                                     <tr>
                                                         <td>
                                                             <div class="form-check font-16 mb-0">

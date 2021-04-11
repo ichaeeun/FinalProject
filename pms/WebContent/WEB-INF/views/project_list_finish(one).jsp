@@ -10,7 +10,7 @@
 <html>
 <head>
         <meta charset="utf-8" />
-        <title>Project List</title>
+        <title>Project List(개인_완료)</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -143,12 +143,8 @@
                                         </div>
                                         <!-- end row --
 									 -->	
-										<form:form modelAttribute="sch" method="post">
-											<!-- 
-											<div class="input-group-prepend">
-									  			<span class="btn btn-info">총 : ${sch.count} 건</span>
-									  		</div>
-									  		 -->
+										<form:form modelAttribute="sch2" method="post">
+
                                         </form:form>
                                         
                                         <form:form method="post" action="${path }/taskdetail.do?method=updateSub">
@@ -157,9 +153,9 @@
 											<c:if test="${mem.auth == 'pm'}"><!-- 권한이 PM인 사람만 추가버튼 가능 -->
 											<div class="button-list">
 	                                            <!-- 프로젝트 추가 모달 버튼 -->
-	                                            
+	                                            <!-- 
 	                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#con-close-modal">프로젝트 추가</button>
-	                                            
+	                                             -->
 	                                        </div>
 	                                        </c:if>
 											<!-- 모달창 버튼 끝 -->
@@ -261,7 +257,7 @@
                                                 <!-- ---------------------------------------------------- -->
                                                 <tbody>
                                                 
-                                                	<c:forEach var="bd" items="${boardList}">
+                                                	<c:forEach var="bd" items="${plist2}">
                                                     <tr>
                                                         <td>
                                                             <div class="form-check font-16 mb-0">

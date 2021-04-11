@@ -32,7 +32,7 @@
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=project_list">
+                                <a href="${path }/project.do?method=project_list2">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -88,7 +88,7 @@
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=project_list">
+                                <a href="${path }/project.do?method=project_list2">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -115,12 +115,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/project.do?method=project_detail">
+                                <a href="${path }/project.do?method=list&no=${mem.pno}">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=project_list">
+                                <a href="${path }/project.do?method=finish_list&no=${mem.pno}">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -163,12 +163,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/project.do?method=project_list">
+                                <a href="${path }/project.do?method=list&no=${mem.pno}">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=project_list">
+                                <a href="${path }/project.do?method=finish_list&no=${mem.pno}">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>

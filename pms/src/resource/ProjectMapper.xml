@@ -16,16 +16,60 @@
 			select rownum cnt, a.*
 			from pms_project a
 			where project_name like '%'||#{project_name}||'%'
-			order by project_no desc
+			and project_status IN '진행'
+			order by project_no
 		)
-		WHERE cnt BETWEEN #{start} AND #{end}
 	</select>
+	
+	<select id="pms_projectList2" resultMap="pms_projectMap" parameterType="pms_projectSch">
+		SELECT *
+		FROM (
+			select rownum cnt, a.*
+			from pms_project a
+			where project_name like '%'||#{project_name}||'%'
+			and project_status IN '완료'
+			order by project_no
+		)
+	</select>
+	
+	
+	
+	
+	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트 -->
+	<select id="projectList" resultType="pms_project" parameterType="int">
+		SELECT c.*
+		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
+		WHERE a.PNO = #{pno}
+			AND a.PNO = b.PNO
+			AND b.PROJECT_NO = c.PROJECT_NO
+			AND c.PROJECT_STATUS NOT IN '완료'
+	</select>
+	
+	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트(완료) -->
+	<select id="projectList2" resultType="pms_project" parameterType="int">
+		SELECT c.*
+		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
+		WHERE a.PNO = #{pno}
+			AND a.PNO = b.PNO
+			AND b.PROJECT_NO = c.PROJECT_NO
+			AND c.PROJECT_STATUS NOT IN '진행'
+	</select>
+	
+	
+	
+	
 	<!-- public pms_project getProject(int no); --><!-- 프로젝트번호로 프로젝트 상세정보 출력 -->
 	<select id="getProject" resultType="pms_project" parameterType="int">
 		SELECT *
 		FROM pms_project
 		WHERE project_no = #{NO}
 	</select>
-
+	<!-- public void insertProject(pms_project insert) --><!-- 프로젝트 생성 -->
+	<insert id="insertProject" parameterType="pms_project">
+		INSERT INTO PMS_PROJECT
+		VALUES (project_no_seq.nextval, #{project_name}, 
+				#{project_content}, #{start1}, #{end1}, 
+				#{pm_pno}, #{project_status})
+	</insert>
 </mapper>  
  

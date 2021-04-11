@@ -18,7 +18,7 @@ public class pms_project {
 	private String end1;
 	private int pm_pno;
 	private String project_status;
-	
+	private int pno; // 멤버번호로 프로젝트 검색시 사용
 	
 	public pms_project() {
 		super();
@@ -74,6 +74,12 @@ public class pms_project {
 	}
 	public void setProject_status(String project_status) {
 		this.project_status = project_status;
+	}
+	public int getPno() {
+		return pno;
+	}
+	public void setPno(int pno) {
+		this.pno = pno;
 	}
 	
 }
