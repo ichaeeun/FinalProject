@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
 <script type="text/javascript">
 	
 <%--
@@ -13,8 +14,9 @@
  
 --%>
 	//
-	$(document).ready(function() {
-
+	jQuery.noConflict(); 
+    jQuery(document).ready(function($) {
+		 $("time.timeago").timeago();
 	});
 </script>
 </head>
@@ -27,6 +29,9 @@
 		<jsp:useBean id="today" class="java.util.Date" />
 		<fmt:formatDate value="${today }" pattern="yyyy-MM-dd" var="todayDate" />
 		<c:forEach var="comm" items="${comment }">
+		  <div class="commList">
+			<input type="hidden" value="${comm.comment_no }" class="deletecomment_no"/>
+			<input type="hidden" value="${comm.task_no }" class="task_no"/>
 			<%-- 현재날짜의 고유값 가져오기 : 1970.1.1  --%>
 			<%--     <fmt:formatDate value="${today}" pattern="yyyyMMdd" var="toFmt"/>
 										    <fmt:formatDate value="${comm.regdte }" pattern="yyyyMMdd" var="regdte"/> --%>
@@ -41,20 +46,23 @@
 	                                                alt="Generic placeholder image" height="32"> --%>
 				<div class="flex-1">
 					<h5 class="mt-0">
-						<i class=" bx bx-face"></i>&nbsp;${comm.name } <small
-							class="text-muted fw-normal float-end"> <c:if
-								test="${todayDate==commregdteDate}">${commregdteTime }</c:if> <c:if
-								test="${todayDate!=commregdteDate }">${commregdteDate}</c:if> <c:if
-								test="${mem.pno==comm.pno }">
-								<div class="action-icon px-1" id="deleteComment">
-									<i class="fe-x-square"></i>
-								</div>
-							</c:if></small>
+						<i class=" bx bx-face"></i>&nbsp;${comm.name } 
+						<small class="text-muted fw-normal float-end"> 
+								<time class="timeago" datetime="${comm.regdte }"></time>
+								<%-- <c:if test="${todayDate==commregdteDate}">${commregdteTime }</c:if> 
+								<c:if test="${todayDate!=commregdteDate }">${commregdteDate}</c:if>  --%>
+								<c:if test="${mem.pno==comm.pno }">
+									<div class="action-icon px-1" >
+										<i class="fe-x-square deleteCommentBtn"></i>
+									</div>
+								</c:if>
+						</small>
 					</h5>
 					${comm.content } <br />
 				</div>
 				<br>
 			</div>
+		   </div>
 		</c:forEach>
 	</div>
 </body>

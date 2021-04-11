@@ -10,7 +10,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>overview</title>
+        <title>인력조회</title>
         <style type="text/css">
         .project-body { text-align:left!important; }
         </style>
@@ -45,8 +45,16 @@
 		  		var code = $("[name=deptValue] option:selected").val();
 		  		$("#frm").attr("action", "manpower.do?method=contacts_list3&dvalue="+code);
 		  		$("#frm").submit();
-		  	})
+		  	});
+			$("[name=goDetail]").click(function(){
+				var ename=$(this).text();
+				var pno = $("[name=pno]").val();
+				//alert(ename);
+				//alert(pno);
+				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
+			});		  	
 	  	})
+	  	
 	  </script>
     </head>
 
@@ -90,12 +98,7 @@
                         <!-- end page title --> 
 
                         <div class="row mb-2">
-                        	<c:if test="${mem.auth == 'hp' }">
-                            <div class="col-sm-4">
-                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
-                            </div>
-                            </c:if>
-                            <div class="col-sm-8">
+<%--                             <div class="col-sm-8">
                                 <div>
                                     <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
                                         <div class="d-flex align-items-start flex-wrap me-2">
@@ -106,7 +109,7 @@
                                     </form>
                                     
                                 </div>
-                            </div><!-- end col-->
+                            </div><!-- end col--> --%>
                             
                             <div class="col-lg-6">
                                 <div class="mb-3">
@@ -141,8 +144,10 @@
                                             </div>
                                         </div>
                                         <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+										<form>
+											<input type="hidden" name="pno" value="${mem.pno }"/>
+										</form>
+                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
                                         <p class="text-muted">${mem.auth } <span> | </span> 
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>

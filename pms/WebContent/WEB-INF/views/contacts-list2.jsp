@@ -10,7 +10,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>overview</title>
+        <title>인력조회</title>
         <style type="text/css">
         .project-body { text-align:left!important; }
         </style>
@@ -40,9 +40,14 @@
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
-	  	$(document).ready(function(){	
-			
-		  	
+	  	$(document).ready(function(){
+			$("[name=goDetail]").click(function(){
+				var ename=$(this).text();
+				var pno = $("[name=pno]").val();
+				//alert(ename);
+				//alert(pno);
+				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
+			});
 	  	})
 	  </script>
     </head>
@@ -87,12 +92,7 @@
                         <!-- end page title --> 
 
                         <div class="row mb-2">
-                        	<c:if test="${mem.auth == 'hp' }">
-                            <div class="col-sm-4">
-                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i>인원 추가</a>
-                            </div>
-                            </c:if>
-                            <div class="col-sm-8">
+<%--                             <div class="col-sm-8">
                                 <div>
                                     <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
                                         <div class="d-flex align-items-start flex-wrap me-2">
@@ -103,7 +103,7 @@
                                     </form>
                                     
                                 </div>
-                            </div><!-- end col-->
+                            </div><!-- end col--> --%>
                         </div>
                         <!-- end row -->
 						
@@ -130,8 +130,10 @@
                                             </div>
                                         </div>
                                         <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
+										<form>
+											<input type="hidden" name="pno" value="${mem.pno }"/>
+										</form>
+                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
                                         <p class="text-muted">${mem.auth } <span> | </span> 
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
@@ -139,33 +141,7 @@
                             </div> <!-- end col -->
                             </c:forEach>
 
-                        	<c:if test="${param == 'availMan'}">
-                        	<c:forEach var="mem" items="${memList2 }">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-
-                                        <h4 class="mt-3 mb-1"><a href="${path }/manpower.do?method=contacts_profile" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            </c:forEach>
-                            </c:if>                            
+                                
                                            
                         </div>
                         <!-- end row -->

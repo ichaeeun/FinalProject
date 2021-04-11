@@ -27,9 +27,13 @@ public class ManPowerController {
 	@RequestMapping(params = "method=contacts_list")
 	public String memList1(@ModelAttribute("sch") Member sch, Model d) {
 		// 전체 인원
-		if (sch.getName() == null)
-			sch.setName("");
+		if (sch.getName() == null) sch.setName("");
+		// 부서 목록
+		d.addAttribute("partList", service.deptList());
+		// 권한 목록
+		d.addAttribute("authList", service.authList());		
 		d.addAttribute("memList1", service.memList1(sch.getName()));
+		d.addAttribute("member", new Member());
 		return "contacts-list";
 	}
 
@@ -71,7 +75,8 @@ public class ManPowerController {
 	// http://localhost:7080/pms/manpower.do?method=contacts_list3
 
 	@RequestMapping(params = "method=contacts_list3")
-	public String memList3(@ModelAttribute("sch") Member sch, Model d, HttpServletRequest request) {
+	public String memList3(@ModelAttribute("sch") Member sch, 
+			Model d, HttpServletRequest request) {
 		// 부서 목록
 		d.addAttribute("deptList", service.deptList());
 		String dvalue = request.getParameter("dvalue");
@@ -86,16 +91,30 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_profile
 	@RequestMapping(params = "method=contacts_profile")
-	public String contacts_profile(Model d, @RequestParam("ename") String ename, @RequestParam("pno") int pno) {
+	public String contacts_profile(Model d, 
+			@RequestParam("ename") String ename, 
+			@RequestParam("pno") int pno) {
 		
-		  d.addAttribute("memDetail",service.memList1(ename)); service.projectpno(pno);
-		  // 1,2 저장 ArrayList<ProjectAdd> projectpno = new ArrayList<ProjectAdd>();
-		  ArrayList<pms_project> proList = new ArrayList<pms_project>(); for(int
-		  i=0;i<service.projectpno(pno).size();i++) {
-		  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));
-		  } d.addAttribute("proList",proList);
+		  d.addAttribute("memDetail",service.memList1(ename)); 
+		  ArrayList<pms_project> proList = new ArrayList<pms_project>(); 
+		  for(int i=0;i<service.projectpno(pno).size();i++) {
+			  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));
+		  } 
+		  d.addAttribute("proList",proList);
 
 		return "contacts-profile";
+	}
+	
+	// http://localhost:7080/pms/manpower.do?method=add_member
+	public String add_member(@ModelAttribute("member") Member ins,
+			Model d){
+		service.addMember(ins);
+		System.out.println("아이디:"+ins.getId());
+		System.out.println("이름:"+ins.getName());
+		System.out.println("부서:"+ins.getPart());
+		ins=null;
+		// ins = null;
+		return "contact-list";
 	}
 
 }

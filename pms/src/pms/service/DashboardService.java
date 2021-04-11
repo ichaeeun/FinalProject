@@ -23,9 +23,6 @@ public class DashboardService {
 	@Autowired(required = false)
 	private DashboardDao dao;
 	
-	public Member IsMem(Member member) {
-		return dao.IsMem(member);
-	}
 	// 코드 추가
 	/*public ArrayList<pms_project> pms_projectList(pms_projectSch sch){
 		if(sch.getProject_name()==null) sch.setProject_name("");
@@ -70,84 +67,6 @@ public class DashboardService {
 		return dao.pms_projectList(sch);
 		
 	}*/
-	   public ArrayList<Task> getTask(Project project) {
-		      ArrayList<Task> t = new ArrayList<Task>();
-		      t = dao.getTask(project);
-		      for(int i=0;i<t.size();i++) {
-		         System.out.println(t.get(i).getStartdte());
-		         System.out.println(t.get(i).getEnddte());
-		      }
-		      
-		      return dao.getTask(project);
-		   }
-		   
-		   public ArrayList<Gantt> getGantt(ArrayList<Task> task) {
-		      ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
-		      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		      ArrayList<Integer> duration = new ArrayList<Integer>(); 
-		      ArrayList<String> str = new ArrayList<String>();
-		      
-		      for(int j=0;j<task.size();j++) {
-		         try {
-		            Date start = df.parse(task.get(j).getStartdte());
-		            Date end = df.parse(task.get(j).getEnddte());
-		            str.add(df.format(start));
-		            long calDateDay = end.getTime() - start.getTime();
-		            long calDateDays = calDateDay / (24*60*60*1000);
-		            
-		            calDateDays = Math.abs(calDateDays);
-		            duration.add((int)calDateDays);
-		         } catch (ParseException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
-		      }
-		      
-		      for(int i=0;i<task.size();i++) {
-		         Gantt g = new Gantt(task.get(i).getTask_no(),
-		               str.get(i),
-		               duration.get(i),
-		               task.get(i).getTask_content(),
-		               0,task.get(i).getTask_no(),
-		               task.get(i).getTask_parent_no(),true);
-		         
-		         gantt.add(g);
-		      }
-		      
-		      return gantt;
-		   }
-		   
-		   public Gantt getGantt(Task task) {
-//		      ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
-		      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//		      ArrayList<Integer> duration = new ArrayList<Integer>(); 
-		      int duration = 0;
-		         try {
-		            System.out.println(task.getStartdte());
-		            System.out.println(task.getEnddte());
-		            Date start = df.parse(task.getStartdte());
-		            Date end = df.parse(task.getEnddte());
-		            
-		            long calDateDay = end.getTime() - start.getTime();
-		            long calDateDays = calDateDay / (24*60*60*1000);
-		            
-		            calDateDays = Math.abs(calDateDays);
-		            duration = (int)calDateDays;
-		         } catch (ParseException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
-
-		         Gantt g = new Gantt(task.getTask_no(),
-		               task.getStartdte(),
-		               duration,
-		               task.getTask_content(),
-		               0,task.getTask_no(),
-		               task.getTask_parent_no(),true);
-		         
-		      
-		      
-		      return g;
-		   }
-		   // ================ 간트 ================================
+	   
+		
 		}	

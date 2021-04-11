@@ -23,4 +23,11 @@ public interface TaskDetailDao {
 	
 	public void deleteSub(int task_no); // 서브태스크 삭제 
 	public void deleteTask(int task_no); // 태스크 삭제 
+	public void deletecomm(int comment_no);// 커멘트 삭제 
+	
+	public void requestApp(int task_no); // 태스크 승인 요청 
+	public void approval(int task_no); // 태스크 완료 승인 .
+	
+	public void statusToDone(int task_no); // 완료로 상태 변경 
+	public void statusFromDone(int task_no); // 진행으로 상태 변경 
 }

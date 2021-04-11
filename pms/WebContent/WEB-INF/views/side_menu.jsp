@@ -96,9 +96,28 @@
                     </div>
                 </li>
  				<li>
-                    <a href="${path }/manpower.do?method=contacts_list">
+                    <a href="#sidebarMans"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                         <span> 인력 현황 </span>
                     </a>
+                    <div class="collapse" id="sidebarMans">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list">
+		                           <span id="list"> 전체인원 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list2">
+                           			<span> 가용인원 </span>
+                       			</a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list3">
+                           			<span> 부서별인원 </span>
+                       			</a>
+                            </li>                            
+                        </ul>
+                    </div>                    
                 </li>  
  				<li>
                     <a href="${path }/main.do?method=riskBoard">
@@ -128,10 +147,29 @@
                     </div>
                 </li>
  				<li>
-                    <a href="${path }/manpower.do?method=contacts_list">
+                    <a href="#sidebarMans"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                         <span> 인력 현황 </span>
                     </a>
-                </li> 
+                    <div class="collapse" id="sidebarMans">
+                    	<ul class="nav-second-level">
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list">
+		                           <span id="list"> 전체인원 </span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list2">
+                           			<span> 가용인원 </span>
+                       			</a>
+                            </li>
+                            <li>
+                                <a href="${path }/manpower.do?method=contacts_list3">
+                           			<span> 부서별인원 </span>
+                       			</a>
+                            </li>                            
+                        </ul>
+                    </div>                    
+                </li>  
 	                <li>
 	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
 	                        <span> 요청 관리 </span>

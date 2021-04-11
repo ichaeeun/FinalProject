@@ -314,7 +314,7 @@
                                 <div class="dropdown-divider"></div>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="${path}/main.do?method=logout" class="dropdown-item notify-item">
                                     <i class="ri-logout-box-line"></i>
                                     <span>Logout</span>
                                 </a>

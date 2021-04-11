@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -37,40 +38,39 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
 
 <script type="text/javascript">
-<%--
- 
- 
---%>
-   $(document).ready(function(){ 
+
+	jQuery.noConflict(); 
+    jQuery(document).ready(function($){ 
+	   $("time.timeago").timeago();
+	   var mem = "${mem.id}";
+	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
+	   
+	   document.getElementById('addTask_startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
+	   document.getElementById('addTask_enddte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
+	   
+	   var approval = "${approval}";
+	   if(approval=="Y"){
+		   $("#success-alert-modal").modal("show");
+	   }
+	   
 	   
 	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
 	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
 	   
-	   	$("#insertComment").click(function(){
-	   		var inscom = commentVal();
-	   		console.log(inscom);
-	   		
-   			$.ajax({
-				  type:"post",
-				  url:"taskdetail.do?method=insertComment",
-				  data:inscom,
-				  dataType:"json",
-				  success:function(data){
-					  if(data.success=="Y")
-					  	console.log(data);
-					  $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
-				  },
-				  error:function(err){
-					  alert("에러발생: "+err);
-					  console.log(err);
-				  }
-			});
-   			
-   			$("#insertComment_content").val("");
+	 
+	   $("#insertComment_content").keypress(function(event){
+		  if(event.keyCode==13){
+			  $("#insertComment").click();
+		  }
+	   });
+	   	
+	   $("#insertComment").click(function(){
+		   commentAjax();
 	   	});
+	   
 	  
 	   
 		var tasknextval = "${taskcurrval}";	// 현재 task_no sequence 받아옴 
@@ -81,16 +81,13 @@
 				alert("사원을 선택하세요");
 				return false;
 			} 
-			
+			/* 
 			var sublengththis = $("#sublength").text();	// 서브태스크 갯수 
-			
 			var addTask_taskName = $("#addTask_task_name").val();
 			var addTask_pName = $("#addTask_name option:checked").text();
 			var addTask_taskPriority = $("#addTask_task_priority").val();
 			var addTask_taskDate=$("#addTask_enddte").val();
-			var addTask_taskContent=$("#addTask_task_content").val();
-          	$("#sublength").text(Number(sublengththis)+1);
-            tasknextval++;
+			var addTask_taskContent=$("#addTask_task_content").val(); */
             
 			var sch = taskVal();
 			console.log(sch);
@@ -103,12 +100,6 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#addSubTaskModal").modal("hide");
-					  $("#addTask_task_name").val("");
-					  // 추가 후 모달 창 클리어 
-					  $("#addTask_name").val(""); 
-					  $("#addTask_task_priority").val("");
-					  $("#addTask_enddte").val("");
-					  $("#addTask_task_content").val("");
 					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
 				  },
 				  error:function(err){
@@ -116,7 +107,13 @@
 					  console.log(err);
 				  }
 			}); 
-			
+			 // 추가 후 모달 창 클리어 
+			  $("#addTask_task_name").val("");
+			  $("#addTask_name").val(""); 
+			  $("#addTask_task_priority").val("");
+			  $("#addTask_enddte").val(new Date().toISOString().substring(0, 10));
+			  $("#addTask_startdte").val(new Date().toISOString().substring(0, 10));
+			  $("#addTask_task_content").val("");
 		});
 	    
 		
@@ -196,8 +193,8 @@
 			 sch.task_no=1;
 			 sch.task_name=$("#addTask_task_name").val();
 			 sch.task_priority=$("#addTask_task_priority").val();
-			 sch.startdte=$("#addTask_startdte").val();
-			 sch.enddte=$("#addTask_enddte").val();
+			 sch.startdte=$("#addTask_startdte").val()+"T00:00:00.000Z";
+			 sch.enddte=$("#addTask_enddte").val()+"T15:00:00.000Z";
 			 sch.task_parent_no = Number(task_parent_no);  
 			 sch.project_no= Number(project_no); 
 			 sch.pno = Number($("#addTask_name").val());
@@ -212,20 +209,13 @@
 			upt.task_priority = $("#updateTask_task_priority").val();
 			upt.task_name = $("#updateTask_task_name").val();
 			upt.pno = $("#updateTask_name").val();
-			upt.startdte = $("#updateTask_startdte").val();
-			upt.enddte = $("#updateTask_enddte").val();
+			upt.startdte = $("#updateTask_startdte").val()+"T00:00:00.000Z";
+			upt.enddte = $("#updateTask_enddte").val()+"T15:00:00.000Z";
 			upt.task_content = $("#updateTask_task_content").val();
 			upt.task_no = Number(task_no);
 			return upt; 
 		 }
 		 
-		 function commentVal(){
-			   var inscom={};
-			   inscom.pno=4; //임시  "${mem.pno}";
-			   inscom.content= $("#insertComment_content").val();
-			   inscom.task_no=task_no;
-			   return inscom;
-		 }
 		 
 		
 		 $("#subtaskList").on("click",".updatesub",function(){
@@ -239,7 +229,7 @@
 			 var startdte = item.find(".startdte").val();
 			 var task_priority = item.find(".task_priority").text();
 			// alert(task_no+" "+task_name+" "+name+" "+enddte+" "+task_priority+" ");
-//   updateSub_task_no  updateSub_task_name updateSub_name updateSub_task_priority updateSub_startdte updateSub_enddte	
+			//   updateSub_task_no  updateSub_task_name updateSub_name updateSub_task_priority updateSub_startdte updateSub_enddte	
 			 $("#updateSub_task_no").val(task_no);
 			 $("#noinmodal").text(task_no);
 			 $("#updateSub_task_name").val(task_name);
@@ -255,8 +245,8 @@
 			 updatesub.task_no= $("#updateSub_task_no").val();
 			 updatesub.pno= $("#updateSub_name").val();
 			 updatesub.task_name= $("#updateSub_task_name").val();
-			 updatesub.enddte= $("#updateSub_enddte").val();
-			 updatesub.startdte= $("#updateSub_startdte").val();
+			 updatesub.enddte= $("#updateSub_enddte").val()+"T15:00:00.000Z";
+			 updatesub.startdte= $("#updateSub_startdte").val()+"T00:00:00.000Z";
 			 updatesub.task_priority= $("#updateSub_task_priority").val();
 			 updatesub.task_parent_no= ${detail.task_no};
 			 $.ajax({
@@ -277,6 +267,34 @@
 			}); 
 			 
 		 });
+		 $("#commentList").on("click",".deleteCommentBtn",function(){
+			 var item=$(this).closest(".commList");
+			 var comment_no = item.find(".deletecomment_no").val();
+			 var task_no = item.find(".task_no").val();
+		//	 alert(comment_no);
+			 var delcomm={
+				 comment_no:comment_no,
+				 task_no:task_no
+			};
+			 console.log(delcomm);
+			 $.ajax({
+				  type:"post",
+				  url:"${path}/taskdetail.do?method=deletecomm",
+				  data:delcomm,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  console.log(data);
+					  $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+			 
+		 });
+		 
 		 
 		 $("#subtaskList").on("click",".deletesub",function(){
 			 var item=$(this).closest(".upt");
@@ -330,8 +348,84 @@
 				  }
 			}); 
 		 });
+		 
+		 $("#requestBtn").click(function(){
+			 var request={};
+			 request.task_no= "${detail.task_no}";
+			 console.log(request.task_no);
+			 $.ajax({
+				  type:"post",
+				  url:"${path}/taskdetail.do?method=requestApp",
+				  data:request,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.request=="Y")
+					  console.log(data);
+					  $("#requestModal").modal("hide");
+					  $("#success-alert-modal2").modal("show");
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+		 });
+		 
+		 $("#subtaskList").on("click","#tasktodayCheck",function(){
+			 var status={};
+			 var item=$(this).closest(".form-check");
+			 var task_no = item.find(".task_no").text();
+			 var task_status = item.find(".task_status").val();
+			 status.task_no =task_no;
+			 // alert(task_no+" "+task_status);
+			 if(task_status=="진행") url = "${path}/taskdetail.do?method=statusToDone";
+			 if(task_status=="완료") url = "${path}/taskdetail.do?method=statusFromDone";
+			 $.ajax({
+				  type:"post",
+				  url:url,
+				  data:status,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  console.log(data);
+					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+		 });
+		 function commentVal(){
+			   var inscom={};
+			   inscom.pno="${mem.pno}"; //임시  "${mem.pno}";
+			   inscom.content= $("#insertComment_content").val();
+			   inscom.task_no="${detail.task_no}";
+			   return inscom;
+		  }
+		 
+		   function commentAjax(){
+			   var inscom = commentVal();
+			   console.log(inscom);
+			   $.ajax({
+					  type:"post",
+					  url:"taskdetail.do?method=insertComment",
+					  data:inscom,
+					  dataType:"json",
+					  success:function(data){
+						  if(data.success=="Y")
+						  	console.log(data);
+						  $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+					  },
+					  error:function(err){
+						  alert("에러발생: "+err);
+						  console.log(err);
+					  }
+				});
+				$("#insertComment_content").val("");
+		   }
    });
-    
+  
 </script>
 </head>
  <body class="loading">
@@ -439,25 +533,29 @@
                                         
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <div data-bs-toggle="modal" data-bs-target="#info-alert-modal"><i class='mdi mdi-check-circle-outline me-1'></i>승인요청</div>
+                                                <div  id="noing">
+                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>">
+                                                    <div data-bs-toggle="modal" data-bs-target="#RequestModal"><i class='mdi mdi-check-circle-outline me-1'></i>승인요청</div>
                                                 </a>
+                                                </div>
                                                 <!-- item-->
-                                               <a href="javascript:void(0);" class="dropdown-item">
+                                               <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>">
                                                     <div data-bs-toggle="modal" data-bs-target="#updateTaskModal"><i class='mdi mdi-pencil-outline me-1'></i>수정</div>
                                                 </a>
                                                 <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
+                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>">
                                                     <div data-bs-toggle="modal" data-bs-target="#addSubTaskModal"><i class='mdi mdi-briefcase-plus me-1'></i>서브태스크 추가</div>
                                                 </a>
+                                                <c:if test="${mem.auth=='pm' }"> <!-- pm일때만 승인버튼 보이기 -->
                                                 <div class="dropdown-divider"></div>
                                                  <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <div data-bs-toggle="modal" data-bs-target="#info-alert-modal2"><i class='mdi mdi-check-circle-outline me-1'></i>완료 승인</div>
+                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${detail.task_status=="완료"}'>disabled</c:if>">
+                                                    <div data-bs-toggle="modal" data-bs-target="#approvalModal"><i class='mdi mdi-check-circle-outline me-1'></i>완료 승인</div>
                                                 </a>
+                                                </c:if>
                                                 <div class="dropdown-divider"></div>
                                                 <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item text-danger">
+                                                <a href="javascript:void(0);" class="dropdown-item text-danger <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>">
                                                     <div data-bs-toggle="modal" data-bs-target="#danger-alert-modal"><i class='mdi mdi-delete-outline me-1'></i>삭제</div>
                                                 </a>
                                             </div>
@@ -472,6 +570,8 @@
                                         <c:if test="${detail.task_priority=='Low'}">
                                         <span class="badge badge-soft-success p-1" id="task_priority">${detail.task_priority }</span>
                                         </c:if>
+                                        <c:if test="${detail.task_status=='완료' }">&nbsp;&nbsp;<span class="badge badge-soft-danger p-1" id="task_priority">${detail.task_status }</span></c:if>
+                                        <c:if test="${detail.task_status=='진행' }">&nbsp;&nbsp;<span class="badge badge-soft-success p-1" id="task_priority">${detail.task_status }</span></c:if>
                                         <h4 class="mb-1" id="task_name">${detail.task_name }</h4>
                                         <div class="mt-4">
                                         <h5>Description:</h5>
@@ -514,7 +614,7 @@
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">시작일</p>
                                                             <h5 class="mt-0 text-truncate" id="startdte">
-                                                                ${detail.startdte }
+                                                            ${fn:substring(detail.startdte,0,10)}
                                                             </h5>
                                                         </div>
                                                     </div>
@@ -527,7 +627,7 @@
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">종료일</p>
                                                             <h5 class="mt-0 text-truncate" id="enddte">
-                                                                ${detail.enddte }
+                                                                ${fn:substring(detail.enddte,0,10)}
                                                             </h5>
                                                         </div>
                                                     </div>
@@ -687,7 +787,7 @@
                                     <i class="bx bx-aperture h1 text-white"></i>
                                     <h4 class="mt-2 text-white">태스크 삭제</h4>
                                     <p class="mt-3 text-white">태스크를 삭제하시겠습니까?</p>
-                                    <button type="button" class="btn btn-light my-2"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
+                                    <button type="button" class="btn btn-light my-2 <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
                                     <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
@@ -754,7 +854,7 @@
 		                             <div class="modal-footer">
 		                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
 		                              
-		                                <input type="submit" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
+		                                <input type="button" class="btn btn-info waves-effect waves-light <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
 		                            </div>
 		                        </div><!-- /.modal-content -->
 		                    </div><!-- /.modal-dialog -->
@@ -808,13 +908,13 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="updateTask_startdte" class="form-label">시작일</label>
-                                            <input type="date" class="form-control" id="updateTask_startdte" value="${detail.startdte}">
+                                            <input type="date" class="form-control" id="updateTask_startdte" value="${fn:substring(detail.startdte,0,10)}">
                                         </div> 
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="updateTask_enddte" class="form-label">종료일</label>
-                                            <input type="date" class="form-control" id="updateTask_enddte" value="${detail.enddte}">
+                                            <input type="date" class="form-control" id="updateTask_enddte" value="${fn:substring(detail.enddte,0,10)}">
                                         </div> 
                                     </div>
                                 </div>
@@ -900,7 +1000,7 @@
                 </div><!-- /.modal -->
 				
 				 <!-- Info Alert Modal -->
-                <div id="info-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div id="RequestModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="modal-body p-4">
@@ -908,7 +1008,7 @@
                                     <i class="bx bx-task h1 text-info"></i>
                                     <h4 class="mt-2">승인요청</h4>
                                     <p class="mt-3">태스크 승인 요청하시겠습니까?</p>
-                                    <button type="button" class="btn btn-info my-2" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#success-alert-modal2">승인요청</button>
+                                    <button type="button" class="btn btn-info my-2" id="requestBtn" data-bs-dismiss="modal"  data-bs-target="#success-alert-modal2">승인요청</button>
                                      <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
@@ -917,22 +1017,24 @@
                 </div><!-- /.modal -->
                 
                  <!-- Info Alert Modal -->
-                <div id="info-alert-modal2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                 <form method="post" action="${path }/taskdetail.do?method=approval">
+                <div id="approvalModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="modal-body p-4">
                                 <div class="text-center">
+                                <input type="hidden" value="${detail.task_no }" name="task_no"/>
                                     <i class="bx bx-task h1 text-info"></i>
                                     <h4 class="mt-2">태스크 승인</h4>
                                     <p class="mt-3">태스크 완료 승인하시겠습니까?</p>
-                                    <button type="button" class="btn btn-info my-2" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#success-alert-modal">완료</button>
+                                    <button type="submit" class="btn btn-info my-2" data-bs-toggle="modal" data-bs-target="#success-alert-modal">완료</button>
                                      <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                
+                </form>
                 
                 
 				 <!-- Danger Alert Modal -->

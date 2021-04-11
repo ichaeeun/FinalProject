@@ -1,112 +1,257 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import ="java.util.*"
+    import="java.util.*"
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="form"
+		uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html>
-	<body> 
-                        <div class="row mb-2">
-                        	<c:if test="${mem.auth == 'hp' }">
-                            <div class="col-sm-4">
-                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
-                            </div>
-                            </c:if>
-                            <div class="col-sm-8">
-                                <div>
-                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end" 
-                                    	action="${path }/manpower.do?method=contacts_list" method="post">
-                                        <div class="d-flex align-items-start flex-wrap me-2">
-                                            <label for="membersearch-input" class="visually-hidden">검색</label>
-                                            <input type="search" class="form-control" name="name" id="membersearch-input" 
-                                            	value="" placeholder="이름 검색">
-                                        </div>
-                                        <button type="submit" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                    </form>
-                                    
-                                </div>
-                            </div><!-- end col-->
-                        </div>
-                        <!-- end row -->
-						
-                        <div class="row">
-                        	<form id="hiddenFrm" method="post">
-                        		<input type="hidden" name="proc"/>
-                        	</form>
-                        	
-                        
-                        	<c:forEach var="mem" items="${memList1 }">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-			                        	<form>
-			                        		<input type="hidden" name="pno" value="${mem.pno }"/>
-			                        	</form>
-                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            </c:forEach>
-                         
-                                           
-                        </div>
-                        <!-- end row -->
+<head>
+<meta charset="UTF-8">
+<title>Calendar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 
-                        <div class="row mb-4">
-                            <div class="col-sm-6">
-                                <div>
-                                    <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
+<!-- Plugin css -->
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.css" rel="stylesheet" type="text/css" />
+<link href="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.css" rel="stylesheet" type="text/css" />
+
+	
+<!-- App favicon -->
+<link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
+<!-- App css -->
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+<link href="${path }/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+<link href="${path }/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+<!-- icons -->
+<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+<script src="${path}/a00_com/jquery.min.js"></script>
+<script src="${path}/a00_com/popper.min.js"></script>
+<script src="${path}/a00_com/bootstrap.min.js"></script>
+<script src="${path}/a00_com/jquery-ui.js"></script>
+<script type="text/javascript">
+<%--
+ 
+ 
+--%>
+
+   $(document).ready(function(){
+      
+   });
+</script>
+</head>
+<body class="loading">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <jsp:include page="top.jsp" flush="false"/>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <jsp:include page="side.jsp" flush="false"/>
+            <!-- Left Sidebar End -->
+
+             <!-- ============================================================== -->
+            <!-- Start Page Content here(완료한 프로젝트 테이블로 출력) -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+						<div class="row">
+							<div class="row" style="padding-top:10px;">
+														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+														</div> 
+							<div class="col-xl-12">
+									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
+							            <li class="nav-item">
+							                      <a href="${path }/task.do?method=view"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+							                    <span class="d-none d-sm-inline-block">오버뷰</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/task.do?method=list" class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/dashboard.do?method=list"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+							                    <span class="d-none d-sm-inline-block">대시보드</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
+							                    <span class="d-none d-sm-inline-block">간트차트</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/cal.do?method=list"  class="nav-link active">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                    <span class="d-none d-sm-inline-block">캘린더</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/task.do?method=log"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                    <span class="d-none d-sm-inline-block">활동로그</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+							                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                           <span class="d-none d-sm-inline-block">리스크</span>
+							                </a>
+							            </li>
+							         </ul> 
+								</div>
+							</div>
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Calendar</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                            <li class="breadcrumb-item active">Calendar</li>
+                                        </ol>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="float-sm-end">
-                                    <ul class="pagination pagination-rounded mb-sm-0">
-                                        <li class="page-item disabled">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                        </li>
-                                    </ul>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3">
+                                                <div class="d-grid">
+                                                    <button class="btn btn-lg font-16 btn-primary" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> Create New Event</button>
+                                                </div>
+                                                <div id="external-events">
+                                                    <br>
+                                                    <p class="text-muted">Drag and drop your event or click in the calendar</p>
+                                                    <div class="external-event bg-success" data-class="bg-success">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>New Theme Release
+                                                    </div>
+                                                    <div class="external-event bg-info" data-class="bg-info">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>My Event
+                                                    </div>
+                                                    <div class="external-event bg-warning" data-class="bg-warning">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Meet manager
+                                                    </div>
+                                                    <div class="external-event bg-danger" data-class="bg-danger">
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Create New theme
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="mt-5 d-none d-xl-block">
+                                                    <h5 class="text-center">How It Works ?</h5>
+    
+                                                    <ul class="ps-3">
+                                                        <li class="text-muted mb-3">
+                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                        </li>
+                                                        <li class="text-muted mb-3">
+                                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage.
+                                                        </li>
+                                                        <li class="text-muted mb-3">
+                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+    
+                                            </div> <!-- end col-->
+
+                                            <div class="col-xl-9">
+                                                <div class="mt-4 mt-xl-0">
+                                                    <div id="calendar"></div>
+                                                </div>
+                                            </div> <!-- end col -->
+
+                                        </div>  <!-- end row -->
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+
+                                <!-- Add New Event MODAL -->
+                                <div class="modal fade" id="event-modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header py-3 px-4 border-bottom-0 d-block">
+                                                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="modal-title">Event</h5>
+                                            </div>
+                                            <div class="modal-body px-4 pb-4 pt-0">
+                                                <form class="needs-validation" name="event-form" id="form-event" novalidate>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">Event Name</label>
+                                                                <input class="form-control" placeholder="Insert Event Name"
+                                                                    type="text" name="title" id="event-title" required />
+                                                                <div class="invalid-feedback">Please provide a valid event name</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">Category</label>
+                                                                <select class="form-control form-select" name="category"
+                                                                    id="event-category" required>
+                                                                    <option value="bg-danger" selected>Danger</option>
+                                                                    <option value="bg-success">Success</option>
+                                                                    <option value="bg-primary">Primary</option>
+                                                                    <option value="bg-info">Info</option>
+                                                                    <option value="bg-dark">Dark</option>
+                                                                    <option value="bg-warning">Warning</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">Please select a valid event category</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6">
+                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
+                                                        </div>
+                                                        <div class="col-6 text-end">
+                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div> <!-- end modal-content-->
+                                    </div> <!-- end modal dialog-->
                                 </div>
+                                <!-- end modal-->
                             </div>
-                        </div>
-                        <!-- end row -->
-                        
+                            <!-- end col-12 -->
+                        </div> <!-- end row -->
                         
                     </div> <!-- container-fluid -->
 
@@ -206,7 +351,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
@@ -221,7 +366,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
@@ -236,7 +381,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
@@ -255,7 +400,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
@@ -270,7 +415,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
@@ -285,7 +430,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
@@ -300,7 +445,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status online"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
@@ -315,7 +460,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status busy"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
@@ -330,7 +475,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status away"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
@@ -534,75 +679,22 @@
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor js -->
-        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
+        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+
+        <!-- plugin js -->
+        <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/interaction/main.min.js"></script>
+
+        <!-- Calendar init -->
+        <script src="${path}/Admin/dist/assets/js/pages/calendar.init.js"></script>
 
         <!-- App js -->
-        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
-
-
-                                        <!-- Signup modal content -->
-                                        <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-    
-                                                    <div class="modal-body">
-                                                        <div class="text-center mt-2 mb-4">
-                                                            <a href="index.html" class="text-success">
-                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
-                                                            </a>
-                                                        </div>
-
-    													<form:form class="px-3" action="${path }/manpower.do?method=add_member" method="post" 
-    														modelAttribute="member">
-                                                            <div class="mb-3">
-                                                                <label for="name" class="form-label">이름</label>
-                                                                <form:input path="name" class="form-control" type="text" placeholder="이름"/>
-                                                            </div>
-    
-                                                            <div class="mb-3">
-                                                                <label for="email" class="form-label">이메일</label>
-                                                                <form:input path="email" class="form-control" type="email" placeholder="이메일"/>
-                                                            </div>
-    
-                                                            <div class="mb-3">
-                                                                <label for="id" class="form-label">아이디</label>
-                                                                <form:input path="id" class="form-control" type="text" placeholder="아이디"/>
-                                                            </div>
-                                                             <div class="mb-3">
-                                                                <label for="pass" class="form-label">비밀번호</label>
-                                                                <form:input path="pass" class="form-control" type="password" placeholder="비밀번호"/>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="part" class="form-label">부서</label>
-                                                                <form:select path="part" class="form-control">
-                                                                	<option>-- 부서 선택 --</option>
-                                                                	<c:forEach var="part" items="${partList }">
-                                                                		<option value="${part.part }">${part.part }</option>
-                                                                	</c:forEach>
-                                                                </form:select>
-                                                            </div>   
-                                                            <div class="mb-3">
-                                                                <label for="auth" class="form-label">직급</label>
-                                                                <form:select path="auth" class="form-control">
-                                                                	<option>-- 직급 선택 --</option>
-                                                                	<c:forEach var="auth" items="${authList }">
-                                                                		<option value="${auth.auth }">${auth.auth }</option>
-                                                                	</c:forEach>                                                                	
-                                                                </form:select>
-                                                            </div>                                                                                                                               
-                                                            <div class="mb-3 text-center">
-                                                                <input class="btn btn-primary" type="submit"/>
-                                                            </div>
-    
-                                                        </form:form>
-    
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-
-
-
+        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
         
     </body>
 </html>

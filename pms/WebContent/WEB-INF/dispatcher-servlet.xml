@@ -95,4 +95,15 @@
   <!--    <bean id="downloadviewer" class="pms.util.FileDownloadViewer"/> -->
      <!-- 4. 엑셀뷰 viewer -->
      <!-- 5. pdf뷰 viewer -->
+     <!--
+    <mvc:interceptor>
+    <mvc:mapping path="/**/*" />
+    	<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<bean:property name="cacheSeconds" value="0" />
+          	<bean:property name="useExpiresHeader" value="true" />
+			<bean:property name="useCacheControlHeader" value="true" />
+			<bean:property name="useCacheControlNoStore" value="true" />
+    	</bean>
+	</mvc:interceptor>
+	-->
 </beans>

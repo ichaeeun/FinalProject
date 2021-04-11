@@ -103,7 +103,57 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        
+                        <div class="row">
+							<div class="row" style="padding-top:10px;">
+														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+														</div> 
+							<div class="col-xl-12">
+									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
+							            <li class="nav-item">
+							                      <a href="${path }/task.do?method=view"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+							                    <span class="d-none d-sm-inline-block">오버뷰</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/task.do?method=list" class="nav-link active">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="#"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
+							                    <span class="d-none d-sm-inline-block">대시보드</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
+							                    <span class="d-none d-sm-inline-block">간트차트</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="#"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                    <span class="d-none d-sm-inline-block">캘린더</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/task.do?method=log"  class="nav-link">
+							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                    <span class="d-none d-sm-inline-block">활동로그</span>
+							                </a>
+							            </li>
+							            <li class="nav-item">
+							                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+							                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
+							                           <span class="d-none d-sm-inline-block">리스크</span>
+							                </a>
+							            </li>
+							         </ul> 
+								</div>
+							</div>
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
