@@ -47,7 +47,13 @@
 		if(proc=="insert"){
 			alert("PM 리스크 요청페이지로 전송되었습니다.");
 		};
-
+		$('.risk_item').on("click", function(){
+			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
+ 			var risk_no = $(this).children().eq(8).children().val();
+ 			$('[name=risk_no]').val(risk_no);
+			
+ 			$('#detail_form').submit();
+		})
 	});
 </script>
 </head>
@@ -108,6 +114,8 @@
                                         <!-- end row -->
                 
                                         <div class="table-responsive">
+                                            <form action="${path}/risk.do?method=riskDetail" id="detail_form" method="post">
+                                            <input type="hidden" value="" name="risk_no">
                                             <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">
                                                     <tr>
@@ -119,7 +127,7 @@
                                                         </th>
                                                         <th class="all">번호</th>
                                                         <th>제목</th>
-                                                        <th>프로젝트 이름</th>
+                                                        <th>내용</th>
                                                         <th>리스크 카테고리</th>
                                                         <th>등록일</th>
                                                         <th>리스크 상태</th>
@@ -128,8 +136,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                               	<c:forEach var="rl" items="${risklist}">
-                                                    <tr>
+                                                <c:forEach var="rl" items="${risklist}">
+                                                    <tr class="risk_item">
                                                         <td>
                                                             <div class="form-check mb-0 font-16">
                                                                 <input class="form-check-input" type="checkbox" id="productlistCheck1">
@@ -140,34 +148,36 @@
                                                  			${rl.rnum}
                                                         </td>
                                                         <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_title}</a></h5>
+                                                            <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/risk.do?method=riskDetail" class="text-dark"> ${rl.risk_content}</a></h5>
+                                                            <h5 class="m-0 d-inline-block align-middle">${rl.risk_content}</h5>
                                                         </td>
                                                         <td>
-                                                   			${rl.risk_parent_no}
+                                                   			[${rl.risk_category}]
                                                         </td>
                                                         <td>
                                                             <fmt:formatDate value="${rl.regdte}"/>
                                                         </td>
                                                         <td>
                                                             <div>
-                                                   				${rl.risk_category}
+                                                   				${rl.risk_status}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div>
-                                                     			${mem.name}
+                                                     			${rl.risk_writer}
                                                             </div>
                                                         </td>
                                                         <td>
+                                                        	<input type="hidden" value="${rl.risk_no}">
                                                         </td>
                                                     </tr>
                                               		</c:forEach>
                                                     <!-- 복붙해야할부분 -->
                                                 </tbody>
                                             </table>
+                                    		</form>
                                         </div>
                                     </div>
                                 </div>

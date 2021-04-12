@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.RiskBoard;
+import pms.dto.UptStatus;
 import pms.service.RiskService;
 
 @Controller
@@ -30,10 +32,11 @@ public class RiskController {
 	}
 	// http://localhost:7080/pms/risk.do?method=riskDetail
 	@RequestMapping(params="method=riskDetail")
-	public String riskdetail() {
+	public String riskdetail(@RequestParam("risk_no") int risk_no, Model d) {
+		System.out.println("리스크넘버:"+risk_no);
+		d.addAttribute("riskboard",service.getBoard(risk_no));
 		return"risk_detail";
 	}
-	
 	
 	// http://localhost:7080/pms/risk.do?method=riskBoardCreate
 	@RequestMapping(params="method=riskBoardCreate")
@@ -48,6 +51,14 @@ public class RiskController {
 		d.addAttribute("risklist",service.rBoard());
 		return "riskBoard";
 	}
-
-
+	// http://localhost:7080/pms/risk.do?method=uptStatus
+	@RequestMapping(params = "method=uptStatus")
+	public String uptStatus (@RequestParam("risk_no") int risk_no, Model d) {
+		System.out.println("test:"+risk_no);
+		UptStatus upt_satus = new UptStatus("승인", risk_no);
+		
+		service.uptStatus(upt_satus);
+		d.addAttribute("uptFinish", "Y");
+		return "forward:risk.do?method=riskDetail";		// 요청값을 갖고 리스크 디테일 컨트롤러로 이동.
+	}
 }

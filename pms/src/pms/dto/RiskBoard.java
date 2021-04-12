@@ -11,11 +11,23 @@ public class RiskBoard {
 	private Date regdte;
 	private String risk_status;
 	private String project_name;
+	private String risk_writer;
 	public RiskBoard() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public String getRisk_writer() {
+		return risk_writer;
+	}
+
+
+	public void setRisk_writer(String risk_writer) {
+		this.risk_writer = risk_writer;
+	}
+
+
 	public int getRnum() {
 		return rnum;
 	}

@@ -106,6 +106,7 @@
 
                                              <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
+ 	                                            <input type="hidden" name="risk_no" value=""/>
                                                     <div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
