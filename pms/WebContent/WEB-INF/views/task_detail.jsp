@@ -42,9 +42,9 @@
 
 <script type="text/javascript">
 
-	jQuery.noConflict(); 
-    jQuery(document).ready(function($){ 
-	   $("time.timeago").timeago();
+	/* jQuery.noConflict();  */
+   	  $(document).ready(function(){ 
+	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
 	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
 	   

@@ -18,10 +18,8 @@ public class pms_project {
 	private String end1;
 	private int pm_pno;
 	private String project_status;
-<<<<<<< HEAD
 	private int pno; // 멤버번호로 프로젝트 검색시 사용
 	
-=======
 	
 	public pms_project(int project_no, String project_name, String project_content, String start1, String end1,
 			int pm_pno, String project_status) {
@@ -34,7 +32,6 @@ public class pms_project {
 		this.pm_pno = pm_pno;
 		this.project_status = project_status;
 	}
->>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
 	public pms_project() {
 		super();
 		// TODO Auto-generated constructor stub
