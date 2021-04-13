@@ -292,9 +292,7 @@
 					  console.log(err);
 				  }
 			}); 
-			 
-		 });
-		 
+		 });		 
 		 
 		 $("#subtaskList").on("click",".deletesub",function(){
 			 var item=$(this).closest(".upt");

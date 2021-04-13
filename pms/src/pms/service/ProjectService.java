@@ -67,8 +67,6 @@ public class ProjectService {
 		return dao.pms_projectList2(sch);
 	}
 	
-	
-	
 	// pno가 진행중인 프로젝트 리스트
 	public ArrayList<pms_project> projectList(int pno){
 		return dao.projectList(pno);
@@ -77,9 +75,7 @@ public class ProjectService {
 	public ArrayList<pms_project> projectList2(int pno){
 		return dao.projectList2(pno);
 	}
-	
-	
-	
+
 	public pms_project getProject(int no) {
 		// 기본 정보 할당
 		pms_project pms_project = dao.getProject(no);

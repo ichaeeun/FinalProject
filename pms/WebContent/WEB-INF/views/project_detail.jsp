@@ -18,7 +18,7 @@
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="${path }/Admin/dist/assets/images/favicon.ico">
+        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
 		<!-- App css -->
 		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
 		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
@@ -43,11 +43,9 @@ function goPage(page){
 
         <!-- Begin page -->
         <div id="wrapper">
-
             <!-- Topbar Start -->
             <jsp:include page="top.jsp" flush="false"/>
             <!-- end Topbar -->
-
             <!-- ========== Left Sidebar Start ========== -->
             <jsp:include page="side.jsp" flush="false"/>
             <!-- Left Sidebar End -->
