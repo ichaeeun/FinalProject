@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
-
+<script src="${path}/a00_com/jquery.min.js"></script>
 <script type="text/javascript">
 <%--
  
