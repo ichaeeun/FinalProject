@@ -42,7 +42,7 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script type="text/javascript">
 
-	/* jQuery.noConflict();  */
+	/* jQuery.noConflict();   */
    	  $(document).ready(function(){ 
 	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
