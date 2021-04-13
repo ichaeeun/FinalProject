@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Log;
 import pms.dto.Task;
@@ -17,12 +18,14 @@ public class OverviewController {
 	
 	//  http://localhost:7080/pms/task.do?method=list
 	@RequestMapping(params="method=list")
-	public String taskList(Task task, Model d) {
-		d.addAttribute("TaskList", service.TaskList(task));
-		d.addAttribute("TaskList2", service.TaskList2(task));
+	public String taskList(@RequestParam("no") int no,Task task, Model d) {
+		d.addAttribute("TaskList", service.TaskList(no));
+		d.addAttribute("TaskList2", service.TaskList2(no));
+
 		System.out.println(task.getPno());
 		return "task_list";
 	}
+	
 //  http://localhost:7080/pms/task.do?method=view
 	@RequestMapping(params="method=view")
 	public String overview() {

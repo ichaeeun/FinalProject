@@ -17,10 +17,10 @@ public class OverviewService {
 	public ArrayList<Log> LogList(Log log){
 		return dao.LogList(log);
 	}
-	public ArrayList<Task> TaskList(Task task){
-		return dao.TaskList(task);
+	public ArrayList<Task> TaskList(int no){
+		return dao.TaskList(no);
 	}
-	public ArrayList<Task> TaskList2(Task task){
-		return dao.TaskList2(task);
+	public ArrayList<Task> TaskList2(int no){
+		return dao.TaskList2(no);
 	}
 }

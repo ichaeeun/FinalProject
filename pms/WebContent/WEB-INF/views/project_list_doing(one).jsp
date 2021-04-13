@@ -81,7 +81,7 @@
 </script>
     </head>
 
-<body class="loading" data-layout-mode="detached" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+<body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">

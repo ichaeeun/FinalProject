@@ -26,7 +26,7 @@
 	            </a>
 	
 	            <a href="${path}/main.do?method=main" class="logo logo-light text-center">
-	                <span class="logo-sm">
+	                <span class="logo-sm" style="display:none;">
 	                    <img src="${path}/Admin/dist/assets/images/logo-sm.png" alt="" height="70">
 	                </span>
 	                <span class="logo-lg">

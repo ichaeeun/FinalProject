@@ -7,6 +7,6 @@ import pms.dto.Task;
 
 public interface OverviewDao {
 	public ArrayList<Log> LogList(Log log);
-	public ArrayList<Task> TaskList(Task task);
-	public ArrayList<Task> TaskList2(Task task);
+	public ArrayList<Task> TaskList(int no);
+	public ArrayList<Task> TaskList2(int no);
 }
