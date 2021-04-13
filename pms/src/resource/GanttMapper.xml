@@ -10,9 +10,20 @@
 		<result property="end" column="end1"/>
 	</resultMap>
 
-	<select id="getTask" parameterType="pms_project" resultMap="taskMap">
+	<select id="getTask" resultMap="taskMap" parameterType="pms_project">
 		select * from project_task where project_no = #{project_no}
 	</select>
 	
+	<select id="getName" resultType="String" parameterType="int">
+		select name from pms_member where pno = #{pno}
+	</select>
+	
+	<insert id="insertTask" parameterType="gantt">
+		insert into project_task values(
+			#{pno},#{project_no},task_no_seq.nextval,#{task_name},
+			#{task_content}, #{task_priority},#{task_parent_no},
+			#{startdte},#{enddte},#{task_status}
+		)
+	</insert>
 </mapper>  
  

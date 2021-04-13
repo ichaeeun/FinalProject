@@ -86,16 +86,18 @@ public class GanttService {
 			Gantt g = new Gantt(task.get(i).getTask_no(),
 					startarr.get(i),
 					duration.get(i),
-					task.get(i).getTask_content(),task.get(i).getTask_priority(),
+					task.get(i).getTask_content(),
+					task.get(i).getTask_priority().equals("High")?1:
+						task.get(i).getTask_priority().equals("Medium")?2:3,
 					0,task.get(i).getTask_no(),
-					task.get(i).getTask_parent_no());
-			
+					task.get(i).getTask_parent_no(),getName(task.get(i).getPno()));
+			System.out.println(getName(task.get(i).getPno()));
 			gantt.add(g);
 		}
 		
 		return gantt;
 	}
-	
+	/*
 	public Gantt getGantt(Task task) {
 //		ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,6 +130,7 @@ public class GanttService {
 		
 		return g;
 	}
+	*/
 	// ================ 간트 ================================
 	public String jsonadd(ArrayList<Gantt> gantt, pms_project project) {
 		JSONObject g = new JSONObject();
@@ -143,7 +146,8 @@ public class GanttService {
 		g.put("sortorder", 1);
 		g.put("parent", 0);
 		g.put("open", true);
-		//g.put("priority", "High");
+		g.put("priority", 1);
+		g.put("holder", "강동원");
 		
 		array.add(g);
 		g = new JSONObject();
@@ -157,7 +161,8 @@ public class GanttService {
 			g.put("sortorder", gantt.get(index).getSortorder());
 			g.put("parent", gantt.get(index).getParent());
 			g.put("open", true);
-			//g.put("priority", gantt.get(index).getPriority());
+			g.put("priority", gantt.get(index).getPriority());
+			g.put("holder", gantt.get(index).getHolder());
 			System.out.println("gantt"+index+": "+g.toJSONString());
 			array.add(g);
 			g = new JSONObject();
@@ -248,5 +253,14 @@ public class GanttService {
 			e.printStackTrace();
 		}
 		
+	}
+	// pno로 이름 가져오기
+	public String getName(int pno) {
+		return dao.getName(pno);
+	}
+	
+	// 새로운 업무 생성
+	public void insertTask(Gantt gantt) {
+		dao.insertTask(gantt);
 	}
 }

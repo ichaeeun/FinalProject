@@ -35,22 +35,46 @@
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
       <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css?v=5.2.0">
+      <%-- moment 메서드 사용 --%>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <script type="text/javascript">
 <%--
  
  
 --%>
-
+var holder = [];
+var tid = [];
    //$(document).ready(function(){
 	document.addEventListener("DOMContentLoaded",function(eve){
-		
+		var g;
 		// 초기 데이터 가져오기
 	   $.ajax({
 			type:"post",
 			url:"${path}/gantt.do?method=data",
 			dataType:"json",
 			success:function(data){
-				console.log(data.gantt);
+				g = data.gantt;
+				var tes = data.gantt.substring(8,data.gantt.length-1);
+				//console.log(data.gantt);
+				//console.log(tes);
+				
+				var arrayList = new Array(tes);
+				//console.log(arrayList[1]);
+				
+				var j = JSON.parse(tes);
+				for(var i=0;i<j.length;i++){
+					holder.push(j[i].holder);
+					if("${mem.name}" == j[i].holder){
+						tid.push(Number(j[i].id));	
+					}
+					//console.log(holder);
+					//console.log(tid);
+				}
+				//console.log($(".gantt_tree_content").val());
+				//console.log(data.gantt.attr('priority'));
+				// 수정 시 이전 정보 담기, priority 만 넣으면 됨 
+				//gantt.getLightboxSection('Priority').setValue(data.gantt.priority);
 				gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
 				gantt.init("gantt_here");
 				gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
@@ -59,74 +83,132 @@
 				console.log(err);
 			}
 		});
-	   
-		// 화면에 수정, 생성, 삭제 버튼 생성
-	   var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
-
-		gantt.config.columns = [
-			{name: "text", tree: true, width: '*', resize: true},
-			{name: "start_date", align: "center", resize: true},
-			{name: "duration", align: "center"},
-			{name: "buttons",label: colHeader,width: 75,template: function (task) {
-				return (
-					'<i class="fa fa-pencil" data-action="edit"></i>' +
-					'<i class="fa fa-plus" data-action="add"></i>' +
-					'<i class="fa fa-times" data-action="delete"></i>'
-					);
-			}}
-		];
 		// 테스크 버튼 클릭 시
-		gantt.attachEvent("onTaskClick", function(id, e){
-			var button = e.target.closest("[data-action]")
-			if(button){
-				var action = button.getAttribute("data-action");
-				switch (action) {
-					case "edit":
-						gantt.showLightbox(id);
-						break;
-					case "add":
-						gantt.createTask(null, id);
-						break;
-					case "delete":
-						gantt.confirm({
-							title: gantt.locale.labels.confirm_deleting_title,
-							text: gantt.locale.labels.confirm_deleting,
-							callback: function (res) {
-								if (res)
-									gantt.deleteTask(id);
-							}
-						});
-						break;
+		if("${mem.auth}"=='pm'){
+			// 화면에 수정, 생성, 삭제 버튼 생성
+		   var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
+	
+			gantt.config.columns = [
+				{name: "text", tree: true, width: '*', resize: true},
+				{name: "start_date", align: "center", resize: true},
+				{name: "duration", align: "center"},
+				{name: "buttons",label: colHeader,width: 75,template: function (task) {
+					return (
+						'<i class="fa fa-pencil" data-action="edit"></i>' +
+						'<i class="fa fa-plus" data-action="add"></i>' +
+						'<i class="fa fa-times" data-action="delete"></i>'
+						);
+				}}
+			];
+		
+			gantt.attachEvent("onTaskClick", function(id, e){
+				var button = e.target.closest("[data-action]")
+				if(button){
+					var action = button.getAttribute("data-action");
+					switch (action) {
+						case "edit":
+							gantt.showLightbox(id);
+							break;
+						case "add":
+							gantt.createTask({start_date:new Date()},null, id);
+							break;
+						case "delete":
+							gantt.confirm({
+								title: gantt.locale.labels.confirm_deleting_title,
+								text: gantt.locale.labels.confirm_deleting,
+								callback: function (res) {
+									if (res)
+										gantt.deleteTask(id);
+								}
+							});
+							break;
+					}
+					return false;
 				}
-				return false;
-			}
-			return true;
-		});
-	   
+				return true;
+			});
+		} else if("${mem.auth}"=='wk'){
+		
+			gantt.config.columns = [
+				{name: "text", tree: true, width: '*', resize: true},
+				{name: "start_date", align: "center", resize: true},
+				{name: "duration", align: "center"},
+				{name: "holder", align: "center", resize: true, label:"holder"}
+				// 세션 id == holder
+				/*
+				if("${mem.name}"== "${holder}"){
+					{name: "buttons",label: colHeader,width: 75,template: function (task) {
+						return (
+							'<i class="fa fa-pencil" data-action="edit"></i>'
+							);
+					}}
+				} else {
+					{name: "holder", align: "center", resize: true, label:"holder"}
+				}
+				*/
+			];
+			
+			gantt.attachEvent("onTaskClick", function(id, e){
+				if(tid.includes(Number(id))){
+					gantt.showLightbox(id);
+				}
+				else {
+					alert("프로젝트 매니저만 이용가능한 서비스입니다.");
+				}
+			});
+		} else if("${mem.auth}"=='ceo' || "${mem.auth}"=='hp'){
+			
+			gantt.templates.progress_text=function(start, end, task){
+				  return formatProgress(task)
+			};
+			
+			gantt.config.columns = [
+				{name: "text", tree: true, width: '*', resize: true},
+				{name: "start_date", align: "center", resize: true},
+				{name: "duration", align: "center"},
+				{name: "holder", align: "center", resize: true, label:"holder"},
+				{name: "progress", align: "center", resize: true, label:"Progress",
+					template: function(task){return formatProgress(task);}}
+			]
+			gantt.attachEvent("onTaskClick", function(id, e){
+				alert("프로젝트 매니저만 이용가능한 서비스입니다.");
+			});
+		}
 
 		var opts = [
 			{ key:1 , label: 'High'},
-			{ key:2 , label: 'Normal'},
+			{ key:2 , label: 'Medium'},
 			{ key:3 , label: 'Low'},
 		];
 		// lightbox 내부 priority 영역 추가
 		gantt.config.lightbox.sections = [
 		    {name:"description", height:60, map_to:"text", type:"textarea", focus:true},
-		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts, default_value:"Low"},
+		    
+		    {name:"parent",height:25, type:"parent", filter:function(id, task){ 
+		        if(task.$level > 1){         
+		            return false;     
+		        }else{  
+		            return true; 
+		        } 
+		    }},
+		    
+		    //{name:"parent", type:"parent", allow_root:"false", root_label:"No parent"},
+		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
+		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
 		    {name:"time",        height:30, map_to:"auto", type:"duration"}
 		];
 		// undefined ==> Priority 변경 (lightbox)
 		gantt.locale.labels.section_priority="Priority";
+		gantt.locale.labels.section_holder="holder";
+		gantt.locale.labels["section_parent"] = "Parent task";
+		//gantt.locale.lightbox.section_priority = "High";
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    console.log(id);
-		    console.log(task);
-		    console.log(is_new);
 		    
 		    // ajax update 처리
 		    updateCall(task,is_new);
 		 // 갱신된 데이터 호출 필요
 		    return true;
-		})
+		});
 		
 		
 	});// document 끝
@@ -135,10 +217,13 @@
 	function updateCall(gantt,is_new){
 		  // callSch() 입력된 수정된 데이터를 요청값으로 전달
 		  if(is_new == false){
+			  console.log("##update##");
+			  console.log(gantt);
+			  var sch = callSch(gantt);
 			  $.ajax({
 				  type:"post",
 				  url:"${path}/gantt.do?method=update",
-				  data:gantt,
+				  data:sch,
 				  dataType:"json",
 				  success:function(data){
 					  // data.모델명
@@ -150,10 +235,13 @@
 					  console.log(err);
 				  }
 			  });
+			  
 		  } else if(is_new == true){
 			  
-			  var sch = callSch(gantt);
+			  var sch = newSch(gantt);
+			  console.log("##insert##");
 			  console.log(sch);
+			  
 			  $.ajax({
 				  type:"post",
 				  url:"${path}/gantt.do?method=insert",
@@ -169,24 +257,59 @@
 					  console.log(err);
 				  }
 			  });
+			  
 		  }
 		  // 갱신된 데이터 호출 필요
 	  } 
 	
 	// is_new == true 일 때, 빈 데이터 채우기
-	function callSch(gantt){
+	function newSch(gantt){
+			console.log("###gantt###");	
+			console.log(gantt);
 		  var sch = {};
 		  sch.duration = gantt.duration;
 		  sch.parent = gantt.parent;
-		  sch.progress = 0;
-		  sch.sortorder = 9999; // id
-		  sch.id = 9999;	// id
+		  sch.progress = gantt.progress;
+		  sch.sortorder = 0; 
+		  sch.id = 0;	
 		  sch.text = gantt.text;
 		  sch.open = true;
-		  sch.start_date = gantt.start_date;
+		  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
+		  
+		  sch.start_date = gantt.start_date.toISOString();
+		  /*
+		  if(gantt.holder == "") sch.holder="no one";
+		  else sch.holder = gantt.holder;
+		  */
+		  sch.holder = gantt.holder;
+		  sch.priority = Number(gantt.priority);
+		  console.log("###sch###");
+		  console.log(sch);
 		  
 		  return sch;
 	  }
+	
+	function callSch(gantt){
+	  var sch = {};
+	  sch.duration = gantt.duration;
+	  sch.parent = gantt.parent;
+	  sch.progress = gantt.progress;
+	  sch.sortorder = gantt.sortorder; 
+	  sch.id = gantt.id;	
+	  sch.text = gantt.text;
+	  sch.open = true;
+	  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
+	  
+	  sch.start_date = gantt.start_date.toISOString();
+	  /*
+	  if(gantt.holder == "") sch.holder="no one";
+	  else sch.holder = gantt.holder;
+	  */
+	  sch.holder = gantt.holder;
+	  sch.priority = Number(gantt.priority);
+	  
+	  return sch;
+  }
 	  
 	function getFormatDate(date){
 	    var year = date.getFullYear();              //yyyy
@@ -196,22 +319,10 @@
 	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
 	    return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
 	}
-	function sw(data){
-		var sch = {};
-		sch.id = data.id;
-		//data.start_date = gantt.date.parseDate(data.start_date,"%Y-%m-%d %H:%i:%s");
-		//sch.start_date = data.start_date.toISOString();
-		sch.start_date = data.start_date;
-		sch.duration = data.duration;
-		sch.text = data.text;
-		sch.progress = data.progress;
-		sch.parent = data.parent;
-		sch.sortorder = data.sortorder;
-		sch.open = true;
-		return sch;
+	
+	function formatProgress(task){
+		  return Math.round(task.progress * 100) + "%"
 	}
-	
-	
 </script>
 <script src="${path}/Admin/dist/assets/js/dhtmlxgantt.js?v=7.0.13"></script>
 <link rel="stylesheet" href="${path}/Admin/dist/assets/css/dhtmlxgantt.css?v=7.0.13">
@@ -275,7 +386,7 @@
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 							            <li class="nav-item">
-							                      <a href="${path }/task.do?method=view"  class="nav-link">
+							                      <a href="${path}/task.do?method=view"  class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
 							                    <span class="d-none d-sm-inline-block">오버뷰</span>
 							                </a>

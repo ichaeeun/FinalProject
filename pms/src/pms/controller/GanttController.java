@@ -47,19 +47,31 @@ public class GanttController {
 	@RequestMapping(params="method=insert")
 	public String insert(Gantt gantt) {
 		System.out.println("pno: " + gantt.getId());
+		System.out.println("start: " + gantt.getStart_date());
 		System.out.println("duration: " + gantt.getDuration());
 		System.out.println("parent: " + gantt.getParent());
 		System.out.println("content: " + gantt.getText());
+		System.out.println("Priority: " + gantt.getPriority());
+		System.out.println("progress: " + gantt.getProgress());
+		System.out.println("sortorder: " + gantt.getSortorder());
+		System.out.println("holder: " + gantt.getHolder());
+
+		
 		
 		return "pageJsonReport";
 	}
 	@RequestMapping(params="method=update")
 	public String update(Gantt gantt) {
 		System.out.println("pno: " + gantt.getId());
+		System.out.println("start: " + gantt.getStart_date());
 		System.out.println("duration: " + gantt.getDuration());
-		System.out.println("pno: " + gantt.getParent());
+		System.out.println("parent: " + gantt.getParent());
 		System.out.println("content: " + gantt.getText());
-		
+		System.out.println("Priority: " + gantt.getPriority());
+		System.out.println("progress: " + gantt.getProgress());
+		System.out.println("sortorder: " + gantt.getSortorder());
+		System.out.println("holder: " + gantt.getHolder());
+		// 수정놈
 		return "pageJsonReport";
 	}
 }

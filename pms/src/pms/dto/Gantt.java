@@ -5,18 +5,20 @@ public class Gantt {
 	private String start_date;
 	private int duration;
 	private String text;
-	private String priority;
+	//private String priority;
+	private int priority;
 	private float progress;
 	private int sortorder;
 	private int parent;
+	private String holder;
 	
 	public Gantt() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
+	}	
 
-	public Gantt(int id, String start_date, int duration, String text, String priority, float progress, int sortorder,
-			int parent) {
+	public Gantt(int id, String start_date, int duration, String text, int priority, float progress, int sortorder,
+			int parent, String holder) {
 		super();
 		this.id = id;
 		this.start_date = start_date;
@@ -26,6 +28,7 @@ public class Gantt {
 		this.progress = progress;
 		this.sortorder = sortorder;
 		this.parent = parent;
+		this.holder = holder;
 	}
 
 	public int getId() {
@@ -59,7 +62,7 @@ public class Gantt {
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	/*
 	public String getPriority() {
 		return priority;
 	}
@@ -67,10 +70,22 @@ public class Gantt {
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
-
+	*/
 	public float getProgress() {
 		return progress;
 	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+
 
 	public void setProgress(float progress) {
 		this.progress = progress;
@@ -90,6 +105,14 @@ public class Gantt {
 
 	public void setParent(int parent) {
 		this.parent = parent;
+	}
+
+	public String getHolder() {
+		return holder;
+	}
+
+	public void setHolder(String holder) {
+		this.holder = holder;
 	}
 	
 	
