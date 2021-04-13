@@ -25,8 +25,5 @@
 	AND t1.project_no = #{no}
 	order by t1.enddte
 </select>
-<select id="Overview" resultType="view" parameterType="int">
-	SELECT 
-</select>
 </mapper>  
  

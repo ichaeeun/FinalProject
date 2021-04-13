@@ -8,3 +8,6 @@ pass = tiger
 # 파일 서버 정보
 #upload=C:/Users/주인/eclipse-workspace/springweb/WebContent/z01_upload/
 #tmpUpload=C:/Users/주인/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/springweb/z01_upload/
+# 태스크 파일업로드 서버 정보 upload uploadTmp
+upload=/Users/ichaeeun/git/FinalProject/pms/WebContent/WEB-INF/task_upload
+uploadTmp=/Users/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/pms/WEB-INF/task_upload

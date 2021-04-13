@@ -1,5 +1,7 @@
 package pms.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Task {
 	   private int pno;
 	   private int project_no;
@@ -13,6 +15,7 @@ public class Task {
 	   private String task_name; //추가 
 	   private String name;	// 추가 // 디테일 화면에서 사원이름 조회 위함 
 	   private String project_name; // 추가 // 디테일 화면에서 프로젝트 이름 조회 위함 
+	   private MultipartFile[] report;		// 업로드 시 필요(파일 수정 시 업로드)
 	   
 	   
 	   public Task() {
@@ -106,6 +109,14 @@ public class Task {
 
 	public void setProject_name(String project_name) {
 		this.project_name = project_name;
+	}
+
+	public MultipartFile[] getReport() {
+		return report;
+	}
+
+	public void setReport(MultipartFile[] report) {
+		this.report = report;
 	}
 	   
 	   

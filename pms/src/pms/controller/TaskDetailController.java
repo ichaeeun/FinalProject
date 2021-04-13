@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Comment;
 import pms.dto.Task;
+import pms.dto.TaskFile;
 import pms.service.TaskDetailService;
 
 @Controller
@@ -135,9 +136,19 @@ public class TaskDetailController {
 		return "pageJsonReport";
 	}; 
 	
+	@RequestMapping(params="method=insertTaskFile") // 파일 업로드 
+	public String insertTaskFile(TaskFile tf) {
+		service.insertTaskFile(tf);
+		return "pageJsonReport";
+	}
+	
+	
+	
 	@ModelAttribute("showMember")  //프로젝트 별 인원 공통 어트리뷰트 
 	public ArrayList<Task> showMember(@RequestParam("task_no") int task_no){
 		return service.showMember(task_no);
 	}
+	
+	
 	
 }

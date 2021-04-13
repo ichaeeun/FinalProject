@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import pms.dto.Comment;
 import pms.dto.Task;
+import pms.dto.TaskFile;
 
 @Repository
 public interface TaskDetailDao {
@@ -30,4 +31,6 @@ public interface TaskDetailDao {
 	
 	public void statusToDone(int task_no); // 완료로 상태 변경 
 	public void statusFromDone(int task_no); // 진행으로 상태 변경 
+	
+	public void insertTaskFile(TaskFile tf); // 파일업로드
 }

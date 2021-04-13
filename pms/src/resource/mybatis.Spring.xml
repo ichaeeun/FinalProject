@@ -16,6 +16,7 @@
       	<typeAlias alias="log" type="pms.dto.Log"/>
       	<typeAlias alias="task" type="pms.dto.Task"/>
       	<typeAlias alias="comment" type="pms.dto.Comment"/>
+      	<typeAlias alias="taskfile" type="pms.dto.TaskFile"/>
       	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
       	<typeAlias alias="uptstatus" type="pms.dto.UptStatus"/>
       	<typeAlias alias="gantt" type="pms.dto.Gantt"/>

@@ -137,5 +137,11 @@ AND a.pno = b.pno; -->
 		SET task_status='진행'
 		WHERE task_no=#{task_no}
 	</update>
+	
+	<!-- INSERT INTO task_file values(1,1000,'파일명','task_upload',sysdate); -->
+	<!-- public void insertTaskFile(taskFile tf); // 파일업로드 -->
+	<insert id="insertTaskFile" parameterType="taskfile">
+		INSERT INTO task_file values(taskfile_seq.nextval,#{task_no},#{filename},#{filepath},sysdate)
+	</insert>
 </mapper>  
  

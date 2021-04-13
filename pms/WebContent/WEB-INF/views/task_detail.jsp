@@ -292,7 +292,9 @@
 					  console.log(err);
 				  }
 			}); 
-		 });		 
+			 
+		 });
+		 
 		 
 		 $("#subtaskList").on("click",".deletesub",function(){
 			 var item=$(this).closest(".upt");
@@ -394,6 +396,37 @@
 				  }
 			}); 
 		 });
+		 
+		 $("#uploadFile").click(function(){
+			//폼객체를 불러와서
+			 var form = $("#task_file")[0].files[0];
+			//FormData parameter에 담아줌
+			 var formData = new FormData(form);
+			/*  var data={};
+			 var formData = new FormData();
+			 formData.append("filename", $("#task_file")[0].files[0]);
+			 data.report = formData; */
+			 data.task_no = "${detail.task_no}";
+			 $.ajax({
+				  type:"post",
+				  url:"${path}/taskdetail.do?method=insertTaskFile",
+				  data:formData,
+				  processData:false,
+				  contentType:false,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  console.log(data);
+					 // $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
+		 });
+		 
+		 
 		 function commentVal(){
 			   var inscom={};
 			   inscom.pno="${mem.pno}"; //임시  "${mem.pno}";
@@ -662,8 +695,12 @@
                                                 </div> --%>
                                                 <div class="fileupload btn btn-success waves-effect waves-light mb-3">
 		                                            <span><i class="mdi mdi-cloud-upload me-1"></i> Upload Files</span>
-		                                            <input type="file" class="upload">
+		                                            <input type="file" name="task_file" id="task_file"> <!-- class="upload" -->
+		                                            <button class="btn btn-light" id="uploadFile">Upload</button>
 		                                        </div>
+		                                          <!-- Preview -->
+                                                 <div class="dropzone-previews mt-2" id="file-previews"></div>
+                                                 
 		                                        <div class="table-responsive">
 		                                            <table class="table table-centered  table-nowrap mb-0">
 		                                                <thead class="table-light">
@@ -671,7 +708,7 @@
 		                                                        <th scope="col">파일명</th>
 		                                                        <th scope="col">업로드일</th>
 		                                                        <th scope="col">담당자</th>
-		                                                        <th scope="col" class="text-center" style="width: 90px;">파일변경</th>
+		                                                        <th scope="col" class="text-center" style="width: 90px;">다운로드</th>
 		                                                        <th scope="col" class="text-center" style="width: 25px;">삭제</th>
 		                                                    </tr>
 		                                                </thead>
@@ -686,7 +723,7 @@
 		                                                        </td>
 		                                                        <td>
 		                                                        	<div class="fileupload btn btn-info waves-effect waves-light mt-1">
-							                                            <span><i class="mdi mdi-cloud-upload me-1"></i>Edit</span>
+							                                            <span><i class="bx bx-download me-1"></i>Download</span>
 							                                            <input type="file" class="upload">
 							                                        </div>
 		                                                        </td>
@@ -704,7 +741,7 @@
 		                                                        </td>
 		                                                        <td>
 		                                                        	<div class="fileupload btn btn-info waves-effect waves-light mt-1">
-							                                            <span><i class="mdi mdi-cloud-upload me-1"></i>Edit</span>
+							                                            <span><i class="bx bx-download me-1"></i>Download</span>
 							                                            <input type="file" class="upload">
 							                                        </div>
 		                                                        </td>
@@ -1176,7 +1213,7 @@
         <script src="${path}/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
         <script src="${path}/Admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-        <!-- init js -->
+        <!— init js —>
         <script src="${path}/Admin/dist/assets/js/pages/form-advanced.init.js"></script>
         <script src="${path}/a00_com/jquery.min.js"></script>
         
