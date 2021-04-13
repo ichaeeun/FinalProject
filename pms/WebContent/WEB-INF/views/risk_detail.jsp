@@ -26,10 +26,24 @@
 		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 		<!-- icons -->
 		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<script src="${path}/a00_com/jquery.min.js"></script>
+		<script src="${path}/a00_com/popper.min.js"></script>
+		<script src="${path}/a00_com/bootstrap.min.js"></script>
+		<script src="${path}/a00_com/jquery-ui.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$('#adBtn').on("click", function(){
+		 			$('#app_form').submit();
+		 			
+			})
+			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
+			if(uptFinish == "Y"){
+				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
+					location.href="${path}/risk.do?method=riskRequest";
+			}
+		});
 
-<script type="text/javascript">
-
-</script>
+		</script>
 </head>
 	<body class="loading">
 
@@ -66,6 +80,9 @@
                         </div>     
                         <!-- end page title -->
                                 <div class="card">
+                         	  	<form action="${path}/risk.do?method=uptStatus" id="app_form" method="post">
+                           			<input type="hidden" value="${riskboard.risk_no}" name="risk_no">
+                           		</form>
                                     <div class="card-body">
                                         <div class="dropdown float-end">
                                             <a href="#" class="dropdown-toggle arrow-none text-muted"
@@ -93,8 +110,8 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <p class="text-primary">#MN2048</p>
-                                        <h4 class="mb-1">그렇게 좋은 날씨는 아닙니다.</h4>
+                                        <p class="text-primary">${riskboard.risk_writer}</p>
+                                        <h4 class="mb-1">${riskboard.risk_title}</h4>
                                         <div class="text-muted">
                                              <div class="row">
                                                 <div class="col-lg-4 col-sm-6">
@@ -103,9 +120,9 @@
                                                             <i class="ri-hashtag h2 m-0 text-muted"></i>
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1">ID</p>
+                                                            <p class="mb-1">작성자</p>
                                                             <h5 class="mt-0 text-truncate">
-                                                                #MN2048
+                                                                ${riskboard.risk_writer}
                                                             </h5>
                                                         </div>
                                                     </div>
@@ -116,9 +133,9 @@
                                                             <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle">
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1">작성자</p>
+                                                            <p class="mb-1">상태</p>
                                                             <h5 class="mt-0 text-truncate">
-                                                                이중구
+                                                                ${riskboard.risk_status}
                                                             </h5>
                                                         </div>
                                                     </div>
@@ -128,16 +145,11 @@
                                         <div class="mt-4">
                                             <div>
                                                 <p class="mb-1">내용</p>
-                                                <h5 class="mt-0 text-truncate">저는 그렇게 좋은 날씨라고 생각하지 않았습니다.
-                                                그렇게 딱 좋은 날씨도 아니였습니다. 대본 수정 부탁드리겠습니다.</h5>
+                                                <h5 class="mt-0 text-truncate">${riskboard.risk_content}</h5>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                        <!-- end row -->
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="header-title mb-3">첨부 파일</h5>
+                                        <div class="card mt-5">
+                                    <p class="mb-1">첨부파일</p>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                  <div class="mt-4 mt-md-0">
@@ -169,40 +181,52 @@
                                             </div>
                                         </div>
                         <!-- file preview template -->
-                        <div class="d-none" id="uploadPreviewTemplate">
-                            <div class="card mb-2 shadow-none border">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                        </div>
-                                        <div class="col ps-0">
-                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                            <p class="mb-0" data-dz-size></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Button -->
-                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                <i class="fe-x"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- container-fluid -->
-		                <div class="row">
-		         			<div>
-			                	<div class="p-2">
+			                        <div class="d-none" id="uploadPreviewTemplate">
+			                            <div class="card mb-2 shadow-none border">
+			                                <div class="p-2">
+			                                    <div class="row align-items-center">
+			                                        <div class="col-auto">
+			                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+			                                        </div>
+			                                        <div class="col ps-0">
+			                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
+			                                            <p class="mb-0" data-dz-size></p>
+			                                        </div>
+			                                        <div class="col-auto">
+			                                            <!-- Button -->
+			                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+			                                                <i class="fe-x"></i>
+			                                            </a>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+                    				<div class="p-2">
 				              		<ul class="pager wizard mb-0 list-inline text-end mt-3">
 				             			<li class="previous list-inline-item">
 				                             <!-- 작성화면 전으로 돌아가는 버튼 -->
 											<a href="${path}/risk.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+											<c:if test="${mem.auth == 'pm'}">
+		                             		<a href="##" id="adBtn" type="button" class="btn btn-primary">승인하기</a>
+		                             		</c:if>
+											<c:if test="${mem.auth == 'pm'}">
+		                             		<a href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</a>
+		                             		</c:if>
 				       					</li>
 				                	</ul>
 				                </div>
-				        	</div>
-						</div>
+                                    </div>
+                                </div>
+                        <!-- end row -->
+                                 <!-- container-fluid 
+                                        <div class="row mb-2">
+                                            <div class="col-sm-6">
+                                                <a href="${path}/risk.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
+                                            </div>
+                                        </div>
+                    -->
+		                
                 </div> <!-- content -->
                 <!-- Footer Start -->
                 <footer class="footer">
@@ -265,7 +289,7 @@
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="mdi mdi-magnify"></span>
                             </div>
-                        </form>
+						</form>
 
                         <h6 class="fw-medium px-3 mt-2 text-uppercase">Group Chats</h6>
 
@@ -609,6 +633,7 @@
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
- 
+ </div>
+ </div>
 </body>
 </html>

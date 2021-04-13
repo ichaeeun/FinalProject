@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import pms.dao.RiskDao;
 import pms.dto.RiskBoard;
+import pms.dto.UptStatus;
 
 @Service
 public class RiskService {
@@ -22,6 +23,13 @@ public class RiskService {
 	
 	public void insertBoard(RiskBoard insert) {
 		dao.insertBoard(insert);
+	}
+	public RiskBoard getBoard(int risk_no) {
+		return dao.getBoard(risk_no);
+	}
+	
+	public void uptStatus (UptStatus upt_satus) {
+		dao.uptStatus(upt_satus);
 	}
 
 }
