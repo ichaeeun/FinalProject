@@ -81,7 +81,7 @@
 </script>
     </head>
 
-<body class="loading" data-layout-mode="detached" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+<body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -110,13 +110,13 @@
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 							            <li class="nav-item">
-							                      <a href="${path }/task.do?method=view"  class="nav-link">
+							                      <a href="${path }/task.do?method=view" class="nav-link active">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
 							                    <span class="d-none d-sm-inline-block">오버뷰</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/task.do?method=list" class="nav-link active">
+							                <a href="${path}/task.do?method=list" class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 							                </a>
@@ -320,7 +320,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/project.do?method=project_detail&no=${bd.project_no}" class="text-dark">${bd.project_name}</a></h5>
+                                                            <h5 class="m-0 d-inline-block align-middle"><a href="${path}/task.do?method=view&no=${bd.project_no}" class="text-dark">${bd.project_name}</a></h5>
                                                         </td>
                                                         <td>
                                                             ${bd.project_no}

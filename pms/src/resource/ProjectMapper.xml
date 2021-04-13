@@ -57,12 +57,16 @@
 	
 	
 	
-	
+	<!-- 
+	select *
+	from PMS_PROJECT
+	where PROJECT_NO = #{no}
+	-->
 	<!-- public pms_project getProject(int no); --><!-- 프로젝트번호로 프로젝트 상세정보 출력 -->
 	<select id="getProject" resultType="pms_project" parameterType="int">
-		SELECT *
-		FROM pms_project
-		WHERE project_no = #{NO}
+		select *
+		from PMS_PROJECT
+		where PROJECT_NO = #{no}
 	</select>
 	<!-- public void insertProject(pms_project insert) --><!-- 프로젝트 생성 -->
 	<insert id="insertProject" parameterType="pms_project">

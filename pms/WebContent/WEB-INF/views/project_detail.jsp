@@ -61,7 +61,7 @@ function goPage(page){
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-			
+						
                         <div class="row">
                             <div class="col-lg-12">
 								<div class="card">
@@ -80,19 +80,19 @@ function goPage(page){
 								                </a>
 								            </li>
 								            <li class="nav-item">
-								                <a href="#"  class="nav-link">
+								                <a href="${path}/dashboard.do?method=list"  class="nav-link">
 								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 								                    <span class="d-none d-sm-inline-block">대시보드</span>
 								                </a>
 								            </li>
 								            <li class="nav-item">
-								                <a href="${path}/main.do?method=gantt"  class="nav-link">
+								                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
 								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
 								                    <span class="d-none d-sm-inline-block">간트차트</span>
 								                </a>
 								            </li>
 								            <li class="nav-item">
-								                <a href="#"  class="nav-link">
+								                <a href="${path}/cal.do?method=list"  class="nav-link">
 								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 								                    <span class="d-none d-sm-inline-block">캘린더</span>
 								                </a>
@@ -104,7 +104,7 @@ function goPage(page){
 								                </a>
 								            </li>
 								            <li class="nav-item">
-								                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+								                <a href="${path}/risk.do?method=riskBoard"  class="nav-link">
 													<span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 													<span class="d-none d-sm-inline-block">리스크</span>
 								                </a>

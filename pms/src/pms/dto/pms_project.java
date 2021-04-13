@@ -18,8 +18,10 @@ public class pms_project {
 	private String end1;
 	private int pm_pno;
 	private String project_status;
-	private int pno; // 멤버번호로 프로젝트 검색시 사용
-	
+	private int pno;		// 멤버번호로 프로젝트 검색시 사용
+	private String id;		// 추가_오버뷰화면
+	private String name;	// 추가_오버뷰화면
+	private int taskcount;	// 추가_오버뷰화면
 	
 	public pms_project(int project_no, String project_name, String project_content, String start1, String end1,
 			int pm_pno, String project_status) {
@@ -92,6 +94,24 @@ public class pms_project {
 	}
 	public void setPno(int pno) {
 		this.pno = pno;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getTaskcount() {
+		return taskcount;
+	}
+	public void setTaskcount(int taskcount) {
+		this.taskcount = taskcount;
 	}
 	
 }

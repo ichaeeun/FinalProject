@@ -64,7 +64,7 @@
                     </div>                    
                 </li>  
  				<li>
-                    <a href="${path }/main.do?method=riskBoard">
+                    <a href="${path }/risk.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                                              
@@ -120,7 +120,7 @@
                     </div>                    
                 </li>  
  				<li>
-                    <a href="${path }/main.do?method=riskBoard">
+                    <a href="${path }/risk.do?method=riskBoard">
                         <span> 리스크 현황 </span>
                     </a>
                 </li>                  

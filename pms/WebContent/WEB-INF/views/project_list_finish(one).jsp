@@ -257,7 +257,7 @@
                                                 <!-- ---------------------------------------------------- -->
                                                 <tbody>
                                                 
-                                                	<c:forEach var="bd" items="${plist2}">
+                                                	<c:forEach var="bd" items="${plist}">
                                                     <tr>
                                                         <td>
                                                             <div class="form-check font-16 mb-0">
