@@ -14,8 +14,8 @@ public class OverviewService {
 	@Autowired(required = false)
 	private OverviewDao dao;
 	
-	public ArrayList<Log> LogList(Log log){
-		return dao.LogList(log);
+	public ArrayList<Log> LogList(int no){
+		return dao.LogList(no);
 	}
 	public ArrayList<Task> TaskList(int no){
 		return dao.TaskList(no);

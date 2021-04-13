@@ -38,9 +38,7 @@ $(document).ready(function(){
 });
 </script>
     </head>
-
     <body class="loading">
-
         <!-- Begin page -->
         <div id="wrapper">
 
@@ -63,18 +61,18 @@ $(document).ready(function(){
                     <div class="container-fluid">
                         <div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name }</button></a>
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name}</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 						            <li class="nav-item">
-						                      <a href="${path }/task.do?method=view"  class="nav-link ">
+						                      <a href="${path }/task.do?method=view&no=${param.no}"  class="nav-link ">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
 						                    <span class="d-none d-sm-inline-block">오버뷰</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=list" class="nav-link active">
+						                <a href="${path}/task.do?method=list&no=${param.no}" class="nav-link active">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
 						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 						                </a>
@@ -98,7 +96,7 @@ $(document).ready(function(){
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=log"  class="nav-link">
+						                <a href="${path}/task.do?method=log&no=${param.no}"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-comment-dots"></i></span>
 						                    <span class="d-none d-sm-inline-block">활동로그</span>
 						                </a>
@@ -113,7 +111,7 @@ $(document).ready(function(){
 							</div>
 						</div>
                         <!-- start page title -->
-                        <div class="row">
+<!--                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
                                     <h4 class="page-title">Tasks List</h4>
@@ -126,7 +124,7 @@ $(document).ready(function(){
                                     </div>
                                 </div>
                             </div>
-                        </div>     
+                        </div>   -->   
                         <!-- end page title --> 
                         <div class="row">
                             <div class="col-12">
@@ -180,10 +178,10 @@ $(document).ready(function(){
                                                       	<span class="badge label-table badge-soft-danger p-1">
                                                       </c:when>
                                                       <c:when test="${task.task_priority eq 'Medium'}">
-                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      	<span class="badge label-table badge-soft-primary p-1">
                                                       </c:when>
                                                       <c:otherwise>
-                                                      	<span class="badge label-table badge-soft-info p-1">
+                                                      	<span class="badge label-table badge-soft-sucess p-1">
                                                       </c:otherwise>
                                                   	</c:choose>	
                                                   	${task.task_priority}</span></td> 
@@ -260,22 +258,7 @@ $(document).ready(function(){
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+            <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->
 
             </div>

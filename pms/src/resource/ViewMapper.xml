@@ -4,26 +4,35 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pms.dao.OverviewDao">
 
-<select id="LogList" resultType="log" parameterType="log">
+<select id="LogList" resultType="log" parameterType="int">
 	SELECT t3.*, t1.name, t2.task_name
 	FROM pms_member t1, project_task t2,  project_log t3
 	WHERE t1.pno = t2.pno
 	AND t1.pno = t3.pno
-	AND t2.project_no = '1'
+	AND t2.project_no = #{no}
 	ORDER BY regdte
 </select>
 <select id="TaskList" resultType="task" parameterType="int">
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 0
 	AND t1.project_no = #{no}
 </select>
 <select id="TaskList2" resultType="task" parameterType="int">
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 0
 	AND t1.project_no = #{no}
 	order by t1.enddte
 </select>
+
+<select id="ViewMem" resultType="member" parameterType="int">
+select t1.pno, t1.member_name, 
+from pms_member t1, pms_task t2
+
+</select>
+
 </mapper>  
  

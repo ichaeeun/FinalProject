@@ -38,8 +38,8 @@ public class OverviewController {
 
 //  http://localhost:7080/pms/task.do?method=log
 	@RequestMapping(params="method=log")
-	public String taskLog(Log log, Model d) {
-		d.addAttribute("LogList",service.LogList(log));
+	public String taskLog(@RequestParam("no") int no,Log log, Model d) {
+		d.addAttribute("LogList",service.LogList(no));
 		return "log";
 	}
 }

@@ -9,6 +9,12 @@
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html>
+<head>
+<style type="text/css">
+ul.list-unstyled.topnav-menu.topnav-menu-left.m-0 {display: none!important;}
+.navbar-custom { box-shadow:none!important; }
+</style>
+</head>
 	<body>
             <!-- Topbar Start -->
             <div class="navbar-custom">

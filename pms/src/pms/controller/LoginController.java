@@ -23,8 +23,7 @@ public class LoginController {
 	private ManPowerService mservice;
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
-		public String loginform(@ModelAttribute("member") Member member) {
-			
+		public String loginform(@ModelAttribute("member") Member member) {		
 			return "auth-login";
 		}
 		
