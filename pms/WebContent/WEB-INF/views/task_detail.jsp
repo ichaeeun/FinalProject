@@ -39,7 +39,6 @@
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
-<script src="${path}/a00_com/jquery.min.js"></script>
 <script type="text/javascript">
 
 	/* jQuery.noConflict();   */
@@ -1153,12 +1152,7 @@
                       </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
               </div><!-- /.modal -->
-              
-              
-             
-
-
-                
+                    
                 <!-- Footer Start -->
                 <footer class="footer">
                     <div class="container-fluid">
