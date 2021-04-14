@@ -89,7 +89,7 @@ AND a.pno = b.pno; -->
 	<!-- public void insertComment(Comment com); -->
 	<insert id="insertComment" parameterType="comment">
 		INSERT INTO task_comment values(task_comment_seq.nextval,#{task_no},#{content},
-		to_char(sysdate,'yyyy-MM-dd HH:MI:SS'),#{pno})
+		to_char(sysdate,'yyyy-MM-dd HH24:MI:SS'),#{pno})
 	</insert>
 	
 	
@@ -141,7 +141,18 @@ AND a.pno = b.pno; -->
 	<!-- INSERT INTO task_file values(1,1000,'파일명','task_upload',sysdate); -->
 	<!-- public void insertTaskFile(taskFile tf); // 파일업로드 -->
 	<insert id="insertTaskFile" parameterType="taskfile">
-		INSERT INTO task_file values(taskfile_seq.nextval,#{task_no},#{filename},#{filepath},sysdate)
+		INSERT INTO task_file values(taskfile_seq.nextval,#{name},#{task_no},#{filename},#{filepath},sysdate)
 	</insert>
+	
+	<!-- select * from task_file where task_no=1000 -->
+	<!-- public ArrayList<TaskFile> getTaskFile(int task_no); -->
+	<select id="getTaskFile" parameterType="int" resultType="taskfile">
+		select * from task_file where task_no=#{task_no}
+	</select>
+	
+	<!-- public ArrayList<TaskFile> taskFileList(int task_no); -->
+	<select id="taskFileList" parameterType="int" resultType="taskfile">
+		select * from task_file where task_no=#{task_no}
+	</select>
 </mapper>  
  

@@ -11,6 +11,7 @@ public class TaskFile {
 //	    filepath varchar2(1000),
 //	    upload_dte date
 	private int fileno;
+	private String name;
 	private int task_no; 
 	private String filename;
 	private String filepath;
@@ -26,6 +27,15 @@ public class TaskFile {
 	
 	public TaskFile(int task_no, String filename, String filepath) {
 		super();
+		this.task_no = task_no;
+		this.filename = filename;
+		this.filepath = filepath;
+	}
+	
+
+	public TaskFile(String name, int task_no, String filename, String filepath) {
+		super();
+		this.name = name;
 		this.task_no = task_no;
 		this.filename = filename;
 		this.filepath = filepath;
@@ -77,6 +87,16 @@ public class TaskFile {
 	}
 	public void setReport(MultipartFile[] report) {
 		this.report = report;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

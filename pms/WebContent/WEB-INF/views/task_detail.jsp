@@ -58,6 +58,7 @@
 	   
 	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
 	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
 	   
 	 
 	   $("#insertComment_content").keypress(function(event){
@@ -369,7 +370,7 @@
 				  }
 			}); 
 		 });
-		 
+		
 		 $("#subtaskList").on("click","#tasktodayCheck",function(){
 			 var status={};
 			 var item=$(this).closest(".form-check");
@@ -397,34 +398,41 @@
 		 });
 		 
 		 $("#uploadFile").click(function(){
-			//폼객체를 불러와서
-			 var form = $("#task_file")[0].files[0];
-			//FormData parameter에 담아줌
-			 var formData = new FormData(form);
-			/*  var data={};
-			 var formData = new FormData();
-			 formData.append("filename", $("#task_file")[0].files[0]);
-			 data.report = formData; */
-			 data.task_no = "${detail.task_no}";
-			 $.ajax({
-				  type:"post",
-				  url:"${path}/taskdetail.do?method=insertTaskFile",
-				  data:formData,
-				  processData:false,
-				  contentType:false,
-				  dataType:"json",
-				  success:function(data){
-					  if(data.success=="Y")
-					  console.log(data);
-					 // $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
-				  },
-				  error:function(err){
-					  alert("에러발생: "+err);
-					  console.log(err);
-				  }
-			}); 
+				//폼객체를 불러와서
+				var report = $("#uploadform")[0];
+				var task_no="${detail.task_no}";
+				var name="${detail.name}";
+				//FormData parameter에 담아줌
+				var formData = new FormData(report);
+				console.log(formData);
+				 $.ajax({
+					  type:"post",
+					  enctype: 'multipart/form-data',
+					  url:"${path}/taskdetail.do?method=insertTaskFile",
+					  data:formData,
+					  processData:false,
+					  contentType:false,
+					  dataType:"json",
+					  success:function(data){
+						  if(data.success=="Y")
+						  console.log(data);
+						  $("#report").val("");
+						  $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
+					  },
+					  error:function(request,status,error){
+						    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					  }
+
+				}); 
+			 }); 
+			 
+		 $("#fileList").on("click","#downloadBtn",function(){
+				var item = $(this).closest(".fileList");
+				var filename = item.find(".fileName").text();
+				var task_no = "${detail.task_no}";
+				// alert(filename);
+			 	location.href="${path}/taskdetail.do?method=download&task_no="+task_no+"&filename="+filename;
 		 });
-		 
 		 
 		 function commentVal(){
 			   var inscom={};
@@ -507,7 +515,7 @@
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+						                <a href="${path}/main.do?method=gantt"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>
@@ -692,64 +700,21 @@
                                                         </div>
                                                     </form>
                                                 </div> --%>
+                                                <form method="post"  enctype="multipart/form-data" id="uploadform">
                                                 <div class="fileupload btn btn-success waves-effect waves-light mb-3">
 		                                            <span><i class="mdi mdi-cloud-upload me-1"></i> Upload Files</span>
-		                                            <input type="file" name="task_file" id="task_file"> <!-- class="upload" -->
-		                                            <button class="btn btn-light" id="uploadFile">Upload</button>
+		                                            <input type="file" name="report" id="report"> <!-- class="upload" -->
+		                                            <input type="hidden" name="task_no" value="${detail.task_no }"/>
+		                                            <input type="hidden" name="name" value="${mem.name }"/>
+		                                            <button type="button" class="btn btn-light" id="uploadFile">Upload</button>
 		                                        </div>
+		                                        </form>
 		                                          <!-- Preview -->
                                                  <div class="dropzone-previews mt-2" id="file-previews"></div>
                                                  
 		                                        <div class="table-responsive">
-		                                            <table class="table table-centered  table-nowrap mb-0">
-		                                                <thead class="table-light">
-		                                                    <tr>
-		                                                        <th scope="col">파일명</th>
-		                                                        <th scope="col">업로드일</th>
-		                                                        <th scope="col">담당자</th>
-		                                                        <th scope="col" class="text-center" style="width: 90px;">다운로드</th>
-		                                                        <th scope="col" class="text-center" style="width: 25px;">삭제</th>
-		                                                    </tr>
-		                                                </thead>
-		                                                <tbody>
-		                                                    <tr>
-		                                                        <td>
-		                                                            <a href="javascript:void(0);" class="text-dark">Invoice-project.pdf</a>
-		                                                        </td>
-		                                                        <td class="font-13">2021-04-10 2:55 PM</td>
-		                                                        <td>
-		                                                        	홍길동
-		                                                        </td>
-		                                                        <td>
-		                                                        	<div class="fileupload btn btn-info waves-effect waves-light mt-1">
-							                                            <span><i class="bx bx-download me-1"></i>Download</span>
-							                                            <input type="file" class="upload">
-							                                        </div>
-		                                                        </td>
-		                                                        <td>
-		                                                        	<a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#deleteFileModal"> <i class="mdi mdi-delete"></i></a>
-		                                                        </td>
-		                                                    </tr>
-		                                                     <tr>
-		                                                        <td>
-		                                                            <a href="javascript:void(0);" class="text-dark">Dashboard-design.png</a>
-		                                                        </td>
-		                                                        <td class="font-13">2021-04-13 2:55 PM</td>
-		                                                        <td>
-		                                                        	김길동
-		                                                        </td>
-		                                                        <td>
-		                                                        	<div class="fileupload btn btn-info waves-effect waves-light mt-1">
-							                                            <span><i class="bx bx-download me-1"></i>Download</span>
-							                                            <input type="file" class="upload">
-							                                        </div>
-		                                                        </td>
-		                                                        <td>
-		                                                        	<a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#deleteFileModal"> <i class="mdi mdi-delete"></i></a>
-		                                                        </td>
-		                                                    </tr>
-		                                                 </tbody>
-		                                            </table>
+		                                        <!-- fileList -->
+		                                        <div id="fileList"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1207,7 +1172,6 @@
         <script src="${path}/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
         <script src="${path}/Admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-        <!— init js —>
         <script src="${path}/Admin/dist/assets/js/pages/form-advanced.init.js"></script>
         <script src="${path}/a00_com/jquery.min.js"></script>
         

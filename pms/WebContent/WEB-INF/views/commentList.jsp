@@ -6,9 +6,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
+<script src="${path}/a00_com/jquery.timeago.js"></script>
 <script type="text/javascript">
-	
 <%--
  
  

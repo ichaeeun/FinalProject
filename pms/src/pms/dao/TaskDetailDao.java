@@ -2,6 +2,7 @@ package pms.dao;
 
 import java.util.ArrayList;
 
+
 import org.springframework.stereotype.Repository;
 
 import pms.dto.Comment;
@@ -33,4 +34,9 @@ public interface TaskDetailDao {
 	public void statusFromDone(int task_no); // 진행으로 상태 변경 
 	
 	public void insertTaskFile(TaskFile tf); // 파일업로드
+	
+	// 첨부파일 불러오기 
+	public ArrayList<TaskFile> getTaskFile(int task_no);
+	
+	public ArrayList<TaskFile> taskFileList(int task_no); 
 }

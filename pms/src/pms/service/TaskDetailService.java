@@ -20,18 +20,22 @@ import pms.dto.TaskFile;
 @Service
 public class TaskDetailService {
 //  info 에 있는 설정 값이 들어온다. ${upload} ${uploadTmp} 
-	@Value("${upload}")
+	@Value("${task_upload}")
 	private String upload; 
-	@Value("${uploadTmp}")
+	@Value("${task_uploadTmp}")
 	private String uploadTmp; 
 	
 	@Autowired(required=false)
 	private TaskDetailDao dao;
 	
 	public Task taskDetail(int task_no) {
-		return dao.taskDetail(task_no);
+		Task task = dao.taskDetail(task_no);
+		task.setFileInfo(dao.getTaskFile(task_no));
+		return task;
 	}
-	
+	public ArrayList<TaskFile> taskFileList(int task_no){
+		return dao.taskFileList(task_no);
+	}; 
 	public ArrayList<Task> subtaskList(int task_no){
 		return dao.subtaskList(task_no);
 	};
@@ -100,15 +104,18 @@ public class TaskDetailService {
 				File pathFile = new File(uploadTmp); //폴더 객체 생성 
 				//.listFiles() : 해당 폴더 객체 안에 있는 파일을 가져오기 
 				// 임시폴더에 있는 모든 파일을 삭제함으로써 중복예외를 방지한다. 
+				if(pathFile.listFiles()!=null) {
 				for(File f:pathFile.listFiles()) {
 					System.out.println("삭제할파일: "+f.getName());
 					// 단위파일을 삭제처리 
 					f.delete();
 				}
+				}
 				
 				// # 다중 파일 처리 / 반복문 수행 
 				for(MultipartFile mpf:tf.getReport()) {
 					// 1) 파일명 지정 
+					System.out.println(mpf.getOriginalFilename());
 					fname = mpf.getOriginalFilename();
 					// 파일을 등록하지 않았을 때 제외 처리 <input type="file">
 					if(fname!=null && !fname.trim().equals("")) {
@@ -128,7 +135,7 @@ public class TaskDetailService {
 							// StandardCopyOption.REPLACE_EXISTING : 동일한 파일명 업로드 시 대체 처리 
 							Files.copy(tmpFile.toPath(), orgFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
 							// 파일명, 업로드위치, 제목 
-							dao.insertTaskFile(new TaskFile(tf.getTask_no(),fname,upload));
+							dao.insertTaskFile(new TaskFile(tf.getName(),tf.getTask_no(),fname,upload));
 							
 						} catch (IllegalStateException e) {
 							// TODO Auto-generated catch block
@@ -140,7 +147,10 @@ public class TaskDetailService {
 							System.out.println("파일 생성 에러: "+e.getMessage());
 						} catch(Exception e) {
 							System.out.println("기타에러: "+e.getMessage());
+						} finally{
+							System.out.println("종료");
 						}
+						
 					}
 				}
 	}; 

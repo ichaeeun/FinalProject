@@ -1,6 +1,9 @@
 package pms.dto;
 
+import java.util.ArrayList;
+
 import org.springframework.web.multipart.MultipartFile;
+
 
 public class Task {
 	   private int pno;
@@ -16,7 +19,7 @@ public class Task {
 	   private String name;	// 추가 // 디테일 화면에서 사원이름 조회 위함 
 	   private String project_name; // 추가 // 디테일 화면에서 프로젝트 이름 조회 위함 
 	   private MultipartFile[] report;		// 업로드 시 필요(파일 수정 시 업로드)
-	   
+	   private ArrayList<TaskFile> fileInfo; 	// 다운로드 시 필요 
 	   
 	   public Task() {
 	      super();
@@ -117,6 +120,14 @@ public class Task {
 
 	public void setReport(MultipartFile[] report) {
 		this.report = report;
+	}
+
+	public ArrayList<TaskFile> getFileInfo() {
+		return fileInfo;
+	}
+
+	public void setFileInfo(ArrayList<TaskFile> fileInfo) {
+		this.fileInfo = fileInfo;
 	}
 	   
 	   
