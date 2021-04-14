@@ -18,12 +18,36 @@
 		select name from pms_member where pno = #{pno}
 	</select>
 	
-	<insert id="insertTask" parameterType="gantt">
+	<select id="getPnoUsingName" resultType="int" parameterType="String">
+		select pno from pms_member where name = #{name}
+	</select>
+	
+	<select id="getMaxPno" resultType="int">
+		select max(pno) from pms_member
+	</select>
+	
+	<insert id="insertTask" parameterType="task">
 		insert into project_task values(
 			#{pno},#{project_no},task_no_seq.nextval,#{task_name},
 			#{task_content}, #{task_priority},#{task_parent_no},
 			#{startdte},#{enddte},#{task_status}
 		)
 	</insert>
+	
+	<update id="updateTask" parameterType="task">
+		update project_task
+			set
+				pno = #{pno},
+				task_name = #{task_name},
+				task_content = #{task_content},
+				task_priority = #{task_priority},
+				startdte = #{startdte},
+				enddte = #{enddte}
+			where task_no = #{task_no}
+	</update>
+	
+	<delete id="deleteTask" parameterType="int">
+		delete from project_task where task_no = #{task_no}
+	</delete>
 </mapper>  
  

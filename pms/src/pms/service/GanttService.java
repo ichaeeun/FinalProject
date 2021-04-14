@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import pms.dao.GanttDao;
 import pms.dto.Gantt;
-import pms.dto.Project;
 import pms.dto.Task;
 import pms.dto.pms_project;
 
@@ -71,11 +70,11 @@ public class GanttService {
 				
 				calDateDays = Math.abs(calDateDays);
 				duration.add((int)calDateDays);
-				
+				/*
 				System.out.println("duration: " + (int)calDateDays);
 				System.out.println("start_date: " + formattedTime1);
 				System.out.println("end_date: " + formattedTime2);
-				
+				*/
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -85,13 +84,13 @@ public class GanttService {
 		for(int i=0;i<task.size();i++) {
 			Gantt g = new Gantt(task.get(i).getTask_no(),
 					startarr.get(i),
-					duration.get(i),
+					endarr.get(i),
 					task.get(i).getTask_content(),
 					task.get(i).getTask_priority().equals("High")?1:
 						task.get(i).getTask_priority().equals("Medium")?2:3,
 					0,task.get(i).getTask_no(),
 					task.get(i).getTask_parent_no(),getName(task.get(i).getPno()));
-			System.out.println(getName(task.get(i).getPno()));
+			//System.out.println(getName(task.get(i).getPno()));
 			gantt.add(g);
 		}
 		
@@ -139,8 +138,10 @@ public class GanttService {
 		// project 가 제일 위로 들어가야함
 		// project => gantt
 		g.put("id", 1);
+		//g.put("start_date", "2021-04-04 00:00:00");
 		g.put("start_date", "2021-04-04 00:00:00");
-		g.put("duration", 20); // end - start
+		g.put("end_date", "2021-04-23 00:00:00");
+		//g.put("duration", 20); // end - start
 		g.put("text", project.getProject_content());
 		g.put("progress", 0);
 		g.put("sortorder", 1);
@@ -155,7 +156,8 @@ public class GanttService {
 		for(int index=0;index<gantt.size();index++) {
 			g.put("id", gantt.get(index).getId());
 			g.put("start_date", gantt.get(index).getStart_date());
-			g.put("duration", gantt.get(index).getDuration());
+			g.put("end_date", gantt.get(index).getEnd_date());
+			//g.put("duration", gantt.get(index).getDuration());
 			g.put("text", gantt.get(index).getText());
 			g.put("progress", gantt.get(index).getProgress());
 			g.put("sortorder", gantt.get(index).getSortorder());
@@ -170,12 +172,17 @@ public class GanttService {
 		result.put("data", array);
 		
 		String json = result.toJSONString();
-		System.out.println(json);
+		//System.out.println(json);
 		// 파일 생성
 		
 		// 경로 변경 필요
+		/*
 		String FilePath = "C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
 		File file = new File("C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
+		*/
+		String FilePath = "C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
+		File file = new File("C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
+		
 		file.delete();
 		try {
 			file.createNewFile();
@@ -259,8 +266,89 @@ public class GanttService {
 		return dao.getName(pno);
 	}
 	
+	// gantt -> task
+	public Task insert_gantttotask(Gantt gantt) {
+		Task task = new Task();
+		int pno = 0;
+		pno = dao.getMaxPno();
+		task.setPno(pno+1); 	// 미정
+		task.setTask_no(0);	// mapper에서 task_no_seq로 처리
+
+		task.setProject_no(1);
+		task.setTask_name(gantt.getText());
+		task.setTask_content(gantt.getText());
+		if(gantt.getPriority() == 1) task.setTask_priority("High");
+		if(gantt.getPriority() == 2) task.setTask_priority("Medium");
+		if(gantt.getPriority() == 3) task.setTask_priority("Low");
+		task.setTask_parent_no(gantt.getParent());
+		task.setStartdte(gantt.getStart_date());
+		task.setEnddte(gantt.getEnd_date());
+		task.setTask_status("진행중");
+		
+		return task;
+	}
+	
+	public Task update_gantttotask(Gantt gantt) {
+		Task task = new Task();
+		int pno = 0;
+		// view 단에서 holder 입력 시 자동으로 id도 셋팅되게
+		// holder가 입력되지 않았다면 pno,  
+		/*
+		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
+			pno = dao.getMaxPno();
+			task.setPno(pno+1); 	// 미정
+			task.setTask_no(0);	// mapper에서 task_no_seq로 처리
+		} 
+		else {
+			pno = getPnoUsingName(gantt.getHolder());
+			task.setPno(pno);
+			task.setTask_no(gantt.getId());
+		}
+		*/
+		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
+			pno = dao.getMaxPno();
+			task.setPno(pno+1); 	// 미정
+		} 
+		else {
+			// holder 가 없는 사람이라면 , 동명이인이라면 => 할당된 사람만 select - option으로 고르게끔
+			pno = getPnoUsingName(gantt.getHolder());
+			task.setPno(pno);
+		}
+		
+		task.setTask_no(gantt.getId());
+		task.setProject_no(1);
+		task.setTask_name(gantt.getText());
+		task.setTask_content(gantt.getText());
+		if(gantt.getPriority() == 1) task.setTask_priority("High");
+		if(gantt.getPriority() == 2) task.setTask_priority("Medium");
+		if(gantt.getPriority() == 3) task.setTask_priority("Low");
+		task.setTask_parent_no(gantt.getParent());
+		task.setStartdte(gantt.getStart_date());
+		task.setEnddte(gantt.getEnd_date());
+		task.setTask_status("진행중");
+		
+		return task;
+	}
+	
 	// 새로운 업무 생성
-	public void insertTask(Gantt gantt) {
-		dao.insertTask(gantt);
+	public void insertTask(Task task) {
+		dao.insertTask(task);
+	}
+	
+	// 이름으로 pno 가져오기
+	public int getPnoUsingName(String name) {
+		return dao.getPnoUsingName(name);
+	}
+	
+	public int getMaxpno() {
+		return dao.getMaxPno();
+	}
+	
+	public void updateTask(Task task) {
+		dao.updateTask(task);
+	}
+
+	public void deleteTask(int task_no) {
+		dao.deleteTask(task_no);
 	}
 }

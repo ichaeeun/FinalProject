@@ -3,7 +3,8 @@ package pms.dto;
 public class Gantt {
 	private int id;
 	private String start_date;
-	private int duration;
+	private String end_date;
+	//private int duration;
 	private String text;
 	//private String priority;
 	private int priority;
@@ -15,14 +16,14 @@ public class Gantt {
 	public Gantt() {
 		super();
 		// TODO Auto-generated constructor stub
-	}	
+	}
 
-	public Gantt(int id, String start_date, int duration, String text, int priority, float progress, int sortorder,
-			int parent, String holder) {
+	public Gantt(int id, String start_date, String end_date, String text, int priority, float progress,
+			int sortorder, int parent, String holder) {
 		super();
 		this.id = id;
 		this.start_date = start_date;
-		this.duration = duration;
+		this.end_date = end_date;
 		this.text = text;
 		this.priority = priority;
 		this.progress = progress;
@@ -47,12 +48,12 @@ public class Gantt {
 		this.start_date = start_date;
 	}
 
-	public int getDuration() {
-		return duration;
+	public String getEnd_date() {
+		return end_date;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
 	}
 
 	public String getText() {
@@ -62,30 +63,18 @@ public class Gantt {
 	public void setText(String text) {
 		this.text = text;
 	}
-	/*
-	public String getPriority() {
-		return priority;
-	}
-
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
-	*/
-	public float getProgress() {
-		return progress;
-	}
 
 	public int getPriority() {
 		return priority;
 	}
 
-
-
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
-
+	public float getProgress() {
+		return progress;
+	}
 
 	public void setProgress(float progress) {
 		this.progress = progress;
@@ -113,7 +102,6 @@ public class Gantt {
 
 	public void setHolder(String holder) {
 		this.holder = holder;
-	}
-	
+	}	
 	
 }

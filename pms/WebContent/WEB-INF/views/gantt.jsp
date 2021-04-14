@@ -37,55 +37,117 @@
       <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css?v=5.2.0">
       <%-- moment 메서드 사용 --%>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
+<style>
+	.nested_task .gantt_add{
+		    display: none !important;
+		}
+</style>
 <script type="text/javascript">
-<%--
- 
- 
---%>
+
+
 var holder = [];
 var tid = [];
+var arrstart_date = []; 
+var arrend_date = [];
+var leftLimit;
+var rightLimit;
    //$(document).ready(function(){
 	document.addEventListener("DOMContentLoaded",function(eve){
 		var g;
 		// 초기 데이터 가져오기
-	   $.ajax({
-			type:"post",
-			url:"${path}/gantt.do?method=data",
-			dataType:"json",
-			success:function(data){
-				g = data.gantt;
-				var tes = data.gantt.substring(8,data.gantt.length-1);
-				//console.log(data.gantt);
-				//console.log(tes);
+	   getdata();
+	   var opts = [
+			{ key:1 , label: 'High'},
+			{ key:2 , label: 'Medium'},
+			{ key:3 , label: 'Low'},
+		];
+		// lightbox 내부 priority 영역 추가
+		gantt.config.lightbox.sections = [
+		    {name:"description", height:60, map_to:"text", type:"textarea", focus:true},
+		    /*
+		    {name:"parent",height:25, type:"parent", map_to:"parent", filter:function(id, task){ 
+		        if(task.$level > 1){         
+		            return false;     
+		        }else{  
+		            return true; 
+		        } 
+		    }},
+		    */
+		    //{name:"parent", type:"parent", allow_root:"false", root_label:"No parent"},
+		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
+		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
+		    {name:"time",        height:30, map_to:"auto", type:"duration"}
+		];
+		// undefined ==> Priority 변경 (lightbox)
+		gantt.locale.labels.section_priority="Priority";
+		gantt.locale.labels.section_holder="holder";
+		gantt.locale.labels.section_parent = "Parent task";
+		
+		//gantt.locale.lightbox.section_priority = "High";
+		
+		gantt.templates.grid_row_class = function( start, end, task ){
+		    if ( task.$level > 1 ){
+		        return "nested_task"
+		    }
+		    return "";
+		};
+		
+
+		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
+		    console.log("after save button");
+		    console.log(id);
+		    console.log(task);
+		    // ajax update 처리
+		    updateCall(id,task,is_new);
+		 // 갱신된 데이터 호출 필요
+		    return true;
+		});
+		
+		gantt.attachEvent("onLightboxDelete", function(id){
+			
+		    var task = gantt.getTask(id);
+		    if (task.$level == 0 ){
+		        alert("프로젝트는 삭제할 수 없습니다");
+		        return false;
+		    }
+		    if(gantt.hasChild(id)){
+		    	gantt.locale.labels.confirm_deleting= "하위 태스크도 함께 삭제됩니다.<br>계속 진행하시겠습니까?";
+		    } else {
+		    	gantt.locale.labels.confirm_deleting= "해당 태스크를 삭제하시겠습니까?";	
+		    }
+		    
+		    return true;
+		});
+		// onaftertaskadd 사용?
+		gantt.attachEvent("onAfterTaskDelete", function(id,item){
+			var task = gantt.getTask(id);
+			deleteTask(id);
+		});
+		
+		gantt.attachEvent("onTaskDrag",function(id,mode,task,original){
+			var modes = gantt.config.drag_mode;
+			
+			if(modes == modes.move || mode == modes.resize){
+				var diff = original.duration*(1000*60*60*24);
 				
-				var arrayList = new Array(tes);
-				//console.log(arrayList[1]);
-				
-				var j = JSON.parse(tes);
-				for(var i=0;i<j.length;i++){
-					holder.push(j[i].holder);
-					if("${mem.name}" == j[i].holder){
-						tid.push(Number(j[i].id));	
-					}
-					//console.log(holder);
-					//console.log(tid);
+				if(+task.end_date > +rightLimit){
+					task.end_date = new Date(rightLimit);
+					if(mode == modes.move)
+						task.start_date = new Date(task.end_date - diff);
 				}
-				//console.log($(".gantt_tree_content").val());
-				//console.log(data.gantt.attr('priority'));
-				// 수정 시 이전 정보 담기, priority 만 넣으면 됨 
-				//gantt.getLightboxSection('Priority').setValue(data.gantt.priority);
-				gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
-				gantt.init("gantt_here");
-				gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
-			},
-			error:function(err){
-				console.log(err);
+				if(+task.start_date < +leftLimit){
+					task.start_date = new Date(leftLimit);
+					if(mode == modes.move)
+						task.end_date = new Date(+task.start_date + diff);
+				}
 			}
 		});
+		
+		
 		// 테스크 버튼 클릭 시
 		if("${mem.auth}"=='pm'){
 			// 화면에 수정, 생성, 삭제 버튼 생성
+			/*
 		   var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
 	
 			gantt.config.columns = [
@@ -100,7 +162,6 @@ var tid = [];
 						);
 				}}
 			];
-		
 			gantt.attachEvent("onTaskClick", function(id, e){
 				var button = e.target.closest("[data-action]")
 				if(button){
@@ -111,6 +172,7 @@ var tid = [];
 							break;
 						case "add":
 							gantt.createTask({start_date:new Date()},null, id);
+							//gantt.addTask({start_date:new Date()},null, id);
 							break;
 						case "delete":
 							gantt.confirm({
@@ -127,6 +189,7 @@ var tid = [];
 				}
 				return true;
 			});
+			*/
 		} else if("${mem.auth}"=='wk'){
 		
 			gantt.config.columns = [
@@ -175,47 +238,16 @@ var tid = [];
 			});
 		}
 
-		var opts = [
-			{ key:1 , label: 'High'},
-			{ key:2 , label: 'Medium'},
-			{ key:3 , label: 'Low'},
-		];
-		// lightbox 내부 priority 영역 추가
-		gantt.config.lightbox.sections = [
-		    {name:"description", height:60, map_to:"text", type:"textarea", focus:true},
-		    
-		    {name:"parent",height:25, type:"parent", filter:function(id, task){ 
-		        if(task.$level > 1){         
-		            return false;     
-		        }else{  
-		            return true; 
-		        } 
-		    }},
-		    
-		    //{name:"parent", type:"parent", allow_root:"false", root_label:"No parent"},
-		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
-		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
-		    {name:"time",        height:30, map_to:"auto", type:"duration"}
-		];
-		// undefined ==> Priority 변경 (lightbox)
-		gantt.locale.labels.section_priority="Priority";
-		gantt.locale.labels.section_holder="holder";
-		gantt.locale.labels["section_parent"] = "Parent task";
-		//gantt.locale.lightbox.section_priority = "High";
-		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    
-		    // ajax update 처리
-		    updateCall(task,is_new);
-		 // 갱신된 데이터 호출 필요
-		    return true;
-		});
-		
+
+		gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
+		gantt.init("gantt_here");
+		gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		
 	});// document 끝
-	
-	// task 생성 및 수정
-	function updateCall(gantt,is_new){
+	//task 생성 및 수정
+	function updateCall(id,gantt,is_new){
 		  // callSch() 입력된 수정된 데이터를 요청값으로 전달
+		  console.log(is_new);
 		  if(is_new == false){
 			  console.log("##update##");
 			  console.log(gantt);
@@ -227,8 +259,9 @@ var tid = [];
 				  dataType:"json",
 				  success:function(data){
 					  // data.모델명
-					  if(data.success=="Y")
-						  alert("수정완료");
+					  //if(data.success=="Y")
+					  //	  alert("수정완료");
+					  	  //getdata();
 				  },
 				  error:function(err){
 					  alert("에러발생: " + err);
@@ -239,7 +272,7 @@ var tid = [];
 		  } else if(is_new == true){
 			  
 			  var sch = newSch(gantt);
-			  console.log("##insert##");
+			  console.log("##return new Sch##");
 			  console.log(sch);
 			  
 			  $.ajax({
@@ -248,9 +281,10 @@ var tid = [];
 				  data:sch,
 				  dataType:"json",
 				  success:function(data){
+					  //getdata();
 					  // data.모델명
 					  if(data.success=="Y")
-						  alert("수정완료");
+						  alert("등록완료");
 				  },
 				  error:function(err){
 					  alert("에러발생: " + err);
@@ -259,48 +293,90 @@ var tid = [];
 			  });
 			  
 		  }
-		  // 갱신된 데이터 호출 필요
-	  } 
-	
+	  };
+	  function deleteTask(id){
+		  //var task = gantt.getTask(id);
+		  console.log("###delete###");
+		  console.log(id);
+		  
+		  $.ajax({
+			  type:"post",
+			  url:"gantt.do?method=delete",
+			  data:{id:id},
+			  dataType:"json",
+			  success:function(data){
+				  //getdata();
+				  // data.모델명
+				  if(data.success=="Y")
+					  alert("등록완료");
+			  },
+			  error:function(err){
+				  alert("에러발생: " + err);
+				  console.log(err);
+			  }
+		  });
+	  }
+	  /*
+	  var idVal = $("[name=id]").val();
+	  var event = calendar.getEventById(idVal);
+	  event.remove();
+	  $.ajax({
+	  	type:"post",
+	  	url:"calendar.do?method=delete",
+	  	data:{id:idVal},
+	  	dataType:"json",
+	  	success:function(data){
+	  		if(data.success == "Y"){
+	  			alert("삭제 성공");
+	  		}
+	  	},
+	  	error: function(err){
+	  		alert("에러 발생");
+	  		console.log(err);
+	  	}
+	  })
+	  $("#schDialog").dialog("close");
+	*/
 	// is_new == true 일 때, 빈 데이터 채우기
 	function newSch(gantt){
-			console.log("###gantt###");	
-			console.log(gantt);
 		  var sch = {};
-		  sch.duration = gantt.duration;
+		  //sch.duration = gantt.duration;
 		  sch.parent = gantt.parent;
 		  sch.progress = gantt.progress;
 		  sch.sortorder = 0; 
 		  sch.id = 0;	
 		  sch.text = gantt.text;
-		  sch.open = true;
+		  //sch.open = true;
 		  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
 		  
 		  sch.start_date = gantt.start_date.toISOString();
-		  /*
-		  if(gantt.holder == "") sch.holder="no one";
-		  else sch.holder = gantt.holder;
-		  */
+		  sch.end_date = gantt.end_date.toISOString();
 		  sch.holder = gantt.holder;
+		  
+		  //if(gantt.holder == "") sch.holder="no one";
+		  //else sch.holder = gantt.holder;
+		  
+		  //sch.holder = gantt.holder;
 		  sch.priority = Number(gantt.priority);
-		  console.log("###sch###");
-		  console.log(sch);
 		  
 		  return sch;
-	  }
-	
+	}
+
 	function callSch(gantt){
+		console.log("###callSch###");
+		console.log(gantt);
 	  var sch = {};
-	  sch.duration = gantt.duration;
+	  //sch.duration = gantt.duration;
 	  sch.parent = gantt.parent;
 	  sch.progress = gantt.progress;
 	  sch.sortorder = gantt.sortorder; 
 	  sch.id = gantt.id;	
 	  sch.text = gantt.text;
-	  sch.open = true;
+	  //sch.open = true;
 	  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
 	  
 	  sch.start_date = gantt.start_date.toISOString();
+	  sch.end_date = gantt.end_date.toISOString();
 	  /*
 	  if(gantt.holder == "") sch.holder="no one";
 	  else sch.holder = gantt.holder;
@@ -309,19 +385,65 @@ var tid = [];
 	  sch.priority = Number(gantt.priority);
 	  
 	  return sch;
-  }
+	}
 	  
 	function getFormatDate(date){
-	    var year = date.getFullYear();              //yyyy
-	    var month = (1 + date.getMonth());          //M
-	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	    var day = date.getDate();                   //d
-	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	    //var year = date.getFullYear();              //yyyy
+	    var year2 = date.substring(0,4);
+	    //var month = (1 + date.getMonth());          //M
+	    var month2 = date.substring(5,7);
+	    //month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    //var day = date.getDate();                   //d
+	    var day2 = date.substring(8,10);        
+	    //day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    var limit = new Date(year2,month2,day2);
+	    //return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	    return limit;
 	}
-	
+
 	function formatProgress(task){
 		  return Math.round(task.progress * 100) + "%"
+	}
+
+	function getdata(){
+		$.ajax({
+			type:"post",
+			url:"${path}/gantt.do?method=data",
+			dataType:"json",
+			success:function(data){
+				g = data.gantt;
+				var tes = data.gantt.substring(8,data.gantt.length-1);
+				console.log(data.gantt);
+				//console.log(tes);
+				
+				var arrayList = new Array(tes);
+				//console.log(arrayList[1]);
+				
+				var j = JSON.parse(tes);
+				for(var i=0;i<j.length;i++){
+					holder.push(j[i].holder);
+					if("${mem.name}" == j[i].holder){
+						tid.push(Number(j[i].id));	
+					}
+					arrstart_date.push(j[i].start_date);
+					arrend_date.push(j[i].end_date);
+					leftLimit = getFormatDate(arrstart_date[0]);
+					rightLimit = getFormatDate(arrend_date[0]);
+					
+					//console.log(holder);
+					//console.log(tid);
+				}
+				console.log(leftLimit);
+				console.log(rightLimit);
+				//console.log($(".gantt_tree_content").val());
+				//console.log(data.gantt.attr('priority'));
+				// 수정 시 이전 정보 담기, priority 만 넣으면 됨 
+				//gantt.getLightboxSection('Priority').setValue(data.gantt.priority);
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
 	}
 </script>
 <script src="${path}/Admin/dist/assets/js/dhtmlxgantt.js?v=7.0.13"></script>
@@ -355,7 +477,7 @@ var tid = [];
 .fa-times {
   color: red;
 }
-	
+
 </style>
 </head>
 <body class="loading">

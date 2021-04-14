@@ -84,7 +84,7 @@ $(document).ready(function(){
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/main.do?method=gantt"  class="nav-link">
+						                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>

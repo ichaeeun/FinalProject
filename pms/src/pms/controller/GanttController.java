@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Gantt;
 import pms.dto.Project;
@@ -22,6 +23,7 @@ public class GanttController {
 	// http://localhost:7080/pms/gantt.do?method=gantt
 	@RequestMapping(params="method=gantt")
 	public String gantt() {
+		// 파라미터로 project_no 넘어옴, 세션으로 가지던지 해야함
 		return "gantt";
 	}
 	
@@ -46,32 +48,52 @@ public class GanttController {
 	
 	@RequestMapping(params="method=insert")
 	public String insert(Gantt gantt) {
+		
 		System.out.println("pno: " + gantt.getId());
 		System.out.println("start: " + gantt.getStart_date());
-		System.out.println("duration: " + gantt.getDuration());
+		System.out.println("end: " + gantt.getEnd_date());
+		//System.out.println("duration: " + gantt.getDuration());
 		System.out.println("parent: " + gantt.getParent());
 		System.out.println("content: " + gantt.getText());
 		System.out.println("Priority: " + gantt.getPriority());
 		System.out.println("progress: " + gantt.getProgress());
 		System.out.println("sortorder: " + gantt.getSortorder());
 		System.out.println("holder: " + gantt.getHolder());
-
 		
+		Task task = service.insert_gantttotask(gantt);
+		service.insertTask(task);
 		
 		return "pageJsonReport";
 	}
 	@RequestMapping(params="method=update")
 	public String update(Gantt gantt) {
+		
 		System.out.println("pno: " + gantt.getId());
 		System.out.println("start: " + gantt.getStart_date());
-		System.out.println("duration: " + gantt.getDuration());
+		System.out.println("end: " + gantt.getEnd_date());
+		//System.out.println("duration: " + gantt.getDuration());
 		System.out.println("parent: " + gantt.getParent());
 		System.out.println("content: " + gantt.getText());
 		System.out.println("Priority: " + gantt.getPriority());
 		System.out.println("progress: " + gantt.getProgress());
 		System.out.println("sortorder: " + gantt.getSortorder());
 		System.out.println("holder: " + gantt.getHolder());
-		// 수정놈
+		
+		Task task = service.update_gantttotask(gantt);
+		System.out.println("taskno: " + task.getTask_no());
+		service.updateTask(task);
+		
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping(params="method=delete")
+	public String delete(@RequestParam("id") int id) {
+		System.out.println("pno: " + id);
+		
+		
+		//Task task = service.switch_gantttotask(gantt);
+		service.deleteTask(id);
+		
 		return "pageJsonReport";
 	}
 }
