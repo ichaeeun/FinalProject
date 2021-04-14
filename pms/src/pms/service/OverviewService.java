@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pms.dao.OverviewDao;
 import pms.dto.Log;
 import pms.dto.Task;
+import pms.dto.Overview;
 
 @Service
 public class OverviewService {
@@ -23,4 +24,7 @@ public class OverviewService {
 	public ArrayList<Task> TaskList2(int no){
 		return dao.TaskList2(no);
 	}
+	public ArrayList<Overview> ViewMem(int no){
+		return dao.ViewMem(no);
+	};
 }

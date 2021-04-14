@@ -16,9 +16,7 @@ import pms.service.ProjectService;
 public class OverviewController {
 	@Autowired(required = false)
 	private OverviewService service;
-	@Autowired(required = false)
-	private ProjectService pservice;
-	
+
 	//  http://localhost:7080/pms/task.do?method=list
 	@RequestMapping(params="method=list")
 	public String taskList(@RequestParam("no") int no,Task task, Model d) {
@@ -32,7 +30,7 @@ public class OverviewController {
 //  http://localhost:7080/pms/task.do?method=view
 	@RequestMapping(params="method=view")
 	public String overview(@RequestParam("no") int no, Model d) {
-		d.addAttribute("pms_project", pservice.getProject(no));
+		d.addAttribute("ViewMem", service.ViewMem(no));
 		return "overview";
 	}
 
@@ -42,4 +40,6 @@ public class OverviewController {
 		d.addAttribute("LogList",service.LogList(no));
 		return "log";
 	}
+	
+	
 }

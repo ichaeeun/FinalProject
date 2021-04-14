@@ -28,10 +28,18 @@
 	order by t1.enddte
 </select>
 
-<select id="ViewMem" resultType="member" parameterType="int">
-select t1.pno, t1.member_name, 
-from pms_member t1, pms_task t2
-
+<select id="ViewMem" resultType="view" parameterType="int">
+SELECT DISTINCT t1.pno, t1.NAME,
+   (SELECT count(*)
+	FROM PROJECT_TASK
+	WHERE t1.pno = pno) AS task_tot,
+	(SELECT count(*)
+	FROM PROJECT_TASK
+	where TASK_STATUS = '완료'
+	and t1.pno = pno) AS task_done
+	FROM pms_member t1, PROJECT_TASK t2
+	WHERE t2.PROJECT_NO = #{no}
+	ORDER BY pno
 </select>
 
 </mapper>  

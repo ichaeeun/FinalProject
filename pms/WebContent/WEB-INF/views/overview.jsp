@@ -84,7 +84,7 @@
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+						                <a href="${path}/main.do?method=gantt"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>
@@ -169,281 +169,27 @@
                                             </thead>
     
                                             <tbody class="font-14">
-                                            
+                                            <c:forEach var="view" items="${ViewMem}">
                                                 <tr>
-                                                    <td><b>#1256</b></td>
+                                                    <td><b>${view.pno}</b></td>
                                                     <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">George A. Lianes</span>
-                                                        </a>
+                                                        ${view.name}
                                                     </td>
                                                     <td>
-                                                        Support for theme
+                                                    <c:choose>
+	                                                    <c:when test="${view.task_tot==0}">                                                 
+	                                                    	<progress value="0" max="100"></progress>                                                
+	                                                    </c:when>
+	    												<c:otherwise> 
+	    													<progress value="${view.task_done/view.task_tot}" max="1"></progress>
+	    												</c:otherwise>		
+	    											</c:choose>
                                                     </td>
                                                     <td>
-                                                        2
+                                                        ${view.task_tot}개
                                                     </td>                                            
                                                 </tr>
-    
-                                                <tr>
-                                                    <td><b>#2542</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Jose D. Delacruz</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        New submission on your website
-                                                    </td>
-    
-                                                    <td>             
-                                                           1   
-                                                    </td>                                        
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#320</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Phyllis K. Maciel</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Verify your new email address!
-                                                    </td>
-    
-                                                    <td>
-                                                       3
-                                                    </td>
-    
-                                            
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#1254</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Margeret V. Ligon</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Your application has been received!
-                                                    </td>
-    
-                                                    <td>
-                                                   3
-                                                    </td>
-    
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#1020</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Erwin E. Brown</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        A new rating has been received
-                                                    </td>
-    
-                                                    <td>
-                                                       4
-                                                    </td>
-    
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#854</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">William L. Trent</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Your Profile has been accepted
-                                                    </td>
-    
-                                                    <td>
-                                                        2
-                                                    </td>                                     
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#9501</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Amy R. Barnaby</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Homeworth for your property increased
-                                                    </td>
-    
-                                                    <td>
-                                                        4
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#3652</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Jessica T. Phillips</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Item Support Message sent
-                                                    </td>
-    
-                                                    <td>
-                                                       3
-                                                    </td>
-    
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#9852</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Debra J. Wilson</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Your item has been updated!
-                                                    </td>
-    
-                                                    <td>
-                                                       2
-                                                    </td>
-    
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#3652</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Luke J. Sain</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Your password has been reset
-                                                    </td>
-    
-                                                    <td>
-                                                        5
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#1352</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Karen R. Doyle</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Question regarding your Bootstrap Theme
-                                                    </td>
-    
-                                                    <td>
-                                                        3
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#3562</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Freddie J. Plourde</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Security alert for my account
-                                                    </td>
-    
-                                                    <td>
-                                                        4
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#3658</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Darrell J. Cook</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Christopher S. Ahmad
-                                                    </td>
-    
-                                                    <td>
-                                                        2
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#2251</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Mark C. Diaz</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Verify your new email address!
-                                                    </td>
-    
-                                                    <td>
-                                                        3
-                                                    </td>
-                                                </tr>
-    
-                                                <tr>
-                                                    <td><b>#3654</b></td>
-                                                    <td>
-                                                        <a href="javascript: void(0);" class="text-dark">
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="contact-img" title="contact-img" class="avatar-sm rounded-circle img-thumbnail" />
-                                                            <span class="ms-2">Robert K. Joseph</span>
-                                                        </a>
-                                                    </td>
-    
-                                                    <td>
-                                                        Support for theme
-                                                    </td>
-    
-                                                    <td>
-                                                    2
-                                                    </td>
-                                                </tr>
-    
+    										</c:forEach>
                                             </tbody>
                                         </table>
                                     </div>

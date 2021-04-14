@@ -59,57 +59,7 @@ $(document).ready(function(){
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        <div class="row">
-						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name}</button></a>
-							</div> 
-							<div class="col-xl-12">
-								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
-						            <li class="nav-item">
-						                      <a href="${path }/task.do?method=view&no=${param.no}"  class="nav-link ">
-						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
-						                    <span class="d-none d-sm-inline-block">오버뷰</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="${path}/task.do?method=list&no=${param.no}" class="nav-link active">
-						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
-						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="bx bxs-dashboard"></i></span>
-						                    <span class="d-none d-sm-inline-block">대시보드</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
-						                    <span class="d-none d-sm-inline-block">간트차트</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="bx bx-calendar"></i></span>
-						                    <span class="d-none d-sm-inline-block">캘린더</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="${path}/task.do?method=log&no=${param.no}"  class="nav-link">
-						                    <span class="d-inline-block d-sm-none"><i class="bx bx-comment-dots"></i></span>
-						                    <span class="d-none d-sm-inline-block">활동로그</span>
-						                </a>
-						            </li>
-						            <li class="nav-item">
-						                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
-						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
-						                           <span class="d-none d-sm-inline-block">리스크</span>
-						                </a>
-						            </li>
-						         </ul> 
-							</div>
-						</div>
+                      
                         <!-- start page title -->
 <!--                         <div class="row">
                             <div class="col-12">
@@ -128,7 +78,7 @@ $(document).ready(function(){
                         <!-- end page title --> 
                         <div class="row">
                             <div class="col-12">
-                                <div class="card">
+                                <div class="card" style="margin-top: 24px;">
                                     <div class="card-body">
                                         <h4 class="header-title">Tasks List</h4>
                                         <p class="sub-header">
@@ -229,7 +179,7 @@ $(document).ready(function(){
                                             </thead>
                                             <tbody>
                                           <c:forEach var="task" items="${TaskList2}">          
-                                                <tr style="cursor:pointer;"  onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
+                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
                                                     <td>${task.name}</td>
@@ -241,10 +191,10 @@ $(document).ready(function(){
                                                       	<span class="badge label-table badge-soft-danger p-1">
                                                       </c:when>
                                                       <c:when test="${task.task_priority eq 'Medium'}">
-                                                      	<span class="badge label-table badge-soft-primary p-1">
+                                                      	<span class="badge label-table badge-soft-success p-1">
                                                       </c:when>
                                                       <c:otherwise>
-                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      	<span class="badge label-table badge-soft-info p-1">
                                                       </c:otherwise>
                                                   	</c:choose>	
                                                   	${task.task_priority}</span></td> 

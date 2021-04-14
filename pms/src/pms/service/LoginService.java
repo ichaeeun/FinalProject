@@ -16,4 +16,7 @@ public class LoginService {
 	public Member IsMem(Member member) {
 		return dao.IsMem(member);
 	}
+	public Member IsPm(String auth) {
+		return dao.IsPm(auth);
+	}
 }
