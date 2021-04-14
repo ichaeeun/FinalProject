@@ -27,7 +27,7 @@
       <!-- App css -->
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
@@ -46,13 +46,16 @@
 		  		$("#frm").attr("action", "manpower.do?method=contacts_list3&dvalue="+code);
 		  		$("#frm").submit();
 		  	});
-			$("[name=goDetail]").click(function(){
-				var ename=$(this).text();
-				var pno = $("[name=pno]").val();
-				//alert(ename);
+		  	$("#memShow").on("click",".goDetail",function(){
+				var ename = $(this).find('.text-dark').html();
+				var pno = $(this).find('.pno').val();
+				alert(ename);
 				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
-			});		  	
+			});	
+		  	// 부서 select 고정
+		  	let dvalue = "${dvalue}";
+		  	$("#selectize-select").val(dvalue).prop("selected",true);
 	  	})
 	  	
 	  </script>
@@ -114,9 +117,9 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                      <select id="selectize-select" name="deptValue">
-                                     	   <option value="" selected="selected">-- 부서 선택 --</option>
+                                     	   <option value="">-- 부서 선택 --</option>
                                            <c:forEach var="dept" items="${deptList }" varStatus="status">
-                                                  <option value="${dept.part}">${dept.part }</option>
+                                                  <option id="${dept.part}" name="partInfo" value="${dept.part}">${dept.part }</option>
                                            </c:forEach>
                                      </select>
                                 </div>
@@ -126,9 +129,9 @@
 						<form method="post" id="frm" name="frm">
 							<input type="hidden" name="dvalue" value=""/>
 						</form>
-                        <div class="row">                  
+                        <div class="row" id="memShow">                  
                         	<c:forEach var="mem" items="${memList3}">
-                            <div class="col-xl-3 col-sm-6">
+                            <div class="col-xl-3 col-sm-6 goDetail">
                                 <div class="text-center card">
                                     <div class="card-body">
                                         
@@ -143,12 +146,12 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+                                        <i class='fas fa-user-circle fa-5x'></i>
 										<form>
-											<input type="hidden" name="pno" value="${mem.pno }"/>
+											<input type="hidden" class="pno" name="pno" value="${mem.pno }"/>
 										</form>
                                         <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } 
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->

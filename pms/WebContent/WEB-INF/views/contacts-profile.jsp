@@ -34,6 +34,8 @@
 
 <!-- icons -->
 <link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
@@ -82,8 +84,7 @@
                                 <div class="card text-center">
                                 <c:forEach var="mem" items="${memDetail }">
                                     <div class="card-body">
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xl img-thumbnail"
-                                        alt="profile-image">
+                                        <i class='fas fa-user-circle fa-5x'></i>
 
                                         <h4 class="mt-3 mb-0">${mem.name }</h4>
                                         <p class="text-muted">${mem.part }</p>

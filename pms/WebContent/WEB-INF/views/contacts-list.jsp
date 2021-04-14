@@ -20,20 +20,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
-
+			
         <!-- third party css -->
         <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
       <!-- App css -->
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
       <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 		<script src="${path}/a00_com/jquery.min.js"></script>
 		<script src="${path}/a00_com/popper.min.js"></script>
@@ -41,15 +41,101 @@
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
 	  	$(document).ready(function(){
-			$("[name=goDetail]").click(function(){
-				var ename=$(this).text();
-				var pno = $("[name=pno]").val();
-				//alert(ename);
+	  		
+	 	    var mem = "${mem.id}";
+		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
+		 	
+		    /////////// 조회와 검색
+		    // 검색 입력값
+  			var shName = "";
+  			console.log("shName:"+shName);
+			function ajaxSearch(){
+	  			$.ajax({
+	  				type:"post",
+	  				url:"${path}/manpower.do?method=jsonContactList",
+	  				data:{
+	  					"name":shName
+	  				},
+	  				dataType:"json",
+	  				success:function(data){
+	  					console.log(data);
+	  					var mlist = data.memList1;
+	  					var show = "";
+	  					$.each(mlist,function(idx,m){
+	  						show+= "<div class='col-xl-3 col-sm-6 goDetail'>";
+	  						show+= "<form style='display:none;'><input type='hidden' class='pno' name=pno value='"+m.pno+"''/></form>";
+	  						show+= "<div class='text-center card'>";
+	  						show+= "<div class='card-body'>";
+	  						show+= "<div class='dropdown float-end'>";
+	  						show+= "<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+	  						show+= "<i class='mdi mdi-dots-vertical font-20'></i></a></div>";						
+	  						show+= "<i class='fas fa-user-circle fa-5x'></i>";
+	  						show+= "<h4 class='mt-3 mb-1 name' name='mt-3 mb-1 name'><a class='text-dark'>";
+	  						show+= m.name+"</a></h4>";
+	  						show+= "<p class='text-muted'>"+m.auth+"<span> | </span>"+m.part;
+	  						show+= "<span> <a href='#' class='text-pink'>"+m.email+"</a> </span></p>";
+	  						show+= "</div></div></div>";
+	  					});
+	  					$("#memShow").html(show);
+	  				},
+		  			error:function(err){
+		  				alert("에러 발생:"+err);
+		  				console.log(err);
+		  			}
+	  			});
+			};
+			ajaxSearch(); // 초기화면 호출하기 위함
+
+	  		// 검색 버튼
+ 	  		$("#searchBtn").click(function(){
+ 	  			shName = $("[name=shName]").val();
+ 	  			console.log(shName);
+ 	  			ajaxSearch();
+	  		}) 
+	  		
+	  		//////////// 계정 생성 모달
+			// 인력 추가 모달창 input값 받아오기
+			function addMember(){
+				var add = {};
+				add.name = $("[name=name]").val();
+				add.id = $("[name=id]").val();
+				add.pass = $("[name=pass]").val();
+				add.auth = $("[name=auth]").val();
+				add.part = $("[name=part]").val();
+				add.email = $("[name=email]").val();
+				return add;
+			}
+  			$("#signupBtn").click(function(){
+  				
+  				var insert = addMember();
+  				$.ajax({
+  					type:"post",
+  					url:"manpower.do?method=add_member",
+  					data:insert,
+  					dataType:"json",
+  					success:function(){
+  						$("#signup-modal").modal("hide");
+  						ajaxSearch();
+  						console.log(insert);
+  					},
+  					error:function(){
+  						alert("에러발생");
+  					}
+  				});
+  			});
+	  		
+	  		//////////// 상세화면
+			$("#memShow").on("click",".goDetail",function(){
+				//var pno = $(this).find('.text-dark').html();
+				var ename = $(this).find('.text-dark').html();
+				var pno = $(this).find('.pno').val();
+				alert(ename);
 				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
-			});
-			
-	  	})
+			});	
+	
+
+	  	});
 	  </script>
     </head>
 
@@ -96,61 +182,26 @@
                         	<c:if test="${mem.auth == 'hp' }">
                             <div class="col-sm-4">
                                 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
+                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mail-modal">계정 발송</button>
                             </div>
                             </c:if>
                             <div class="col-sm-8">
                                 <div>
-                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end" 
-                                    	action="${path }/manpower.do?method=contacts_list" method="post">
-                                        <div class="d-flex align-items-start flex-wrap me-2">
+                                        <div class="d-flex align-items-start flex-wrap me-2" id="memSearch">
                                             <label for="membersearch-input" class="visually-hidden">검색</label>
-                                            <input type="search" class="form-control" name="name" id="membersearch-input" 
-                                            	value="" placeholder="이름 검색">
+                                            <input type="text" class="form-control" id="shName" name="shName" placeholder="이름 검색">
                                         </div>
-                                        <button type="submit" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                    </form>
+                                        <button type="button" id="searchBtn" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
                                     
                                 </div>
                             </div><!-- end col-->
                         </div>
                         <!-- end row -->
 						
-                        <div class="row">
-                        	<form id="hiddenFrm" method="post">
-                        		<input type="hidden" name="proc"/>
-                        	</form>
-                        	
-                        
-                        	<c:forEach var="mem" items="${memList1 }">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="text-center card">
-                                    <div class="card-body">
-                                        
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
-			                        	<form>
-			                        		<input type="hidden" name="pno" value="${mem.pno }"/>
-			                        	</form>
-                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
-                            </c:forEach>
-                         
-                                           
+                        <div class="row" id="memShow">
+                        <!-- 조회 검색 view단 -->
                         </div>
+                       
                         <!-- end row -->
 
                         <div class="row mb-4">
@@ -250,12 +301,12 @@
                 <div class="tab-content pt-0">
                     <div class="tab-pane" id="chat-tab" role="tabpanel">
                 
-                        <form class="search-bar p-3">
+<%--                         <form class="search-bar p-3">
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="mdi mdi-magnify"></span>
                             </div>
-                        </form>
+                        </form> --%>
 
                         <h6 class="fw-medium px-3 mt-2 text-uppercase">Group Chats</h6>
 
@@ -630,61 +681,94 @@
                                                     <div class="modal-body">
                                                         <div class="text-center mt-2 mb-4">
                                                             <a href="index.html" class="text-success">
-                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
+                                                                <span>
+  																 <img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24">
+                                                                </span>
                                                             </a>
                                                         </div>
-
-    													<form:form class="px-3" action="${path }/manpower.do?method=add_member" method="post" 
-    														modelAttribute="member">
+														<!-- <div class="col-xl-3 col-lg-4 col-sm-6">
+                                                            <i class="bx bxs-user"></i>
+                                                        </div> -->
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">이름</label>
-                                                                <form:input path="name" class="form-control" type="text" placeholder="이름"/>
+                                                                <input name="name" class="form-control" type="text" placeholder="이름"/>
                                                             </div>
-    
                                                             <div class="mb-3">
                                                                 <label for="email" class="form-label">이메일</label>
-                                                                <form:input path="email" class="form-control" type="email" placeholder="이메일"/>
-                                                            </div>
-    
+                                                                <input name="email" class="form-control" type="email" placeholder="이메일"/>
+                                                            </div>   
                                                             <div class="mb-3">
                                                                 <label for="id" class="form-label">아이디</label>
-                                                                <form:input path="id" class="form-control" type="text" placeholder="아이디"/>
+                                                                <input name="id" class="form-control" type="text" placeholder="아이디"/>
                                                             </div>
                                                              <div class="mb-3">
                                                                 <label for="pass" class="form-label">비밀번호</label>
-                                                                <form:input path="pass" class="form-control" type="password" placeholder="비밀번호"/>
+                                                                <input name="pass" class="form-control" type="password" placeholder="비밀번호"/>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="part" class="form-label">부서</label>
-                                                                <form:select path="part" class="form-control">
-                                                                	<option>-- 부서 선택 --</option>
-                                                                	<c:forEach var="part" items="${partList }">
-                                                                		<option value="${part.part }">${part.part }</option>
+                                                                <select name="part" class="form-control">
+                                                                	<c:forEach var="part" items="${partList}">
+                                                                		<option name="part" value="${part.part }">${part.part }</option>
                                                                 	</c:forEach>
-                                                                </form:select>
+                                                                </select>
                                                             </div>   
                                                             <div class="mb-3">
                                                                 <label for="auth" class="form-label">직급</label>
-                                                                <form:select path="auth" class="form-control">
-                                                                	<option>-- 직급 선택 --</option>
-                                                                	<c:forEach var="auth" items="${authList }">
-                                                                		<option value="${auth.auth }">${auth.auth }</option>
+                                                                <select name="auth" class="form-control">
+                                                                	<c:forEach var="auth" items="${authList}">
+                                                                		<option name="auth" value="${auth.auth }">${auth.auth }</option>
                                                                 	</c:forEach>                                                                	
-                                                                </form:select>
+                                                                </select>
+                                                                
                                                             </div>                                                                                                                               
                                                             <div class="mb-3 text-center">
-                                                                <input class="btn btn-primary" type="submit"/>
+                                                                <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="signupBtn">계정생성</button>
                                                             </div>
-    
-                                                        </form:form>
-    
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
 
 
+                                        <!-- mail modal content -->
+                                        <div id="mail-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+    
+                                                    <div class="modal-body">
+                                                        <div class="text-center mt-2 mb-4">
+                                                            <a href="index.html" class="text-success">
+                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
+                                                            </a>
+                                                        </div>
 
+														<!-- MessagingException -->
+    													<form class="px-3"  method="post" action="${path}/mail.do?method=send">
+                                                            <div class="mb-3">
+                                                                <label for="subject" class="form-label">제 목</label>
+                                                                <input name="subject" class="form-control" type="text" placeholder="제목을 입력하세요."/>
+                                                            </div>
+    
+                                                            <div class="mb-3">
+                                                                <label for="receiver" class="form-label">이메일 주소</label>
+                                                                <input name="receiver" class="form-control" type="email" placeholder="이메일 주소를 입력하세요."/>
+                                                            </div>
+    
+                                                            <div class="mb-3">
+                                                                <label for="content" class="form-label">내 용</label>
+                                                                <input name="content" class="form-control" type="text" placeholder="내용을 입력하세요."/>
+                                                            </div>                                                                                                                          
+                                                            <div class="mb-3 text-center">
+                                                                <input class="btn btn-primary" type="submit" value="메일 전송"/>
+                                                            </div>
+    
+                                                        </form>
+    
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
         
     </body>
 </html>

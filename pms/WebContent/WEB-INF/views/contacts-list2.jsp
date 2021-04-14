@@ -34,6 +34,7 @@
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
       <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 		<script src="${path}/a00_com/jquery.min.js"></script>
 		<script src="${path}/a00_com/popper.min.js"></script>
@@ -41,11 +42,11 @@
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
 	  	$(document).ready(function(){
-			$("[name=goDetail]").click(function(){
-				var ename=$(this).text();
-				var pno = $("[name=pno]").val();
-				//alert(ename);
-				//alert(pno);
+	  		$("#memShow").on("click",".goDetail",function(){
+				var ename = $(this).find('.text-dark').html();
+				var pno = $(this).find('.pno').val();
+				alert(ename);
+				alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});
 	  	})
@@ -107,14 +108,9 @@
                         </div>
                         <!-- end row -->
 						
-                        <div class="row">
-                        	<form id="hiddenFrm" method="post">
-                        		<input type="hidden" name="proc"/>
-                        	</form>
-                        	
-                        
+                        <div class="row" id="memShow">                        
                         	<c:forEach var="mem" items="${memList2 }">
-                            <div class="col-xl-3 col-sm-6">
+                            <div class="col-xl-3 col-sm-6 goDetail">
                                 <div class="text-center card">
                                     <div class="card-body">
                                         
@@ -129,12 +125,12 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-3.jpg" class="rounded-circle img-thumbnail avatar-xl mt-1" alt="profile-image">
+                                        <i class='fas fa-user-circle fa-5x'></i>
 										<form>
-											<input type="hidden" name="pno" value="${mem.pno }"/>
+											<input type="hidden" class='pno' name="pno" value="${mem.pno }"/>
 										</form>
                                         <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span> 
+                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } 
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
@@ -281,7 +277,7 @@
                                 <div class="d-flex align-items-start">
                                     <div class="position-relative me-2">
                                         <span class="user-status"></span>
-                                        <img src="${path }/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        
                                     </div>
                                     <div class="flex-1 overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>

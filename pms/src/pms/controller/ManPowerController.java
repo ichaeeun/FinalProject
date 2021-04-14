@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,18 +25,34 @@ public class ManPowerController {
 	@Autowired(required = false)
 	private ManPowerService service;
 
-	// http://localhost:7080/pms/manpower.do?method=contacts_list
-	@RequestMapping(params = "method=contacts_list")
-	public String memList1(@ModelAttribute("sch") Member sch, Model d) {
+	// http://localhost:7080/pms/manpower.do?method=jsonContactList
+	@RequestMapping(params = "method=jsonContactList")
+	public String memList1(@ModelAttribute("sch") Member sch, Model d,
+			@RequestParam("name") String name) {
 		// 전체 인원
-		if (sch.getName() == null) sch.setName("");
+		// if (sch.getName() == null) sch.setName("");
+		if(name==null) name="";
+		System.out.println("검색이름:"+name);
+		d.addAttribute("memList1",service.memList1(name));
 		// 부서 목록
 		d.addAttribute("partList", service.deptList());
 		// 권한 목록
 		d.addAttribute("authList", service.authList());		
-		d.addAttribute("memList1", service.memList1(sch.getName()));
-		d.addAttribute("member", new Member());
+		return "pageJsonReport";
+	}
+	
+	@GetMapping(params="method=contacts_list")
+	public String showMem(Model d) {
+		d.addAttribute("partList", service.deptList());
+		d.addAttribute("authList", service.authList());		
 		return "contacts-list";
+	}
+	
+	@RequestMapping(params="method=allMan")
+	public String allMan(@RequestParam("shName") String name, Model d) {
+		if(name==null) name="";
+		d.addAttribute("memList1", service.memList1(name));
+		return "allMan";
 	}
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_list2
@@ -61,7 +79,7 @@ public class ManPowerController {
 					sum++;
 				}
 			}
-			if (sum == 0) {
+			if (sum == 0||project_no==null) {
 				System.out.println("전부 완료인 애들의 사원 번호: " + pno.get(i));
 				System.out.println(service.memPoss(pno.get(i)).getName());
 				memList2.add(service.memPoss(pno.get(i)));
@@ -82,6 +100,7 @@ public class ManPowerController {
 		String dvalue = request.getParameter("dvalue");
 		if (dvalue == null)
 			dvalue = "";
+		//d.addAttribute("dvalue",dvalue);
 		System.out.println("dvalue:" + dvalue);
 		System.out.println(service.memList3(dvalue).size());
 		d.addAttribute("memList3", service.memList3(dvalue));
@@ -94,7 +113,8 @@ public class ManPowerController {
 	public String contacts_profile(Model d, 
 			@RequestParam("ename") String ename, 
 			@RequestParam("pno") int pno) {
-		
+		  System.out.println("ename:"+ename);
+		  System.out.println("pno:"+pno);
 		  d.addAttribute("memDetail",service.memList1(ename)); 
 		  ArrayList<pms_project> proList = new ArrayList<pms_project>(); 
 		  for(int i=0;i<service.projectpno(pno).size();i++) {
@@ -104,17 +124,21 @@ public class ManPowerController {
 
 		return "contacts-profile";
 	}
-	
+
+	/*
+	@RequestMapping(params="method=update")  // 태스크 수정 
+	public String updateTask(Task t,Model d) {
+		service.updateTask(t);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
+	}
+	*/
 	// http://localhost:7080/pms/manpower.do?method=add_member
-	public String add_member(@ModelAttribute("member") Member ins,
-			Model d){
+	@PostMapping(params = "method=add_member")
+	public String add_member(Member ins, Model d){
 		service.addMember(ins);
-		System.out.println("아이디:"+ins.getId());
-		System.out.println("이름:"+ins.getName());
-		System.out.println("부서:"+ins.getPart());
-		ins=null;
-		// ins = null;
-		return "contact-list";
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
 	}
 
 }
