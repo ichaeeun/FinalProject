@@ -35,8 +35,7 @@ public class LoginController {
 				session.setAttribute("mem", service.IsMem(member));
 			} else {
 				d.addAttribute("proc","false");
-			}
-			
+			}			
 			return "auth-login";
 		}
 		
@@ -54,6 +53,15 @@ public class LoginController {
 		// http://localhost:7080/pms/main.do?method=main
 		@RequestMapping(params="method=main")
 		public String main(HttpSession session, @ModelAttribute("sch") Member sch, Model d) {
+			// 세션 값
+			Member m = (Member)session.getAttribute("mem");
+			System.out.println(m.getAuth());
+			String page = "";
+			
+			if( m.getAuth().equals("pm")) {	page = "overview";
+			}else if(m.getAuth().equals("wk")) {page = "task_list(all)";}
+			else if(m.getAuth().equals("ceo")) {page = "dashboard";}
+			else if(m.getAuth().equals("hp")) {page = "contacts-list";}
 			// 전체 인원
 			if (sch.getName() == null) sch.setName("");
 			// 부서 목록
@@ -61,7 +69,8 @@ public class LoginController {
 			// 권한 목록
 			d.addAttribute("authList", mservice.authList());		
 			d.addAttribute("memList1", mservice.memList1(sch.getName()));
-			d.addAttribute("member", new Member());
-			return "main";
+			d.addAttribute("member", new Member());		
+			
+			return page;		
 		}
 }

@@ -105,8 +105,8 @@
                     <div class="container-fluid">
                         <div class="row">
 							<div class="row" style="padding-top:10px;">
-														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
-														</div> 
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+							</div> 
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 							            <li class="nav-item">
