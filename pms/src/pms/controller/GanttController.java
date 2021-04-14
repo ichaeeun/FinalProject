@@ -22,33 +22,24 @@ public class GanttController {
     
 	// http://localhost:7080/pms/gantt.do?method=gantt
 	@RequestMapping(params="method=gantt")
-	public String gantt() {
-		// 파라미터로 project_no 넘어옴, 세션으로 가지던지 해야함
+	public String gantt(@RequestParam("no") int no, Model d) {
+		d.addAttribute("no",no);
 		return "gantt";
 	}
 	
 	// http://localhost:7080/pms/gantt.do?method=data
 	@RequestMapping(params="method=data")
-	public String data(pms_project project,Model d,String proc) {
-		project = new pms_project(1,"project01","내용ㅎㅎ","2021-04-04T15:00:00.000Z","2021-04-06T15:00:00.000Z",1,"진행중");
-		// 파라미터로 받아온 프로젝트에 대한 정보
-		//d.addAttribute("project",project);
-		// 파라미터로 받아온 프로젝트의 정보를 이용해 task 가져오기
-				
-		ArrayList<Task> task = new ArrayList<Task>();
-		task = service.getTask(project);
-		//d.addAttribute("task", task);
-		// 받아온 정보들 gantt json에 맞게 처리
-		ArrayList<Gantt> gantt = new ArrayList<Gantt>();
-		gantt = service.getGantt(task);
-		d.addAttribute("gantt",service.jsonadd(gantt,project));
+	public String data(@RequestParam("no") int no,Model d) {
+		d.addAttribute("no",no);
+		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
-	}
+	}	
 	
 	@RequestMapping(params="method=insert")
-	public String insert(Gantt gantt) {
-		
+	public String insert(@RequestParam("no") int no,Gantt gantt,Model d) {
+		d.addAttribute("success","Y");
+		System.out.println("####insert####");
 		System.out.println("pno: " + gantt.getId());
 		System.out.println("start: " + gantt.getStart_date());
 		System.out.println("end: " + gantt.getEnd_date());
@@ -62,12 +53,14 @@ public class GanttController {
 		
 		Task task = service.insert_gantttotask(gantt);
 		service.insertTask(task);
-		
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("gantt",service.list(no));
 		return "pageJsonReport";
 	}
 	@RequestMapping(params="method=update")
-	public String update(Gantt gantt) {
-		
+	public String update(@RequestParam("no") int no,Gantt gantt,Model d) {
+		System.out.println("####update####");
 		System.out.println("pno: " + gantt.getId());
 		System.out.println("start: " + gantt.getStart_date());
 		System.out.println("end: " + gantt.getEnd_date());
@@ -79,20 +72,31 @@ public class GanttController {
 		System.out.println("sortorder: " + gantt.getSortorder());
 		System.out.println("holder: " + gantt.getHolder());
 		
-		Task task = service.update_gantttotask(gantt);
-		System.out.println("taskno: " + task.getTask_no());
-		service.updateTask(task);
+		if(gantt.getParent() == 0) {
+			service.uptProject(gantt,no);
+		}
+		else {
+			Task task = service.update_gantttotask(gantt);
+			System.out.println("taskno: " + task.getTask_no());
+			service.updateTask(task);
+		}
+		
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
 	}
 	
 	@RequestMapping(params="method=delete")
-	public String delete(@RequestParam("id") int id) {
-		System.out.println("pno: " + id);
+	public String delete(@RequestParam("no") int no,@RequestParam("id") int id,Model d) {
+		System.out.println("####delete####");
+		System.out.println("task_no: " + id);
 		
-		
-		//Task task = service.switch_gantttotask(gantt);
 		service.deleteTask(id);
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
 	}

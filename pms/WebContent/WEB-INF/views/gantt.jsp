@@ -55,7 +55,44 @@ var rightLimit;
 	document.addEventListener("DOMContentLoaded",function(eve){
 		var g;
 		// 초기 데이터 가져오기
-	   getdata();
+	   $.ajax({
+			type:"post",
+			url:"${path}/gantt.do?method=data&no="+'${no}',
+			dataType:"json",
+			success:function(data){
+				g = data.gantt;
+				var tes = data.gantt.substring(8,data.gantt.length-1);
+				console.log(data.gantt);
+				//console.log(tes);
+				
+				var arrayList = new Array(tes);
+				
+				var j = JSON.parse(tes);
+				for(var i=0;i<j.length;i++){
+					holder.push(j[i].holder);
+					if("${mem.name}" == j[i].holder){
+						tid.push(Number(j[i].id));	
+					}
+					arrstart_date.push(j[i].start_date);
+					arrend_date.push(j[i].end_date);
+					leftLimit = getFormatDate(arrstart_date[0]);
+					rightLimit = getFormatDate(arrend_date[0]);
+					
+					//console.log(holder);
+					//console.log(tid);
+				}
+				console.log(leftLimit);
+				console.log(rightLimit);
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+		
+	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
+		gantt.init("gantt_here");
+		gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 	   var opts = [
 			{ key:1 , label: 'High'},
 			{ key:2 , label: 'Medium'},
@@ -78,13 +115,11 @@ var rightLimit;
 		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
 		    {name:"time",        height:30, map_to:"auto", type:"duration"}
 		];
-		// undefined ==> Priority 변경 (lightbox)
+		// lightbox 내부 섹션 이름 변경
 		gantt.locale.labels.section_priority="Priority";
 		gantt.locale.labels.section_holder="holder";
 		gantt.locale.labels.section_parent = "Parent task";
-		
-		//gantt.locale.lightbox.section_priority = "High";
-		
+		// 서브태스크의 + 버튼 삭제
 		gantt.templates.grid_row_class = function( start, end, task ){
 		    if ( task.$level > 1 ){
 		        return "nested_task"
@@ -92,17 +127,13 @@ var rightLimit;
 		    return "";
 		};
 		
-
+		/*
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    console.log("after save button");
-		    console.log(id);
-		    console.log(task);
-		    // ajax update 처리
-		    updateCall(id,task,is_new);
-		 // 갱신된 데이터 호출 필요
+		    if(is_new == true) gantt.addTask(task);
+		    else if(is_new == false) gantt.updateTask(id,task);
 		    return true;
 		});
-		
+		*/
 		gantt.attachEvent("onLightboxDelete", function(id){
 			
 		    var task = gantt.getTask(id);
@@ -118,10 +149,28 @@ var rightLimit;
 		    
 		    return true;
 		});
-		// onaftertaskadd 사용?
+		
+		gantt.attachEvent("onAfterTaskAdd", function(id,item){
+			insertCall(id,item);
+			gantt.refreshData();
+			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
+		});
+		
+		gantt.attachEvent("onAfterTaskUpdate", function(id,item){
+			updateCall(id,item);
+			gantt.refreshData();
+			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
+		});
+		
 		gantt.attachEvent("onAfterTaskDelete", function(id,item){
-			var task = gantt.getTask(id);
 			deleteTask(id);
+			gantt.refreshData();
+			//gantt.deleteTask(id);
+			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
+		});
+		
+		gantt.attachEvent("onAfterLightbox", function (id,task){
+			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
 		
 		gantt.attachEvent("onTaskDrag",function(id,mode,task,original){
@@ -197,18 +246,6 @@ var rightLimit;
 				{name: "start_date", align: "center", resize: true},
 				{name: "duration", align: "center"},
 				{name: "holder", align: "center", resize: true, label:"holder"}
-				// 세션 id == holder
-				/*
-				if("${mem.name}"== "${holder}"){
-					{name: "buttons",label: colHeader,width: 75,template: function (task) {
-						return (
-							'<i class="fa fa-pencil" data-action="edit"></i>'
-							);
-					}}
-				} else {
-					{name: "holder", align: "center", resize: true, label:"holder"}
-				}
-				*/
 			];
 			
 			gantt.attachEvent("onTaskClick", function(id, e){
@@ -239,61 +276,61 @@ var rightLimit;
 		}
 
 
-		gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
-		gantt.init("gantt_here");
-		gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
+		
 		
 	});// document 끝
 	//task 생성 및 수정
-	function updateCall(id,gantt,is_new){
-		  // callSch() 입력된 수정된 데이터를 요청값으로 전달
-		  console.log(is_new);
-		  if(is_new == false){
-			  console.log("##update##");
-			  console.log(gantt);
-			  var sch = callSch(gantt);
-			  $.ajax({
-				  type:"post",
-				  url:"${path}/gantt.do?method=update",
-				  data:sch,
-				  dataType:"json",
-				  success:function(data){
-					  // data.모델명
-					  //if(data.success=="Y")
-					  //	  alert("수정완료");
-					  	  //getdata();
-				  },
-				  error:function(err){
-					  alert("에러발생: " + err);
-					  console.log(err);
-				  }
-			  });
-			  
-		  } else if(is_new == true){
-			  
-			  var sch = newSch(gantt);
-			  console.log("##return new Sch##");
-			  console.log(sch);
-			  
-			  $.ajax({
-				  type:"post",
-				  url:"${path}/gantt.do?method=insert",
-				  data:sch,
-				  dataType:"json",
-				  success:function(data){
-					  //getdata();
-					  // data.모델명
-					  if(data.success=="Y")
-						  alert("등록완료");
-				  },
-				  error:function(err){
-					  alert("에러발생: " + err);
-					  console.log(err);
-				  }
-			  });
-			  
+	function updateCall(id,item){
+		console.log("###updateCall###");	
+		console.log(id);
+		console.log(item);
+			 
+	  var sch = callSch(item);
+	  //console.log("##return upt Sch##");
+	  //console.log(sch);
+	  $.ajax({
+		  type:"post",
+		  url:"${path}/gantt.do?method=update&no="+'${no}',
+		  data:sch,
+		  dataType:"json",
+		  success:function(data){
+			  if(data.success=="Y"){
+				  alert("수정 완료");  
+				  console.log(data.gantt);
+			  }
+		  },
+		  error:function(err){
+			  alert("에러발생: " + err);
+			  console.log(err);
 		  }
-	  };
+	  });
+	}
+		
+	function insertCall(id,item){
+		console.log("###insertCall###");	
+		console.log(id);
+		console.log(item);
+	  	var sch = newSch(item);
+	  //console.log("##return ins Sch##");
+	  //console.log(sch);
+	  
+	  $.ajax({
+		  type:"post",
+		  url:"${path}/gantt.do?method=insert&no="+'${no}',
+		  data:sch,
+		  dataType:"json",
+		  success:function(data){
+			  if(data.success=="Y"){
+				  alert("등록 완료");  
+				  console.log(data.gantt);
+			  }
+		  },
+		  error:function(err){
+			  alert("에러발생: " + err);
+			  console.log(err);
+		  }
+	  });
+	};
 	  function deleteTask(id){
 		  //var task = gantt.getTask(id);
 		  console.log("###delete###");
@@ -301,14 +338,14 @@ var rightLimit;
 		  
 		  $.ajax({
 			  type:"post",
-			  url:"gantt.do?method=delete",
+			  url:"gantt.do?method=delete&no="+'${no}',
 			  data:{id:id},
 			  dataType:"json",
 			  success:function(data){
-				  //getdata();
-				  // data.모델명
-				  if(data.success=="Y")
-					  alert("등록완료");
+				  if(data.success=="Y"){
+					  alert("삭제 완료");  
+					  console.log(data.gantt);
+				  }
 			  },
 			  error:function(err){
 				  alert("에러발생: " + err);
@@ -316,135 +353,61 @@ var rightLimit;
 			  }
 		  });
 	  }
-	  /*
-	  var idVal = $("[name=id]").val();
-	  var event = calendar.getEventById(idVal);
-	  event.remove();
-	  $.ajax({
-	  	type:"post",
-	  	url:"calendar.do?method=delete",
-	  	data:{id:idVal},
-	  	dataType:"json",
-	  	success:function(data){
-	  		if(data.success == "Y"){
-	  			alert("삭제 성공");
-	  		}
-	  	},
-	  	error: function(err){
-	  		alert("에러 발생");
-	  		console.log(err);
-	  	}
-	  })
-	  $("#schDialog").dialog("close");
-	*/
+	 
 	// is_new == true 일 때, 빈 데이터 채우기
 	function newSch(gantt){
-		  var sch = {};
-		  //sch.duration = gantt.duration;
-		  sch.parent = gantt.parent;
-		  sch.progress = gantt.progress;
-		  sch.sortorder = 0; 
-		  sch.id = 0;	
-		  sch.text = gantt.text;
-		  //sch.open = true;
-		  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
-		  
-		  sch.start_date = gantt.start_date.toISOString();
-		  sch.end_date = gantt.end_date.toISOString();
-		  sch.holder = gantt.holder;
-		  
-		  //if(gantt.holder == "") sch.holder="no one";
-		  //else sch.holder = gantt.holder;
-		  
-		  //sch.holder = gantt.holder;
-		  sch.priority = Number(gantt.priority);
-		  
-		  return sch;
+		console.log("###newSch###");
+		console.log(gantt);
+	  var sch = {};
+	  sch.parent = gantt.parent;
+	  sch.progress = gantt.progress;
+	  sch.sortorder = 0; 
+	  sch.id = 0;	
+	  sch.text = gantt.text;
+	  sch.start_date = gantt.start_date.toISOString();
+	  sch.end_date = gantt.end_date.toISOString();
+	  sch.holder = gantt.holder;
+	  sch.priority = Number(gantt.priority);
+	  
+	  return sch;
 	}
 
 	function callSch(gantt){
 		console.log("###callSch###");
 		console.log(gantt);
 	  var sch = {};
-	  //sch.duration = gantt.duration;
 	  sch.parent = gantt.parent;
 	  sch.progress = gantt.progress;
 	  sch.sortorder = gantt.sortorder; 
 	  sch.id = gantt.id;	
 	  sch.text = gantt.text;
-	  //sch.open = true;
-	  //sch.start_date = moment(gantt.start_date).format('YYYY-MM-DD HH:mm:ss');
-	  
 	  sch.start_date = gantt.start_date.toISOString();
 	  sch.end_date = gantt.end_date.toISOString();
-	  /*
-	  if(gantt.holder == "") sch.holder="no one";
-	  else sch.holder = gantt.holder;
-	  */
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
 	  
 	  return sch;
 	}
-	  
+	
 	function getFormatDate(date){
 	    //var year = date.getFullYear();              //yyyy
-	    var year2 = date.substring(0,4);
 	    //var month = (1 + date.getMonth());          //M
-	    var month2 = date.substring(5,7);
 	    //month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
 	    //var day = date.getDate();                   //d
-	    var day2 = date.substring(8,10);        
 	    //day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    var limit = new Date(year2,month2,day2);
 	    //return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	    var year2 = date.substring(0,4);
+	    var month2 = date.substring(5,7);
+	    var day2 = date.substring(8,10);        
+	    var limit = new Date(year2,month2,day2);
 	    return limit;
 	}
-
+	
+	// ceo, hp progress 표시용
 	function formatProgress(task){
 		  return Math.round(task.progress * 100) + "%"
 	}
-
-	function getdata(){
-		$.ajax({
-			type:"post",
-			url:"${path}/gantt.do?method=data",
-			dataType:"json",
-			success:function(data){
-				g = data.gantt;
-				var tes = data.gantt.substring(8,data.gantt.length-1);
-				console.log(data.gantt);
-				//console.log(tes);
-				
-				var arrayList = new Array(tes);
-				//console.log(arrayList[1]);
-				
-				var j = JSON.parse(tes);
-				for(var i=0;i<j.length;i++){
-					holder.push(j[i].holder);
-					if("${mem.name}" == j[i].holder){
-						tid.push(Number(j[i].id));	
-					}
-					arrstart_date.push(j[i].start_date);
-					arrend_date.push(j[i].end_date);
-					leftLimit = getFormatDate(arrstart_date[0]);
-					rightLimit = getFormatDate(arrend_date[0]);
-					
-					//console.log(holder);
-					//console.log(tid);
-				}
-				console.log(leftLimit);
-				console.log(rightLimit);
-				//console.log($(".gantt_tree_content").val());
-				//console.log(data.gantt.attr('priority'));
-				// 수정 시 이전 정보 담기, priority 만 넣으면 됨 
-				//gantt.getLightboxSection('Priority').setValue(data.gantt.priority);
-			},
-			error:function(err){
-				console.log(err);
-			}
-		});
-	}
+	
 </script>
 <script src="${path}/Admin/dist/assets/js/dhtmlxgantt.js?v=7.0.13"></script>
 <link rel="stylesheet" href="${path}/Admin/dist/assets/css/dhtmlxgantt.css?v=7.0.13">
@@ -478,6 +441,10 @@ var rightLimit;
   color: red;
 }
 
+.gantt_grid_head_add {
+	display:none;
+}
+
 </style>
 </head>
 <body class="loading">
@@ -508,43 +475,43 @@ var rightLimit;
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 							            <li class="nav-item">
-							                      <a href="${path}/task.do?method=view"  class="nav-link">
+							                      <a href="${path}/task.do?method=view&no=${param.no}"  class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
 							                    <span class="d-none d-sm-inline-block">오버뷰</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/task.do?method=list" class="nav-link">
+							                <a href="${path}/task.do?method=list&no=${param.no}" class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/dashboard.do?method=list"  class="nav-link">
+							                <a href="${path}/dashboard.do?method=list&no=${param.no}"  class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
 							                    <span class="d-none d-sm-inline-block">대시보드</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/gantt.do?method=gantt"  class="nav-link active">
+							                <a href="${path}/gantt.do?method=gantt&no=${param.no}"  class="nav-link active">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
 							                    <span class="d-none d-sm-inline-block">간트차트</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/cal.do?method=list"  class="nav-link">
+							                <a href="${path}/cal.do?method=list&no=${param.no}"  class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 							                    <span class="d-none d-sm-inline-block">캘린더</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/task.do?method=log"  class="nav-link">
+							                <a href="${path}/task.do?method=log&no=${param.no}"  class="nav-link">
 							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 							                    <span class="d-none d-sm-inline-block">활동로그</span>
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+							                <a href="${path}/main.do?method=riskBoard&no=${param.no}"  class="nav-link">
 							                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 							                           <span class="d-none d-sm-inline-block">리스크</span>
 							                </a>

@@ -45,8 +45,16 @@ public class GanttService {
 	
 	public ArrayList<Gantt> getGantt(ArrayList<Task> task) {
 		ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//Date d = df.parse(day1);
+		//String formattedTime = output.format(d);
+		//d = df.parse(day2);
+		//String formattedTime2 = output.format(d);
+		
 		// 기한 저장
 		ArrayList<Integer> duration = new ArrayList<Integer>(); 
 		// 시작일 저장
@@ -96,59 +104,56 @@ public class GanttService {
 		
 		return gantt;
 	}
-	/*
-	public Gantt getGantt(Task task) {
-//		ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//		ArrayList<Integer> duration = new ArrayList<Integer>(); 
-		int duration = 0;
-			try {
-				System.out.println(task.getStartdte());
-				System.out.println(task.getEnddte());
-				Date start = df.parse(task.getStartdte());
-				Date end = df.parse(task.getEnddte());
-				
-				long calDateDay = end.getTime() - start.getTime();
-				long calDateDays = calDateDay / (24*60*60*1000);
-				
-				calDateDays = Math.abs(calDateDays);
-				duration = (int)calDateDays;
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			Gantt g = new Gantt(task.getTask_no(),
-					task.getStartdte(),
-					duration,
-					task.getTask_content(),task.getTask_priority(),
-					0,task.getTask_no(),
-					task.getTask_parent_no());
-			
-		
-		
-		return g;
+	// project_no으로 project 객체 가져오기
+	public pms_project getProject(int project_no) {
+		return dao.getProject(project_no);
 	}
-	*/
-	// ================ 간트 ================================
+	
+	// 서비스 한개로 json 파일 생성, 프로젝트번호는 세션값임
+	public String list(int project_no) {
+		// 프로젝트 번호로 프로젝트 객체 가져오는 메서드
+		pms_project pp = getProject(project_no);
+		// 프로젝트 정보로 태스크 리스트 가져오기
+		ArrayList<Task> task = new ArrayList<Task>(); 
+		task = getTask(pp);
+		// 태스크 => 간트 변형
+		ArrayList<Gantt> gantt = new ArrayList<Gantt>();
+		gantt = getGantt(task);
+		// json 데이터 변경( 파일 생성 )
+		return jsonadd(gantt,pp);
+		
+	}
+	
 	public String jsonadd(ArrayList<Gantt> gantt, pms_project project) {
 		JSONObject g = new JSONObject();
 		JSONArray array = new JSONArray();
 		JSONObject result = new JSONObject();
 		// project 가 제일 위로 들어가야함
 		// project => gantt
-		g.put("id", 1);
-		//g.put("start_date", "2021-04-04 00:00:00");
-		g.put("start_date", "2021-04-04 00:00:00");
-		g.put("end_date", "2021-04-23 00:00:00");
+		g.put("id", project.getProject_no());
+		// 날짜 형식 변경
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date start = df.parse(project.getStart1());
+			Date end = df.parse(project.getEnd1());
+			String start_date = dateFormat2.format(start);
+			String end_date = dateFormat2.format(end);
+			g.put("start_date", start_date);
+			g.put("end_date", end_date);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//g.put("duration", 20); // end - start
 		g.put("text", project.getProject_content());
 		g.put("progress", 0);
 		g.put("sortorder", 1);
 		g.put("parent", 0);
 		g.put("open", true);
-		g.put("priority", 1);
-		g.put("holder", "강동원");
+		g.put("priority",1);
+		// pno 를 이용해 이름 가져오기
+		g.put("holder", getName(project.getPm_pno()));
 		
 		array.add(g);
 		g = new JSONObject();
@@ -176,12 +181,12 @@ public class GanttService {
 		// 파일 생성
 		
 		// 경로 변경 필요
-		/*
+		
 		String FilePath = "C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
 		File file = new File("C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
-		*/
-		String FilePath = "C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
-		File file = new File("C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
+		
+		//String FilePath = "C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
+		//File file = new File("C:\\Users\\user\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
 		
 		file.delete();
 		try {
@@ -288,6 +293,22 @@ public class GanttService {
 		return task;
 	}
 	
+	public pms_project upt_gantttoproject(Gantt g,int project_no) {
+		// project_no으로 project 정보 가져오기
+		pms_project pp = getProject(project_no);
+		// gantt 화면에서 변경된 정보만 set변경
+		pp.setProject_content(g.getText());
+		pp.setStart1(g.getStart_date());
+		pp.setEnd1(g.getEnd_date());
+		
+		return pp;
+	}
+	
+	public void uptProject(Gantt g, int project_no) {
+		pms_project pp = upt_gantttoproject(g, project_no);
+		dao.uptProject(pp);
+	}
+	
 	public Task update_gantttotask(Gantt gantt) {
 		Task task = new Task();
 		int pno = 0;
@@ -351,4 +372,6 @@ public class GanttService {
 	public void deleteTask(int task_no) {
 		dao.deleteTask(task_no);
 	}
+	
+	
 }
