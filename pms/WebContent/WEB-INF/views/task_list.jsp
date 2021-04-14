@@ -161,18 +161,22 @@ $(document).ready(function(){
                                                 	<th>Task ID</th>
                                                     <th data-toggle="true">Tasks</th>
                                                     <th>Assign to</th>
-                                                    <th data-hide="phone, tablet">Due Date</th>
-                                                    <th data-hide="phone, tablet">Task priority</th>
+                                                    <th>Due Date</th>
+                                                    <th>Task priority</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <c:forEach var="task" items="${TaskList}">          
-                                                <tr  onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
+                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
                                                     <td>${task.name}</td>
-                                                    <td>${task.enddte}</td>                                             
+                                                    <td> <fmt:parseDate value="${task.enddte}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
+														 <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
+														 </td>                                             
+                                                      
                                                       <td>
+                                                      
                                                       <c:choose>    
                                                       <c:when test="${task.task_priority eq 'High'}">
                                                       	<span class="badge label-table badge-soft-danger p-1">
@@ -225,11 +229,12 @@ $(document).ready(function(){
                                             </thead>
                                             <tbody>
                                           <c:forEach var="task" items="${TaskList2}">          
-                                                <tr  onclick="location.href='${path}/taskdetail.do?method=list'">
+                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
                                                     <td>${task.name}</td>
-                                                    <td>${task.enddte}</td>                                             
+                                                    <td><fmt:parseDate value="${task.enddte}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
+														 <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/></td>                                             
                                                       <td>
                                                       <c:choose>    
                                                       <c:when test="${task.task_priority eq 'High'}">

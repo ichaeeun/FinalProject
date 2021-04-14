@@ -66,13 +66,13 @@
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 						            <li class="nav-item">
-						                      <a href="${path }/task.do?method=view&no=${param.no}"  class="nav-link ">
+						                      <a href="${path }/task.do?method=view&no=${param.no}"  class="nav-link active">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
 						                    <span class="d-none d-sm-inline-block">오버뷰</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=list&no=${param.no}" class="nav-link active">
+						                <a href="${path}/task.do?method=list&no=${param.no}" class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
 						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 						                </a>
@@ -460,22 +460,7 @@
                 </div> <!-- content -->
 
              <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <jsp:include page="footer.jsp"></jsp:include>
                 <!-- end Footer -->
 
             </div>

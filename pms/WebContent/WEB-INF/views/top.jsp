@@ -11,7 +11,7 @@
 <html>
 <head>
 <style type="text/css">
-ul.list-unstyled.topnav-menu.topnav-menu-left.m-0 {display: none!important;}
+
 .navbar-custom { box-shadow:none!important; }
 </style>
 </head>
@@ -84,7 +84,6 @@ ul.list-unstyled.topnav-menu.topnav-menu-left.m-0 {display: none!important;}
                                                 </div>
                                             </a>
                                         </div>
-            
                                     </div>  
                                 </div>
                             </form>
@@ -395,32 +394,26 @@ ul.list-unstyled.topnav-menu.topnav-menu-left.m-0 {display: none!important;}
                                     <i class="fe-user me-1"></i>
                                     <span>Create Users</span>
                                 </a>
-    
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    <i class="fe-bar-chart-line- me-1"></i>
-                                    <span>Revenue Report</span>
-                                </a>
-    
-                                <!-- item-->
+  
+<!--                                 item
                                 <a href="javascript:void(0);" class="dropdown-item">
                                     <i class="fe-settings me-1"></i>
                                     <span>Settings</span>
-                                </a>
+                                </a> 
     
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>-->
     
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">
+                            <!--  <a href="javascript:void(0);" class="dropdown-item">
                                     <i class="fe-headphones me-1"></i>
                                     <span>Help & Support</span>
-                                </a>
+                                </a> -->
     
                             </div>
                         </li>
     
                         <li class="dropdown dropdown-mega d-none d-xl-block">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <a  style="display:none;" class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 Mega Menu
                                 <i class="mdi mdi-chevron-down"></i> 
                             </a>
