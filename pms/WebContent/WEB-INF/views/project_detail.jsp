@@ -1,41 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="java.util.*"
-%>
+    import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>프로젝트 상세</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+
+        <!-- third party css -->
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
 		<!-- App css -->
 		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
 		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
 		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
 		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
 		<!-- icons -->
-		<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<script src="${path}/a00_com/jquery.min.js"></script>
+	<script src="${path}/a00_com/popper.min.js"></script>
+	<script src="${path}/a00_com/bootstrap.min.js"></script>
+	<script src="${path}/a00_com/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function(){
-   
+	$("#updateProject").click(function(){
+		var sch = ProV();
+		console.log("##등록할 데이터 확인 ##");
+		console.log(sch);
+		$.ajax({
+			type:"post",
+			url:"project.do?method=update",
+			data: sch,
+			dataType: "json",
+			success:function(data){
+				if(data.success=="Y"){
+					console.log(data);
+					alert("수정 성공");
+					location.href="${path}/project.do?method=list&pno="+${mem.pno};
+				}
+			},
+			error:function(err){
+				alert("에러발생: "+err);
+				console.log(err);
+			}
+		});
+	});
+	
+	function ProV(){
+		var sch = {};
+		sch.project_no = $("#project_no").val();
+		sch.project_name = $("#project_name").val();
+		sch.project_content = $("#project_content").val();
+		sch.start1 = $("#start1").val();
+		sch.end1 = $("#end1").val();
+		sch.pm_pno = $("#pm_pno").val();
+		sch.project_status = $("#project_status").val();
+		
+		return sch;
+	}
+	
 });
-function goPage(page){
-		$("[name=curPage]").val(page);
-		$("form").submit();
-	};
+
 </script>
 </head>
 
@@ -51,7 +92,7 @@ function goPage(page){
             <!-- Left Sidebar End -->
 
              <!-- ============================================================== -->
-            <!-- Start Page Content here(완료한 프로젝트 테이블로 출력) -->
+            <!-- Start Page Content here -->
             <!-- ============================================================== -->
 
             <div class="content-page">
@@ -59,82 +100,78 @@ function goPage(page){
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-						
+
+                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-lg-12">
-								<div class="card">
-									<div class="card-body">
-										<ul class="nav nav-tabs nav-bordered" style="margin-top:10px;">
-								            <li class="nav-item">
-												<a href="${path }/task.do?method=view"  class="nav-link active">
-													<span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
-													<span class="d-none d-sm-inline-block">오버뷰</span>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href="${path}/task.do?method=list" class="nav-link">
-								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
-								                    <span class="d-none d-sm-inline-block">태스크리스트</span>
-								                </a>
-								            </li>
-								            <li class="nav-item">
-								                <a href="${path}/dashboard.do?method=list"  class="nav-link">
-								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
-								                    <span class="d-none d-sm-inline-block">대시보드</span>
-								                </a>
-								            </li>
-								            <li class="nav-item">
-								                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
-								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
-								                    <span class="d-none d-sm-inline-block">간트차트</span>
-								                </a>
-								            </li>
-								            <li class="nav-item">
-								                <a href="${path}/cal.do?method=list"  class="nav-link">
-								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-								                    <span class="d-none d-sm-inline-block">캘린더</span>
-								                </a>
-								            </li>
-								            <li class="nav-item">
-								                <a href="${path}/task.do?method=log"  class="nav-link">
-								                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-								                    <span class="d-none d-sm-inline-block">활동로그</span>
-								                </a>
-								            </li>
-								            <li class="nav-item">
-								                <a href="${path}/risk.do?method=riskBoard"  class="nav-link">
-													<span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-													<span class="d-none d-sm-inline-block">리스크</span>
-								                </a>
-								            </li>
-										</ul>
-									</div>
-								</div>
+                            <div class="col-12">
+                                <div class="page-title-box page-title-box-alt">
+                                    <h4 class="page-title">프로젝트 상세(수정)</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Main</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Project</a></li>
+                                            <li class="breadcrumb-item active">Project Detail</li>
+                                        </ol>
+                                    </div>
+                                </div>
                             </div>
-						</div>
-                        
+                        </div>     
+                        <!-- end page title -->
+                        <form method="post">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="text-center">
+                                        <div class="text">
                                             <div class="row">
-                                                <div class="project-body">
-                                                    <div class="py-1">
-                                                        <i class="fe-archive font-24"></i>
-                                                        <h3 class="text-warning">${pms_project.project_name}</h3>
-                                                        <p class="text-uppercase mb-1 font-13 fw-medium">
-                                                        프로젝트 관리 소프트웨어는 리소스 도구를 계획, 조직, 관리하는 것을 도와주고 리소스 추산치를 만드는 소프트웨어이다.<br>
-                                                        프로젝트 관리 시스템은 프로젝트의 정량적인 성과 및 진행 지표를 체계적으로 관리하기 위한 것이다. 
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                            	<div class="col-md-12">
+													<div class="mb-3">
+                                                    	<label for="project_no" class="form-label">프로젝트번호</label>
+                                                        <input type="hidden" value="${pms_project.project_no}" id="project_no" class="form-control" readonly>
+													</div>
+													<div class="mb-3">
+                                                    	<label for="project_name" class="form-label">프로젝트이름</label>
+                                                        <input type="text" value="${pms_project.project_name}" id="project_name" class="form-control">
+													</div>
+													<div class="mb-3">
+                                                    	<label for="project_content" class="form-label">프로젝트내용</label>
+                                                        <input type="text" value="${pms_project.project_content}" id="project_content" class="form-control">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="mb-3">
+                                                    	<label for="start1" class="form-label">시작일</label>
+                                                        <input type="date" value="${pms_project.start1}" id="start1" class="form-control">
+													</div>
+													<div class="mb-3">
+                                                    	<label for="end1" class="form-label">종료일</label>
+                                                        <input type="date" value="${pms_project.end1}" id="end1" class="form-control">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="mb-3">
+                                                    	<label for="pm_pno" class="form-label">PM</label>
+                                                        <input type="text" value="${pms_project.pm_pno}" id="pm_pno" class="form-control">
+													</div>
+													<div class="mb-3">
+                                                    	<label for="project_status" class="form-label">프로젝트상태</label>
+                                                        	<select class="form-control" id="project_status">
+																<option value="진행">진행</option>	
+                                                                <option value="종료">종료</option>
+                                                        	</select>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-info waves-effect waves-light" id="updateProject">프로젝트 수정</button>
+												</div>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </form>
                         <!-- end row -->
                         
                     </div> <!-- container -->
@@ -158,17 +195,15 @@ function goPage(page){
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- plugin js -->
-        <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/@fullcalendar/interaction/main.min.js"></script>
+        <!-- third party js -->
+        <script src="${path}/Admin/dist/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+        <!-- third party js ends -->
 
-        <!-- Calendar init -->
-        <script src="${path}/Admin/dist/assets/js/pages/calendar.init.js"></script>
+        <script src="${path}/Admin/dist/assets/js/pages/product-list.init.js"></script>
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>

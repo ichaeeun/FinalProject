@@ -134,12 +134,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/project.do?method=list&no=${mem.pno}">
+                                <a href="${path }/project.do?method=list&pno=${mem.pno}">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=finish_list&no=${mem.pno}">
+                                <a href="${path }/project.do?method=finish_list&pno=${mem.pno}">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>
@@ -201,12 +201,12 @@
                     <div class="collapse" id="sidebarTasks">
                     	<ul class="nav-second-level">
                             <li>
-                                <a href="${path }/project.do?method=list&no=${mem.pno}">
+                                <a href="${path }/project.do?method=list&pno=${mem.pno}">
 		                           <span id="list"> 진행 프로젝트 </span>
 		                        </a>
                             </li>
                             <li>
-                                <a href="${path }/project.do?method=finish_list&no=${mem.pno}">
+                                <a href="${path }/project.do?method=finish_list&pno=${mem.pno}">
                            			<span> 완료 프로젝트 </span>
                        			</a>
                             </li>

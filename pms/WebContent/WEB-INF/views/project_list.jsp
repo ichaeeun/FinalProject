@@ -38,13 +38,19 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var mem = "${mem.id}";
+		if(mem==""){
+			alert("로그인 하세요");
+			location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동	
+		}
+		
 		$("#insertProject").click(function(){
 			var sch = ProV();
 			console.log("##등록할 데이터 확인 ##");
 			console.log(sch);
 			$.ajax({
 				type:"post",
-				url:"project.do?method=project_insert",
+				url:"project.do?method=insert",
 				data: sch,
 				dataType: "json",
 				success:function(data){
@@ -64,7 +70,6 @@
 		});
 		
 		<%--(project_no_seq.nextval, #{project_name},#{project_content},#{start1},#{end1},#{pm_pno}, #{project_status}) --%>
-		
 		function ProV(){
 			var sch = {};
 			sch.project_name = $("#project_name").val();
@@ -73,6 +78,7 @@
 			sch.end1 = $("#end1").val();
 			sch.pm_pno = $("#pm_pno").val();
 			sch.project_status = $("#project_status").val();
+			
 			return sch;
 		}
 	
@@ -103,57 +109,6 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        <div class="row">
-							<div class="row" style="padding-top:10px;">
-														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
-														</div> 
-							<div class="col-xl-12">
-									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
-							            <li class="nav-item">
-							                      <a href="${path }/task.do?method=view" class="nav-link active">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
-							                    <span class="d-none d-sm-inline-block">오버뷰</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="${path}/task.do?method=list" class="nav-link">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
-							                    <span class="d-none d-sm-inline-block">태스크리스트</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="#"  class="nav-link">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
-							                    <span class="d-none d-sm-inline-block">대시보드</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
-							                    <span class="d-none d-sm-inline-block">간트차트</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="#"  class="nav-link">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-							                    <span class="d-none d-sm-inline-block">캘린더</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="${path}/task.do?method=log"  class="nav-link">
-							                    <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-							                    <span class="d-none d-sm-inline-block">활동로그</span>
-							                </a>
-							            </li>
-							            <li class="nav-item">
-							                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
-							                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
-							                           <span class="d-none d-sm-inline-block">리스크</span>
-							                </a>
-							            </li>
-							         </ul> 
-								</div>
-							</div>
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -175,47 +130,24 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                    <!-- 
-                                        <div class="row mb-2">
-                                            <div class="col-sm-6">
-                                            <!-- 멤버의 권한이 pm 일때만 프로젝트 추가 버튼 활성화 --
-                                            <c:if test="${mem.auth == 'pm'}">
-                                                <a href="${path}/project.do?method=project_insert_form" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>프로젝트 추가</a>
-                                            </c:if>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="float-sm-end">
-                                                    
-                                                    <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                                    
-                                                </div>
-                                            </div><!-- end col--
-                                        </div>
-                                        <!-- end row --
-									 -->	
-										<form:form modelAttribute="sch" method="post">
-											<!-- 
-											<div class="input-group-prepend">
-									  			<span class="btn btn-info">총 : ${sch.count} 건</span>
-									  		</div>
-									  		 -->
-                                        </form:form>
-                                        
+
                                         <form:form method="post" action="${path }/taskdetail.do?method=updateSub">
 										<!-- 프로젝트 추가 Modal 창 시작-->
 											<!-- 모달창 버튼 시작 -->
-											<c:if test="${mem.auth == 'pm'}"><!-- 권한이 PM인 사람만 추가버튼 가능 -->
+											<c:if test="${mem.auth == 'pm'}"><!-- 가진프로젝트가 없는 PM 만 추가버튼 가능 // 조건추가하기 -->
+											
 											<div class="button-list">
 	                                            <!-- 프로젝트 추가 모달 버튼 -->
 	                                            
-	                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#con-close-modal">프로젝트 추가</button>
+	                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addProject">프로젝트 추가</button>
 	                                            
 	                                        </div>
 	                                        </c:if>
+	                                        
 											<!-- 모달창 버튼 끝 -->
 										<!-- sample modal content -->
     
-                                        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div id="addProject" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -224,16 +156,18 @@
                                                     </div>
                                                     <div class="modal-body p-4">
                                                         <div class="row">
+                                                        <!-- 
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="a" class="form-label">프로젝트번호</label>
-                                                                    <input type="text" class="form-control" id="a" placeholder="시퀀스로자동생성" readonly>
+                                                                    <input type="text" value="" class="form-control" id="a" placeholder="시퀀스로자동생성" readonly>
                                                                 </div>
                                                             </div>
+                                                         -->
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="project_name" class="form-label">프로젝트명</label>
-                                                                    <input type="text" class="form-control" id="project_name" placeholder="프로젝트명">
+                                                                    <input type="text" value="" class="form-control" id="project_name" placeholder="프로젝트명">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -249,25 +183,29 @@
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="start1" class="form-label">시작일</label>
-                                                                    <input type="text" class="form-control" id="start1" placeholder="Date">
+                                                                    <input type="date" value="" class="form-control" id="start1" placeholder="Date">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="end1" class="form-label">종료일</label>
-                                                                    <input type="text" class="form-control" id="end1" placeholder="Date">
+                                                                    <input type="date" value="" class="form-control" id="end1" placeholder="Date">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="pm_pno" class="form-label">PM번호</label>
-                                                                    <input type="text" class="form-control" id="pm_pno" placeholder="">
+                                                                    <input type="text" value="${mem.pno}" class="form-control" id="pm_pno">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="project_status" class="form-label">프로젝트상태</label>
-                                                                    <input type="text" class="form-control" id="project_status" placeholder="">
+                                                                    <select class="form-control" id="project_status">
+																		<option value="진행">진행</option>	
+                                                                    	<option value="종료">종료</option>
+                                                                    </select>
+                                                                    <!-- <input type="text" value="" class="form-control" id="project_status" placeholder="">  -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -282,7 +220,8 @@
                                         </div><!-- /.modal -->
 										</form:form>
 										<!-- 프로젝트 추가 Modal 창 끝 -->
-										                
+										
+										
                                         <div class="table-responsive">
                                             <table class="table table-centered w-100 dt-responsive nowrap" 
                                             	id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -310,7 +249,6 @@
                                                 <!-- 테이블 몸통 시작(데이터베이스에 있는 목록 출력) -->
                                                 <!-- ---------------------------------------------------- -->
                                                 <tbody>
-                                                
                                                 	<c:forEach var="bd" items="${boardList}">
                                                     <tr>
                                                         <td>
@@ -350,15 +288,20 @@
                     
                                                         <td>
                                                             <ul class="list-inline table-action m-0">
+                                                            	<!-- 
                                                                 <li class="list-inline-item"> 
                                                                     <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
                                                                 </li>
+                                                                -->
+                                                                <c:if test="${mem.pno == bd.pm_pno && bd.project_status == '진행'}">
                                                                 <li class="list-inline-item"> 
-                                                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="${path}/project.do?method=project_detail&pno=${bd.project_no}" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>
                                                                 </li>
+                                                                </c:if>
+                                                                <!-- 
                                                                 <li class="list-inline-item"> 
                                                                     <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                                </li>
+                                                                </li> -->
                                                             </ul>
                                                         </td>
                                                     </tr>
@@ -383,22 +326,7 @@
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->
 
             </div>

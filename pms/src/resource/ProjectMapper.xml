@@ -62,11 +62,11 @@
 	from PMS_PROJECT
 	where PROJECT_NO = #{no}
 	-->
-	<!-- public pms_project getProject(int no); --><!-- 프로젝트번호로 프로젝트 상세정보 출력 -->
+	<!-- public pms_project getProject(int pno); --><!-- 프로젝트번호로 프로젝트 상세정보 출력 -->
 	<select id="getProject" resultType="pms_project" parameterType="int">
 		select *
 		from PMS_PROJECT
-		where PROJECT_NO = #{no}
+		where PROJECT_NO = #{pno}
 	</select>
 	<!-- public void insertProject(pms_project insert) --><!-- 프로젝트 생성 -->
 	<insert id="insertProject" parameterType="pms_project">
@@ -75,5 +75,17 @@
 				#{project_content}, #{start1}, #{end1}, 
 				#{pm_pno}, #{project_status})
 	</insert>
+	<!-- public void updateProject(pms_project update) --><!-- 프로젝트 수정 -->
+	<insert id="updateProject" parameterType="pms_project">
+		UPDATE PMS_PROJECT
+		SET project_name = #{project_name},
+			project_content = #{project_content},
+			start1 = #{start1},
+			end1 = #{end1},
+			pm_pno = #{pm_pno},
+			project_status = #{project_status}
+		WHERE project_no = #{project_no}
+	</insert>
+	
 </mapper>  
  

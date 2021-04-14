@@ -76,9 +76,9 @@ public class ProjectService {
 		return dao.projectList2(pno);
 	}
 
-	public pms_project getProject(int no) {
+	public pms_project getProject(int pno) {
 		// 기본 정보 할당
-		pms_project pms_project = dao.getProject(no);
+		pms_project pms_project = dao.getProject(pno);
 		return pms_project;
 		
 	}
@@ -86,4 +86,8 @@ public class ProjectService {
 	public void insertProject(pms_project insert) {
 		dao.insertProject(insert);
 	}
+	// 프로젝트 수정
+	public void updateProject(pms_project update) {
+		dao.updateProject(update);
+	};
 }

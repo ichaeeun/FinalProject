@@ -29,43 +29,53 @@ public class ProjectController {
 	// 완료 프로젝트 리스트_CEO,인사담당자 화면
 	// http://localhost:7080/pms/project.do?method=project_list2
 	@RequestMapping(params="method=project_list2")
-	public String pms_projectList2(@ModelAttribute("sch0") pms_projectSch sch0, Model d) {
-		d.addAttribute("boardList", service.pms_projectList2(sch0));
+	public String pms_projectList2(@ModelAttribute("sch2") pms_projectSch sch2, Model d) {
+		d.addAttribute("boardList", service.pms_projectList2(sch2));
 		return "project_list";
 	}
 	// 멤버번호 pno의 진행 프로젝트 조회
+	// http://localhost:7080/pms/project.do?method=list
 	@RequestMapping(params="method=list")
-	public String pms_projectList(@ModelAttribute("sch2") pms_project sch2, Model d, int no) {
-		d.addAttribute("boardList", service.projectList(no));
+	public String pms_projectList(@ModelAttribute("sch3") pms_project sch3, Model d, int pno) {
+		d.addAttribute("boardList", service.projectList(pno));
 		return "project_list";
 	}
 	// 멤버번호 pno의 완료 프로젝트 조회
+	// 	// http://localhost:7080/pms/project.do?method=finish_list
 	@RequestMapping(params="method=finish_list")
-	public String pms_projectList2(@ModelAttribute("sch3") pms_project sch3, Model d, int no) {
-		d.addAttribute("boardList", service.projectList2(no));
+	public String pms_projectList2(@ModelAttribute("sch4") pms_project sch4, Model d, int pno) {
+		d.addAttribute("boardList", service.projectList2(pno));
 		return "project_list";
 	}
 	
-	// 프로젝트 상세 화면(오버뷰)_프로젝트 번호로 프로젝트 정보(+참여 인원)
+	// 프로젝트 상세 화면(오버뷰)_프로젝트 번호로 프로젝트 정보
 	// http://localhost:7080/pms/project.do?method=project_detail
 	@RequestMapping(params="method=project_detail")
-	public String project_detail(@RequestParam("no") int no, Model d) {
-		d.addAttribute("pms_project", service.getProject(no));
-		return "overview";
+	public String project_detail(@RequestParam("pno") int pno, Model d) {
+		d.addAttribute("pms_project", service.getProject(pno));
+		return "project_detail";
 	}
 	
+	
+	
 	// 프로젝트 등록
-	// http://localhost:7080/pms/project.do?method=project_insert
-	@RequestMapping(params="method=project_insert")
+	// http://localhost:7080/pms/project.do?method=insert
+	@RequestMapping(params="method=insert")
 	public String insertProject(pms_project insert, Model d) {
 		System.out.println("등록:"+insert.getProject_name());
 		service.insertProject(insert);
 		d.addAttribute("success", "Y");
 		return "pageJsonReport";
 	}
-
+	// 프로젝트 수정
+	// http://localhost:7080/pms/project.do?method=update
+	@RequestMapping(params="method=update")
+	public String updateProject(pms_project update, Model d) {
+		System.out.println("수정:"+update.getProject_name());
+		service.updateProject(update);
+		d.addAttribute("success", "Y");
+		return "pageJsonReport";
+	}
 	
-	
-	/* 프로젝트 수정 */
 	/* 프로젝트 완료시 보기만 가능하게 처리 */
 }
