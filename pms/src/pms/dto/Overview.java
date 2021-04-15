@@ -7,7 +7,8 @@ public class Overview {
 	private int task_tot;
 	private int progress;
 	private String project_name;
-	
+	private String project_content;
+	private int project_no;
 	public Overview() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -67,6 +68,22 @@ public class Overview {
 
 	public void setProject_name(String project_name) {
 		this.project_name = project_name;
+	}
+
+	public String getProject_content() {
+		return project_content;
+	}
+
+	public void setProject_content(String project_content) {
+		this.project_content = project_content;
+	}
+
+	public int getProject_no() {
+		return project_no;
+	}
+
+	public void setProject_no(int project_no) {
+		this.project_no = project_no;
 	}
 
 }

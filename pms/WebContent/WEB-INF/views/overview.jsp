@@ -15,6 +15,7 @@
         .project-body { text-align:left!important; }
         .bg-vio { background-color:#B396FF!important; }
         .text-vio { color:#B396FF!important; }
+        .curpoint { cursor: pointer; }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -144,8 +145,7 @@
                                                         <i class="fe-archive font-24"></i>
                                                         <h3 class="text-warning">${ViewMem[0].project_name}</h3><%--  --%>
                                                         <p class="text-uppercase mb-1 font-13 fw-medium">
-                                                        프로젝트 관리 소프트웨어는 리소스 도구를 계획, 조직, 관리하는 것을 도와주고 리소스 추산치를 만드는 소프트웨어이다.<br>
-                                                        프로젝트 관리 시스템은 프로젝트의 정량적인 성과 및 진행 지표를 체계적으로 관리하기 위한 것이다. 
+                                                        ${ViewMem[0].project_content}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                                             <c:forEach var="view" items="${ViewMem}">
                                                 <tr>
                                                     <td><b>${view.pno}</b></td>
-                                                    <td>${view.name}</td>
+                                                    <td class="curpoint" onclick="location.href='${path}/manpower.do?method=contacts_profile&ename=${view.name}&pno=${view.pno}'">${view.name}</td>
                                                     <td>
                                                     <c:choose>
 	                                                    <c:when test="${view.task_tot==0}">                                                      

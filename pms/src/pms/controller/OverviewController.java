@@ -1,12 +1,16 @@
 package pms.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Log;
+import pms.dto.Member;
 import pms.dto.Task;
 import pms.service.OverviewService;
 import pms.service.ProjectService;
@@ -41,14 +45,17 @@ public class OverviewController {
 		return "log";
 	}
 	
-	// http://localhost:8080/pms/task.do?method=insert
+	// http://localhost:7080/pms/task.do?method=insert
 	@RequestMapping(params="method=insert")  // 메인태스크 추가 
-	public String insertSubtask(Task t,Model d) {
+	public String insertSubtask(Task t, Model d) {
 		System.out.println(t.getTask_name());
 		service. mTaskInsert(t);
-		d.addAttribute("success","Y");
-		
+		d.addAttribute("success","Y");		
 		return "pageJsonReport";
 	}
 	
+	@ModelAttribute("taskMember")
+	public ArrayList<Member> taskMember(@RequestParam int no){
+		return service.taskMember(no);
+	}
 }
