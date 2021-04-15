@@ -8,30 +8,31 @@
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="utf-8" />
-        <title>Tasks List</title>
-        <style type="text/css">
-        table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
-        </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+<head>
+<meta charset="utf-8" />
+<title>Tasks List</title>
+<style type="text/css">
+	table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
+	.wrap-tasklist-btn { position:absolute; top:20px; right:20px;  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- App favicon -->
+<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
 
-		<!-- App css -->
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+<!-- App css -->
+<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
-		<!-- icons -->
-		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-		<%-- j-query --%>
-		<script type="text/javascript" src="/springweb/a00_com/jquery-3.5.1.js"></script>
+<!-- icons -->
+<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<%-- j-query --%>
+<script type="text/javascript" src="/springweb/a00_com/jquery-3.5.1.js"></script>
 <script>
 $(document).ready(function(){
 
@@ -61,7 +62,7 @@ $(document).ready(function(){
                     <div class="container-fluid">
                         <div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name}</button></a>
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${TaskList[0].project_name}</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -130,6 +131,9 @@ $(document).ready(function(){
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
+                                       <div class="wrap-tasklist-btn">
+                                       <button type="button" class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-briefcase-plus me-1"></i>태스크 추가</button>
+                                       </div>
                                         <h4 class="header-title">Tasks List</h4>
                                         <p class="sub-header">
                                             현재 프로젝트의 전체 태스크 리스트 입니다.
@@ -173,8 +177,7 @@ $(document).ready(function(){
                                                     <td>${task.name}</td>
                                                     <td> <fmt:parseDate value="${task.enddte}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
 														 <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
-														 </td>                                             
-                                                      
+														 </td>                                                                                                 
                                                       <td>
                                                       
                                                       <c:choose>    

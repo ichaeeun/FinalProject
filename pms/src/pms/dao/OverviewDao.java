@@ -11,4 +11,5 @@ public interface OverviewDao {
 	public ArrayList<Task> TaskList(int no);
 	public ArrayList<Task> TaskList2(int no);
 	public ArrayList<Overview> ViewMem(int no);
+	public void mTaskInsert(Task t); // 메인태스크 추가
 }

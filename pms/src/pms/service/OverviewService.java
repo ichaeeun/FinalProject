@@ -27,4 +27,7 @@ public class OverviewService {
 	public ArrayList<Overview> ViewMem(int no){
 		return dao.ViewMem(no);
 	};
+	public void mTaskInsert(Task t) {
+		dao.mTaskInsert(t);
+	}
 }

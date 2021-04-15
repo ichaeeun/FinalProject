@@ -17,7 +17,7 @@ public class OverviewController {
 	@Autowired(required = false)
 	private OverviewService service;
 
-	//  http://localhost:7080/pms/task.do?method=list
+//  http://localhost:7080/pms/task.do?method=list
 	@RequestMapping(params="method=list")
 	public String taskList(@RequestParam("no") int no,Task task, Model d) {
 		d.addAttribute("TaskList", service.TaskList(no));
@@ -41,5 +41,14 @@ public class OverviewController {
 		return "log";
 	}
 	
+	// http://localhost:8080/pms/task.do?method=insert
+	@RequestMapping(params="method=insert")  // 메인태스크 추가 
+	public String insertSubtask(Task t,Model d) {
+		System.out.println(t.getTask_name());
+		service. mTaskInsert(t);
+		d.addAttribute("success","Y");
+		
+		return "pageJsonReport";
+	}
 	
 }

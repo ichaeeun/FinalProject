@@ -42,12 +42,16 @@ $(document).ready(function(){
 		if(confirm("채팅서버에 접속하시겠습니까?")){
 			//ws://192.168.0.47:7080/${path}/chat-ws.do
 				// 211.63.89.68
-			wsocket = new WebSocket("ws://192.168.0.47:7080/${path}/chat-ws.do");
+			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do");
 			wsocket.onopen=function(evt){
 				// 채팅서버에 접속되었을 때, 처리할 내용..
 				console.log(evt)
 				// 접속메시지 전송..
-				wsocket.send($("#group").val()+":"+$("#id").val()+":연결 접속했습니다!▒▒▒▒");
+				wsocket.send(
+						
+						$("#group").val()+":"+$("#id").val()+":연결 접속했습니다!"
+						
+				);
 				
 			}
 			// 2.서버에서 메시지 받기.
@@ -88,16 +92,20 @@ $(document).ready(function(){
 	});
 	function sendMsg(){
 		var id=$("#id").val();
-		var msg=$("#msg").val();
-		wsocket.send($("#group").val()+":"+id+":"+msg);	
+		var msg = $("#msg").val();
+		wsocket.send(
+				 
+				
+				$("#group").val()+":"+id+":"+msg);	
 		$("#msg").val("");
 	}
+	
 	function revMsg(msg){
 		$("#chatMessageArea").append(msg+"<br>");
 		// 자동 스크롤처리.. (메시지 내용)
 		var mx = parseInt($("#chatMessageArea").height() );
 		$("#chatArea").scrollTop(mx);
-		}
+	}
 });
 
 </script>
@@ -136,7 +144,7 @@ $(document).ready(function(){
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
                                     <h4 class="page-title">Chat</h4>
-                                    <div class="page-title-right">
+                                    <div class="page-title-right" style="display:none;">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
@@ -150,7 +158,7 @@ $(document).ready(function(){
 
                         <div class="row">
                             <!-- start chat users-->
-                            <div class="col-xl-3 col-lg-4">
+                            <div class="col-xl-3 col-lg-4" style="display:none;">
                                 <div class="card">
                                     <div class="card-body">
 
@@ -386,18 +394,9 @@ $(document).ready(function(){
                                                             Hello!
                                                         </p>
                                                     </div>
-                                                </div>
-                                                <div class="conversation-actions dropdown">
-                                                    <button class="btn btn-sm btn-link text-reset" data-bs-toggle="dropdown"
-                                                        aria-expanded="false"><i class='mdi mdi-dots-vertical font-18'></i></button>
-
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="#">Copy Message</a>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
+                                                </div>                                          
                                             </li>
+                                            
                                             <li class="clearfix odd">
                                                 <div class="chat-avatar">
                                                     <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded" alt="Nik Patel" />
@@ -626,7 +625,7 @@ $(document).ready(function(){
                                                         id="chat-form">
                                                         <div class="row">
                                                             <div class="col mb-2 mb-sm-0">
-                                                                <input type="text" class="form-control border-0" placeholder="Enter your text" required="">
+                                                                <input type="text" class="form-control border-0" placeholder="Enter your text" name="msg" required="">
                                                                 <div class="invalid-feedback mt-2">
                                                                     Please enter your messsage
                                                                 </div>
