@@ -8,6 +8,11 @@
 <fmt:requestEncoding value="UTF-8" />
 <script src="${path}/a00_com/jquery.min.js"></script>
 </head>
+<style>
+.done_line{
+text-decoration:line-through;
+}
+</style>
 <body>
 <div id="real">
 	<h5 class="position-relative mb-0">
@@ -50,7 +55,7 @@
 									</div>
 								</div>
 							</td>
-							<td id="subtaskName" class="task_name">${sub.task_name }</td>
+							<td id="subtaskName" class="task_name <c:if test="${sub.task_status=='완료' }">done_line</c:if>">${sub.task_name }</td>
 							<input type="hidden" class="pno" value="${sub.pno }">
 							<td id="subtaskpName" class="name">${sub.name }</td>
 							<input type="hidden" class="startdte" value="${fn:substring(sub.startdte,0,10)}"/>
@@ -70,7 +75,7 @@
 											</button></a></li>
 									<li class="list-inline-item"><a href="javascript:void(0);"
 										class="action-icon px-1 text-danger">
-											<button class="btn action-icon px-1 text-danger deletesub <c:if test="${!(sub.pno==mem.pno || mem.auth=='pm') }">disabled</c:if>">
+											<button class="btn action-icon px-1 text-danger deletesub <c:if test="${!(sub.pno==mem.pno || mem.auth=='pm')||detail.task_status=='완료' }">disabled</c:if>">
 												<i class='mdi mdi-delete-outline me-1'></i>
 											</button>
 									</a></li>

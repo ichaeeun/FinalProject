@@ -521,13 +521,13 @@
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 						            <li class="nav-item">
-						                      <a href="${path }/task.do?method=view"  class="nav-link ">
+						                      <a href="${path }/task.do?method=view&no=${detail.project_no }"  class="nav-link ">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
 						                    <span class="d-none d-sm-inline-block">오버뷰</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=list" class="nav-link active">
+						                <a href="${path}/task.do?method=list&no=${detail.project_no }" class="nav-link active">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
 						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 						                </a>
@@ -810,7 +810,7 @@
                                     <i class="bx bx-aperture h1 text-white"></i>
                                     <h4 class="mt-2 text-white">태스크 삭제</h4>
                                     <p class="mt-3 text-white">태스크를 삭제하시겠습니까?</p>
-                                    <button type="button" class="btn btn-light my-2 <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
+                                    <button type="button" class="btn btn-light my-2"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
                                     <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
@@ -877,7 +877,7 @@
 		                             <div class="modal-footer">
 		                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
 		                              
-		                                <input type="button" class="btn btn-info waves-effect waves-light <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
+		                                <input type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
 		                            </div>
 		                        </div><!-- /.modal-content -->
 		                    </div><!-- /.modal-dialog -->
