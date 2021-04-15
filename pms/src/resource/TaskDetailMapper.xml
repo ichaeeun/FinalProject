@@ -154,5 +154,11 @@ AND a.pno = b.pno; -->
 	<select id="taskFileList" parameterType="int" resultType="taskfile">
 		select * from task_file where task_no=#{task_no}
 	</select>
+	
+	<!-- DELETE FROM task_file WHERE fileno=5 -->
+	<!-- public void deleteTaskFile(int fileno); -->
+	<delete id="deleteTaskFile" parameterType="int">
+		DELETE FROM task_file WHERE fileno=#{fileno} 
+	</delete>
 </mapper>  
  

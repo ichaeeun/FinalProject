@@ -9,6 +9,7 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 </head>
 <body>
+<div id="real">
 	<h5 class="position-relative mb-0">
 		<a href="#taskcollapse1" class="text-dark d-block"
 			data-bs-toggle="collapse">서브태스크 <span class="text-muted">(<c:if
@@ -32,7 +33,7 @@
 						<th scope="col">기한</th>
 						<th scope="col">중요도</th>
 						<th scope="col" style="width: 85px;">
-							&nbsp;수정&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;삭제</th>
+							&nbsp;&nbsp;수정&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;삭제</th>
 					</tr>
 				</thead>
 				<tbody id="subtaskTableBody">
@@ -64,14 +65,14 @@
 							<td>
 								<ul class="list-inline table-action m-0">
 									<li class="list-inline-item"><a href="javascript:void(0);"
-										class="action-icon px-1"><div class="updatesub">
+										class="action-icon px-1"><button class="btn action-icon px-1 updatesub <c:if test="${!(sub.pno==mem.pno || mem.auth=='pm') }">disabled</c:if>">
 												<i class="mdi mdi-square-edit-outline"></i>
-											</div></a></li>
+											</button></a></li>
 									<li class="list-inline-item"><a href="javascript:void(0);"
 										class="action-icon px-1 text-danger">
-											<div class="deletesub">
+											<button class="btn action-icon px-1 text-danger deletesub <c:if test="${!(sub.pno==mem.pno || mem.auth=='pm') }">disabled</c:if>">
 												<i class='mdi mdi-delete-outline me-1'></i>
-											</div>
+											</button>
 									</a></li>
 								</ul>
 							</td>
@@ -81,5 +82,6 @@
 			</table>
 		</div>
 	</div>
+</div>
 </body>
 </html>

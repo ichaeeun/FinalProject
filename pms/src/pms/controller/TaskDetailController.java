@@ -41,7 +41,6 @@ public class TaskDetailController {
 		d.addAttribute("comment",service.commentList(task_no));
 		return "subtaskList";
 	}
-	
 	// http://localhost:8080/pms/taskdetail.do?method=commentList
 	@GetMapping(params="method=commentList") //커멘트 리스트 출력 
 	public String commentList(@RequestParam("task_no") int task_no, Model d) {
@@ -167,6 +166,13 @@ public class TaskDetailController {
 		// viewer 안에 선언한 모델명 
 		// 컨테이너 안에 선언되어 있는 viewer명 
 		return "downloadviewer";
+	}
+	
+	@RequestMapping(params="method=deleteTaskFile")
+	public String deleteTaskFile(@RequestParam("fileno") int fileno,Model d) {
+		service.deleteTaskFile(fileno);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
 	}
 	
 	@ModelAttribute("showMember")  //프로젝트 별 인원 공통 어트리뷰트 
