@@ -44,7 +44,17 @@
 		SET RISK_STATUS = #{risk_status}
 		WHERE risk_no = #{risk_no}
 	</update>
+	<select id="fileInfo" resultType="riskfile" parameterType="int">
+		select *
+		from risk_file
+		where fno = #{fno}
+	</select>
 	
+	<!-- public void insertRiskFile(RiskFile riskfile) -->
+	<insert id="insertRiskFile" parameterType="riskfile">
+		INSERT INTO risk_file values(riskfile_seq.nextval,#{name},#{rnum},
+				#{filename},#{filepath},sysdate)
+	</insert>
 
 </mapper>  
  
