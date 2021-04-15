@@ -13,6 +13,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+		<style>
+			footer .chatting{display:none;}
+		</style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -47,8 +50,18 @@
 			$("[name=risk_writer]").val("${mem.name}");
 			$("#riskboard").submit();
 		});
+		
+		$("#addFun").click(function(){
+			$("#fileArea").append($(".custom-file").eq(0).clone());
+		});
 
 	});
+	function rm(obj){
+		var len=$("[type=file]").length;
+		if(len>1){
+			$(obj).parent().remove();
+		}
+	}
 </script>
 </head>
 	<body class="loading">
@@ -103,10 +116,9 @@
                                                 <div class="tab-pane" id="general-info">
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
-
                                              <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
- 	                                            <input type="hidden" name="risk_no" value=""/>
+ 	                                            <input type="hidden" name="risk_no" value="0"/>
                                                     <div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -136,29 +148,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!--  
                                                    	<div class="tab-pane" id="product-img">
-                                                    <h4 class="header-title">첨부 파일</h4>
-                                                    <p class="sub-header">참고해야할 파일을 올려주세요</p>
-                                                    <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                                        data-upload-preview-template="#uploadPreviewTemplate">
-                                                        <div class="fallback">
-                                                            <input name="file" type="file" multiple />
-                                                        </div>
-                                                    </form>
-                                                    -->
-                                                    
-                
+                                                    	<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
+		                                                    <div id="fileArea">
+			                                                 	<div class="custom-file">
+			                                                 		<input name="report" type="file"/>
+			                                                 		<span onclick="rm(this)"> [X] </span><br>
+			                                               		</div>
+		                                               		</div>
                                                     <!-- Preview -->
-	                                       			<div class="dropzone-previews mt-3" id="file-previews"></div>
-	                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-	                                                        <li class="previous list-inline-item">
-	                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
-	                                                        </li>
-	                                                        <li class="next list-inline-item">
-	                                                            <button type="button" id="sndBtn" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
-	                                                        </li>
-	                                                    </ul>
+		                                       			<div class="dropzone-previews mt-3" id="file-previews">
+		                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
+		                                                        <li class="previous list-inline-item">
+		                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
+		                                                        </li>
+		                                                        <li class="next list-inline-item">
+		                                                            <button type="button" id="sndBtn" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
+		                                                        </li>
+		                                                    </ul>
+		                                          		</div>
 	                                                </div>
                                                 </form:form>
                                                 
@@ -172,7 +180,7 @@
                         </div>
                         <!-- end row -->
 
-                        <!-- file preview template -->
+                        <!-- file preview template 
                         <div class="d-none" id="uploadPreviewTemplate">
                             <div class="card mt-1 mb-0 shadow-none border">
                                 <div class="p-2">
@@ -185,7 +193,7 @@
                                             <p class="mb-0" data-dz-size></p>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- Button -->
+                                            Button 
                                             <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
                                                 <i class="fe-x"></i>
                                             </a>
@@ -193,29 +201,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         
                     </div> <!-- container -->
 
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->
 
             </div>

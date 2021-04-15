@@ -61,4 +61,18 @@ public class RiskController {
 		d.addAttribute("uptFinish", "Y");
 		return "forward:risk.do?method=riskDetail";		// 요청값을 갖고 리스크 디테일 컨트롤러로 이동.
 	}
+	
+	
+	// http://localhost:7080/pms/risk.do?method=download
+	// 화면단에 클릭시, 
+	// http://localhost:7080/board/board.do?method=download&fname=파일명
+	@RequestMapping(params="method=download")
+	public String download(@RequestParam("fname") String fname, Model d) {
+		System.out.println("파일명 : "+fname);
+		d.addAttribute("downloadFile", fname);
+		// viewer안에 선언한 모델명 - 파일다운로드뷰어에 같은 이름을 사용해준다.
+		// 컨테이너 안에 있는 viewer명.
+		return"downloadviewer";
+	}
+	
 }

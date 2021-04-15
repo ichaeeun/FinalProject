@@ -17,6 +17,7 @@
       	<typeAlias alias="comment" type="pms.dto.Comment"/>
       	<typeAlias alias="taskfile" type="pms.dto.TaskFile"/>
       	<typeAlias alias="riskboard" type="pms.dto.RiskBoard"/>
+      	<typeAlias alias="riskfile" type="pms.dto.RiskFile"/>
       	<typeAlias alias="uptstatus" type="pms.dto.UptStatus"/>
       	<typeAlias alias="gantt" type="pms.dto.Gantt"/>
       	<typeAlias alias="view" type="pms.dto.Overview"/>
