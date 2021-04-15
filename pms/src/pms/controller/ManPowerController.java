@@ -37,14 +37,14 @@ public class ManPowerController {
 		// 부서 목록
 		d.addAttribute("partList", service.deptList());
 		// 권한 목록
-		d.addAttribute("authList", service.authList());		
+		d.addAttribute("authList", service.authList());
 		return "pageJsonReport";
 	}
 	
 	@GetMapping(params="method=contacts_list")
 	public String showMem(Model d) {
 		d.addAttribute("partList", service.deptList());
-		d.addAttribute("authList", service.authList());		
+		d.addAttribute("authList", service.authList());
 		return "contacts-list";
 	}
 	
@@ -60,7 +60,7 @@ public class ManPowerController {
 	public String memList(@ModelAttribute("sch") Member sch, Model d) {
 		// 가용 인원
 		// pm이나 wk인 직원의 사원번호 가져오기
-		HashMap<String, String> hm = new HashMap<String, String>();
+		HashMap<String, String> hm = new HashMap<String, String>(); //
 		ArrayList<Integer> pno = service.pnoList(hm);
 		Object[] pnoNum = pno.toArray();
 		// 해당 사원이 맡은 or 맡았던 프로젝트 넘버 가져오기
@@ -87,6 +87,7 @@ public class ManPowerController {
 			sum = 0;
 		}
 		d.addAttribute("memList2", memList2);
+		d.addAttribute("allProject",service.allProject());
 		return "contacts-list2";
 	}
 
@@ -100,7 +101,7 @@ public class ManPowerController {
 		String dvalue = request.getParameter("dvalue");
 		if (dvalue == null)
 			dvalue = "";
-		//d.addAttribute("dvalue",dvalue);
+		d.addAttribute("dvalue",dvalue);
 		System.out.println("dvalue:" + dvalue);
 		System.out.println(service.memList3(dvalue).size());
 		d.addAttribute("memList3", service.memList3(dvalue));
@@ -140,5 +141,19 @@ public class ManPowerController {
 		d.addAttribute("success","Y");
 		return "pageJsonReport";
 	}
-
+	
+	// http://localhost:7080/pms/manpower.do?method=delete_member
+	@RequestMapping(params="method=delete_member")
+	public String deleteMember(int pno) {
+		service.deleteMember(pno);
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/pms/manpower.do?method=addProject
+	@RequestMapping(params="method=addProject")
+	public String addProject(Model d,
+			@RequestParam("name") String name) {
+		
+		return "pageJsonReport";
+	}
 }

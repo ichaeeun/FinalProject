@@ -32,7 +32,6 @@
 
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 		<script src="${path}/a00_com/jquery.min.js"></script>
@@ -62,18 +61,22 @@
 	  					var mlist = data.memList1;
 	  					var show = "";
 	  					$.each(mlist,function(idx,m){
-	  						show+= "<div class='col-xl-3 col-sm-6 goDetail'>";
-	  						show+= "<form style='display:none;'><input type='hidden' class='pno' name=pno value='"+m.pno+"''/></form>";
+	  						show+= "<div class='col-xl-3 col-sm-6'>";			
 	  						show+= "<div class='text-center card'>";
 	  						show+= "<div class='card-body'>";
 	  						show+= "<div class='dropdown float-end'>";
 	  						show+= "<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-	  						show+= "<i class='mdi mdi-dots-vertical font-20'></i></a></div>";						
+	  						show+= "<i class='mdi mdi-dots-vertical font-20'></i></a>";
+	  						show+= "<div class='dropdown-menu dropdown-menu-end'>";
+                            show+= "<a class='dropdown-item goMail' ><button name='mailPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>";
+                            show+= "<a class='dropdown-item goDelete'><button name='deletePno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a></div></div>";                           
 	  						show+= "<i class='fas fa-user-circle fa-5x'></i>";
-	  						show+= "<h4 class='mt-3 mb-1 name' name='mt-3 mb-1 name'><a class='text-dark'>";
-	  						show+= m.name+"</a></h4>";
+	  						show+= "<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'><a class='text-dark'>";
+	  						show+= m.name+"</a>";
+	  						show+= "<form style='display:none;'><input type='hidden' class='pno' name=pno value='"+m.pno+"''/></form>";
+	  						show+= "</h4>";
 	  						show+= "<p class='text-muted'>"+m.auth+"<span> | </span>"+m.part;
-	  						show+= "<span> <a href='#' class='text-pink'>"+m.email+"</a> </span></p>";
+	  						show+= "<br><span> <a href='#' class='text-pink'>"+m.email+"</a> </span></p>";
 	  						show+= "</div></div></div>";
 	  					});
 	  					$("#memShow").html(show);
@@ -126,15 +129,60 @@
 	  		
 	  		//////////// 상세화면
 			$("#memShow").on("click",".goDetail",function(){
-				//var pno = $(this).find('.text-dark').html();
 				var ename = $(this).find('.text-dark').html();
 				var pno = $(this).find('.pno').val();
-				alert(ename);
-				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});	
 	
+	  		/////// 메일 발송	  		
+	  		$("#memShow").on("click",".goMail",function(){
+	  			 var pno = $(this).find("[name=mailPno]").val();
+	  			 // alert(pno);
+	  			 $.ajax({
+		  			type:"post",
+		  			url:"${path}/mail.do?method=jsonMailList",
+		  			data:{
+		  				"pno":pno
+		  			},	
+  					dataType:"json",
+  					success:function(data){
+  						var mailInfo = data.mailMemList;
+  						$("#mail-modal").modal();
+  						$("#mail-modal [name=subject]").val("AZZA 회원 정보입니다.");
+  						$("#mail-modal [name=receiver]").val(mailInfo.email);
+  						$("#mail-modal [name=content]").val("아이디:"+ mailInfo.id+" 비밀번호:"+mailInfo.pass);  						
+  					},
+  					error:function(err){
+  						alert("에러발생");
+  					}
+	  			 })
+	  			 
+	  		})
+	  		
+	  		///////// 인력 삭제
+ 	  		$("#memShow").on("click",".goDelete",function(){
+	  			var pno = $(this).find("[name=deletePno]").val();
+	  			// alert(pno);
+	  		    $("#deleteManBtn").on("click",function(){
+		  			$.ajax({
+		  				type:"post",
+		  				url:"${path}/manpower.do?method=delete_member",
+		  				data:{
+		  					"pno":pno
+		  				},
+		  				dataType:"json",
+		  				success:function(data){
+		  					$("#danger-alert-modal").modal("hide");
+		  					$("#warning-alert-modal").modal("hide");
+		  					ajaxSearch();
+		  				},
+		  				error:function(err){
+		  					alert("에러 발생");
+		  				}
+		  			})
+	  			})
 
+	  		}); 
 	  	});
 	  </script>
     </head>
@@ -156,43 +204,41 @@
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
 
-            <div class="content-page">
+ 		<div class="content-page">
                 <div class="content">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-
+                        
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">  
+                                <div class="page-title-box">
+                                    <h4 class="page-title">CRM</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                                            <li class="breadcrumb-item active">Members List</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                            <li class="breadcrumb-item active">CRM</li>
                                         </ol>
                                     </div>
                                 </div>
                             </div>
-                        </div>     
-                        <!-- end page title --> 
-
+                        </div>
                         <div class="row mb-2">
-                        	<c:if test="${mem.auth == 'hp' }">
+                        	
                             <div class="col-sm-4">
                                 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
-                                	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mail-modal">계정 발송</button>
                             </div>
-                            </c:if>
-                            <div class="col-sm-8">
+                        
+                            <div class="col-sm-8" text-align="right">
                                 <div>
-                                        <div class="d-flex align-items-start flex-wrap me-2" id="memSearch">
+                                        <div style="text-align:right;" class="align-items-start flex-wrap me-2" id="memSearch">
                                             <label for="membersearch-input" class="visually-hidden">검색</label>
-                                            <input type="text" class="form-control" id="shName" name="shName" placeholder="이름 검색">
-                                        </div>
-                                        <button type="button" id="searchBtn" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                    
+                                            <input type="text" class="align-items-start flex-wrap justify-content-sm-end" 
+                                            	id="shName" name="shName" placeholder="이름 검색">&nbsp;
+                                            <button type="button" id="searchBtn" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>	
+                                        </div>         
                                 </div>
                             </div><!-- end col-->
                         </div>
@@ -744,9 +790,10 @@
                                                         </div>
 
 														<!-- MessagingException -->
-    													<form class="px-3"  method="post" action="${path}/mail.do?method=send">
+    													<form class="px-3"  method="post" action="${path}/mail.do?method=send"> 
                                                             <div class="mb-3">
                                                                 <label for="subject" class="form-label">제 목</label>
+                                                                <!-- 시작 -->
                                                                 <input name="subject" class="form-control" type="text" placeholder="제목을 입력하세요."/>
                                                             </div>
     
@@ -758,17 +805,50 @@
                                                             <div class="mb-3">
                                                                 <label for="content" class="form-label">내 용</label>
                                                                 <input name="content" class="form-control" type="text" placeholder="내용을 입력하세요."/>
+                                                            	<!-- 끝 -->
                                                             </div>                                                                                                                          
                                                             <div class="mb-3 text-center">
-                                                                <input class="btn btn-primary" type="submit" value="메일 전송"/>
+                                                                <input class="btn btn-primary" id="mailBtn" type="submit" value="메일 전송"/>
                                                             </div>
     
-                                                        </form>
+                                                       </form> 
     
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-        
+										<!-- Danger Alert Modal -->
+						                <div id="danger-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+						                    <div class="modal-dialog modal-sm">
+						                        <div class="modal-content modal-filled bg-danger">
+						                            <div class="modal-body p-4">
+						                                <div class="text-center">
+						                                    <i class="bx bx-aperture h1 text-white"></i>
+						                                    <input type="hidden" id="delete_pno" />
+						                                    <h4 class="mt-2 text-white">인력 삭제</h4>
+						                                    <p class="mt-3 text-white">해당 인력을 삭제하시겠습니까?</p>
+						                                    <button type="button" class="btn btn-light my-2" id="deleteManBtn" data-bs-toggle="modal" data-bs-target="#warning-alert-modal">삭제</button>
+						                                    <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
+						                                </div>
+						                            </div>
+						                        </div><!-- /.modal-content -->
+						                    </div><!-- /.modal-dialog -->
+						                </div><!-- /.modal -->                                        
+                                        
+							                     <!-- Warning Alert Modal -->
+							               <div id="warning-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+							                   <div class="modal-dialog modal-sm">
+							                       <div class="modal-content">
+							                           <div class="modal-body p-4">
+							                               <div class="text-center">
+							                                   <i class="bx bx-check-circle h1 text-info"></i>
+							                                  <!--  <h4 class="mt-2">태스크 삭제</h4> -->
+							                                   <p class="mt-3">삭제되었습니다.</p>
+							                                   <button type="button" class="btn btn-info my-2" data-bs-dismiss="modal">확인</button>
+							                               </div>
+							                           </div>
+							                       </div><!-- /.modal-content -->
+							                   </div><!-- /.modal-dialog -->
+							               </div><!-- /.modal -->  
     </body>
 </html>

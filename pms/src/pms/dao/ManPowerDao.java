@@ -22,6 +22,9 @@ public interface ManPowerDao {
 	public String status(int project_no);
 	// 가용인원 - 최종 조회
 	public Member memPoss(int pno);
+	
+	
+	
 	// 부서인원 - 부서목록
 	public ArrayList<Member> deptList();
 	// 부서인원 - 최종 조회
@@ -35,6 +38,11 @@ public interface ManPowerDao {
 	public ArrayList<Member> authList();
 	// 계정생성 - insert
 	public void addMember(Member ins);
+	// 계정삭제
+	public void deleteMember(int pno);
+	
+	// 프로젝트 리스트
+	public ArrayList<pms_project> allProject();
 }
 
 

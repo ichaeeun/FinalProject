@@ -33,7 +33,7 @@
 
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 		<script src="${path}/a00_com/jquery.min.js"></script>
 		<script src="${path}/a00_com/popper.min.js"></script>
@@ -77,29 +77,27 @@
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
-
-            <div class="content-page">
+		<div class="content-page">
                 <div class="content">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-
+                        
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">      
+                                <div class="page-title-box">
+                                    <h4 class="page-title">CRM</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                                            <li class="breadcrumb-item active">Members List</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                            <li class="breadcrumb-item active">CRM</li>
                                         </ol>
                                     </div>
                                 </div>
                             </div>
-                        </div>     
-                        <!-- end page title --> 
-
+                        </div>
                         <div class="row mb-2">
 <%--                             <div class="col-sm-8">
                                 <div>
@@ -151,7 +149,7 @@
 											<input type="hidden" class="pno" name="pno" value="${mem.pno }"/>
 										</form>
                                         <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } 
+                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } <br>
                                         <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->

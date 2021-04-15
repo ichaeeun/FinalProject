@@ -21,6 +21,7 @@
       	<typeAlias alias="uptstatus" type="pms.dto.UptStatus"/>
       	<typeAlias alias="gantt" type="pms.dto.Gantt"/>
       	<typeAlias alias="view" type="pms.dto.Overview"/>
+      	<typeAlias alias="mail" type="pms.dto.Mail"/>
    </typeAliases>
    <!-- 3. sql이 저장되는 mapper.xml 등록
    		4. 주로 업무단위 dao단위 하나의 mapper.xml을 만든다
