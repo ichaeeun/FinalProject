@@ -46,14 +46,15 @@ public class OverviewController {
 	}
 	
 	// http://localhost:7080/pms/task.do?method=insert
-	@RequestMapping(params="method=insert")  // 메인태스크 추가 
-	public String insertSubtask(Task t, Model d) {
+	@RequestMapping(params="method=insert")  // 메인태스크 추가
+	public String mTaskInsert(@RequestParam("no") int no, Task t, Model d) {
 		System.out.println(t.getTask_name());
-		service. mTaskInsert(t);
+		service.mTaskInsert(t);
 		d.addAttribute("success","Y");		
 		return "pageJsonReport";
 	}
 	
+	// 태스크 추가에 select옵션 project에 할당된 인원이 나온다.
 	@ModelAttribute("taskMember")
 	public ArrayList<Member> taskMember(@RequestParam int no){
 		return service.taskMember(no);

@@ -46,7 +46,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	
+
 $("#btnAddTaskForm").click(function(){
 	$("#addTaskModal").modal("show");
 	
@@ -54,35 +54,56 @@ $("#btnAddTaskForm").click(function(){
 
 	
 $("#btnAddTask").click(function(){
-	
-	var addform = {
-		task_name : $("#Mtask_name").val(),
-		task_content : $("#Mtask_content").val(),
-		pno : $("#MaddTask_name").val(),
-		task_property : $("#Mtask_property").val(),
-		startdte : $("#Mstartdte").val(),
-		enddte :  $("#enddte").val()
-	};
-	// 태스크 추가 모달
+	 /* $("#addTaskModal>form")[0].reset(); */ // 값 초기화 처리.
+	 
+	var sch = addtask(); //  리턴값이 입력된 객체 데이터
+	console.log("##등록할 데이터##");
+	console.log(sch);
+
+	// 태스크 추가 모달 ajax(db에등록)
 	$.ajax({
 		  type:"post",
 		  url:"${path}/task.do?method=insert",
-		  data: addform,
-		  dataType:"json",
-		  contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		  data: sch,
+		  dataType:"json", // 요청값을 json 객체로 전달 가능
 		  success:function(data){
 			  if(data.success=="Y")
 			  console.log(data);
-			  $("#addTaskModal").modal("hide");
-			  
+			  alert("태스크 등록이 완료되었습니다.");
+			  $("#addTaskModal").modal("hide");			
+			/*   $(document).load("${path}/task.do?method=list?no="+${param.no});  */
+			  window.location.reload(true);
 		  },
 		  error:function(err){
 			  alert("에러발생: "+err);
 			  console.log(err);
 		  }
+		 
 	});  
-	 // 추가 후 모달 창 클리어 
+
 });
+
+function addtask(){
+    var sch = {};
+    sch.no = ${param.no};
+    sch.project_no = ${param.no};
+    sch.task_name = $("[name=task_name]").val();
+    sch.task_content = $("[name=task_content]").val();
+    sch.pno = $("[name=pno]").val();
+    sch.task_priority = $("[name=task_priority]").val();
+    // 화면에 보이는 형식 설정  
+    // Date타입은 화면에서 사용되는 형식으로 설정하여야 한다.
+    // 전역변수에 할당한 data.start//date.end의 ISO 형태로 속성 할당
+    // ?? calendar api에서 사용되는 날짜 처리 방식이 ISO문자열 형식이기
+  	// 떄문이다. ex) Date ==> toISOString() 형식
+  	
+    sch.startdte = $("[name=startdte]").val()+"T00:00:00.000Z";
+    sch.enddte = $("[name=enddte]").val()+"T18:00:00.000Z";
+    // alert('등록할 시작일:'+sch.start);
+    
+    return sch;
+ }
+
 });
 </script>
     </head>
@@ -235,7 +256,7 @@ $("#btnAddTask").click(function(){
                                                       	<span class="badge label-table badge-soft-primary p-1">
                                                       </c:when>
                                                       <c:otherwise>
-                                                      	<span class="badge label-table badge-soft-sucess p-1">
+                                                      	<span class="badge label-table badge-soft-success p-1">
                                                       </c:otherwise>
                                                   	</c:choose>	
                                                   	${task.task_priority}</span></td> 
@@ -321,20 +342,22 @@ $("#btnAddTask").click(function(){
                                 <h4 class="modal-title" id="myLargeModalLabel">메인태스크 추가</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">								
+                            <div class="modal-body">		
+                             <form id="taskFrm">						
                             	<div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="addTask_task_name" class="form-label">태스크</label>
-                                            <input type="text" class="form-control"  id="Mtask_name" placeholder="태스크명">
+                                            <input type="text" class="form-control"  name="task_name" placeholder="태스크명">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
+                         
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="addTask_task_content" class="form-label">내용</label>
-                                            <textarea row="5" class="form-control" id="Mtask_content" ></textarea>
+                                            <textarea row="5" class="form-control" name="task_content" ></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -342,7 +365,7 @@ $("#btnAddTask").click(function(){
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="addTask_name" class="form-label">담당자</label>
-                                            <select class="form-control" id="MaddTask_name">
+                                            <select class="form-control" name="pno">
                                             	  <option value="">사원선택</option>
                                             	 <c:forEach var="mem" items="${taskMember}">
                                                    <option value="${mem.pno }">${mem.name }</option>
@@ -353,7 +376,7 @@ $("#btnAddTask").click(function(){
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="addTask_task_priority" class="form-label">중요도</label>
-                                            <select class="form-control" id="Mtask_priority">
+                                            <select class="form-control" name="task_priority">
                                             	<option value="High">High</option>
                                             	<option value="Medium">Medium</option>
                                             	<option value="Low">Low</option>
@@ -363,22 +386,25 @@ $("#btnAddTask").click(function(){
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="addTask_startdte" class="form-label">시작일</label>
-                                            <input type="date" class="form-control" id="Mstartdte">
+                                            <input type="date" class="form-control" name="startdte">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="addTask_enddte" class="form-label">종료일</label>
-                                            <input type="date" class="form-control" id="Menddte">
+                                            <input type="date" class="form-control" name="enddte">
                                         </div>
                                     </div>
+                                
                                 </div>
+                                
                                <div class="modal-footer"><%--data-bs-dismiss="modal" --%>
                                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
-                                <button type="submit" class="btn btn-info waves-effect waves-light"  id="btnAddTask">추가</button>
+                                <button type="button" class="btn btn-info waves-effect waves-light"  id="btnAddTask">추가</button>
                               </div>     
+                                </form>
                             </div>
-                      
+                     
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->

@@ -29,7 +29,7 @@ public class OverviewService {
 	public ArrayList<Overview> ViewMem(int no){ // 오버뷰 멤버 & progress출력
 		return dao.ViewMem(no);
 	}
-	public void mTaskInsert(Task t) {
+	public void mTaskInsert(Task t) { // task추가
 		dao.mTaskInsert(t);
 	}
 	public ArrayList<Member> taskMember(int no){ //project_no

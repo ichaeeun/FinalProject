@@ -11,7 +11,7 @@
 <html>
 <head>
 <style type="text/css">
- footer{ z-index: 999999; }
+ footer{ z-index: 999; }
 .chatting { position: fixed; bottom: 80px; right: 50px; border-radius: 100%; cursor:pointer; background: white; width: 78px; text-align: center; box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.1); transition:0.5s; }
 .chatting:hover { box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.3);  }
 .ri-discuss-fill:before {  font-size: 50px; }
