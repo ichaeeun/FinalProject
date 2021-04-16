@@ -152,10 +152,6 @@ public class TaskDetailController {
 	@ResponseBody
 	public String insertTaskFile(@RequestParam("task_no") int task_no, TaskFile tf, Model d) {
 		service.insertTaskFile(tf);
-//		d.addAttribute("detail",service.taskDetail(task_no));
-//		d.addAttribute("subdetail",service.subtaskList(task_no));
-//		d.addAttribute("taskcurrval",service.taskcurrval());
-//		d.addAttribute("comment",service.commentList(task_no));
 		d.addAttribute("success","Y");
 		System.out.println("파일업로드"); // {"success":"Y"}
 		return "{\"success\":\"Y\"}";

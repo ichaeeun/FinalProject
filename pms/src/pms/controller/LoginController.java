@@ -58,7 +58,11 @@ public class LoginController {
 			System.out.println(m.getAuth());
 			String page = "";
 			
-			if( m.getAuth().equals("pm")) {	page = "dashboard_pm";
+			if( m.getAuth().equals("pm")) {	
+				if(service.IsPm(m.getPno())!=null) {
+					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
+				}
+				page = "dashboard_pm";
 			}else if(m.getAuth().equals("wk")) {page = "task_list(all)";}
 			else if(m.getAuth().equals("ceo")) {page = "dashboard";}
 			else if(m.getAuth().equals("hp")) {page = "contacts-list";}

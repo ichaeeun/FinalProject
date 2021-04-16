@@ -17,7 +17,16 @@ public class Member {
 	private String email;
 	private String part;
 	private String auth;	
+	private int project_no;
 	
+	
+	
+	public int getProject_no() {
+		return project_no;
+	}
+	public void setProject_no(int project_no) {
+		this.project_no = project_no;
+	}
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub

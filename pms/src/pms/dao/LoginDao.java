@@ -7,5 +7,5 @@ import pms.dto.Member;
 @Repository
 public interface LoginDao {
 	public Member IsMem(Member member);
-	public Member IsPm(String auth);
+	public Member IsPm(int pno);
 }

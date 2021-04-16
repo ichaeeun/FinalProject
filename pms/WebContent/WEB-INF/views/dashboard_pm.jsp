@@ -50,7 +50,12 @@
 --%>
 
    $(document).ready(function(){
-      
+      var project_no = "${mem.project_no}";
+      if(project_no=="" || project_no=="0"){
+    	  $(".project_no").text("참여중인 프로젝트가 없습니다.");
+      }else{
+    	  $(".project_no").text("project_no: "+project_no);
+      }
    });
 </script>
 </head>
@@ -77,7 +82,7 @@
                     <!-- Start Content-->
                     <div class="container-fluid">
 						<div class="row">
-							<div class="md-4"> <h4 class="page-title">&nbsp;</h4></div>
+							<div class="md-4"> <h4 class="page-title project_no"> </h4></div>
 							
 							<div class="row">
 						        <div class="col-xl-3 col-md-6">
