@@ -21,6 +21,7 @@
 <tbody>
 <c:forEach var="file" items="${detail.fileInfo }">
 	 <tr class="fileList">
+	 	<input type="hidden" value="${file.fileno}" class="fileno"/>
        <td>
        	   <div class="text-dark fileName">${file.filename}</div>
            <%-- <a href="javascript:void(0);" class="text-dark">${file.filename}</a> --%>
@@ -35,7 +36,7 @@
 			</div>
            </td>
            <td>
-           	<a href="javascript:void(0);" class="action-icon px-1"><div data-bs-toggle="modal" data-bs-target="#deleteFileModal"> <i class="mdi mdi-delete"></i></a>
+           	<button id="deleteFileBtn" class="btn action-icon px-1 text-danger <c:if test="${mem.name!=file.name }">disabled</c:if>"><i class="mdi mdi-delete-outline me-1"></i></button>
            </td>
        </tr>
    	</c:forEach>

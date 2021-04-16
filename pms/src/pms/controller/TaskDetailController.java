@@ -32,6 +32,18 @@ public class TaskDetailController {
 		return "task_detail";
 	}
 	
+//		// http://localhost:8080/pms/taskdetail.do?method=test
+//		@GetMapping(params="method=test") // 서브 태스크 리스트 출력 
+//		public String test(@RequestParam("task_no") int task_no, Model d) {
+//			service.taskFileList(task_no);
+//			d.addAttribute("detail",service.taskDetail(task_no));
+//			d.addAttribute("subdetail",service.subtaskList(task_no));
+//			d.addAttribute("taskcurrval",service.taskcurrval());
+//			d.addAttribute("comment",service.commentList(task_no));
+//			return "task_detail_sub_temp";
+//		}
+//	
+	
 	// http://localhost:8080/pms/taskdetail.do?method=sub
 	@GetMapping(params="method=sub") // 서브 태스크 리스트 출력 
 	public String subtask(@RequestParam("task_no") int task_no, Model d) {
@@ -41,7 +53,6 @@ public class TaskDetailController {
 		d.addAttribute("comment",service.commentList(task_no));
 		return "subtaskList";
 	}
-	
 	// http://localhost:8080/pms/taskdetail.do?method=commentList
 	@GetMapping(params="method=commentList") //커멘트 리스트 출력 
 	public String commentList(@RequestParam("task_no") int task_no, Model d) {
@@ -141,10 +152,6 @@ public class TaskDetailController {
 	@ResponseBody
 	public String insertTaskFile(@RequestParam("task_no") int task_no, TaskFile tf, Model d) {
 		service.insertTaskFile(tf);
-//		d.addAttribute("detail",service.taskDetail(task_no));
-//		d.addAttribute("subdetail",service.subtaskList(task_no));
-//		d.addAttribute("taskcurrval",service.taskcurrval());
-//		d.addAttribute("comment",service.commentList(task_no));
 		d.addAttribute("success","Y");
 		System.out.println("파일업로드"); // {"success":"Y"}
 		return "{\"success\":\"Y\"}";
@@ -167,6 +174,13 @@ public class TaskDetailController {
 		// viewer 안에 선언한 모델명 
 		// 컨테이너 안에 선언되어 있는 viewer명 
 		return "downloadviewer";
+	}
+	
+	@RequestMapping(params="method=deleteTaskFile")
+	public String deleteTaskFile(@RequestParam("fileno") int fileno,Model d) {
+		service.deleteTaskFile(fileno);
+		d.addAttribute("success","Y");
+		return "pageJsonReport";
 	}
 	
 	@ModelAttribute("showMember")  //프로젝트 별 인원 공통 어트리뷰트 

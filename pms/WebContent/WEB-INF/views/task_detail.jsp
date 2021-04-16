@@ -38,7 +38,6 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min.js"></script>
 <script type="text/javascript">
 
 	/* jQuery.noConflict();   */
@@ -375,6 +374,7 @@
 			 var status={};
 			 var item=$(this).closest(".form-check");
 			 var task_no = item.find(".task_no").text();
+			 var taskNo = "${detail.task_no}";
 			 var task_status = item.find(".task_status").val();
 			 status.task_no =task_no;
 			 // alert(task_no+" "+task_status);
@@ -388,7 +388,8 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					 // $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+				 	  location.href="${path}/taskdetail.do?method=list&task_no="+taskNo;
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -432,6 +433,29 @@
 				var task_no = "${detail.task_no}";
 				// alert(filename);
 			 	location.href="${path}/taskdetail.do?method=download&task_no="+task_no+"&filename="+filename;
+		 });
+		 $("#fileList").on("click","#deleteFileBtn",function(){
+				var item = $(this).closest(".fileList");
+				var fileno = item.find(".fileno").val();
+				var deletefile={};
+				deletefile.fileno=fileno;
+				deletefile.task_no="${detail.task_no}";
+				// alert(fileno);
+				$.ajax({
+					type:"post",
+					  url:"${path}/taskdetail.do?method=deleteTaskFile",
+					  data:deletefile,
+					  dataType:"json",
+					  success:function(data){
+						  if(data.success=="Y")
+						  console.log(data);
+						  $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
+					  },
+					  error:function(err){
+						  alert("에러발생: "+err);
+						  console.log(err);
+					  }
+				});
 		 });
 		 
 		 function commentVal(){
@@ -497,13 +521,13 @@
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
 						            <li class="nav-item">
-						                      <a href="${path }/task.do?method=view"  class="nav-link ">
+						                      <a href="${path }/task.do?method=view&no=${detail.project_no }"  class="nav-link ">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-book-open"></i></span>
 						                    <span class="d-none d-sm-inline-block">오버뷰</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=list" class="nav-link active">
+						                <a href="${path}/task.do?method=list&no=${detail.project_no }" class="nav-link active">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-task"></i></span>
 						                    <span class="d-none d-sm-inline-block">태스크리스트</span>
 						                </a>
@@ -675,7 +699,7 @@
 
                                         <div class="mt-4">
                                             <div class="mt-4" id="subtaskList">
-												 <!-- 여기에 서브태스크 리스트 출력  -->                                                
+												 <!-- 여기에 서브태스크 리스트 출력  -->   
                                             </div> <!-- end sub tasks -->
                                         </div>
                                     </div>
@@ -786,7 +810,7 @@
                                     <i class="bx bx-aperture h1 text-white"></i>
                                     <h4 class="mt-2 text-white">태스크 삭제</h4>
                                     <p class="mt-3 text-white">태스크를 삭제하시겠습니까?</p>
-                                    <button type="button" class="btn btn-light my-2 <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
+                                    <button type="button" class="btn btn-light my-2"  data-bs-toggle="modal" id="deleteSubtaskBtn">삭제</button>
                                     <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
@@ -853,7 +877,7 @@
 		                             <div class="modal-footer">
 		                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
 		                              
-		                                <input type="button" class="btn btn-info waves-effect waves-light <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
+		                                <input type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
 		                            </div>
 		                        </div><!-- /.modal-content -->
 		                    </div><!-- /.modal-dialog -->
@@ -1119,22 +1143,7 @@
               </div><!-- /.modal -->
                     
                 <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->
 
             </div>
@@ -1151,7 +1160,6 @@
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
 
-		<script src="${path}/a00_com/jquery.min.js"></script>
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
@@ -1173,7 +1181,6 @@
         <script src="${path}/Admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
         <script src="${path}/Admin/dist/assets/js/pages/form-advanced.init.js"></script>
-        <script src="${path}/a00_com/jquery.min.js"></script>
         
 </body>
 </html>

@@ -8,33 +8,81 @@
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="utf-8" />
-        <title>Tasks List</title>
-        <style type="text/css">
-        table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
-        </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
+<head>
+<meta charset="utf-8" />
+<title>Tasks List</title>
+<style type="text/css">
+	table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
+	.wrap-tasklist-btn { position:absolute; top:20px; right:20px;  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <!-- App favicon -->
+<link rel="shortcut icon" href="${path }/Admin/dist/assets/images/favicon.ico">
 
-		<!-- App css -->
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+<!-- plugin css -->
+<link href="${path }/Admin/dist/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+ <!-- Plugins css -->
+ <link href="${path }/Admin/dist/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
 
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+<!-- App css -->
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+<link href="${path }/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-		<!-- icons -->
-		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-		<%-- j-query --%>
-		<script type="text/javascript" src="/springweb/a00_com/jquery-3.5.1.js"></script>
-<script>
+<link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+<link href="${path }/Admin/dist//assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<script src="${path}/a00_com/jquery.min.js"></script>
+<script src="${path}/a00_com/popper.min.js"></script>
+<script src="${path}/a00_com/jquery-ui.js"></script>
+<script type="text/javascript">
 $(document).ready(function(){
+	
+	
+$("#btnAddTaskForm").click(function(){
+	$("#addTaskModal").modal("show");
+	
+});
 
+	
+$("#btnAddTask").click(function(){
+	
+	var addform = {
+		task_name : $("#Mtask_name").val(),
+		task_content : $("#Mtask_content").val(),
+		pno : $("#MaddTask_name").val(),
+		task_property : $("#Mtask_property").val(),
+		startdte : $("#Mstartdte").val(),
+		enddte :  $("#enddte").val()
+	};
+	// 태스크 추가 모달
+	$.ajax({
+		  type:"post",
+		  url:"${path}/task.do?method=insert",
+		  data: addform,
+		  dataType:"json",
+		  contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		  success:function(data){
+			  if(data.success=="Y")
+			  console.log(data);
+			  $("#addTaskModal").modal("hide");
+			  
+		  },
+		  error:function(err){
+			  alert("에러발생: "+err);
+			  console.log(err);
+		  }
+	});  
+	 // 추가 후 모달 창 클리어 
+});
 });
 </script>
     </head>
@@ -61,7 +109,7 @@ $(document).ready(function(){
                     <div class="container-fluid">
                         <div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name}</button></a>
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${TaskList[0].project_name}</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -130,6 +178,9 @@ $(document).ready(function(){
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
+                                       <div class="wrap-tasklist-btn">
+                                       <button type="button" class="btn btn-warning waves-effect waves-light" id="btnAddTaskForm"><i class="mdi mdi-briefcase-plus me-1"></i>태스크 추가</button>
+                                       </div>
                                         <h4 class="header-title">Tasks List</h4>
                                         <p class="sub-header">
                                             현재 프로젝트의 전체 태스크 리스트 입니다.
@@ -173,8 +224,7 @@ $(document).ready(function(){
                                                     <td>${task.name}</td>
                                                     <td> <fmt:parseDate value="${task.enddte}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
 														 <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
-														 </td>                                             
-                                                      
+														 </td>                                                                                                 
                                                       <td>
                                                       
                                                       <c:choose>    
@@ -261,7 +311,78 @@ $(document).ready(function(){
                     </div> <!-- container-fluid -->
 
                 </div> <!-- content -->
-
+                
+ 				<!-- 태스크 추가 모달  -->
+				 <!--  Modal content for the Large example   tabindex="-1"-->
+                <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">메인태스크 추가</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">								
+                            	<div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="addTask_task_name" class="form-label">태스크</label>
+                                            <input type="text" class="form-control"  id="Mtask_name" placeholder="태스크명">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="addTask_task_content" class="form-label">내용</label>
+                                            <textarea row="5" class="form-control" id="Mtask_content" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="addTask_name" class="form-label">담당자</label>
+                                            <select class="form-control" id="MaddTask_name">
+                                            	  <option value="">사원선택</option>
+                                            	 <c:forEach var="mem" items="${taskMember}">
+                                                   <option value="${mem.pno }">${mem.name }</option>
+                                                 </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="addTask_task_priority" class="form-label">중요도</label>
+                                            <select class="form-control" id="Mtask_priority">
+                                            	<option value="High">High</option>
+                                            	<option value="Medium">Medium</option>
+                                            	<option value="Low">Low</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="addTask_startdte" class="form-label">시작일</label>
+                                            <input type="date" class="form-control" id="Mstartdte">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="addTask_enddte" class="form-label">종료일</label>
+                                            <input type="date" class="form-control" id="Menddte">
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="modal-footer"><%--data-bs-dismiss="modal" --%>
+                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light"  id="btnAddTask">추가</button>
+                              </div>     
+                            </div>
+                      
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                
                 <!-- Footer Start -->
             <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->

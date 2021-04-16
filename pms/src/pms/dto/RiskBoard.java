@@ -1,6 +1,8 @@
 package pms.dto;
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RiskBoard {
 	private int rnum;
 	private int risk_no;	
@@ -12,12 +14,26 @@ public class RiskBoard {
 	private String risk_status;
 	private String project_name;
 	private String risk_writer;
+	private MultipartFile[] report;
 	public RiskBoard() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	
+	
+	public MultipartFile[] getReport() {
+		return report;
+	}
+
+
+
+	public void setReport(MultipartFile[] report) {
+		this.report = report;
+	}
+
+
+
 	public String getRisk_writer() {
 		return risk_writer;
 	}

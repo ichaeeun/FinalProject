@@ -39,4 +39,6 @@ public interface TaskDetailDao {
 	public ArrayList<TaskFile> getTaskFile(int task_no);
 	
 	public ArrayList<TaskFile> taskFileList(int task_no); 
+	
+	public void deleteTaskFile(int fileno);
 }

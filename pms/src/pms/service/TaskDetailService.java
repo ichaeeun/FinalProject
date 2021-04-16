@@ -30,7 +30,9 @@ public class TaskDetailService {
 	
 	public Task taskDetail(int task_no) {
 		Task task = dao.taskDetail(task_no);
-		task.setFileInfo(dao.getTaskFile(task_no));
+		if(task!=null) {
+			task.setFileInfo(dao.getTaskFile(task_no));
+		}
 		return task;
 	}
 	public ArrayList<TaskFile> taskFileList(int task_no){
@@ -154,4 +156,8 @@ public class TaskDetailService {
 					}
 				}
 	}; 
+	
+	 public void deleteTaskFile(int fileno) {
+		 dao.deleteTaskFile(fileno);
+	 }
 }

@@ -6,17 +6,26 @@ public class Overview {
 	private int task_done;
 	private int task_tot;
 	private int progress;
+	private String project_name;
+	private String project_content;
+	private int project_no;
 	public Overview() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Overview(String pno, String name, int task_done, int task_tot) {
+	public Overview(String project_name) {
+		super();
+		this.project_name = project_name;
+	}
+
+	public Overview(String pno, String name, int task_done, int task_tot, String project_name) {
 		super();
 		this.pno = pno;
 		this.name = name;
 		this.task_done = task_done;
 		this.task_tot = task_tot;
+		this.project_name = project_name;
 	}
 
 	public String getPno() {
@@ -25,6 +34,7 @@ public class Overview {
 	public void setPno(String pno) {
 		this.pno = pno;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -44,12 +54,36 @@ public class Overview {
 		this.task_tot = task_tot;
 	}
 
-	public int getProgress() {
+	public int getProgress(){
 		return progress;
 	}
 
 	public void setProgress(int progress) {
 		this.progress = progress;
+	}
+
+	public String getProject_name() {
+		return project_name;
+	}
+
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+
+	public String getProject_content() {
+		return project_content;
+	}
+
+	public void setProject_content(String project_content) {
+		this.project_content = project_content;
+	}
+
+	public int getProject_no() {
+		return project_no;
+	}
+
+	public void setProject_no(int project_no) {
+		this.project_no = project_no;
 	}
 
 }

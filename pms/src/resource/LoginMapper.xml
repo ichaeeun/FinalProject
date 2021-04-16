@@ -9,10 +9,12 @@
 		select * from pms_member where id = #{id}
 							and pass = #{pass}
 	</select>
-	<select id="IsPm" resultType="int" parameterType="String">
-		select project_no 
-		from pms_project
-		where pm_pno = #{pno}
+	<select id="IsPm" resultType="member" parameterType="int">
+		select a.project_no, b.*
+		from pms_project a, PMS_MEMBER b
+		WHERE a.PM_PNO = b.PNO 
+		and project_status='진행'
+		and pm_pno = #{pno}
 	</select>
 </mapper>  
  

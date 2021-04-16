@@ -69,6 +69,16 @@
 		INSERT INTO PMS_MEMBER 
 		values(pms_pno_seq.nextval,#{id},#{pass},#{name},#{email},#{part},#{auth})
 	</insert>
+	<!-- public void deleteMember(int pno) -->
+	<delete id="deleteMember" parameterType="int">
+		delete from pms_member
+		where pno = #{pno}
+	</delete>
+	<!-- public ArrayList<pms_project> allProject(); -->
+	<select id="allProject" resultType="pms_project">
+		select distinct project_name
+		from pms_project
+	</select>
 </mapper>   
 <!-- 
 <task 요청 페이지>
@@ -99,7 +109,12 @@
 6. 계정 생성 (insert) pms_member
 	- 부서와 직급 뿌리기 (part와 auth)
 	- 계정생성 버튼 누르면 insert로 pms_member에 추가하기
-	- 
+7. 프로젝트 할당
+	- 프로젝트할당 버튼 누르면 
+	- 해당 사원의 pno가 값으로 넘어가고,
+	- 모달에서 프로젝트 이름을 select로 띄운 뒤 그걸 선택하면
+	- 해당 프로젝트명으로 프로젝트no를 가져와서
+	- 위의 사원pno와 프로젝트no를 이용하여 프로젝트 할당(insert)를 한다.  
  -->
 
 

@@ -127,6 +127,11 @@
                 </c:if>
                 
                 <c:if test="${mem.auth == 'pm' }">
+                 <li>
+                	<a href="${path }/main.do?method=main">
+                        <span> Dashboards </span>
+                    </a>
+                </li>
                 <li>
                     <a href="#sidebarTasks"  target="_self" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTasks">
                         <span> 프로젝트 </span>  
