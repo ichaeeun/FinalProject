@@ -293,28 +293,28 @@
                                 </div>
     
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="${path }/mypage.do?method=my&pno=${mem.pno }" class="dropdown-item notify-item">
                                     <i class="ri-account-circle-line"></i>
-                                    <span>My Account</span>
+                                    <span>My Page</span>
                                 </a>
 
-                                <!-- item-->
+                               <%--  <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="ri-settings-3-line"></i>
                                     <span>Settings</span>
                                 </a>
 
-                                <!-- item-->
+                                item
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="ri-wallet-line"></i>
                                     <span>My Wallet <span class="badge bg-success float-end">3</span> </span>
                                 </a>
 
-                                <!-- item-->
+                                item
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="ri-lock-line"></i>
                                     <span>Lock Screen</span>
-                                </a>
+                                </a> --%>
 
                                 <div class="dropdown-divider"></div>
 
