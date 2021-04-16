@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.dto.pms_projectSch;
 
@@ -20,9 +21,15 @@ public interface ProjectDao {
 	// 본인이 속한 프로젝트 리스트 출력(완료)
 	public ArrayList<pms_project> projectList2(int pno);
 	
-	
 	public pms_project getProject(int pno);
-	public void insertProject(pms_project insert);
-	public void updateProject(pms_project update);
+	
+	public void insertProject(pms_project insert);		// 프로젝트 추가
+	public void insertProejectAdd(pms_project insert);	// 인원할당 테이블에(PM번호, 프로젝트번호)추가
+		
+	public void updateProject(pms_project update);		// 프로젝트 수정
+	
+	
+	
+	
 }
 
