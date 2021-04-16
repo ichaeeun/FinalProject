@@ -65,14 +65,15 @@ public class RiskController {
 	
 	// http://localhost:7080/pms/risk.do?method=download
 	// 화면단에 클릭시, 
-	// http://localhost:7080/board/board.do?method=download&fname=파일명
+	// http://localhost:7080/board/risk.do?method=download&filename=파일명
 	@RequestMapping(params="method=download")
-	public String download(@RequestParam("fname") String fname, Model d) {
-		System.out.println("파일명 : "+fname);
-		d.addAttribute("downloadFile", fname);
+	public String download(@RequestParam("filename") String filename, Model d) {
+		System.out.println("파일명 : "+filename);
+		d.addAttribute("downloadFile", filename);
 		// viewer안에 선언한 모델명 - 파일다운로드뷰어에 같은 이름을 사용해준다.
 		// 컨테이너 안에 있는 viewer명.
-		return"downloadviewer";
+		return"downloadviewerrisk";
 	}
+	
 	
 }

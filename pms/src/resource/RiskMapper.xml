@@ -36,7 +36,7 @@
 	<select id="getBoard" resultType="riskboard" parameterType="int">
 		select * 
 		from riskboard 
-		where risk_no=#{risk_no}
+		where risk_no = #{risk_no}
 	</select>
 	<!-- public void uptStatus (UptStatus upt_satus) -->
 	<update id="uptStatus" parameterType="uptstatus">
@@ -44,17 +44,21 @@
 		SET RISK_STATUS = #{risk_status}
 		WHERE risk_no = #{risk_no}
 	</update>
-	<select id="fileInfo" resultType="riskfile" parameterType="int">
-		select *
-		from risk_file
-		where fno = #{fno}
-	</select>
+<!-- 	<select id="fileInfo" resultType="riskfile" parameterType="int"> -->
+<!-- 		select * -->
+<!-- 		from risk_file -->
+<!-- 		where fno = #{fno} -->
+<!-- 	</select> -->
 	
 	<!-- public void insertRiskFile(RiskFile riskfile) -->
 	<insert id="insertRiskFile" parameterType="riskfile">
-		INSERT INTO risk_file values(riskfile_seq.nextval,#{name},#{rnum},
+		INSERT INTO risk_file values(riskfile_seq.nextval,#{name},riskBoard_seq.currval,
 				#{filename},#{filepath},sysdate)
 	</insert>
+	<select id="fileInfo" resultType="riskfile" parameterType="int">
+		SELECT * FROM RISK_FILE
+		WHERE rnum=#{rnum}
+	</select>
 
 </mapper>  
  

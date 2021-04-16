@@ -2,6 +2,7 @@ package pms.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -18,10 +19,11 @@ import pms.dto.UptStatus;
 
 @Service
 public class RiskService {
-	@Value("${task_upload}")
-	private String upload; 
-	@Value("${task_uploadTmp}")
-	private String uploadTmp;
+	@Value("${risk_upload}")
+	private String risk_upload; 
+	@Value("${risk_uploadTmp}")
+	private String risk_uploadTmp;
+	private int i = 1;
 	
 	@Autowired(required = false)
 	private RiskDao dao;
@@ -32,10 +34,10 @@ public class RiskService {
 	public ArrayList<RiskBoard> rBoard_request(){
 		return dao.rBoard_request();
 	}
-	
-	public RiskBoard getBoard(int risk_no) {
-		return dao.getBoard(risk_no);
-	}
+//	
+//	public RiskBoard getBoard(int risk_no) {
+//		return dao.getBoard(risk_no);
+//	}
 	
 	public void uptStatus (UptStatus upt_satus) {
 		dao.uptStatus(upt_satus);
@@ -45,8 +47,22 @@ public class RiskService {
 		String fname = null;
 		File tmpFile = null;
 		File orgFile = null;
+		System.out.println(risk_upload);
+		System.out.println(risk_uploadTmp);
+		if(i == 1) {
+		      try {
+		    	  risk_upload = new String(risk_upload.getBytes("ISO-8859-1"), "UTF-8");
+		    	  risk_uploadTmp = new String(risk_uploadTmp.getBytes("ISO-8859-1"), "UTF-8");
+		      } catch (UnsupportedEncodingException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      }
+		      }
+		      i++;
+		      System.out.println(risk_upload);
+		      System.out.println(risk_uploadTmp);
 		
-		File pathFile = new File(uploadTmp);
+		File pathFile = new File(risk_uploadTmp);
 		if(pathFile.listFiles()!=null) {
 			for(File f:pathFile.listFiles()) {
 				System.out.println("삭제할 파일:" + f.getName());
@@ -57,12 +73,13 @@ public class RiskService {
 			System.out.println(mpf.getOriginalFilename());
 			fname = mpf.getOriginalFilename();
 			if(fname!=null&&!fname.trim().equals("")) {
-				tmpFile = new File(uploadTmp+fname);
+				tmpFile = new File(risk_uploadTmp+fname);
 				try {
 					mpf.transferTo(tmpFile);
-					orgFile = new File(upload+fname);
+					orgFile = new File(risk_upload+fname);
 					Files.copy(tmpFile.toPath(), orgFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
-					dao.insertRiskFile(new RiskFile(insert.getRisk_writer(),insert.getRnum(),fname,upload));
+					dao.insertRiskFile(new RiskFile(insert.getRisk_writer(),insert.getRnum(),fname,risk_upload));
+					System.out.println(insert.getRnum());
 					
 				} catch (IllegalStateException e) {
 					// TODO Auto-generated catch block
@@ -80,5 +97,15 @@ public class RiskService {
 			}
 		}
 	}
+	
+	public RiskBoard getBoard(int risk_no) {
+		RiskBoard rBoard = dao.getBoard(risk_no);
+		rBoard.setFileInfo(dao.fileInfo(risk_no));
+		for(int i = 0; i<dao.fileInfo(risk_no).size(); i++) {
+			System.out.println(dao.fileInfo(risk_no).get(i).getFilename());			
+		}
+		return rBoard;
+	}
+	
 
 }

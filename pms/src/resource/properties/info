@@ -11,3 +11,8 @@ pass = tiger
 # 태스크 파일업로드 서버 정보 upload uploadTmp
 task_upload=/Users/ichaeeun/git/FinalProject/pms/WebContent/task_upload/
 task_uploadTmp=/Users/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/pms/task_upload/
+
+# 리스크 파일업로드 서버 정보 
+
+risk_upload=C:/Users/김영하/git/FinalProject/pms/WebContent/risk_upload/
+risk_uploadTmp=C:/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/pms/risk_upload/
