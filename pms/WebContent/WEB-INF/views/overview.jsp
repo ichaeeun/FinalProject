@@ -13,6 +13,9 @@
         <title>overview</title>
         <style type="text/css">
         .project-body { text-align:left!important; }
+        .bg-vio { background-color:#B396FF!important; }
+        .text-vio { color:#B396FF!important; }
+        .curpoint { cursor: pointer; }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -61,7 +64,7 @@
                     <div class="container-fluid">
                         <div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${task.project_name}</button></a>
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${ViewMem[0].project_name} </button></a><%-- ${ViewMem.project_name} --%>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -140,10 +143,9 @@
                                                 <div class="project-body">
                                                     <div class="py-1">
                                                         <i class="fe-archive font-24"></i>
-                                                        <h3 class="text-warning">프로젝트 명: ${pms_project.project_name}</h3>
+                                                        <h3 class="text-warning">${ViewMem[0].project_name}</h3><%--  --%>
                                                         <p class="text-uppercase mb-1 font-13 fw-medium">
-                                                        프로젝트 관리 소프트웨어는 리소스 도구를 계획, 조직, 관리하는 것을 도와주고 리소스 추산치를 만드는 소프트웨어이다.<br>
-                                                        프로젝트 관리 시스템은 프로젝트의 정량적인 성과 및 진행 지표를 체계적으로 관리하기 위한 것이다. 
+                                                        ${ViewMem[0].project_content}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -161,10 +163,10 @@
                                         <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100 table01" cellspacing="0" id="tickets-table">
                                             <thead class="bg-light">
                                             <tr>
-                                                <th class="fw-medium">ID</th>
-                                                <th class="fw-medium">팀원명</th>
+                                                <th class="fw-medium" style="width:25px">ID</th>
+                                                <th class="fw-medium" style="width:100px">팀원명</th>
                                                 <th class="fw-medium">태스크 진행율</th>
-                                                <th class="fw-medium">태스크 개수</th>
+                                                <th class="fw-medium" style="width:100px">태스크 개수</th>
                                             </tr>
                                             </thead>
     
@@ -172,20 +174,24 @@
                                             <c:forEach var="view" items="${ViewMem}">
                                                 <tr>
                                                     <td><b>${view.pno}</b></td>
-                                                    <td>
-                                                        ${view.name}
-                                                    </td>
+                                                    <td class="curpoint" onclick="location.href='${path}/manpower.do?method=contacts_profile&ename=${view.name}&pno=${view.pno}'">${view.name}</td>
                                                     <td>
                                                     <c:choose>
-	                                                    <c:when test="${view.task_tot==0}">                                                 
-	                                                    	<progress value="0" max="100"></progress>                                                
+	                                                    <c:when test="${view.task_tot==0}">                                                      
+	                                                    	<div class="progress mb-0 " style="width:80%;">
+					                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1"></div>
+					                                        </div>                                        
 	                                                    </c:when>
-	    												<c:otherwise> 
-	    													<progress value="${view.task_done/view.task_tot}" max="1"></progress>
+	    												<c:otherwise>     											
+	    													<div class="progress mb-0" style="width:80%;">
+					                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="${Integer.toString(view.task_done/view.task_tot*100)}" aria-valuemin="0" aria-valuemax="100"
+					                                            style="width:${Integer.toString(view.task_done/view.task_tot*100)}%"></div>
+					                                        </div>  
+					                                
 	    												</c:otherwise>		
 	    											</c:choose>
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align:center;">
                                                         ${view.task_tot}개
                                                     </td>                                            
                                                 </tr>
