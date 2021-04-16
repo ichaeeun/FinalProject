@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pms.dao.ProjectDao;
+import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.dto.pms_projectSch;
 
@@ -82,12 +83,16 @@ public class ProjectService {
 		return pms_project;
 		
 	}
-	// 프로젝트 생성
+	// 프로젝트 추가
 	public void insertProject(pms_project insert) {
-		dao.insertProject(insert);
+		dao.insertProject(insert);		// 프로젝트 테이블에 추가
+		dao.insertProejectAdd(insert);	// 인원할당 테이블에 PM 정보입력
 	}
 	// 프로젝트 수정
 	public void updateProject(pms_project update) {
-		dao.updateProject(update);
+		dao.updateProject(update); // 프로젝트 테이블에 정보 입력
 	};
+	
+	
+	
 }

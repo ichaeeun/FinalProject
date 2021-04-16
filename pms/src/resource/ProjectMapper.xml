@@ -68,13 +68,23 @@
 		from PMS_PROJECT
 		where PROJECT_NO = #{pno}
 	</select>
-	<!-- public void insertProject(pms_project insert) --><!-- 프로젝트 생성 -->
+	<!-- public void insertProject(pms_project insert) --><!-- 프로젝트 추가 -->
 	<insert id="insertProject" parameterType="pms_project">
 		INSERT INTO PMS_PROJECT
 		VALUES (project_no_seq.nextval, #{project_name}, 
 				#{project_content}, #{start1}, #{end1}, 
 				#{pm_pno}, #{project_status})
 	</insert>
+	<!-- public void insertProejectAdd(pms_project insert); 인원할당테이블에 정보추가-->
+	<insert id="insertProejectAdd" parameterType="pms_project">
+		INSERT INTO PMS_MEMBER_PROJECT
+		VALUES (#{pm_pno}, project_no_seq.currval)
+	</insert>
+	
+	
+	
+	
+	
 	<!-- public void updateProject(pms_project update) --><!-- 프로젝트 수정 -->
 	<insert id="updateProject" parameterType="pms_project">
 		UPDATE PMS_PROJECT
@@ -86,6 +96,8 @@
 			project_status = #{project_status}
 		WHERE project_no = #{project_no}
 	</insert>
+	
+	
 	
 </mapper>  
  

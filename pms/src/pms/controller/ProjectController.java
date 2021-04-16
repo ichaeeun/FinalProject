@@ -57,13 +57,15 @@ public class ProjectController {
 	}
 	
 	
-	
 	// 프로젝트 등록
 	// http://localhost:7080/pms/project.do?method=insert
 	@RequestMapping(params="method=insert")
 	public String insertProject(pms_project insert, Model d) {
-		System.out.println("등록:"+insert.getProject_name());
+		System.out.println("#등록:"+insert.getProject_name());
+		System.out.println("프로젝트내용:"+insert.getProject_content());
+		System.out.println("담당PM의번호:"+insert.getPm_pno());
 		service.insertProject(insert);
+		
 		d.addAttribute("success", "Y");
 		return "pageJsonReport";
 	}
@@ -76,6 +78,5 @@ public class ProjectController {
 		d.addAttribute("success", "Y");
 		return "pageJsonReport";
 	}
-	
-	/* 프로젝트 완료시 보기만 가능하게 처리 */
+
 }

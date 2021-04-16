@@ -133,18 +133,18 @@
 
                                         <form:form method="post" action="${path }/taskdetail.do?method=updateSub">
 										<!-- 프로젝트 추가 Modal 창 시작-->
-											<!-- 모달창 버튼 시작 -->
-											<c:if test="${mem.auth == 'pm'}"><!-- 가진프로젝트가 없는 PM 만 추가버튼 가능 // 조건추가하기 -->
+											<!-- 프로젝트 추가버튼 시작 -->
+											<c:if test="${mem.auth == 'pm' && boardList.size() == 0}"><!-- PM이고 가진 프로젝트리스트 개수가 0일때 활성화 -->
 											
 											<div class="button-list">
-	                                            <!-- 프로젝트 추가 모달 버튼 -->
+
 	                                            
 	                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addProject">프로젝트 추가</button>
 	                                            
 	                                        </div>
 	                                        </c:if>
 	                                        
-											<!-- 모달창 버튼 끝 -->
+											<!-- 프로젝트 추가 버튼 끝 -->
 										<!-- sample modal content -->
     
                                         <div id="addProject" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
