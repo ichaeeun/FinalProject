@@ -53,7 +53,7 @@ public class GanttController {
 		System.out.println("sortorder: " + gantt.getSortorder());
 		System.out.println("holder: " + gantt.getHolder());
 		
-		Task task = service.insert_gantttotask(gantt);
+		Task task = service.insert_gantttotask(gantt,no);
 		service.insertTask(task);
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
@@ -79,7 +79,7 @@ public class GanttController {
 			service.uptProject(gantt,no);
 		}
 		else {
-			Task task = service.update_gantttotask(gantt);
+			Task task = service.update_gantttotask(gantt,no);
 			System.out.println("taskno: " + task.getTask_no());
 			service.updateTask(task);
 		}

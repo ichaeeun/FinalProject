@@ -105,7 +105,7 @@ var rightLimit;
 		gantt.config.lightbox.sections = [
 			{name:"title", height:30, map_to:"title", type:"textarea", focus:true},
 		    {name:"description", height:50, map_to:"text", type:"textarea", focus:true},
-		    /*
+		    
 		    {name:"parent",height:25, type:"parent", map_to:"parent", filter:function(id, task){ 
 		        if(task.$level > 1){         
 		            return false;     
@@ -113,8 +113,6 @@ var rightLimit;
 		            return true; 
 		        } 
 		    }},
-		    */
-		    //{name:"parent", type:"parent", allow_root:"false", root_label:"No parent"},
 		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
 		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
 		    {name:"duration", height:30, map_to:{start_date:"start_date",end_date:"end_date"}, type:"time", time_format:["%d","%m","%Y","%H:%i"]},
@@ -126,12 +124,7 @@ var rightLimit;
 		gantt.locale.labels.section_holder="holder";
 		gantt.locale.labels.section_parent = "Parent task";
 		gantt.locale.labels.section_duration = "Duration";
-		//gantt.config.start_date =  "${gnInfo.t0Date.format('yyyy.MM.dd HH:mm')}";
-		//var dated = new Date();
-		//dated.setTime(dated.getTime() + ${gnInfo.duration}*60*60*1000);
-		//gantt.config.end_date = dated;
-		//gantt.config.duration_unit = "hour";
-		//gantt.config.round_dnd_dates = false;
+		
 
 		// 서브태스크의 + 버튼 삭제
 		gantt.templates.grid_row_class = function( start, end, task ){

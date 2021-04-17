@@ -274,14 +274,14 @@ public class GanttService {
 	}
 	
 	// gantt -> task
-	public Task insert_gantttotask(Gantt gantt) {
+	public Task insert_gantttotask(Gantt gantt, int project_no) {
 		Task task = new Task();
-		int pno = 0;
-		pno = dao.getMaxPno();
-		task.setPno(pno+1); 	// 미정
+		int pno = 9001;
+		//pno = dao.getMaxPno();
+		task.setPno(pno); 	// 미정
 		task.setTask_no(0);	// mapper에서 task_no_seq로 처리
 
-		task.setProject_no(1);
+		task.setProject_no(project_no);
 		task.setTask_name(gantt.getTitle());
 		task.setTask_content(gantt.getText());
 		if(gantt.getPriority() == 1) task.setTask_priority("High");
@@ -312,7 +312,7 @@ public class GanttService {
 		dao.uptProject(pp);
 	}
 	
-	public Task update_gantttotask(Gantt gantt) {
+	public Task update_gantttotask(Gantt gantt,int project_no) {
 		Task task = new Task();
 		int pno = 0;
 		// view 단에서 holder 입력 시 자동으로 id도 셋팅되게
@@ -330,7 +330,8 @@ public class GanttService {
 		}
 		*/
 		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
-			pno = dao.getMaxPno();
+			//pno = dao.getMaxPno();
+			pno = 9000;
 			task.setPno(pno+1); 	// 미정
 		} 
 		else {
@@ -340,7 +341,7 @@ public class GanttService {
 		}
 		
 		task.setTask_no(gantt.getId());
-		task.setProject_no(1);
+		task.setProject_no(project_no);
 		task.setTask_name(gantt.getTitle());
 		task.setTask_content(gantt.getText());
 		if(gantt.getPriority() == 1) task.setTask_priority("High");

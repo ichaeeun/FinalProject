@@ -45,6 +45,7 @@
 				task_name = #{task_name},
 				task_content = #{task_content},
 				task_priority = #{task_priority},
+				task_parent_no = #{task_parent_no},
 				startdte = #{startdte},
 				enddte = #{enddte}
 			where task_no = #{task_no}
