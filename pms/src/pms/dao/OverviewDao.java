@@ -11,6 +11,8 @@ public interface OverviewDao {
 	public ArrayList<Log> LogList(int no);
 	public ArrayList<Task> TaskList(int no);
 	public ArrayList<Task> TaskList2(int no);
+	public ArrayList<Task> doneTaskList(int no); //완료된 태스크 리스트
+	
 	// 개발자 전체 태스크 리스트
 	public ArrayList<Task> TaskListAll(int pno);
 	public ArrayList<Task> TaskListAll2(int pno);

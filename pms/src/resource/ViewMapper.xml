@@ -20,7 +20,7 @@
 	FROM pms_member t2, project_task t1, PMS_PROJECT t3
 	WHERE t1.pno = t2.pno
 	and t1.task_parent_no = 0
-	AND t2.TASK_PRIORITY NOT IN  ('완료')
+	AND t1.TASK_STATUS NOT IN  ('완료')
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t1.project_no = #{no}
 </select>
@@ -31,9 +31,19 @@
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
 	and t1.task_parent_no = 0
-	AND t2.TASK_PRIORITY NOT IN  ('완료')
+	AND t1.TASK_STATUS NOT IN  ('완료')
 	AND t1.project_no = #{no}
 	order by t1.enddte
+</select>
+
+<!-- 	public ArrayList<Task> TaskList2(int no); -->
+<select id="doneTaskList" resultType="task" parameterType="int">
+	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
+	FROM pms_member t2, project_task t1
+	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 0
+	AND t1.TASK_STATUS =  '완료'
+	AND t1.project_no = #{no}
 </select>
 
 <!-- 개발자버전 task list -->

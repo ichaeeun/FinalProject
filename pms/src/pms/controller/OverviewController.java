@@ -22,12 +22,13 @@ public class OverviewController {
 	@Autowired(required = false)
 	private OverviewService service;
 
-//  http://localhost:7080/pms/task.do?method=list
+//  http://localhost:7080/pms/task.do?method=list&no=1
 	@RequestMapping(params="method=list")
 	public String taskList(@RequestParam("no") int no,Task task, Model d) {
 		d.addAttribute("TaskList", service.TaskList(no));
 		d.addAttribute("TaskList2", service.TaskList2(no));
-
+		d.addAttribute("donTaskList", service.doneTaskList(no));
+		
 		System.out.println(task.getPno());
 		return "task_list";
 	}

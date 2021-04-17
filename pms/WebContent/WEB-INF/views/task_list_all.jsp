@@ -178,7 +178,7 @@ $(document).ready(function(){
                                             </tr>
                                             </thead>
                                             <tbody>
-                                          <c:forEach var="task" items="${TaskListAll2}">          
+                                          <c:forEach var="task" items="${TaskListAll2}" begin="0" end="4">          
                                                 <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
