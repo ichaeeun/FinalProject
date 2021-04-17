@@ -37,6 +37,10 @@ public class OverviewService {
 	public ArrayList<Task> TaskListAll2(int pno){
 		return dao.TaskListAll2(pno);
 	}
+	public ArrayList<Task> doneMyList(int pno){
+		return dao.doneMyList(pno);
+	}
+	
 	public ArrayList<Overview> ViewMem(int no){ // 오버뷰 멤버 & progress출력
 		return dao.ViewMem(no);
 	}

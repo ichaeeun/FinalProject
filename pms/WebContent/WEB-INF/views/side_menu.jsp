@@ -195,7 +195,7 @@
                 
                 <c:if test="${mem.auth == 'wk' }">
                 <li>
-                    <a href="${path }/task.do?method=list">
+                    <a href="${path}/main.do?method=main">
                         <span> My Task </span>
                     </a>
                 </li>

@@ -40,16 +40,19 @@ public class OverviewController {
 	
 //  http://localhost:7080/pms/task.do?method=dlist
 	@RequestMapping(params="method=dlist")
-	public String deTaskList(@RequestParam("pno") int pno, @RequestParam(value="pno",required = false) int no, Task task, Model d) {
-		
+	public String deTaskList(HttpSession session, @ModelAttribute("sch") Member sch, Task task, Model d) {
+		Member m = (Member)session.getAttribute("mem");
 		/* Member m = (Member)session.getAttribute("mem"); 
 		 * System.out.println(m.getPno());*/
 
-		d.addAttribute("TaskListAll", service.TaskListAll(pno));
-		d.addAttribute("TaskListAll2", service.TaskListAll2(pno));
-		d.addAttribute("project",gservice.getProject(no));
+		d.addAttribute("TaskListAll", service.TaskListAll(m.getPno()));
+		d.addAttribute("TaskListAll2", service.TaskListAll2(m.getPno()));
+		d.addAttribute("project",gservice.getProject(m.getPno()));
+		System.out.println("로그인한사람 pno");
+		System.out.println(m.getPno());
 		System.out.println(task.getPno());
-			
+		System.out.println(task.getName());
+		
 		return "task_list_all";
 	}	
 	

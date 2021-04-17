@@ -1,8 +1,11 @@
 package pms.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.dto.Member;
+import pms.dto.Task;
 import pms.service.LoginService;
 import pms.service.ManPowerService;
 import pms.service.OverviewService;
@@ -72,8 +76,12 @@ public class LoginController {
 				
 				d.addAttribute("TaskListAll", oservice.TaskListAll(m.getPno()));
 				d.addAttribute("TaskListAll2", oservice.TaskListAll2(m.getPno()));
-				oservice.doneTaskList(m.getPno());	
+				d.addAttribute("doneMyList",oservice.doneMyList(m.getPno()));
 				
+				System.out.println("개발자정보");
+				System.out.println(m.getPno());
+				System.out.println(m.getName());
+				System.out.println("######"+oservice.TaskListAll(m.getPno()));
 				page = "task_list_all";
 			}
 			else if(m.getAuth().equals("ceo")) {page = "dashboard_ceo";}

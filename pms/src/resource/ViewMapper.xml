@@ -19,7 +19,7 @@
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority, t3.PROJECT_NAME 
 	FROM pms_member t2, project_task t1, PMS_PROJECT t3
 	WHERE t1.pno = t2.pno
-	and t1.task_parent_no = 0
+	and t1.task_parent_no = 1
 	AND t1.TASK_STATUS NOT IN  ('완료')
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t1.project_no = #{no}
@@ -31,7 +31,7 @@
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
-	and t1.task_parent_no = 0
+	and t1.task_parent_no = 1
 	AND t1.TASK_STATUS NOT IN  ('완료')
 	AND t1.project_no = #{no}
 	order by t1.enddte
@@ -42,7 +42,7 @@
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
-	and t1.task_parent_no = 0
+	and t1.task_parent_no = 1
 	AND t1.TASK_STATUS =  '완료'
 	AND t1.project_no = #{no}	
 </select>
@@ -52,7 +52,7 @@
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority, t3.PROJECT_NAME 
 	FROM pms_member t2, project_task t1, PMS_PROJECT t3
 	WHERE t1.pno = t2.pno
-	and t1.task_parent_no = 0
+	and t1.task_parent_no = 1
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t2.pno = #{pno}
 </select>
@@ -60,12 +60,19 @@
 	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority, t3.PROJECT_NAME 
 	FROM pms_member t2, project_task t1, PMS_PROJECT t3
 	WHERE t1.pno = t2.pno
-	and t1.task_parent_no = 0
+	and t1.task_parent_no = 1
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t2.pno = #{pno}
 	order by t1.enddte
 </select>
-
+<select id="doneMyList" resultType="task" parameterType="int">
+	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority
+	FROM pms_member t2, project_task t1
+	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 1
+	AND t1.TASK_STATUS =  '완료'
+	AND t2.pno = #{pno}
+</select>
 <!-- 	public ArrayList<Overview> ViewMem(int no); -->
 <select id="ViewMem" resultType="view" parameterType="int">
 SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project_no,

@@ -82,7 +82,7 @@ $(document).ready(function(){
                                     <div class="card-body">
                                         <h4 class="header-title">Tasks List</h4>
                                         <p class="sub-header">
-                                            현재 프로젝트의 전체 태스크 리스트 입니다.
+                                            현재 나의 전체 태스크 리스트 입니다.
                                         </p>
     
                                         <div class="mb-2">
@@ -191,10 +191,10 @@ $(document).ready(function(){
                                                       	<span class="badge label-table badge-soft-danger p-1">
                                                       </c:when>
                                                       <c:when test="${task.task_priority eq 'Medium'}">
-                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      	<span class="badge label-table badge-soft-primary p-1">
                                                       </c:when>
                                                       <c:otherwise>
-                                                      	<span class="badge label-table badge-soft-info p-1">
+                                                      	<span class="badge label-table badge-soft-success p-1">
                                                       </c:otherwise>
                                                   	</c:choose>	
                                                   	${task.task_priority}</span></td> 
@@ -207,6 +207,86 @@ $(document).ready(function(){
                             </div> <!-- end col-->
                         </div>
                         <!-- end row -->
+                           <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">     
+                                        <h4 class="header-title">Done List</h4>
+                                        <p class="sub-header">
+                                            나의 완료된 태스크 리스트 입니다.
+                                        </p>
+                                        <div class="mb-2">
+                                            <div class="row row-cols-lg-auto g-2 align-items-center">
+                                                <div class="col-12">
+                                                    <div>
+                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
+                                                            <option value="">Show all</option>
+                                                            <option value="High">High</option>
+                                                            <option value="Medium">Medium</option>
+                                                            <option value="Low">Low</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                <thead>
+                                                <tr>
+                                                	<th>Task ID</th>
+                                                    <th data-toggle="true">Tasks</th>
+                                                    <th>Assign to</th>
+                                                    <th>Due Date</th>
+                                                    <th>Task priority</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach var="task" items="${doneMyList}">          
+                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
+                                                	<td>${task.task_no}</td>
+                                                    <td>${task.task_name}</td>
+                                                    <td>${task.name}</td>
+                                                    <td> <fmt:parseDate value="${task.enddte}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
+														 <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
+														 </td>                                                                                                 
+                                                      <td>
+                                                      
+                                                      <c:choose>    
+                                                      <c:when test="${task.task_priority eq 'High'}">
+                                                      	<span class="badge label-table badge-soft-danger p-1">
+                                                      </c:when>
+                                                      <c:when test="${task.task_priority eq 'Medium'}">
+                                                      	<span class="badge label-table badge-soft-primary p-1">
+                                                      </c:when>
+                                                      <c:otherwise>
+                                                      	<span class="badge label-table badge-soft-success p-1">
+                                                      </c:otherwise>
+                                                  	</c:choose>	
+                                                  	${task.task_priority}</span></td> 
+                                                </tr>
+                                            </c:forEach>                                                                   
+                                                </tbody>
+                                                <tfoot>
+                                                <tr class="active">
+                                                    <td colspan="10">
+                                                        <div>
+                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div> <!-- end .table-responsive-->
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                        </div> 
+                        
                         
                     </div> <!-- container-fluid -->
 
