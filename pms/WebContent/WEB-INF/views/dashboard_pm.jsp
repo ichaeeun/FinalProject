@@ -84,14 +84,15 @@
 						<div class="row">
 							<div class="md-4"> <h4 class="page-title project_no"> </h4></div>
 							
+							<!-- 대시보드 상단 4칸() 시작 -->
 							<div class="row">
 						        <div class="col-xl-3 col-md-6">
 						            <div class="card">
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Campaign Sent</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">865</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">현재 프로젝트</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">10</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -112,8 +113,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">New Leads</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">384</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">참여인원</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">11</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 3.27%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -134,8 +135,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">Deals</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">34,521</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">리스크 수</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">5</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -156,8 +157,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Booked Revenue</h5>
-						                            <h3 class="my-2 py-1">$<span data-plugin="counterup">89,357</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">태스크 수</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">8</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 34.61%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -173,6 +174,118 @@
 						            </div>
 						        </div><!-- end col -->
 						    </div>
+						    <div class="row">
+	                            <div class="col-xl-3 col-md-6">
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div class="knob-chart" dir="ltr">
+	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#18c984"
+	                                                    data-bgColor="#d1f2eb" value="80"
+	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
+	                                                    data-thickness=".15"/>
+	                                            </div>
+	                                            <div class="text-end">
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">10</span> </h3>
+	                                                <p class="text-muted mb-0">현재 프로젝트</p>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div><!-- end col -->
+	                            
+	                            <div class="col-xl-3 col-md-6">
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div class="knob-chart" dir="ltr">
+	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#526dee"
+	                                                    data-bgColor="#d4dbfd" value="80"
+	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
+	                                                    data-thickness=".15"/>
+	                                            </div>
+	                                            <div class="text-end">
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">11</span> </h3>
+	                                                <p class="text-muted mb-0">참여인원</p>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div><!-- end col -->
+	
+	                            <div class="col-xl-3 col-md-6">
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div class="knob-chart" dir="ltr">
+	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#f672a7"
+	                                                    data-bgColor="#fde3ed" value="77"
+	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
+	                                                    data-thickness=".15"/>
+	                                            </div>
+	                                            <div class="text-end">
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">5</span> </h3>
+	                                                <p class="text-muted mb-0">리스크 수</p>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div><!-- end col -->
+	
+	                            <div class="col-xl-3 col-md-6">
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div class="knob-chart" dir="ltr">
+	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#6c757d"
+	                                                    data-bgColor="#e2e3e5" value="35"
+	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
+	                                                    data-thickness=".15"/>
+	                                            </div>
+	                                            <div class="text-end">
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">7</span> </h3>
+	                                                <p class="text-muted mb-1">태스크 수</p>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div><!-- end col -->
+	                            <div class="col-xl-4">
+	                                <!-- Portlet card -->
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="card-widgets">
+	                                            <a href="javascript: void(0);" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+	                                            <a data-bs-toggle="collapse" href="#cardCollpase21" role="button" aria-expanded="false" aria-controls="cardCollpase21"><i class="mdi mdi-minus"></i></a>
+	                                            <a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+	                                        </div>
+	                                        <h4 class="header-title mb-0">Basic RadialBar Chart</h4>
+	
+	                                        <div id="cardCollpase21" class="collapse pt-3 show" dir="ltr">
+	                                            <div id="apex-radialbar-1" class="apex-charts" data-colors="#48c2e7"></div>
+	                                        </div> <!-- collapsed end -->
+	                                    </div> <!-- end card-body -->
+	                                </div> <!-- end card-->
+	                            </div> <!-- end col-->
+	
+	                            <div class="col-xl-4">
+	                                <!-- Portlet card -->
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <div class="card-widgets">
+	                                            <a href="javascript: void(0);" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+	                                            <a data-bs-toggle="collapse" href="#cardCollpase22" role="button" aria-expanded="false" aria-controls="cardCollpase22"><i class="mdi mdi-minus"></i></a>
+	                                            <a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+	                                        </div>
+	                                        <h4 class="header-title mb-0">Multiple RadialBars</h4>
+	
+	                                        <div id="cardCollpase22" class="collapse pt-3 show" dir="ltr">
+	                                            <div id="apex-radialbar-2" class="apex-charts" data-colors="#48c2e7,#f672a7,#18c984,#f7b84b"></div>
+	                                        </div> <!-- collapsed end -->
+	                                    </div> <!-- end card-body -->
+	                                </div> <!-- end card-->
+	                            </div> <!-- end col-->
+                            </div>
 						    <!-- end row -->
 						
 						
@@ -181,7 +294,7 @@
 						            <div class="card">
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
-						                        <h4 class="header-title">Campaigns</h4>
+						                        <h4 class="header-title">Campaigns차트</h4>
 						                        <div class="btn-group mb-2">
 						                            <button type="button" class="btn btn-xs btn-light active">Today</button>
 						                            <button type="button" class="btn btn-xs btn-light">Weekly</button>
@@ -511,6 +624,21 @@
 		
 		<!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+        <!-- KNOB JS -->
+        <script src="${path}/Admin/dist/assets/libs/jquery-knob/jquery.knob.min.js"></script>
+        <!-- Apex js-->
+        <script src="${path}/Admin/dist/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
+        <script src="${path}/Admin/dist/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
+        
+        <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+        <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
+        
+        <!-- Dashboard init-->
+        <script src="${path}/Admin/dist/assets/js/pages/dashboard-crm.init.js"></script>
+        <!-- init js -->
+        <script src="${path}/Admin/dist/assets/js/pages/apexcharts.init.js"></script>
+        
 		<!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>        
     </body>

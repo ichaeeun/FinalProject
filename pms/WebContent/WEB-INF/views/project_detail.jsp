@@ -67,8 +67,8 @@ $(document).ready(function(){
 		sch.project_no = $("#project_no").val();
 		sch.project_name = $("#project_name").val();
 		sch.project_content = $("#project_content").val();
-		sch.start1 = $("#start1").val();
-		sch.end1 = $("#end1").val();
+		sch.start1 = $("#start1").val()+"T00:00:00.000Z";
+		sch.end1 = $("#end1").val()+"T18:00:00.000Z";
 		sch.pm_pno = $("#pm_pno").val();
 		sch.project_status = $("#project_status").val();
 		

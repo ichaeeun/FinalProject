@@ -58,7 +58,7 @@
 						console.log(data);
 						alert("등록 성공");
 						$("#closeBtn").click();
-						location.href="${path}/project.do?method=project_list";
+						location.href="${path}/project.do?method=list&pno="+${mem.pno};
 					}
 				},
 				error:function(err){
@@ -74,8 +74,9 @@
 			var sch = {};
 			sch.project_name = $("#project_name").val();
 			sch.project_content = $("#project_content").val();
-			sch.start1 = $("#start1").val();
-			sch.end1 = $("#end1").val();
+			sch.start1 = $("#start1").val()+"T00:00:00.000Z";
+			sch.end1 = $("#end1").val()+"T18:00:00.000Z";	
+			
 			sch.pm_pno = $("#pm_pno").val();
 			sch.project_status = $("#project_status").val();
 			
@@ -267,10 +268,12 @@
                                                             ${bd.project_content}
                                                         </td>
                                                         <td>
-                                                            ${bd.start1}
+                                                        	<fmt:parseDate value="${bd.start1}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
+															<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>                             
                                                         </td>
                                                         <td>
-                                                            ${bd.end1}
+                                                            <fmt:parseDate value="${bd.end1}" var="dateFmt" pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"/>
+															<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>                            
                                                         </td>
                                                         <td>
                                                             ${bd.pm_pno}
