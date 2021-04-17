@@ -92,7 +92,7 @@ public class GanttService {
 		for(int i=0;i<task.size();i++) {
 			Gantt g = new Gantt(task.get(i).getTask_no(),
 					startarr.get(i),
-					endarr.get(i),
+					endarr.get(i), task.get(i).getTask_name(),
 					task.get(i).getTask_content(),
 					task.get(i).getTask_priority().equals("High")?1:
 						task.get(i).getTask_priority().equals("Medium")?2:3,
@@ -146,6 +146,7 @@ public class GanttService {
 			e1.printStackTrace();
 		}
 		//g.put("duration", 20); // end - start
+		g.put("title", project.getProject_name());
 		g.put("text", project.getProject_content());
 		g.put("progress", 0);
 		g.put("sortorder", 1);
@@ -162,6 +163,7 @@ public class GanttService {
 			g.put("id", gantt.get(index).getId());
 			g.put("start_date", gantt.get(index).getStart_date());
 			g.put("end_date", gantt.get(index).getEnd_date());
+			g.put("title", gantt.get(index).getTitle());
 			//g.put("duration", gantt.get(index).getDuration());
 			g.put("text", gantt.get(index).getText());
 			g.put("progress", gantt.get(index).getProgress());
@@ -181,7 +183,7 @@ public class GanttService {
 		// 파일 생성
 		
 		// 경로 변경 필요
-		
+		/*
 		String FilePath = "C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json";
 		File file = new File("C:\\Users\\주인\\git\\FinalProject\\pms\\WebContent\\Admin\\dist\\assets\\data\\data2.json");
 		
@@ -195,8 +197,8 @@ public class GanttService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		UpdateFile(FilePath,json);
+		*/
+		//UpdateFile(FilePath,json);
 		
 		return json;
 	}
@@ -272,15 +274,15 @@ public class GanttService {
 	}
 	
 	// gantt -> task
-	public Task insert_gantttotask(Gantt gantt) {
+	public Task insert_gantttotask(Gantt gantt, int project_no) {
 		Task task = new Task();
-		int pno = 0;
-		pno = dao.getMaxPno();
-		task.setPno(pno+1); 	// 미정
+		int pno = 9001;
+		//pno = dao.getMaxPno();
+		task.setPno(pno); 	// 미정
 		task.setTask_no(0);	// mapper에서 task_no_seq로 처리
 
-		task.setProject_no(1);
-		task.setTask_name(gantt.getText());
+		task.setProject_no(project_no);
+		task.setTask_name(gantt.getTitle());
 		task.setTask_content(gantt.getText());
 		if(gantt.getPriority() == 1) task.setTask_priority("High");
 		if(gantt.getPriority() == 2) task.setTask_priority("Medium");
@@ -297,6 +299,7 @@ public class GanttService {
 		// project_no으로 project 정보 가져오기
 		pms_project pp = getProject(project_no);
 		// gantt 화면에서 변경된 정보만 set변경
+		pp.setProject_name(g.getTitle());
 		pp.setProject_content(g.getText());
 		pp.setStart1(g.getStart_date());
 		pp.setEnd1(g.getEnd_date());
@@ -309,7 +312,7 @@ public class GanttService {
 		dao.uptProject(pp);
 	}
 	
-	public Task update_gantttotask(Gantt gantt) {
+	public Task update_gantttotask(Gantt gantt,int project_no) {
 		Task task = new Task();
 		int pno = 0;
 		// view 단에서 holder 입력 시 자동으로 id도 셋팅되게
@@ -327,7 +330,8 @@ public class GanttService {
 		}
 		*/
 		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
-			pno = dao.getMaxPno();
+			//pno = dao.getMaxPno();
+			pno = 9000;
 			task.setPno(pno+1); 	// 미정
 		} 
 		else {
@@ -337,8 +341,8 @@ public class GanttService {
 		}
 		
 		task.setTask_no(gantt.getId());
-		task.setProject_no(1);
-		task.setTask_name(gantt.getText());
+		task.setProject_no(project_no);
+		task.setTask_name(gantt.getTitle());
 		task.setTask_content(gantt.getText());
 		if(gantt.getPriority() == 1) task.setTask_priority("High");
 		if(gantt.getPriority() == 2) task.setTask_priority("Medium");
@@ -366,6 +370,8 @@ public class GanttService {
 	}
 	
 	public void updateTask(Task task) {
+		//task.setStartdte(SwitchDate(task.getStartdte()));
+		//task.setEnddte(SwitchDate(task.getEnddte()));
 		dao.updateTask(task);
 	}
 
@@ -373,5 +379,21 @@ public class GanttService {
 		dao.deleteTask(task_no);
 	}
 	
+	public String SwitchDate(String before) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String result = "";
+		Date after;
+		try {
+			after = df2.parse(before);
+			String formattedTime1 = df.format(after);
+			result = formattedTime1;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("result: " + result);
+		return result;
+	}
 	
 }

@@ -2,6 +2,8 @@ package pms.dao;
 //pms.dao.RiskDao
 import java.util.ArrayList;
 
+
+
 import org.springframework.stereotype.Repository;
 
 import pms.dto.RiskBoard;
@@ -16,5 +18,7 @@ public interface RiskDao {
 	public RiskBoard getBoard(int risk_no);
 	public void uptStatus(UptStatus upt_satus);
 	public void insertRiskFile(RiskFile riskfile);
+	public ArrayList<RiskFile> getRiskFile(int fno);
+	public ArrayList<RiskFile> fileInfo(int fno);
 	
 }

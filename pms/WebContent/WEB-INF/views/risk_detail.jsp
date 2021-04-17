@@ -34,13 +34,21 @@
 		$(document).ready(function(){
 			$('#adBtn').on("click", function(){
 		 			$('#app_form').submit();
-		 			
 			})
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
 			if(uptFinish == "Y"){
 				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
 					location.href="${path}/risk.do?method=riskRequest";
 			}
+			$("[name=fnames]").click(function(){
+				var filename = $(this).val();
+				console.log(filename);
+				if(confirm("파일을 다운로드 하시겠습니까?")){
+					location.href="${path}/risk.do?method=download&filename="+filename;
+				}
+			});
+			
+			
 		});
 
 		</script>
@@ -148,37 +156,36 @@
                                                 <h5 class="mt-0 text-truncate">${riskboard.risk_content}</h5>
                                             </div>
                                         </div>
-                                        <div class="card mt-5">
-                                    <p class="mb-1">첨부파일</p>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                 <div class="mt-4 mt-md-0">
-                                                    <div class="card border mb-2">
-                                                        <div class="p-2">
-                                                            <div class="row align-items-center">
-                                                                <div class="col-auto">
-                                                                    <div class="avatar-sm">
-                                                                        <span class="avatar-title badge-soft-primary text-primary rounded">
-                                                                            ZIP
-                                                                        </span>
+		                                   	<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts">
+                                                    <div class="col-xl-4">
+                                                        <div class="card mb-1 shadow-none border">
+                                                            <div class="p-2">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-auto">
+                                                                        <div class="avatar-sm">
+                                                                            <span class="avatar-title bg-soft-primary text-primary rounded">
+                                                                                File
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col ps-0">
-                                                                    <a href="javascript:void(0);" class="text-muted fw-semibold">${riskfile.filename}</a>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <!-- Button -->
-                                                                    <a href="javascript:void(0);" class="btn btn-link font-16 text-muted">
-                                                                        <i class="ri-download-2-line"></i>
-                                                                    </a>
+                                                                    <div class="col ps-0">
+                                                                        <input name="fnames" class="text-muted fw-semibold" value="${finf.filename}" />
+                                                                        <p class="mb-0"></p>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <!-- Button -->
+                                                                        <a href="javascript:void(0);" class="btn btn-link btn-lg text-muted">
+                                                                            <i class="ri-download-2-line"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div><!-- Preview -->
-                                                    <div class="dropzone-previews mt-2" id="file-previews"></div>
-                                                 </div>
-                                            </div>
-                                        </div>
+                                                    </div>
+												</c:forEach>
+                                             	</div>
+										</div>
                         <!-- file preview template -->
 			                        <div class="d-none" id="uploadPreviewTemplate">
 			                            <div class="card mb-2 shadow-none border">
@@ -232,12 +239,6 @@
                 <!-- end Footer -->
 
             </div>
-
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
-
-
         </div>
         <!-- END wrapper -->
 

@@ -62,8 +62,8 @@ var rightLimit;
 			success:function(data){
 				g = data.gantt;
 				var tes = data.gantt.substring(8,data.gantt.length-1);
-				console.log(data.gantt);
-				//console.log(tes);
+				//console.log(data.gantt);
+				console.log(tes);
 				
 				var arrayList = new Array(tes);
 				
@@ -73,17 +73,18 @@ var rightLimit;
 					if("${mem.name}" == j[i].holder){
 						tid.push(Number(j[i].id));	
 					}
-					arrstart_date.push(j[i].start_date);
-					arrend_date.push(j[i].end_date);
-					leftLimit = getFormatDate(arrstart_date[0]);
-					rightLimit = getFormatDate(arrend_date[0]);
+					arrstart_date.push(Convertdate(j[i].start_date));
+					arrend_date.push(Convertdate(j[i].end_date));
+					//leftLimit = getFormatDate(arrstart_date);
+					//rightLimit = getFormatDate(arrend_date[0]);
 					
-					//console.log(holder);
-					//console.log(tid);
+					//console.log(arrstart_date[i]);
+					//console.log(arrend_date[i]);
 				}
-				console.log(leftLimit);
-				console.log(rightLimit);
+				leftLimit = arrstart_date[0];
+				rightLimit = arrend_date[0];
 				
+				gantt.parse(data.gantt);
 			},
 			error:function(err){
 				console.log(err);
@@ -92,16 +93,19 @@ var rightLimit;
 		
 	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
 		gantt.init("gantt_here");
-		gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
+
 	   var opts = [
 			{ key:1 , label: 'High'},
 			{ key:2 , label: 'Medium'},
 			{ key:3 , label: 'Low'},
 		];
+	   
+	   
 		// lightbox 내부 priority 영역 추가
 		gantt.config.lightbox.sections = [
-		    {name:"description", height:60, map_to:"text", type:"textarea", focus:true},
-		    /*
+			{name:"title", height:30, map_to:"title", type:"textarea", focus:true},
+		    {name:"description", height:50, map_to:"text", type:"textarea", focus:true},
+		    
 		    {name:"parent",height:25, type:"parent", map_to:"parent", filter:function(id, task){ 
 		        if(task.$level > 1){         
 		            return false;     
@@ -109,16 +113,19 @@ var rightLimit;
 		            return true; 
 		        } 
 		    }},
-		    */
-		    //{name:"parent", type:"parent", allow_root:"false", root_label:"No parent"},
 		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
 		    {name:"holder",    height:30, type:"textarea", map_to:"holder"},
-		    {name:"time",        height:30, map_to:"auto", type:"duration"}
+		    {name:"duration", height:30, map_to:{start_date:"start_date",end_date:"end_date"}, type:"time", time_format:["%d","%m","%Y","%H:%i"]},
+		    
 		];
 		// lightbox 내부 섹션 이름 변경
+		gantt.locale.labels.section_title="Title";
 		gantt.locale.labels.section_priority="Priority";
 		gantt.locale.labels.section_holder="holder";
 		gantt.locale.labels.section_parent = "Parent task";
+		gantt.locale.labels.section_duration = "Duration";
+		
+
 		// 서브태스크의 + 버튼 삭제
 		gantt.templates.grid_row_class = function( start, end, task ){
 		    if ( task.$level > 1 ){
@@ -126,11 +133,12 @@ var rightLimit;
 		    }
 		    return "";
 		};
-		
+		gantt.config.grid_resizer_attribute = "gridresizer";
+		//gantt.config.min_duration = 60*60*1000;
 		/*
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    if(is_new == true) gantt.addTask(task);
-		    else if(is_new == false) gantt.updateTask(id,task);
+		    if(is_new == true) {insertCall(id,task); gantt.refreshData();}//gantt.addTask(task);
+		    else if(is_new == false) {updateCall(id,task); gantt.refreshData();}//gantt.updateTask(id,task);
 		    return true;
 		});
 		*/
@@ -151,6 +159,10 @@ var rightLimit;
 		});
 		
 		gantt.attachEvent("onAfterTaskAdd", function(id,item){
+			console.log("####ins######");
+			console.log(id);
+			console.log(item);
+			gantt.deleteTask(id);
 			insertCall(id,item);
 			gantt.refreshData();
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
@@ -163,8 +175,13 @@ var rightLimit;
 		});
 		
 		gantt.attachEvent("onAfterTaskDelete", function(id,item){
-			deleteTask(id);
-			gantt.refreshData();
+			console.log("#####del#####");
+			console.log(id);
+			console.log(item);
+			if(id < 100000000000){
+				deleteTask(id);
+				gantt.refreshData();
+			}
 			//gantt.deleteTask(id);
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
@@ -173,23 +190,23 @@ var rightLimit;
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
 		
-		gantt.attachEvent("onTaskDrag",function(id,mode,task,original){
-			var modes = gantt.config.drag_mode;
-			
-			if(modes == modes.move || mode == modes.resize){
-				var diff = original.duration*(1000*60*60*24);
-				
-				if(+task.end_date > +rightLimit){
-					task.end_date = new Date(rightLimit);
-					if(mode == modes.move)
-						task.start_date = new Date(task.end_date - diff);
-				}
-				if(+task.start_date < +leftLimit){
-					task.start_date = new Date(leftLimit);
-					if(mode == modes.move)
-						task.end_date = new Date(+task.start_date + diff);
-				}
-			}
+		gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+		    var modes = gantt.config.drag_mode;
+		    if(mode == modes.move || mode == modes.resize){
+		 
+		        var diff = original.duration*(1000*60*60*24);
+		 
+		        if(+task.end_date > +rightLimit){
+		            task.end_date = new Date(rightLimit);
+		            if(mode == modes.move)
+		                task.start_date = new Date(task.end_date - diff);
+		            }
+		        if(+task.start_date < +leftLimit){
+		            task.start_date = new Date(leftLimit);
+		            if(mode == modes.move)
+		                task.end_date = new Date(+task.start_date + diff);
+		        }
+		    }
 		});
 		
 		
@@ -297,6 +314,7 @@ var rightLimit;
 			  if(data.success=="Y"){
 				  alert("수정 완료");  
 				  console.log(data.gantt);
+				  gantt.parse(data.gantt);
 			  }
 		  },
 		  error:function(err){
@@ -323,6 +341,7 @@ var rightLimit;
 			  if(data.success=="Y"){
 				  alert("등록 완료");  
 				  console.log(data.gantt);
+				  gantt.parse(data.gantt);
 			  }
 		  },
 		  error:function(err){
@@ -345,6 +364,7 @@ var rightLimit;
 				  if(data.success=="Y"){
 					  alert("삭제 완료");  
 					  console.log(data.gantt);
+					  gantt.parse(data.gantt);
 				  }
 			  },
 			  error:function(err){
@@ -358,14 +378,22 @@ var rightLimit;
 	function newSch(gantt){
 		console.log("###newSch###");
 		console.log(gantt);
-	  var sch = {};
+		var sch = {}; var tmp_start; var tmp_end;
+	  sch.title = gantt.title;
 	  sch.parent = gantt.parent;
 	  sch.progress = gantt.progress;
 	  sch.sortorder = 0; 
 	  sch.id = 0;	
 	  sch.text = gantt.text;
-	  sch.start_date = gantt.start_date.toISOString();
-	  sch.end_date = gantt.end_date.toISOString();
+	  
+	  tmp_start = gantt.start_date; 
+	  tmp_start.setHours(tmp_start.getHours() + 9);
+	  sch.start_date = tmp_start.toISOString();
+	  
+	  tmp_end = gantt.end_date;
+	  tmp_end.setHours(tmp_end.getHours() + 9);
+	  sch.end_date = tmp_end.toISOString();
+	  
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
 	  
@@ -375,18 +403,43 @@ var rightLimit;
 	function callSch(gantt){
 		console.log("###callSch###");
 		console.log(gantt);
-	  var sch = {};
+	  var sch = {}; var tmp_start; var tmp_end;
+	  sch.title = gantt.title;
 	  sch.parent = gantt.parent;
 	  sch.progress = gantt.progress;
 	  sch.sortorder = gantt.sortorder; 
 	  sch.id = gantt.id;	
 	  sch.text = gantt.text;
-	  sch.start_date = gantt.start_date.toISOString();
-	  sch.end_date = gantt.end_date.toISOString();
+	  
+	  tmp_start = gantt.start_date; 
+	  tmp_start.setHours(tmp_start.getHours() + 9);
+	  sch.start_date = tmp_start.toISOString();
+	  
+	  tmp_end = gantt.end_date;
+	  tmp_end.setHours(tmp_end.getHours() + 9);
+	  sch.end_date = tmp_end.toISOString();
+	  
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
-	  
+	  console.log("#########convert##########");
+	  console.log(sch.start_date);
+	  console.log(sch.end_date);
 	  return sch;
+	}
+	/*
+	function formatDate(date){
+		var d = new Date(date),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear(),
+		hour = d.getHours(),
+		min = d.getMinutes(),
+		sec = d.getSeconds();
+		
+		if(month.length < 2) month = '0' + month;
+		if(day.length < 2) day = '0' + day;
+		
+		return [year,month,day].join('-') + ' ' + [hour,min,sec].join(':');
 	}
 	
 	function getFormatDate(date){
@@ -399,8 +452,19 @@ var rightLimit;
 	    var year2 = date.substring(0,4);
 	    var month2 = date.substring(5,7);
 	    var day2 = date.substring(8,10);        
-	    var limit = new Date(year2,month2,day2);
+	    var limit = new Date(year2,month2-1,day2);
+	    console.log("##############");
+	    console.log(year2);console.log(month2);console.log(day2);
+	    console.log(limit);
 	    return limit;
+	}
+	*/
+	function Convertdate(date){
+		var d = new Date(date);
+		d = new Date(d.getTime() - 3000000);
+		var date_format_str = d.getFullYear().toString()+"-"+((d.getMonth()+1).toString().length==2?(d.getMonth()+1).toString():"0"+(d.getMonth()+1).toString())+"-"+(d.getDate().toString().length==2?d.getDate().toString():"0"+d.getDate().toString())+" "+(d.getHours().toString().length==2?d.getHours().toString():"0"+d.getHours().toString())+":"+((parseInt(d.getMinutes()/5)*5).toString().length==2?(parseInt(d.getMinutes()/5)*5).toString():"0"+(parseInt(d.getMinutes()/5)*5).toString())+":00";
+		
+		return date_format_str;
 	}
 	
 	// ceo, hp progress 표시용
@@ -412,12 +476,12 @@ var rightLimit;
 <script src="${path}/Admin/dist/assets/js/dhtmlxgantt.js?v=7.0.13"></script>
 <link rel="stylesheet" href="${path}/Admin/dist/assets/css/dhtmlxgantt.css?v=7.0.13">
 <style>
-	html, body {
-		padding: 0px;
-		margin: 0px;
-		height: 100%;
-	}
-	.fa {
+html, body {
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+}
+.fa {
   cursor: pointer;
   font-size: 14px;
   text-align: center;
@@ -443,6 +507,9 @@ var rightLimit;
 
 .gantt_grid_head_add {
 	display:none;
+}
+.gantt_cal_light {
+	width:600px;
 }
 
 </style>
@@ -470,7 +537,7 @@ var rightLimit;
                     <div class="container-fluid">
                     	<div class="row">
 							<div class="row" style="padding-top:10px;">
-														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+														<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${project.project_name}</button></a>
 														</div> 
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -523,12 +590,12 @@ var rightLimit;
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">Overview</h4>
+                                    <h4 class="page-title">Gantt</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">Tickets</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">${mem.auth}</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">${project.project_name}</a></li>
+                                            <li class="breadcrumb-item active">Gantt</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -539,7 +606,7 @@ var rightLimit;
                         	<div class="col-lg-12">
                         		<div class="card">
                                     <div class="card-body">
-										<div id="gantt_here" style='width:100%; height:490px;'></div>
+										<div id="gantt_here" style='width:100%; height:450px;'></div>
 									</div>
 								</div>
 							</div>

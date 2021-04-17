@@ -93,6 +93,7 @@
      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
      <!-- 3. 파일다운로드뷰 viewer -->
      <bean id="downloadviewer" class="pms.util.FileDownloadViewer"/> 
+     <bean id="downloadviewerrisk" class="pms.util.FileDownloadViewerRisk"/> 
      
      <!-- 4. 엑셀뷰 viewer -->
      <!-- 5. pdf뷰 viewer -->

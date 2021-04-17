@@ -77,7 +77,7 @@
                     <div class="container-fluid">
 						<div class="row">
 							<div class="row" style="padding-top:10px;">
-														<a href="${path }/task.do?method=view&no=${param.no}"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+														<a href="${path }/task.do?method=view&no=${param.no}"><button class="btn btn-primary btn-md">project1</button></a>
 														</div> 
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -133,8 +133,8 @@
                                     <h4 class="page-title">Calendar</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">개발자</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">project1</a></li>
                                             <li class="breadcrumb-item active">Calendar</li>
                                         </ol>
                                     </div>

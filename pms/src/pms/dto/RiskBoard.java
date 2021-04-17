@@ -1,7 +1,10 @@
 package pms.dto;
+import java.util.ArrayList;
+
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
+
 
 public class RiskBoard {
 	private int rnum;
@@ -15,6 +18,8 @@ public class RiskBoard {
 	private String project_name;
 	private String risk_writer;
 	private MultipartFile[] report;
+	private String[] fnames;
+	private ArrayList<RiskFile> fileInfo;
 	public RiskBoard() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -22,6 +27,35 @@ public class RiskBoard {
 	
 	
 	
+	
+	public String[] getFnames() {
+		return fnames;
+	}
+
+
+
+
+	public void setFnames(String[] fnames) {
+		this.fnames = fnames;
+	}
+
+
+
+
+	public ArrayList<RiskFile> getFileInfo() {
+		return fileInfo;
+	}
+
+
+
+
+	public void setFileInfo(ArrayList<RiskFile> fileInfo) {
+		this.fileInfo = fileInfo;
+	}
+
+
+
+
 	public MultipartFile[] getReport() {
 		return report;
 	}

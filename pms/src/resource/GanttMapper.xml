@@ -45,6 +45,7 @@
 				task_name = #{task_name},
 				task_content = #{task_content},
 				task_priority = #{task_priority},
+				task_parent_no = #{task_parent_no},
 				startdte = #{startdte},
 				enddte = #{enddte}
 			where task_no = #{task_no}
@@ -53,6 +54,7 @@
 	<update id="uptProject" parameterType="pms_project">
 		update pms_project
 			set
+				project_name = #{project_name},
 				project_content = #{project_content},
 				start1 = #{start1},
 				end1 = #{end1}
