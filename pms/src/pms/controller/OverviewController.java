@@ -2,6 +2,8 @@ package pms.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,6 @@ import pms.dto.Log;
 import pms.dto.Member;
 import pms.dto.Task;
 import pms.service.OverviewService;
-import pms.service.ProjectService;
 
 @Controller
 @RequestMapping("/task.do")
@@ -30,6 +31,22 @@ public class OverviewController {
 		System.out.println(task.getPno());
 		return "task_list";
 	}
+	
+//  http://localhost:7080/pms/task.do?method=dlist
+	@RequestMapping(params="method=dlist")
+	public String deTaskList(@RequestParam("pno") int pno,Task task, Model d) {
+		
+		/* Member m = (Member)session.getAttribute("mem"); 
+		 * System.out.println(m.getPno());*/
+
+		d.addAttribute("TaskListAll", service.TaskListAll(pno));
+		d.addAttribute("TaskListAll2", service.TaskListAll2(pno));
+			
+		System.out.println(task.getPno());
+			
+		return "task_list_all";
+	}	
+	
 	
 //  http://localhost:7080/pms/task.do?method=view
 	@RequestMapping(params="method=view")

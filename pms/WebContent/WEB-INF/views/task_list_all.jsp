@@ -10,7 +10,7 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <title>Tasks List</title>
+        <title>Developer Tasks List</title>
         <style type="text/css">
         table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
         </style>
@@ -116,7 +116,7 @@ $(document).ready(function(){
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="task" items="${TaskList}">          
+                                                <c:forEach var="task" items="${TaskListAll}">          
                                                 <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
@@ -135,7 +135,7 @@ $(document).ready(function(){
                                                       	<span class="badge label-table badge-soft-primary p-1">
                                                       </c:when>
                                                       <c:otherwise>
-                                                      	<span class="badge label-table badge-soft-sucess p-1">
+                                                      	<span class="badge label-table badge-soft-success p-1">
                                                       </c:otherwise>
                                                   	</c:choose>	
                                                   	${task.task_priority}</span></td> 
@@ -178,8 +178,8 @@ $(document).ready(function(){
                                             </tr>
                                             </thead>
                                             <tbody>
-                                          <c:forEach var="task" items="${TaskList2}">          
-                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list'">
+                                          <c:forEach var="task" items="${TaskListAll2}">          
+                                                <tr style="cursor:pointer;" onclick="location.href='${path}/taskdetail.do?method=list&task_no=${task.task_no}'">
                                                 	<td>${task.task_no}</td>
                                                     <td>${task.task_name}</td>
                                                     <td>${task.name}</td>

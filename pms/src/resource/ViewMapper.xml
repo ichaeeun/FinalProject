@@ -20,6 +20,7 @@
 	FROM pms_member t2, project_task t1, PMS_PROJECT t3
 	WHERE t1.pno = t2.pno
 	and t1.task_parent_no = 0
+	AND t2.TASK_PRIORITY NOT IN  ('완료')
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t1.project_no = #{no}
 </select>
@@ -30,9 +31,30 @@
 	FROM pms_member t2, project_task t1
 	WHERE t1.pno = t2.pno
 	and t1.task_parent_no = 0
+	AND t2.TASK_PRIORITY NOT IN  ('완료')
 	AND t1.project_no = #{no}
 	order by t1.enddte
 </select>
+
+<!-- 개발자버전 task list -->
+<select id="TaskListAll" resultType="task" parameterType="int">
+	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority, t3.PROJECT_NAME 
+	FROM pms_member t2, project_task t1, PMS_PROJECT t3
+	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 0
+	AND t1.PROJECT_NO = t3.PROJECT_NO 
+	AND t2.pno = #{pno}
+</select>
+<select id="TaskListAll2" resultType="task" parameterType="int">
+	SELECT t1.task_no, t1.task_name, t2.name, t1.enddte, t1.task_priority, t3.PROJECT_NAME 
+	FROM pms_member t2, project_task t1, PMS_PROJECT t3
+	WHERE t1.pno = t2.pno
+	and t1.task_parent_no = 0
+	AND t1.PROJECT_NO = t3.PROJECT_NO 
+	AND t2.pno = #{pno}
+	order by t1.enddte
+</select>
+
 <!-- 	public ArrayList<Overview> ViewMem(int no); -->
 <select id="ViewMem" resultType="view" parameterType="int">
 SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project_no,
@@ -60,5 +82,7 @@ SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project
 	SELECT DISTINCT pm.pno, pm.name FROM PMS_MEMBER pm, PMS_MEMBER_PROJECT pmp
 	WHERE pmp.project_no = #{no}
 </select>
+
+
 </mapper>  
  

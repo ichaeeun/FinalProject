@@ -69,10 +69,15 @@ $("#btnAddTask").click(function(){
 		  success:function(data){
 			  if(data.success=="Y")
 			  console.log(data);
-			  alert("태스크 등록이 완료되었습니다.");
-			  $("#addTaskModal").modal("hide");			
+
+			  $("#addTaskModal").modal("hide");	  
 			/*   $(document).load("${path}/task.do?method=list?no="+${param.no});  */
-			  window.location.reload(true);
+			
+			  $("#success-alert-modal").modal("show");
+			  $("#success-alert-modal btn").click(function(){
+				  window.location.reload(true);
+			  });
+			 
 		  },
 		  error:function(err){
 			  alert("에러발생: "+err);
@@ -199,9 +204,12 @@ function addtask(){
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                       <div class="wrap-tasklist-btn">
-                                       <button type="button" class="btn btn-warning waves-effect waves-light" id="btnAddTaskForm"><i class="mdi mdi-briefcase-plus me-1"></i>태스크 추가</button>
-                                       </div>
+									  <c:if test="${mem.auth == 'pm' }">
+	                                       <div class="wrap-tasklist-btn">
+	                                       <button type="button" class="btn btn-warning waves-effect waves-light" id="btnAddTaskForm"><i class="mdi mdi-briefcase-plus me-1"></i>태스크 추가</button>
+	                                       </div>                                   
+                                       </c:if>
+                                       
                                         <h4 class="header-title">Tasks List</h4>
                                         <p class="sub-header">
                                             현재 프로젝트의 전체 태스크 리스트 입니다.
@@ -409,6 +417,22 @@ function addtask(){
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 
+                <!-- Success Alert Modal -->
+              <div id="success-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                      <div class="modal-content modal-filled bg-success">
+                          <div class="modal-body p-4">
+                              <div class="text-center">
+                                  <i class="bx bx-check-double h1 text-white"></i>
+                                  <h4 class="mt-2 text-white">Well Done!</h4>
+                                  <p class="mt-3 text-white">태스크가 완료되었습니다!</p>
+                                  <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">Continue</button>
+                              </div>
+                          </div>
+                      </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+              
                 <!-- Footer Start -->
             <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->

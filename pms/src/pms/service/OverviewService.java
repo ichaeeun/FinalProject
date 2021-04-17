@@ -26,6 +26,13 @@ public class OverviewService {
 	public ArrayList<Task> TaskList2(int no){ // 마감임박 태스크 리스트 출력
 		return dao.TaskList2(no);
 	}
+	// 개발자 리스트
+	public ArrayList<Task> TaskListAll(int pno){
+		return dao.TaskListAll(pno);
+	}
+	public ArrayList<Task> TaskListAll2(int pno){
+		return dao.TaskListAll2(pno);
+	}
 	public ArrayList<Overview> ViewMem(int no){ // 오버뷰 멤버 & progress출력
 		return dao.ViewMem(no);
 	}
