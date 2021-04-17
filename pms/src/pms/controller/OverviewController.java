@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.Log;
 import pms.dto.Member;
 import pms.dto.Task;
+import pms.service.GanttService;
 import pms.service.OverviewService;
 
 @Controller
@@ -21,13 +22,17 @@ import pms.service.OverviewService;
 public class OverviewController {
 	@Autowired(required = false)
 	private OverviewService service;
+	@Autowired(required = false)
+	private GanttService gservice;
+	
 
 //  http://localhost:7080/pms/task.do?method=list&no=1
 	@RequestMapping(params="method=list")
 	public String taskList(@RequestParam("no") int no,Task task, Model d) {
 		d.addAttribute("TaskList", service.TaskList(no));
 		d.addAttribute("TaskList2", service.TaskList2(no));
-		d.addAttribute("donTaskList", service.doneTaskList(no));
+		d.addAttribute("doneTaskList", service.doneTaskList(no));
+		d.addAttribute("project",gservice.getProject(no));
 		
 		System.out.println(task.getPno());
 		return "task_list";
@@ -35,14 +40,14 @@ public class OverviewController {
 	
 //  http://localhost:7080/pms/task.do?method=dlist
 	@RequestMapping(params="method=dlist")
-	public String deTaskList(@RequestParam("pno") int pno,Task task, Model d) {
+	public String deTaskList(@RequestParam("pno") int pno, @RequestParam(value="pno",required = false) int no, Task task, Model d) {
 		
 		/* Member m = (Member)session.getAttribute("mem"); 
 		 * System.out.println(m.getPno());*/
 
 		d.addAttribute("TaskListAll", service.TaskListAll(pno));
 		d.addAttribute("TaskListAll2", service.TaskListAll2(pno));
-			
+		d.addAttribute("project",gservice.getProject(no));
 		System.out.println(task.getPno());
 			
 		return "task_list_all";
@@ -53,6 +58,7 @@ public class OverviewController {
 	@RequestMapping(params="method=view")
 	public String overview(@RequestParam("no") int no, Model d) {
 		d.addAttribute("ViewMem", service.ViewMem(no));
+		d.addAttribute("project",gservice.getProject(no));
 		return "overview";
 	}
 
@@ -60,6 +66,7 @@ public class OverviewController {
 	@RequestMapping(params="method=log")
 	public String taskLog(@RequestParam("no") int no,Log log, Model d) {
 		d.addAttribute("LogList",service.LogList(no));
+		d.addAttribute("project",gservice.getProject(no));
 		return "log";
 	}
 	

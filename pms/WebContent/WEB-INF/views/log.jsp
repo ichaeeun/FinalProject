@@ -64,21 +64,63 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        
-                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">활동로그</h4>
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item active">활동로그</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>     
+						<div class="row" style="padding-top: 10px;">
+							<a href="${path }/task.do?method=view"><button
+									class="btn btn-primary btn-md">${project.project_name}
+								</button></a>
+							<%-- ${ViewMem.project_name} --%>
+						</div>
+						<div class="col-xl-12">
+							<ul class="nav nav-tabs nav-bordered" style="padding-top: 10px;">
+								<li class="nav-item"><a
+									href="${path }/task.do?method=view&no=${param.no}"
+									class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-book-open"></i></span> <span
+										class="d-none d-sm-inline-block">오버뷰</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/task.do?method=list&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-task"></i></span> <span
+										class="d-none d-sm-inline-block">태스크리스트</span>
+								</a></li>
+								<li class="nav-item"><a href="#" class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bxs-dashboard"></i></span> <span
+										class="d-none d-sm-inline-block">대시보드</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/gantt.do?method=gantt&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class=" bx bx-bar-chart-square"></i></span> <span
+										class="d-none d-sm-inline-block">간트차트</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/cal.do?method=list&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-calendar"></i></span> <span
+										class="d-none d-sm-inline-block">캘린더</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/task.do?method=log&no=${param.no}"
+									class="nav-link active"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-comment-dots"></i></span> <span
+										class="d-none d-sm-inline-block">활동로그</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/main.do?method=riskBoard" class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크</span>
+								</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- 상단 탭바 끝 -->
+                        <!-- start page title -->
+    
                         <!-- end page title --> 
 
                         <div class="row">

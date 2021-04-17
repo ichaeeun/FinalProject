@@ -90,7 +90,7 @@
 					<div class="row">
 						<div class="row" style="padding-top: 10px;">
 							<a href="${path }/task.do?method=view"><button
-									class="btn btn-primary btn-md">${ViewMem[0].project_name}
+									class="btn btn-primary btn-md">${project.project_name}
 								</button></a>
 							<%-- ${ViewMem.project_name} --%>
 						</div>
@@ -171,10 +171,10 @@
 											<div class="project-body">
 												<div class="py-1">
 													<i class="fe-archive font-24"></i>
-													<h3 class="text-warning">${ViewMem[0].project_name}</h3>
+													<h3 class="text-warning">${project.project_name}</h3>
 													<%--  --%>
 													<p class="text-uppercase mb-1 font-13 fw-medium">
-														${ViewMem[0].project_content}</p>
+														${project.project_content}</p>
 												</div>
 											</div>
 										</div>

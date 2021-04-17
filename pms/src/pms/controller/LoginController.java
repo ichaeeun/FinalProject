@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pms.dto.Member;
 import pms.service.LoginService;
 import pms.service.ManPowerService;
+import pms.service.OverviewService;
 
 @Controller
 @RequestMapping("main.do")
@@ -21,6 +22,9 @@ public class LoginController {
 	private LoginService service;
 	@Autowired(required = false)
 	private ManPowerService mservice;
+	@Autowired(required = false)
+	private OverviewService oservice;
+	
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
 		public String loginform(@ModelAttribute("member") Member member) {		
@@ -29,6 +33,7 @@ public class LoginController {
 		
 		// http://localhost:7080/pms/main.do?method=login
 		@RequestMapping(params="method=login")
+		
 		public String login(@ModelAttribute("member") Member member, Model d,HttpSession session) {
 			if(service.IsMem(member) != null) {
 				d.addAttribute("proc","true");
@@ -63,7 +68,14 @@ public class LoginController {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
 				}
 				page = "dashboard_pm";
-			}else if(m.getAuth().equals("wk")) {page = "task_list_all";}
+			}else if(m.getAuth().equals("wk")) {
+				
+				d.addAttribute("TaskListAll", oservice.TaskListAll(m.getPno()));
+				d.addAttribute("TaskListAll2", oservice.TaskListAll2(m.getPno()));
+				oservice.doneTaskList(m.getPno());	
+				
+				page = "task_list_all";
+			}
 			else if(m.getAuth().equals("ceo")) {page = "dashboard_ceo";}
 			else if(m.getAuth().equals("hp")) {page = "contacts-list";}
 			// 전체 인원

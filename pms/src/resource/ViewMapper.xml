@@ -23,6 +23,7 @@
 	AND t1.TASK_STATUS NOT IN  ('완료')
 	AND t1.PROJECT_NO = t3.PROJECT_NO 
 	AND t1.project_no = #{no}
+	order by t1.task_no desc
 </select>
 
 <!-- 	public ArrayList<Task> TaskList2(int no); -->
@@ -43,7 +44,7 @@
 	WHERE t1.pno = t2.pno
 	and t1.task_parent_no = 0
 	AND t1.TASK_STATUS =  '완료'
-	AND t1.project_no = #{no}
+	AND t1.project_no = #{no}	
 </select>
 
 <!-- 개발자버전 task list -->

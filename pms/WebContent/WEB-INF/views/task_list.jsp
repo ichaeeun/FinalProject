@@ -74,7 +74,7 @@ $("#btnAddTask").click(function(){
 			/*   $(document).load("${path}/task.do?method=list?no="+${param.no});  */
 			
 			  $("#success-alert-modal").modal("show");
-			  $("#success-alert-modal btn").click(function(){
+			  $("#success-alert-modal .btn").click(function(){
 				  window.location.reload(true);
 			  });
 			 
@@ -135,7 +135,7 @@ function addtask(){
                     <div class="container-fluid">
                         <div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${TaskList[0].project_name}</button></a>
+							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${project.project_name}</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
