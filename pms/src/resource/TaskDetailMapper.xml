@@ -45,7 +45,7 @@ AND a.pno = b.pno; -->
 	
 	<!-- public ArrayList<Task> showMember(int task_no); -->
 	<select id="showMember" resultType="task" parameterType="int">
-		SELECT c.pno, c.name
+		SELECT DISTINCT c.pno, c.name
 		FROM pms_member_project a, project_task b, pms_member c 
 		WHERE b.project_no = a.project_no 
 		AND b.task_no= #{task_no}
