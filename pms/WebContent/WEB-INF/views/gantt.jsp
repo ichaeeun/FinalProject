@@ -144,8 +144,8 @@ var rightLimit;
 		//gantt.config.min_duration = 60*60*1000;
 		/*
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    if(is_new == true) gantt.addTask(task);
-		    else if(is_new == false) gantt.updateTask(id,task);
+		    if(is_new == true) {insertCall(id,task); gantt.refreshData();}//gantt.addTask(task);
+		    else if(is_new == false) {updateCall(id,task); gantt.refreshData();}//gantt.updateTask(id,task);
 		    return true;
 		});
 		*/
@@ -166,6 +166,10 @@ var rightLimit;
 		});
 		
 		gantt.attachEvent("onAfterTaskAdd", function(id,item){
+			console.log("####ins######");
+			console.log(id);
+			console.log(item);
+			gantt.deleteTask(id);
 			insertCall(id,item);
 			gantt.refreshData();
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
@@ -178,8 +182,13 @@ var rightLimit;
 		});
 		
 		gantt.attachEvent("onAfterTaskDelete", function(id,item){
-			deleteTask(id);
-			gantt.refreshData();
+			console.log("#####del#####");
+			console.log(id);
+			console.log(item);
+			if(id < 100000000000){
+				deleteTask(id);
+				gantt.refreshData();
+			}
 			//gantt.deleteTask(id);
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
