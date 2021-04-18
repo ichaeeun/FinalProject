@@ -27,6 +27,18 @@
 			) b
 			WHERE PROJECT_NO = #{project_no}
 	</select>
+	<!-- public ArrayList<RiskBoard> rBoardAll() -->
+	<select id="rBoardAll" resultMap="riskMap">
+			SELECT *
+		 	from(
+		 		select rownum rnum, level, a.*
+		 		from RISKBOARD a
+		 		where risk_status='승인'
+				start with risk_parent_no=0
+				connect by prior risk_no = risk_parent_no
+				order siblings by risk_no DESC
+			)
+	</select>
 	
 	<!-- public void insertBoard(RiskBoard insert); -->
 	<insert id="insertBoard" parameterType="riskboard">

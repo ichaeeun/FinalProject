@@ -338,7 +338,7 @@
 					  console.log(data);
 					  $("#deleteSubtaskModal").modal("hide");
 					  $("#warning-alert-modal").modal("show");
-					  location.href="${path}/task.do?method=list";
+					  location.href="${path}/task.do?method=list&no="+${detail.project_no};
 
 				  },
 				  error:function(err){
@@ -533,31 +533,31 @@
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
+						                <a href="${path}/dashboard.do?method=list&no=${detail.project_no }"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bxs-dashboard"></i></span>
 						                    <span class="d-none d-sm-inline-block">대시보드</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/main.do?method=gantt"  class="nav-link">
+						                <a href="${path}/gantt.do?method=gantt&no=${detail.project_no }"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
+						                <a href="${path}/cal.do?method=list&no=${detail.project_no }"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-calendar"></i></span>
 						                    <span class="d-none d-sm-inline-block">캘린더</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/task.do?method=log"  class="nav-link">
+						                <a href="${path}/task.do?method=log&no=${detail.project_no }"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-comment-dots"></i></span>
 						                    <span class="d-none d-sm-inline-block">활동로그</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+						                <a href="${path}/risk.do?method=riskBoard&no=${detail.project_no }"  class="nav-link">
 						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
 						                           <span class="d-none d-sm-inline-block">리스크</span>
 						                </a>

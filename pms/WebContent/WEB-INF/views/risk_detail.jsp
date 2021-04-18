@@ -40,20 +40,14 @@
 		 		
 			});
 			
-			
-			
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
 			if(uptFinish == "Y"){
 				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
 					location.href="${path}/risk.do?method=riskRequest&no=${param.no}";
 			}
 			
-			
-			
-			
-			
 			$("[name=fnames]").click(function(){
-				var filename = $(this).val();
+				var filename = $("[name=ffname]").val();
 				console.log(filename);
 				if(confirm("파일을 다운로드 하시겠습니까?")){
 					location.href="${path}/risk.do?method=download&no=${param.no}&filename="+filename;
@@ -184,7 +178,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col ps-0">
-                                                                        <input  class="text-muted fw-semibold" value="${finf.filename}" />
+                                                                        <input name="ffname" class="text-muted fw-semibold" value="${finf.filename}" />
                                                                         <p class="mb-0"></p>
                                                                     </div>
                                                                     <div class="col-auto">
