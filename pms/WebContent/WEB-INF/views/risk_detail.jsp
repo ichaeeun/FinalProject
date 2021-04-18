@@ -47,7 +47,7 @@
 			}
 			
 			$("[name=fnames]").click(function(){
-				var filename = $(this).val();
+				var filename = $("[name=ffname]").val();
 				console.log(filename);
 				if(confirm("파일을 다운로드 하시겠습니까?")){
 					location.href="${path}/risk.do?method=download&no=${param.no}&filename="+filename;
@@ -178,7 +178,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col ps-0">
-                                                                        <input  class="text-muted fw-semibold" value="${finf.filename}" />
+                                                                        <input name="ffname" class="text-muted fw-semibold" value="${finf.filename}" />
                                                                         <p class="mb-0"></p>
                                                                     </div>
                                                                     <div class="col-auto">
