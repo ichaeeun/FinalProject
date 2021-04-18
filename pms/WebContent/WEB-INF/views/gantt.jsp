@@ -94,7 +94,17 @@ var rightLimit;
 	   gantt.config.order_branch = true;
 	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
 	   gantt.init("gantt_here");
-
+		
+	   gantt.templates.task_text=function(start, end, task){
+		    return task.title;
+		};
+		gantt.config.columns = [
+		    {name:"title",       label:"Task name",  width:"*", tree:true },
+		    {name:"start_date", label:"Start time", align:"center" },
+		    {name:"duration",   label:"Duration",   align:"center" },
+		    {name:"add",        label:"",           width:44 }
+		];
+		
 	   var opts = [
 			{ key:1 , label: 'High'},
 			{ key:2 , label: 'Medium'},
@@ -104,7 +114,7 @@ var rightLimit;
 	   
 		// lightbox 내부 priority 영역 추가
 		gantt.config.lightbox.sections = [
-			{name:"title", height:30, map_to:"title", type:"textarea", focus:true},
+			{name:"title", height:30, map_to:"title", type:"textarea", focus:true, label:"title"},
 		    {name:"description", height:50, map_to:"text", type:"textarea", focus:true},
 		    
 		    {name:"parent",height:25, type:"parent", map_to:"parent", filter:function(id, task){ 
@@ -279,7 +289,6 @@ var rightLimit;
 		        */
 		    }
 		});
-		
 		/*
 		gantt.attachEvent("onAfterTaskMove", function(id, parent, tindex){
 			var task = gantt.getTask(id);
@@ -309,6 +318,8 @@ var rightLimit;
 		// 테스크 버튼 클릭 시
 		if("${mem.auth}"=='pm'){
 			gantt.config.order_branch = true;
+			
+			
 			// 화면에 수정, 생성, 삭제 버튼 생성
 			/*
 		   var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
@@ -363,9 +374,9 @@ var rightLimit;
 			        return false;      //denies dragging if the global task index is odd
 			});
 			gantt.config.columns = [
-				{name: "text", tree: true, width: '*', resize: true},
+				{name: "title", tree: true, width: '*', resize: true , label:"title"},
 				{name: "start_date", align: "center", resize: true},
-				{name: "duration", align: "center"},
+				//{name: "duration", align: "center"},
 				{name: "holder", align: "center", resize: true, label:"holder"}
 			];
 			
@@ -384,15 +395,22 @@ var rightLimit;
 			gantt.templates.progress_text=function(start, end, task){
 				  return formatProgress(task)
 			};
-			
+			/*
 			gantt.config.columns = [
-				{name: "text", tree: true, width: '*', resize: true},
+				{name: "title", tree: true, width: '*', resize: true, label:"title"},
 				{name: "start_date", align: "center", resize: true},
 				{name: "duration", align: "center"},
 				{name: "holder", align: "center", resize: true, label:"holder"},
 				{name: "progress", align: "center", resize: true, label:"Progress",
 					template: function(task){return formatProgress(task);}}
 			]
+			*/
+			gantt.config.columns = [
+				{name: "title", tree: true, width: '*', resize: true , label:"title"},
+				{name: "start_date", align: "center", resize: true},
+				//{name: "duration", align: "center"},
+				{name: "holder", align: "center", resize: true, label:"holder"}
+			];
 			gantt.attachEvent("onTaskClick", function(id, e){
 				alert("프로젝트 매니저만 이용가능한 서비스입니다.");
 			});

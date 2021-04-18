@@ -4,8 +4,7 @@
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -133,8 +132,8 @@
                                     <h4 class="page-title">Calendar</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">개발자</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">project1</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">${mem.auth}</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">${project.project_name}</a></li>
                                             <li class="breadcrumb-item active">Calendar</li>
                                         </ol>
                                     </div>
@@ -171,24 +170,10 @@
                                                 </div>
 
 
-                                                <div class="mt-5 d-none d-xl-block">
-                                                    <h5 class="text-center">How It Works ?</h5>
-    
-                                                    <ul class="ps-3">
-                                                        <li class="text-muted mb-3">
-                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                                                        </li>
-                                                        <li class="text-muted mb-3">
-                                                            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage.
-                                                        </li>
-                                                        <li class="text-muted mb-3">
-                                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                
     
                                             </div> <!-- end col-->
-
+											
                                             <div class="col-xl-9">
                                                 <div class="mt-4 mt-xl-0">
                                                     <div id="calendar"></div>
@@ -212,7 +197,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="mb-2">
-                                                                <label class="control-label form-label">Event Name</label>
+                                                                <label class="control-label form-label">태스크 내용</label>
                                                                 <input class="form-control" placeholder="Insert Event Name"
                                                                     type="text" name="title" id="event-title" required />
                                                                 <div class="invalid-feedback">Please provide a valid event name</div>
