@@ -75,6 +75,10 @@ public class ManPowerService {
 	public ArrayList<pms_project> allProject(){
 		return dao.allProject();
 	}
+	
+	public void alertAuth(Member member) {
+		dao.alertAuth(member);
+	}
 }
 
 

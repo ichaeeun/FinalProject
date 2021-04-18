@@ -79,6 +79,13 @@
 		select distinct project_name
 		from pms_project
 	</select>
+	<!-- public void alertAuth(Member member); -->
+	<update id="alertAuth" parameterType="member">
+		UPDATE PMS_MEMBER 
+			SET auth = #{auth},
+				part = #{part}
+			WHERE pno = #{pno}
+	</update>
 </mapper>   
 <!-- 
 <task 요청 페이지>

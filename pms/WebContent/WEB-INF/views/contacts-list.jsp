@@ -42,6 +42,7 @@
 	  	$(document).ready(function(){
 	  		
 	 	    var mem = "${mem.id}";
+	 	    var auth = "${mem.auth}";
 		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
 		 	
 		    /////////// 조회와 검색
@@ -61,15 +62,24 @@
 	  					var mlist = data.memList1;
 	  					var show = "";
 	  					$.each(mlist,function(idx,m){
+	  						
 	  						show+= "<div class='col-xl-3 col-sm-6'>";			
 	  						show+= "<div class='text-center card'>";
 	  						show+= "<div class='card-body'>";
 	  						show+= "<div class='dropdown float-end'>";
 	  						show+= "<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
 	  						show+= "<i class='mdi mdi-dots-vertical font-20'></i></a>";
-	  						show+= "<div class='dropdown-menu dropdown-menu-end'>";
-                            show+= "<a class='dropdown-item goMail' ><button name='mailPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>";
-                            show+= "<a class='dropdown-item goDelete'><button name='deletePno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a></div></div>";                           
+	  						// 인사부 일 때에만 계정 발송, 인력 삭제가 가능함
+	  						if(auth == 'hp'){
+	  							show+= "<div class='dropdown-menu dropdown-menu-end'>";
+                           		show+= "<a class='dropdown-item goMail' ><button name='mailPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>";
+                            	show+= "<a class='dropdown-item goDelete'><button name='deletePno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a>";
+                            	if(m.auth == 'wk' || m.auth == 'pm'){
+                            		show+= "<a class='dropdown-item alertAuth'><button name='alertPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#alert-modal'>직급 변경</button></a>";
+                            	}
+                            	show+= "</div>";
+	  						}
+                            show+= "</div>";                           
 	  						show+= "<i class='fas fa-user-circle fa-5x'></i>";
 	  						show+= "<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'><a class='text-dark'>";
 	  						show+= m.name+"</a>";
@@ -108,8 +118,7 @@
 				add.email = $("[name=email]").val();
 				return add;
 			}
-  			$("#signupBtn").click(function(){
-  				
+  			$("#signupBtn").click(function(){ 				
   				var insert = addMember();
   				$.ajax({
   					type:"post",
@@ -125,7 +134,13 @@
   						alert("에러발생");
   					}
   				});
+  				$("#addTask_task_name").val("");
+  				$("#signup-modal [name=name]").val("");
+  				$("#signup-modal [name=id]").val("");
+  				$("#signup-modal [name=pass]").val("");
+  				$("#signup-modal [name=email]").val("");
   			});
+  			
 	  		
 	  		//////////// 상세화면
 			$("#memShow").on("click",".goDetail",function(){
@@ -155,8 +170,7 @@
   					error:function(err){
   						alert("에러발생");
   					}
-	  			 })
-	  			 
+	  			 })	  			 
 	  		})
 	  		
 	  		///////// 인력 삭제
@@ -183,6 +197,30 @@
 	  			})
 
 	  		}); 
+	  		
+			//////// 직급 변경
+			$("#memShow").on("click",".alertAuth",function(){
+				var pno = $(this).find("[name=alertPno]").val();
+	  			 $("#alertAuthBtn").on("click",function(){	  				 
+	  				 var part = $("#alert-modal [name=part]").val();
+	  				 var auth = $("#alert-modal [name=auth]").val();
+	  				 $.ajax({
+	  					 type:"post",
+	  					 url:"${path}/manpower.do?method=alertAuth",
+	  					 data:{"part":part, "auth":auth, "pno":pno},
+	  					 dataType:"json",
+	  					 success:function(data){
+	  						 console.log(data);
+	  						 $("#alert-modal").modal("hide");
+	  						 ajaxSearch();
+	  					 },
+	  					 error:function(err){
+	  						 alert("에러발생:"+err);
+	  					 }
+	  				 })
+ 					 
+	  			 });	
+			})	
 	  	});
 	  </script>
     </head>
@@ -214,7 +252,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">CRM</h4>
+                                    <h4 class="page-title">인력현황</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
@@ -230,6 +268,8 @@
                             <div class="col-sm-4">
                                 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
                             </div>
+                        
+                        
                         
                             <div class="col-sm-8" text-align="right">
                                 <div>
@@ -850,5 +890,42 @@
 							                       </div><!-- /.modal-content -->
 							                   </div><!-- /.modal-dialog -->
 							               </div><!-- /.modal -->  
+							               
+                                        <!-- alert modal content -->
+                                        <div id="alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+    
+                                                    <div class="modal-body">
+                                                        <div class="text-center mt-2 mb-4">
+                                                            <a href="index.html" class="text-success">
+                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
+                                                            </a>
+                                                        </div>
+                                                            <div class="mb-3">
+                                                                <label for="part" class="form-label">부 서</label>
+                                                                <select name="part" class="form-control">
+                                                                	<option "selected=selected">-- 부서 선택 --</option>
+                                                                	<option>관리부</option>
+                                                                	<option>개발부</option>
+                                                                </select>
+                                                            </div>    
+                                                            <div class="mb-3">
+                                                                <label for="auth" class="form-label">직 급</label>
+                                                                <select name="auth" class="form-control">
+                                                                	<option "selected=selected">-- 직급 선택 --</option>
+                                                                	<option>wk</option>
+                                                                	<option>pm</option>
+                                                                </select>
+                                                            </div>                                                                                                                        
+                                                            <div class="mb-3 text-center">
+                                                                <button class="btn btn-primary" id="alertAuthBtn">변경하기</button>
+                                                            </div>
+
+    
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->							               
     </body>
 </html>
