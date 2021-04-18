@@ -263,10 +263,11 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                        	
+                        	<c:if test="${mem.auth == 'hp' }">
                             <div class="col-sm-4">
                                 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">계정 생성</button>
                             </div>
+                            </c:if>
                         
                         
                         
