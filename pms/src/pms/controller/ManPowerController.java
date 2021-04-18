@@ -75,6 +75,7 @@ public class ManPowerController {
 			for (int j = 0; j < add.size(); j++) {
 				System.out.println(add.get(j).getProject_no());
 				String status = service.status(add.get(j).getProject_no());
+				System.out.println(status);
 				if (status.equals("진행")) {
 					sum++;
 				}
@@ -154,6 +155,13 @@ public class ManPowerController {
 	public String addProject(Model d,
 			@RequestParam("name") String name) {
 		
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/pms/manpower.do?method=alertAuth
+	@PostMapping(params="method=alertAuth")
+	public String alertAuth(Model d, Member member) {
+		service.alertAuth(member);
 		return "pageJsonReport";
 	}
 }
