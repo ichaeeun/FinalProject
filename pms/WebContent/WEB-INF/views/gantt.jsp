@@ -45,6 +45,7 @@
 <script type="text/javascript">
 
 
+
 var holder = [];
 var tid = [];
 var arrstart_date = []; 
@@ -90,9 +91,9 @@ var rightLimit;
 				console.log(err);
 			}
 		});
-		
+	   gantt.config.order_branch = true;
 	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
-		gantt.init("gantt_here");
+	   gantt.init("gantt_here");
 
 	   var opts = [
 			{ key:1 , label: 'High'},
@@ -121,7 +122,7 @@ var rightLimit;
 		// lightbox 내부 섹션 이름 변경
 		gantt.locale.labels.section_title="Title";
 		gantt.locale.labels.section_priority="Priority";
-		gantt.locale.labels.section_holder="holder";
+		gantt.locale.labels.section_holder="담당자";
 		gantt.locale.labels.section_parent = "Parent task";
 		gantt.locale.labels.section_duration = "Duration";
 		
@@ -133,13 +134,21 @@ var rightLimit;
 		    }
 		    return "";
 		};
-		gantt.config.grid_resizer_attribute = "gridresizer";
+		//gantt.config.grid_resizer_attribute = "gridresizer";
 		//gantt.config.min_duration = 60*60*1000;
 		/*
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 		    if(is_new == true) {insertCall(id,task); gantt.refreshData();}//gantt.addTask(task);
 		    else if(is_new == false) {updateCall(id,task); gantt.refreshData();}//gantt.updateTask(id,task);
 		    return true;
+		});
+		*/
+		/*
+		gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
+		    if (task.priority == "High"){
+		        return true;
+		    }
+		    return false;
 		});
 		*/
 		gantt.attachEvent("onLightboxDelete", function(id){
@@ -189,13 +198,13 @@ var rightLimit;
 		gantt.attachEvent("onAfterLightbox", function (id,task){
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
-		
+		/*
 		gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
 		    var modes = gantt.config.drag_mode;
 		    if(mode == modes.move || mode == modes.resize){
 		 
-		        var diff = original.duration*(1000*60*60*24);
-		 
+		        var diff = original.duration*(1000*60*60);
+		 		
 		        if(+task.end_date > +rightLimit){
 		            task.end_date = new Date(rightLimit);
 		            if(mode == modes.move)
@@ -208,10 +217,36 @@ var rightLimit;
 		        }
 		    }
 		});
+		*/
+		/*
+		gantt.attachEvent("onAfterTaskMove", function(id, parent, tindex){
+			var task = gantt.getTask(id);
+			updateCall2(id,parent,task);
+			gantt.refreshData();
+		});
 		
+		gantt.attachEvent("onRowDragStart", function(id, target, e) {
+		    drag_id = id;
+		    return true;
+		});
+		
+		gantt.attachEvent("onRowDragEnd", function(id, target) {
+		    drag_id = null;
+		    gantt.render();
+		});
+		 
+		gantt.templates.grid_row_class = function(start, end, task){
+		    if(drag_id && task.id != drag_id){
+		        if(task.$level != gantt.getTask(drag_id).$level)
+		            return "cant-drop";
+		        }
+		    return "";
+		};
+		*/
 		
 		// 테스크 버튼 클릭 시
 		if("${mem.auth}"=='pm'){
+			gantt.config.order_branch = true;
 			// 화면에 수정, 생성, 삭제 버튼 생성
 			/*
 		   var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
@@ -257,7 +292,14 @@ var rightLimit;
 			});
 			*/
 		} else if("${mem.auth}"=='wk'){
-		
+			gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
+					var task = gantt.getTask(id);	
+					if("${mem.name}" == task.holder){
+						return true;	
+					}
+			
+			        return false;      //denies dragging if the global task index is odd
+			});
 			gantt.config.columns = [
 				{name: "text", tree: true, width: '*', resize: true},
 				{name: "start_date", align: "center", resize: true},
@@ -274,7 +316,9 @@ var rightLimit;
 				}
 			});
 		} else if("${mem.auth}"=='ceo' || "${mem.auth}"=='hp'){
-			
+			gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
+		        return false;      //denies dragging if the global task index is odd
+			});
 			gantt.templates.progress_text=function(start, end, task){
 				  return formatProgress(task)
 			};
@@ -303,6 +347,33 @@ var rightLimit;
 		console.log(item);
 			 
 	  var sch = callSch(item);
+	  //console.log("##return upt Sch##");
+	  //console.log(sch);
+	  $.ajax({
+		  type:"post",
+		  url:"${path}/gantt.do?method=update&no="+'${no}',
+		  data:sch,
+		  dataType:"json",
+		  success:function(data){
+			  if(data.success=="Y"){
+				  alert("수정 완료");  
+				  console.log(data.gantt);
+				  gantt.parse(data.gantt);
+			  }
+		  },
+		  error:function(err){
+			  alert("에러발생: " + err);
+			  console.log(err);
+		  }
+	  });
+	}
+	
+	function updateCall2(id,parent,task){
+		console.log("###updateCall###");	
+		console.log(id);
+		console.log(parent);
+			 
+	  var sch = callSch2(id,parent,task);
 	  //console.log("##return upt Sch##");
 	  //console.log(sch);
 	  $.ajax({
@@ -421,6 +492,33 @@ var rightLimit;
 	  
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
+	  console.log("#########convert##########");
+	  console.log(sch.start_date);
+	  console.log(sch.end_date);
+	  return sch;
+	}
+	
+	function callSch2(id,parent,task){
+		console.log("###2callSch2###");
+		console.log(id);console.log(parent);console.log(task);
+	  var sch = {}; var tmp_start; var tmp_end;
+	  sch.title = task.title;
+	  sch.parent = parent;
+	  sch.progress = task.progress;
+	  sch.sortorder = task.sortorder; 
+	  sch.id = task.id;	
+	  sch.text = task.text;
+	  
+	  tmp_start = task.start_date; 
+	  tmp_start.setHours(tmp_start.getHours() + 9);
+	  sch.start_date = tmp_start.toISOString();
+	  
+	  tmp_end = task.end_date;
+	  tmp_end.setHours(tmp_end.getHours() + 9);
+	  sch.end_date = tmp_end.toISOString();
+	  
+	  sch.holder = task.holder;
+	  sch.priority = Number(task.priority);
 	  console.log("#########convert##########");
 	  console.log(sch.start_date);
 	  console.log(sch.end_date);

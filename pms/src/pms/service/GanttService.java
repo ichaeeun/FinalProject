@@ -290,7 +290,7 @@ public class GanttService {
 		task.setTask_parent_no(gantt.getParent());
 		task.setStartdte(gantt.getStart_date());
 		task.setEnddte(gantt.getEnd_date());
-		task.setTask_status("진행중");
+		task.setTask_status("진행");
 		
 		return task;
 	}
@@ -350,7 +350,7 @@ public class GanttService {
 		task.setTask_parent_no(gantt.getParent());
 		task.setStartdte(gantt.getStart_date());
 		task.setEnddte(gantt.getEnd_date());
-		task.setTask_status("진행중");
+		task.setTask_status("진행");
 		
 		return task;
 	}
