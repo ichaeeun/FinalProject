@@ -6,30 +6,31 @@
    <!-- public ArrayList<RiskBoard> rBoard() -->
 <mapper namespace="pms.dao.RiskDao">
 	<resultMap type="riskboard" id="riskMap"/>
-	<select id="rBoard" resultMap="riskMap">
+	<select id="rBoard" resultMap="riskMap" parameterType="int">
 	select *
  	from(
- 		select rownum rnum, level, a.* 
+ 		select rownum rnum, level, a.*
  		from RISKBOARD a
  		where risk_status='승인'
 		start with risk_parent_no=0
 		connect by prior risk_no = risk_parent_no
-		order siblings by risk_no desc
-	)
+		order siblings by risk_no DESC
+	)WHERE PROJECT_NO = #{project_no}
 	</select>
 	
-	<select id="rBoard_request" resultMap="riskMap">
+	<select id="rBoard_request" resultMap="riskMap" parameterType="int">
 		SELECT rownum rnum, b.* from(
 			SELECT * FROM RISKBOARD 
 			where risk_status='미승인'
 			ORDER BY risk_no
 			) b
+			WHERE PROJECT_NO = #{project_no}
 	</select>
 	
 	<!-- public void insertBoard(RiskBoard insert); -->
 	<insert id="insertBoard" parameterType="riskboard">
 		INSERT INTO riskboard values(
-			riskBoard_seq.nextval,#{risk_title},
+			riskBoard_seq.nextval,#{project_no},#{risk_title},
 			#{risk_content},#{risk_category},
 			0,sysdate,'미승인',#{risk_writer})
 	</insert>

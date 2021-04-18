@@ -38,13 +38,13 @@
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
 			if(uptFinish == "Y"){
 				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
-					location.href="${path}/risk.do?method=riskRequest";
+					location.href="${path}/risk.do?method=riskRequest&no=${param.no}";
 			}
 			$("[name=fnames]").click(function(){
 				var filename = $(this).val();
 				console.log(filename);
 				if(confirm("파일을 다운로드 하시겠습니까?")){
-					location.href="${path}/risk.do?method=download&filename="+filename;
+					location.href="${path}/risk.do?method=download&no=${param.no}&filename="+filename;
 				}
 			});
 			
@@ -212,9 +212,11 @@
 				              		<ul class="pager wizard mb-0 list-inline text-end mt-3">
 				             			<li class="previous list-inline-item">
 				                             <!-- 작성화면 전으로 돌아가는 버튼 -->
-											<a href="${path}/risk.do?method=riskBoard" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+											<a href="${path}/risk.do?method=riskBoard&no=${param.no}" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
 											<c:if test="${mem.auth == 'pm'}">
-		                             		<a href="##" id="adBtn" type="button" class="btn btn-primary">승인하기</a>
+												<c:if test="${riskboard.risk_status == '미승인'}">
+		                             				<a href="##" id="adBtn" type="button" class="btn btn-primary">승인하기</a>
+		                             			</c:if>
 		                             		</c:if>
 											<c:if test="${mem.auth == 'pm'}">
 		                             		<a href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</a>

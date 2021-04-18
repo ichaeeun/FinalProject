@@ -20,19 +20,19 @@ public class RiskController {
 	
 	// http://localhost:7080/pms/risk.do?method=riskBoard
 	@RequestMapping(params="method=riskBoard")
-	public String riskform(Model d) {
-		d.addAttribute("risklist", service.rBoard());
+	public String riskform(@RequestParam("no") int no,Model d) {
+		d.addAttribute("risklist", service.rBoard(no));
 		return "riskBoard";
 	}
 	// http://localhost:7080/pms/risk.do?method=riskRequest
 	@RequestMapping(params="method=riskRequest")
-	public String riskrequest(Model d) {
-		d.addAttribute("requestlist",service.rBoard_request());
+	public String riskrequest(@RequestParam("no") int no,Model d) {
+		d.addAttribute("requestlist",service.rBoard_request(no));
 		return"risk_request";		
 	}
 	// http://localhost:7080/pms/risk.do?method=riskDetail
 	@RequestMapping(params="method=riskDetail")
-	public String riskdetail(@RequestParam("risk_no") int risk_no, Model d) {
+	public String riskdetail(@RequestParam("no") int no,@RequestParam("risk_no") int risk_no, Model d) {
 		System.out.println("리스크넘버:"+risk_no);
 		d.addAttribute("riskboard",service.getBoard(risk_no));
 		return"risk_detail";
@@ -40,20 +40,20 @@ public class RiskController {
 	
 	// http://localhost:7080/pms/risk.do?method=riskBoardCreate
 	@RequestMapping(params="method=riskBoardCreate")
-	public String riskformCreate(@ModelAttribute("riskboard") RiskBoard b) {
+	public String riskformCreate(@RequestParam("no") int no,@ModelAttribute("riskboard") RiskBoard b) {
 		return"riskBoardCreate";		
 	}
 	// http://localhost:7080/pms/risk.do?method=insert
 	@RequestMapping(params = "method=insert")
-	public String insertBoard(RiskBoard insert, Model d) {
+	public String insertBoard(@RequestParam("no") int no,RiskBoard insert, Model d) {
 		service.insertBoard(insert);
 		d.addAttribute("proc","insert");
-		d.addAttribute("risklist",service.rBoard());
+		d.addAttribute("risklist",service.rBoard(no));
 		return "riskBoard";
 	}
 	// http://localhost:7080/pms/risk.do?method=uptStatus
 	@RequestMapping(params = "method=uptStatus")
-	public String uptStatus (@RequestParam("risk_no") int risk_no, Model d) {
+	public String uptStatus (@RequestParam("no") int no,@RequestParam("risk_no") int risk_no, Model d) {
 		System.out.println("test:"+risk_no);
 		UptStatus upt_satus = new UptStatus("승인", risk_no);
 		
@@ -67,7 +67,7 @@ public class RiskController {
 	// 화면단에 클릭시, 
 	// http://localhost:7080/board/risk.do?method=download&filename=파일명
 	@RequestMapping(params="method=download")
-	public String download(@RequestParam("filename") String filename, Model d) {
+	public String download(@RequestParam("no") int no, @RequestParam("filename") String filename, Model d) {
 		System.out.println("파일명 : "+filename);
 		d.addAttribute("downloadFile", filename);
 		// viewer안에 선언한 모델명 - 파일다운로드뷰어에 같은 이름을 사용해준다.

@@ -176,7 +176,7 @@ function addtask(){
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/main.do?method=riskBoard"  class="nav-link">
+						                <a href="${path}/risk.do?method=riskBoard&no=${param.no}"  class="nav-link">
 						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
 						                           <span class="d-none d-sm-inline-block">리스크</span>
 						                </a>

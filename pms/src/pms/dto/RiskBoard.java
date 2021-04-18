@@ -8,7 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class RiskBoard {
 	private int rnum;
-	private int risk_no;	
+	private int risk_no;
+	private int project_no;
 	private String risk_title;
 	private String risk_content;
 	private String risk_category;
@@ -25,9 +26,18 @@ public class RiskBoard {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	
+
+	public int getProject_no() {
+		return project_no;
+	}
+
+
+	public void setProject_no(int project_no) {
+		this.project_no = project_no;
+	}
+
+
+
 	public String[] getFnames() {
 		return fnames;
 	}

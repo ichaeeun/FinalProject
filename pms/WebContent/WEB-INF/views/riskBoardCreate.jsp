@@ -42,7 +42,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#mainBtn").click(function(){
-			location.href="${path}/risk.do?method=riskBoard";
+			location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
 		});
 		
 		$("#sndBtn").click(function(){
@@ -90,7 +90,7 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
-                                            <li class="breadcrumb-item"><a href="${path}/risk.do?method=riskBoard">리스크 목록</a></li>
+                                            <li class="breadcrumb-item"><a href="${path}/risk.do?method=riskBoard&no=${param.no}">리스크 목록</a></li>
                                             <li class="breadcrumb-item active">리스크 작성</li>
                                         </ol>
                                     </div>
@@ -116,7 +116,7 @@
                                                 <div class="tab-pane" id="general-info">
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
-                                             <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert" method="post" enctype="multipart/form-data">
+                                             <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert&no=${param.no}" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
  	                                            <input type="hidden" name="risk_no" value="0"/>
                                                     <div>

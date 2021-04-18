@@ -99,7 +99,7 @@
                             			<c:if test="${mem.auth == 'wk'}">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
-                                                <a href="${path}/risk.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
+                                                <a href="${path}/risk.do?method=riskBoardCreate&no=${param.no}" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="float-sm-end">
@@ -111,7 +111,7 @@
                                         <!-- end row -->
                 
                                         <div class="table-responsive">
-                                  			<form action="${path}/risk.do?method=riskDetail" id="detail_form" method="post">
+                                  			<form action="${path}/risk.do?method=riskDetail&no=${param.no}" id="detail_form" method="post">
                                   			<input type="hidden" value="" name="risk_no">
                                             <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">

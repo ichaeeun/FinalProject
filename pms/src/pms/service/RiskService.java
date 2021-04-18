@@ -28,11 +28,11 @@ public class RiskService {
 	@Autowired(required = false)
 	private RiskDao dao;
 	
-	public ArrayList<RiskBoard> rBoard(){
-		return dao.rBoard();
+	public ArrayList<RiskBoard> rBoard(int project_no){
+		return dao.rBoard(project_no);
 	}
-	public ArrayList<RiskBoard> rBoard_request(){
-		return dao.rBoard_request();
+	public ArrayList<RiskBoard> rBoard_request(int project_no){
+		return dao.rBoard_request(project_no);
 	}
 //	
 //	public RiskBoard getBoard(int risk_no) {
