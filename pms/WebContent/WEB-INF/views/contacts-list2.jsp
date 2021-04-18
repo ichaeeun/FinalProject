@@ -41,10 +41,13 @@
 	  <script>
 	  	$(document).ready(function(){
  	  		$("#memShow").on("click",".project",function(){
+ 	  			var pno = $(this).find('.pno').val();
+ 	  			// alert(pno);
  	  			$("#project-modal").modal("show"); 			
 				$("#projectBtn").on("click",function(){		
 					var project_no = $("#project-modal [name=pro]").val();
-					var pno = $(".project [name=pno]").val();
+					//alert(pno);
+					//alert(project_no);
  		  			$.ajax({
 		  				type:"post",
 		  				url:"${path}/manpower.do?method=insertProject",
@@ -53,6 +56,7 @@
 		  				success:function(data){
 		  					console.log(data);
 		  					$("#project-modal").modal("hide");
+		  					window.location.reload();
 		  				},
 		  				error:function(err){
 		  					alert("에러발생:"+err);
@@ -132,11 +136,11 @@
 
                                             <div class="dropdown-menu dropdown-menu-end">
                                             <a class='dropdown-item project'>
-                                            	<form>
-                                            		<input type="hidden" name="pno" value="${mem.pno }"/>
-                                            	</form>
 												<div data-bs-toggle="modal" data-bs-target="#project-add">
 													프로젝트 할당
+                                        		<form>
+											 		<input type="hidden" style="display:none;" class='pno' name="pno" value="${mem.pno }"/>
+												</form>
 												</div>
                                             </a>    
                                             </div>
@@ -636,6 +640,7 @@
                                                                 <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
                                                             </a>
                                                         </div>
+                                                        <input type="hidden" name="memPno" value="${mem.pno }"/>
                                                             <div class="mb-3">
                                                                 <label for="pro" class="form-label">프로젝트</label>
                                                                 <!-- 시작 -->

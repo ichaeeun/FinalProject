@@ -78,6 +78,7 @@
 	<select id="allProject" resultType="pms_project">
 		select distinct *
 		from pms_project
+		where project_status like '진행'
 	</select>
 	<!-- public void alertAuth(Member member); -->
 	<update id="alertAuth" parameterType="member">
