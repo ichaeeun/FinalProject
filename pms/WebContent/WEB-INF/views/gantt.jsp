@@ -120,11 +120,17 @@ var rightLimit;
 		    
 		];
 		// lightbox 내부 섹션 이름 변경
-		gantt.locale.labels.section_title="Title";
+		/* gantt.locale.labels.section_title="Title";
 		gantt.locale.labels.section_priority="Priority";
-		gantt.locale.labels.section_holder="담당자";
+		gantt.locale.labels.section_holder="holder";
 		gantt.locale.labels.section_parent = "Parent task";
-		gantt.locale.labels.section_duration = "Duration";
+		gantt.locale.labels.section_duration = "Duration"; */
+		gantt.locale.labels.section_title="태스크 이름";
+		gantt.locale.labels.section_description="태스크 내용";
+		gantt.locale.labels.section_priority="중요도";
+		gantt.locale.labels.section_holder="담당자";
+		gantt.locale.labels.section_parent = "부모 태스크";
+		gantt.locale.labels.section_duration = "작업 기한";
 		
 
 		// 서브태스크의 + 버튼 삭제
@@ -136,13 +142,49 @@ var rightLimit;
 		};
 		//gantt.config.grid_resizer_attribute = "gridresizer";
 		//gantt.config.min_duration = 60*60*1000;
-		/*
+		
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-		    if(is_new == true) {insertCall(id,task); gantt.refreshData();}//gantt.addTask(task);
-		    else if(is_new == false) {updateCall(id,task); gantt.refreshData();}//gantt.updateTask(id,task);
+			//var task = gantt.getTask(task_id);
+			var ptask = gantt.getTask(task.parent);
+		    
+			if(task.start_date < ptask.start_date) { alert("시작일이 부모태스크보다 빠릅니다"); return false; }
+			else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }
+			else if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
+			else if(task.start_date == task.end_date) { alert("시작일과 종료일이 같습니다"); return false; }
+			
 		    return true;
 		});
-		*/
+		
+		gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
+		    console.log("####onBeforeTaskChanged#####");
+			var ptask = gantt.getTask(task.parent);
+			console.log(task.start_date);console.log(ptask.start_date);
+			console.log(task.end_date);console.log(ptask.end_date);
+
+		    return true;
+		});
+		
+		gantt.attachEvent("onBeforeTaskUpdate", function(id,new_item){
+			console.log("####onBeforeTaskUpdate#####");
+			console.log(id);console.log(new_item);
+			
+		});
+		
+		gantt.attachEvent("onLightbox", function (task_id){
+			//console.log("####lightboxsave#####");
+			
+			/*
+		    var start = task.start_date; start.setHours(start.getHours() + 9);
+		    var end = task.end_date; end.setHours(end.getHours() + 9);
+		    start = start.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+		    end = end.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+		    console.log(start);console.log(end);
+		    
+		    var left = leftLimit; console.log(left);
+		    var right = rightLimit; console.log(right);
+		    */
+		});
+		
 		/*
 		gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
 		    if (task.priority == "High"){
@@ -151,6 +193,8 @@ var rightLimit;
 		    return false;
 		});
 		*/
+		
+		
 		gantt.attachEvent("onLightboxDelete", function(id){
 			
 		    var task = gantt.getTask(id);
@@ -198,11 +242,28 @@ var rightLimit;
 		gantt.attachEvent("onAfterLightbox", function (id,task){
 			//gantt.load("${path}/Admin/dist/assets/data/data2.json", "json");
 		});
-		/*
+		
 		gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+			console.log("###onTaskDrag###");
+			console.log(id);console.log(mode);console.log(task);console.log(original);
+			var ptask = gantt.getTask(task.parent);
 		    var modes = gantt.config.drag_mode;
 		    if(mode == modes.move || mode == modes.resize){
-		 
+		    
+		    	var diff = original.duration*(1000*60*60*24);
+		    	
+		    	if(task.start_date < ptask.start_date){
+		    		task.start_date = new Date(ptask.start_date);
+		            if(mode == modes.move)
+		                task.end_date = new Date(task.start_date + diff);
+		    	}
+		    	if(task.end_date > ptask.end_date){
+		    		task.end_date = new Date(ptask.end_date);
+		            if(mode == modes.move)
+		                task.start_date = new Date(task.end_date - diff);
+		    	}
+		    
+		 		/*
 		        var diff = original.duration*(1000*60*60);
 		 		
 		        if(+task.end_date > +rightLimit){
@@ -215,9 +276,10 @@ var rightLimit;
 		            if(mode == modes.move)
 		                task.end_date = new Date(+task.start_date + diff);
 		        }
+		        */
 		    }
 		});
-		*/
+		
 		/*
 		gantt.attachEvent("onAfterTaskMove", function(id, parent, tindex){
 			var task = gantt.getTask(id);
@@ -358,7 +420,31 @@ var rightLimit;
 			  if(data.success=="Y"){
 				  alert("수정 완료");  
 				  console.log(data.gantt);
-				  gantt.parse(data.gantt);
+				  g = data.gantt;
+					var tes = data.gantt.substring(8,data.gantt.length-1);
+					//console.log(data.gantt);
+					console.log(tes);
+					
+					var arrayList = new Array(tes);
+					
+					var j = JSON.parse(tes);
+					for(var i=0;i<j.length;i++){
+						holder.push(j[i].holder);
+						if("${mem.name}" == j[i].holder){
+							tid.push(Number(j[i].id));	
+						}
+						arrstart_date.push(Convertdate(j[i].start_date));
+						arrend_date.push(Convertdate(j[i].end_date));
+						//leftLimit = getFormatDate(arrstart_date);
+						//rightLimit = getFormatDate(arrend_date[0]);
+						
+						//console.log(arrstart_date[i]);
+						//console.log(arrend_date[i]);
+					}
+					leftLimit = arrstart_date[0];
+					rightLimit = arrend_date[0];
+					
+					gantt.parse(data.gantt);
 			  }
 		  },
 		  error:function(err){
@@ -385,7 +471,31 @@ var rightLimit;
 			  if(data.success=="Y"){
 				  alert("수정 완료");  
 				  console.log(data.gantt);
-				  gantt.parse(data.gantt);
+				  g = data.gantt;
+					var tes = data.gantt.substring(8,data.gantt.length-1);
+					//console.log(data.gantt);
+					console.log(tes);
+					
+					var arrayList = new Array(tes);
+					
+					var j = JSON.parse(tes);
+					for(var i=0;i<j.length;i++){
+						holder.push(j[i].holder);
+						if("${mem.name}" == j[i].holder){
+							tid.push(Number(j[i].id));	
+						}
+						arrstart_date.push(Convertdate(j[i].start_date));
+						arrend_date.push(Convertdate(j[i].end_date));
+						//leftLimit = getFormatDate(arrstart_date);
+						//rightLimit = getFormatDate(arrend_date[0]);
+						
+						//console.log(arrstart_date[i]);
+						//console.log(arrend_date[i]);
+					}
+					leftLimit = arrstart_date[0];
+					rightLimit = arrend_date[0];
+					
+					gantt.parse(data.gantt);
 			  }
 		  },
 		  error:function(err){
@@ -412,7 +522,31 @@ var rightLimit;
 			  if(data.success=="Y"){
 				  alert("등록 완료");  
 				  console.log(data.gantt);
-				  gantt.parse(data.gantt);
+				  g = data.gantt;
+					var tes = data.gantt.substring(8,data.gantt.length-1);
+					//console.log(data.gantt);
+					console.log(tes);
+					
+					var arrayList = new Array(tes);
+					
+					var j = JSON.parse(tes);
+					for(var i=0;i<j.length;i++){
+						holder.push(j[i].holder);
+						if("${mem.name}" == j[i].holder){
+							tid.push(Number(j[i].id));	
+						}
+						arrstart_date.push(Convertdate(j[i].start_date));
+						arrend_date.push(Convertdate(j[i].end_date));
+						//leftLimit = getFormatDate(arrstart_date);
+						//rightLimit = getFormatDate(arrend_date[0]);
+						
+						//console.log(arrstart_date[i]);
+						//console.log(arrend_date[i]);
+					}
+					leftLimit = arrstart_date[0];
+					rightLimit = arrend_date[0];
+					
+					gantt.parse(data.gantt);
 			  }
 		  },
 		  error:function(err){
@@ -435,7 +569,31 @@ var rightLimit;
 				  if(data.success=="Y"){
 					  alert("삭제 완료");  
 					  console.log(data.gantt);
-					  gantt.parse(data.gantt);
+					  g = data.gantt;
+						var tes = data.gantt.substring(8,data.gantt.length-1);
+						//console.log(data.gantt);
+						console.log(tes);
+						
+						var arrayList = new Array(tes);
+						
+						var j = JSON.parse(tes);
+						for(var i=0;i<j.length;i++){
+							holder.push(j[i].holder);
+							if("${mem.name}" == j[i].holder){
+								tid.push(Number(j[i].id));	
+							}
+							arrstart_date.push(Convertdate(j[i].start_date));
+							arrend_date.push(Convertdate(j[i].end_date));
+							//leftLimit = getFormatDate(arrstart_date);
+							//rightLimit = getFormatDate(arrend_date[0]);
+							
+							//console.log(arrstart_date[i]);
+							//console.log(arrend_date[i]);
+						}
+						leftLimit = arrstart_date[0];
+						rightLimit = arrend_date[0];
+						
+						gantt.parse(data.gantt);
 				  }
 			  },
 			  error:function(err){

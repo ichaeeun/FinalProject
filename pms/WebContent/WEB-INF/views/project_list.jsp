@@ -276,7 +276,10 @@
 															<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>                            
                                                         </td>
                                                         <td>
-                                                            ${bd.name}
+                                                        	<c:choose>
+                                                        	<c:when test="${mem.auth=='wk'}">${bd.pm_pno}</c:when>
+                                                        	<c:otherwise>${bd.name}</c:otherwise>
+                                                        	</c:choose>
                                                         </td>
                                                         <td>
                                                         	<c:choose>
