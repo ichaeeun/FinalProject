@@ -3,7 +3,9 @@
     import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -141,11 +143,11 @@ $(document).ready(function(){
 												<div class="col-md-6">
 													<div class="mb-3">
                                                     	<label for="start1" class="form-label">시작일</label>
-                                                        <input type="date" value="${pms_project.start1}" id="start1" class="form-control">
-													</div>
+                                                        <input type="date" value="${fn:substring(pms_project.start1,0,10)}" id="start1" class="form-control">
+													</div> 
 													<div class="mb-3">
                                                     	<label for="end1" class="form-label">종료일</label>
-                                                        <input type="date" value="${pms_project.end1}" id="end1" class="form-control">
+                                                        <input type="date" value="${fn:substring(pms_project.end1,0,10)}" id="end1" class="form-control">
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -157,7 +159,7 @@ $(document).ready(function(){
                                                     	<label for="project_status" class="form-label">프로젝트상태</label>
                                                         	<select class="form-control" id="project_status">
 																<option value="진행">진행</option>	
-                                                                <option value="종료">종료</option>
+                                                                <option value="완료">완료</option>
                                                         	</select>
 													</div>
 												</div>
