@@ -19,7 +19,7 @@
 	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 	<meta content="Coderthemes" name="author" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+	
 	<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >	
 	<!-- App favicon -->
 	<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
@@ -39,7 +39,7 @@
 	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<script src="${path}/a00_com/jquery.min.js"></script>
 	<script src="${path}/a00_com/popper.min.js"></script>
-	
+	<script src="${path}/a00_com/bootstrap.min.js"></script>
 	<script src="${path}/a00_com/jquery-ui.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){

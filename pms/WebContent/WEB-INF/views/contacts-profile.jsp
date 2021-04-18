@@ -140,9 +140,12 @@
                                                             <tr>
                                                                 <td>${sts.count }</td>
                                                                 <td>${pro.project_name }</td>
-                                                                <td>${pro.start1 }</td>
-                                                                <td>${pro.end1 }</td>
-                                                                <td><span class="badge bg-info">${pro.project_status }</span></td>
+                                                                <td>${fn:substring(pro.start1,0,10)}</td>
+                                                                <td>${fn:substring(pro.end1,0,10)}</td>
+                                                                <td>
+                                                                	<c:if test="${pro.project_status=='완료' }"><span class="badge bg-danger">${pro.project_status }</span></c:if>
+                                                                	<c:if test="${pro.project_status=='진행' }"><span class="badge bg-success">${pro.project_status }</span></c:if>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                         </tbody>
