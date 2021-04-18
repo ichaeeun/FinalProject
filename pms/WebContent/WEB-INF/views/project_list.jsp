@@ -281,10 +281,10 @@
                                                         <td>
                                                         	<c:choose>
                                                             <c:when test="${bd.project_status == '완료'}">
-                                                            	<span class="badge badge-soft-success">
+                                                            	<span class="badge badge-soft-danger">
                                                             </c:when>
                                                             <c:otherwise>
-                                                            	<span class="badge badge-soft-danger">
+                                                            	<span class="badge badge-soft-success">
                                                             </c:otherwise>
                                                             </c:choose>${bd.project_status}</span>
                                                         </td>
