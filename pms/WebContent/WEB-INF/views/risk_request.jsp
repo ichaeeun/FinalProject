@@ -47,7 +47,6 @@
 			console.log($(this).children().eq(8).children().val());
  			var risk_no = $(this).children().eq(8).children().val();
  			$('[name=risk_no]').val(risk_no);
-			
  			$('#detail_form').submit();
 		})
 		
@@ -112,7 +111,7 @@
                 
                                         <div class="table-responsive">
                                   			<form action="${path}/risk.do?method=riskDetail&no=${param.no}" id="detail_form" method="post">
-                                  			<input type="hidden" value="" name="risk_no">
+                                  				<input type="hidden" value="" name="risk_no">
                                             <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">
                                                     <tr>

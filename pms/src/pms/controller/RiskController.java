@@ -46,14 +46,14 @@ public class RiskController {
 	// http://localhost:7080/pms/risk.do?method=insert
 	@RequestMapping(params = "method=insert")
 	public String insertBoard(@RequestParam("no") int no,RiskBoard insert, Model d) {
-		service.insertBoard(insert);
+		service.insertBoard(no, insert);
 		d.addAttribute("proc","insert");
 		d.addAttribute("risklist",service.rBoard(no));
 		return "riskBoard";
 	}
 	// http://localhost:7080/pms/risk.do?method=uptStatus
 	@RequestMapping(params = "method=uptStatus")
-	public String uptStatus (@RequestParam("no") int no,@RequestParam("risk_no") int risk_no, Model d) {
+	public String uptStatus (@RequestParam("no") int no, @RequestParam("risk_no") int risk_no, Model d) {
 		System.out.println("test:"+risk_no);
 		UptStatus upt_satus = new UptStatus("승인", risk_no);
 		

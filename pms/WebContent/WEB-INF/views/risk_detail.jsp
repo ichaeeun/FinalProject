@@ -33,13 +33,25 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			$('#adBtn').on("click", function(){
-		 			$('#app_form').submit();
-			})
+	 			var risk_no = ${riskboard.risk_no};
+	 			$('[name=risk_no]').val(risk_no);
+	 			console.log(risk_no);
+		 		$('#app_form').submit();
+		 		
+			});
+			
+			
+			
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
 			if(uptFinish == "Y"){
 				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
 					location.href="${path}/risk.do?method=riskRequest&no=${param.no}";
 			}
+			
+			
+			
+			
+			
 			$("[name=fnames]").click(function(){
 				var filename = $(this).val();
 				console.log(filename);
@@ -76,6 +88,7 @@
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
                                     <h4 class="page-title">리스크 상세</h4>
+                                    
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
@@ -88,10 +101,11 @@
                         </div>     
                         <!-- end page title -->
                                 <div class="card">
-                         	  	<form action="${path}/risk.do?method=uptStatus" id="app_form" method="post">
+                         	  	<form action="${path}/risk.do?method=uptStatus&no=${param.no}" id="app_form" method="post">
                            			<input type="hidden" value="${riskboard.risk_no}" name="risk_no">
                            		</form>
                                     <div class="card-body">
+                                    
                                         <div class="dropdown float-end">
                                             <a href="#" class="dropdown-toggle arrow-none text-muted"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -158,7 +172,7 @@
                                         </div>
                                         <div class="row">
 		                                   	<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts">
-                                                    <div class="col-xl-4">
+                                                    <div class="col-xl-4" name="fnames">
                                                         <div class="card mb-1 shadow-none border">
                                                             <div class="p-2">
                                                                 <div class="row align-items-center">
@@ -170,7 +184,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col ps-0">
-                                                                        <input name="fnames" class="text-muted fw-semibold" value="${finf.filename}" />
+                                                                        <input  class="text-muted fw-semibold" value="${finf.filename}" />
                                                                         <p class="mb-0"></p>
                                                                     </div>
                                                                     <div class="col-auto">
@@ -215,7 +229,7 @@
 											<a href="${path}/risk.do?method=riskBoard&no=${param.no}" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
 											<c:if test="${mem.auth == 'pm'}">
 												<c:if test="${riskboard.risk_status == '미승인'}">
-		                             				<a href="##" id="adBtn" type="button" class="btn btn-primary">승인하기</a>
+		                             				<button href="" id="adBtn" type="button" class="btn btn-primary">승인하기</button>
 		                             			</c:if>
 		                             		</c:if>
 											<c:if test="${mem.auth == 'pm'}">
@@ -224,7 +238,7 @@
 				       					</li>
 				                	</ul>
 				                </div>
-                                    </div>
+                          	</div>
                                 </div>
                         <!-- end row -->
                                  <!-- container-fluid 

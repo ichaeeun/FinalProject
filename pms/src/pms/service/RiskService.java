@@ -42,7 +42,8 @@ public class RiskService {
 	public void uptStatus (UptStatus upt_satus) {
 		dao.uptStatus(upt_satus);
 	}
-	public void insertBoard(RiskBoard insert) {
+	public void insertBoard(int project_no, RiskBoard insert) {
+		insert.setProject_no(project_no);
 		dao.insertBoard(insert);
 		String fname = null;
 		File tmpFile = null;

@@ -4,8 +4,6 @@ public class UptStatus {
 	private String risk_status;
 	private int risk_no;
 	
-	
-	
 	public UptStatus() {
 		super();
 		// TODO Auto-generated constructor stub

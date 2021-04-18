@@ -7,7 +7,7 @@
 <mapper namespace="pms.dao.RiskDao">
 	<resultMap type="riskboard" id="riskMap"/>
 	<select id="rBoard" resultMap="riskMap" parameterType="int">
-	select *
+	SELECT ROWNUM rnum1, b.*
  	from(
  		select rownum rnum, level, a.*
  		from RISKBOARD a
@@ -15,7 +15,8 @@
 		start with risk_parent_no=0
 		connect by prior risk_no = risk_parent_no
 		order siblings by risk_no DESC
-	)WHERE PROJECT_NO = #{project_no}
+	)b
+	WHERE PROJECT_NO = #{project_no}
 	</select>
 	
 	<select id="rBoard_request" resultMap="riskMap" parameterType="int">
