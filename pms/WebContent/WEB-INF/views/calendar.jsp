@@ -16,16 +16,20 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 
 <!-- Plugin css -->
+<%--
 <link href="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.css" rel="stylesheet" type="text/css" />
 <link href="${path}/Admin/dist/assets/libs/@fullcalendar/daygrid/main.min.css" rel="stylesheet" type="text/css" />
 <link href="${path}/Admin/dist/assets/libs/@fullcalendar/bootstrap/main.min.css" rel="stylesheet" type="text/css" />
 <link href="${path}/Admin/dist/assets/libs/@fullcalendar/timegrid/main.min.css" rel="stylesheet" type="text/css" />
 <link href="${path}/Admin/dist/assets/libs/@fullcalendar/list/main.min.css" rel="stylesheet" type="text/css" />
-
+ --%>
+<link href='${path}/a00_com/lib/main.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 	
 <!-- App favicon -->
 <link rel="shortcut icon" href="${path }/a00_com/assets/images/favicon.ico">
@@ -35,22 +39,299 @@
 <link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
 <link href="${path }/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 <!-- icons -->
-<link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+<script src='${path}/a00_com/lib/main.js'></script>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
+
+<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css?v=5.2.0">
+      
 <script type="text/javascript">
 <%--
  
  
 --%>
+var date = {};
+   //$(document).ready(function(){
+	document.addEventListener('DOMContentLoaded', function() {
+		var opts={
+				autoOpen:false,	// 초기에 로딩하지 않게 처리
+				width:"350px",
+				modal:true		// 입력 시 그 외 화면처리는 비활성화 처리
+		}
+		$( "#schDialog" ).dialog(opts);
+		
+		var calendarEl = document.getElementById('calendar');
+		
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+		      headerToolbar: {
+		        left: 'prevYear prev today next nextYear',
+		        center: 'title',
+		        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		      },
+		      themeSystem: 'bootstrap',
+		      //initialDate: '2021-04-12',	//초기 로딩 날짜
+		      initialDate: new Date().toISOString(),	//초기 로딩 날짜(현재 날짜)
+		      navLinks: true, // can click day/week names to navigate views
+		      selectable: true,
+		      selectMirror: true,
+		      // 이벤트명:function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용
+		      select: function(arg) {
+		    	  // 등록 시, 기존 내용 로딩을 방지 처리, 초기화 처리
+		    	  $("#schDialog>form")[0].reset();
+		    	  // 화면에 보이는 형식 설정
+		    	  // 클릭한 날짜를 전역변수에 할당/시작일과 마지막을 date형식으로 할당
+		    	  // 위에 선언한 전역변수에 날짜시간 정보를 할당하므로
+		    	  // 다른 함수에서 활용할 수 있게한다
+		    	  date.start = arg.start; // arg.start 데이터 유형은 Date이다
+		    	  date.end = arg.end;
+		    	  
+		    	  opts.buttons = {
+		    			  "등록":function(){    				  
+		    				  alert("등록처리합니다");
+		    				  var sch = callSch();
+		    				  console.log("# 등록할 데이터 #");
+		    				  console.log(sch);
+		    				  
+		    				  // 화면에 출력
+		    				  if(sch.title){
+		    					  calendar.addEvent(sch);
+		    					  calendar.unselect();
+		    				  }    				  
+		    				  // ajax 처리 ( DB 등록 )
+		    				  $.ajax({
+		    					 type:"post",
+		    					 url:"${path}/calendar.do?method=insert",
+		    					 dataType:"json",
+		    					 data:sch,
+		    					 success:function(data){
+		    						 if(data.success=="Y"){
+		    							// data.모델명
+		    							alert('등록 성공');
+		    						 }
+		    					 },
+		    					 error:function(err){
+		    						 console.log(err);
+		    					 }
+		    				  });
+		    				  $("#schDialog").dialog("close");
+		    			  }
+		    	  };
+		    	  console.log("# 매개변수 arg의 속성 #");
+		    	  console.log(arg);	// console을 통해서 해당 속성 확인
+		    	  
+		    	//$("#btn01").click();    	
+		    	  
+		    	  // 화면에 보이는 날짜는 한국 표현식으로 처리
+		    	  $("[name=start]").val(arg.start.toLocaleString());
+		    	  $("[name=end]").val(arg.end.toLocaleString());
+		    	  // all.Day는 boolean 값, select의 선택형식에 맞게
+		    	  // 처리하려면 ""+ 형식으로 문자열 처리가 필요
+		    	  $("[name=allDay]").val(""+arg.allDay);
+		    	  // 등록 버튼이 있는 dialog 옵션 설정
+		    	  $("#schDialog").dialog(opts);
+		    	  // 등록 화면 로딩
+		    	  $("#schDialog").dialog("open");
+		      },
+		      
+		      eventDrop:function(arg){
+		    	  eventUpt(arg.event);
+		      },
+		      eventResize:function(arg){
+		    	  eventUpt(arg.event);
+		      },
+		      
+		      eventClick: function(arg) {
+		      	// 삭제 : 화면에서 삭제
+		      	// event의 날짜 저장
+		    	  date.start = arg.event.start;
+		    	  date.end = arg.event.end;
+		    	// 있는 일정 클릭 시
+		    	// 상세 화면 보이기(등록되어 있는 데이터 출력)
+		    	// ajax를 통해서 수정/삭제
+		    	// arg.event : 해당 상세 정보를 가지고 있다
+		    	console.log("#등록된 일정 클릭#");
+		    	console.log(arg.event);
+		    	// 각 form에 값 추가
+		    	// 1. 화면로딩
+		    	//		2번 이상 중복된 함수 사용이 필요한 부분은 모듈로 분리 처리
+		    	detail(arg.event);
+		    	// 2. 기능별 버튼에 대한 처리
+//		    	$("#schDialog").dialog("open");
+		    	opts.buttons = {
+		    			"수정":function(){
+		    				// 수정 후, json 데이터 가져오기
+		    				// 화면에 form 하위에 있는 요소객체의 값을 가져오는 부분
+		    				var sch = callSch();
+		    				// 1. 화면단 처리 변경
+		    				// 현재 캘린더 api의 속성 변경하기
+		    				var event = calendar.getEventById(sch.id);
+		    				console.log("수정할 값: " + sch);
+		    				// 속성 값 변경 setProp
+		    				event.setProp("title",sch.title);
+		    				event.setProp("textColor",sch.textColor);
+		    				event.setProp("backgroundColor",sch.backgroundColor);
+		    				event.setProp("borderColor",sch.borderColor);
+		    				
+		    				// 확장 속성
+		    				event.setExtendedProp("writer",sch.writer);
+		    				event.setExtendedProp("content",sch.content);
+		    				event.setAllDay(sch.allDay);
+		    				
+		    				// DB 변경
+		    				updateCall(sch);
+		    				$("#schDialog").dialog("close");
+		    			},
+		    			"삭제":function(){
+		    				var idVal = $("[name=id]").val();
+		    	            var event = calendar.getEventById(idVal);
+		    	            event.remove();
+		    	            $.ajax({
+		    	            	type:"post",
+		    	            	url:"calendar.do?method=delete",
+		    	            	data:{id:idVal},
+		    	            	dataType:"json",
+		    	            	success:function(data){
+		    	            		if(data.success == "Y"){
+		    	            			alert("삭제 성공");
+		    	            		}
+		    	            	},
+		    	            	error: function(err){
+		    	            		alert("에러 발생");
+		    	            		console.log(err);
+		    	            	}
+		    	            })
+		    	            $("#schDialog").dialog("close");
+		    			}
+		    	}
+		    	$("#schDialog").dialog(opts);
+		        $("#schDialog").dialog("open")
+		    	/*
+		        if (confirm('일정 삭제?')) {
+		          arg.event.remove()
+		        }
+		    	*/
+		      },
+		      editable: true,
+		      dayMaxEvents: true, // allow "more" link when too many events
+		      events: function(info, successCallback, failureCallback){
+		    	  // ajax 처리로 데이터를 로딩 시킨다
+		    	  // 화면에 나타날 일정들을 ajax를 통해 호출하고
+		    	  // success 함수를 통해 서버에서 받은 데이터를 가져오고,
+		    	  // successCallback이라는 매개변수를 받은 함수에 일정 내용을 전달하면
+		    	  // 전체 화면에서 일정이 반영된다
+		    	  $.ajax({
+		    		  type:"get",
+		    		  url:"${path}/cal.do?method=data&no="+'${no}',
+		    		  dataType:"json",
+		    		  success:function(data){
+		    			  console.log(data.calendar);
+		    			  successCallback(data.calendar);
+		    		  },
+		    		  error:function(err){
+		    			  console.log(err);
+		    		  }
+		    	  });
+		      }
+		    });
 
-   $(document).ready(function(){
-      
-   });
-</script>
+		    calendar.render();
+		  });
+		  
+		  // form 하위 요소객체에서 사용할 데이터를 json 형식을 만들어 준다
+		  function callSch(){
+			  var sch = {};
+			  sch.id=$("[name=id]").val();
+			  sch.title=$("[name=title]").val();
+			  sch.writer=$("[name=writer]").val();
+			  sch.content=$("[name=content]").val();
+			  // Date타입은 화면에서 사용되는 형식으로 설정하여야 한다
+			  // 전역변수에 할당한 date.start/end의 ISO형태로 속성 할당
+			  
+			  // ?? calendar api에서 사용되는 날짜 처리 방식이 ISO문자열 형식이기 때문이다
+			  // ex) Date ==> toISOString() 형식
+			  console.log("#####여기#######");
+			  console.log(date.start);
+			  sch.start = date.start.toISOString();
+			  console.log("#####여기#######");
+			  console.log(sch.start);
+			  sch.end = date.end.toISOString();
+			  //alert("등록할 시작일: " + sch.start);
+			  // 문자열이 "true"일 때, 그외는 false
+			  // sch.allDay : calendar로 처리할 데이터 boolean 형식으로 true/false
+			  // 으로 처리되어야 하는데 화면에 보이는 내용은 문자열로 되어있다
+			  // option value="true" 이 선택되어졌을 때 == 비교연산을 통해
+			  // true로 boolean값을 넘기고, 그 외는 false을 boolean값으로 전달
+			  sch.allDay=$("[name=allDay]").val() == "true";
+			  sch.backgroundColor=$("[name=backgroundColor]").val();
+			  sch.textColor=$("[name=textColor]").val();
+			  sch.borderColor=$("[name=borderColor]").val();
+			  
+			  return sch;
+		  }
+		  function detail(event){
+			  // event안에 기본 속성 값이 초기에 데이터 로딩 시, 가지고 있음
+			  // 상세 내용을 event의 속성값으로 form객체 하위에 표현하기 위해 사용
+			  // form 하위 객체에 할당
+			  $("[name=id]").val(event.id);
+			  $("[name=title]").val(event.title);
+			  // calendar에서 추가된 속성들
+			  // ex) event.extendedProps
+			  //		calendar api 자체에서 지원되는 기본 속성이 아니고,
+			  //		사용자에 의해 DB관리가 필요한 속성을 처리할 때 사용
+			  var exProps = event.extendedProps;
+			  $("[name=writer]").val(exProps.writer);
+			  $("[name=content]").val(exProps.content);
+			  $("[name=start]").val(event.start.toLocaleString());
+			  $("[name=end]").val(event.end.toLocaleString());
+			  $("[name=allDay]").val(""+event.allDay);
+			  $("[name=backgroundColor]").val(event.backgroundColor);
+			  $("[name=textColor]").val(event.textColor);
+			  $("[name=borderColor]").val(event.borderColor);
+		  }
+		  
+		  function updateCall(sch){
+			  // callSch() 입력된 수정된 데이터를 요청값으로 전달
+			  $.ajax({
+				  type:"post",
+				  url:"calendar.do?method=update",
+				  data:sch,
+				  dataType:"json",
+				  success:function(data){
+					  // data.모델명
+					  if(data.success=="Y")
+						  alert("수정완료");
+				  },
+				  error:function(err){
+					  alert("에러발생: " + err);
+					  console.log(err);
+				  }
+			  });
+		  }
+		  function eventUpt(event){
+			  var sch = {};
+			sch.id = event.id;
+			sch.title = event.title;
+			sch.start = event.start.toISOString();
+			sch.end = event.end.toISOString();
+			sch.content = event.extendedProps.content;
+			sch.backgroundColor = event.backgroundColor;
+			sch.borderColor = event.borderColor;
+			sch.allDay = event.allDay;
+			sch.textColor = event.textColor;
+			
+			console.log("# 이벤트에 의한 수정 #");
+			console.log(sch);
+			
+			updateCall(sch);
+		  }
+		   $(document).ready(function(){
+		      
+		   });
+		</script>
+
 </head>
 <body class="loading">
 
@@ -148,6 +429,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
+                                        <%--
                                             <div class="col-xl-3">
                                                 <div class="d-grid">
                                                     <button class="btn btn-lg font-16 btn-primary" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> Create New Event</button>
@@ -168,10 +450,6 @@
                                                         <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Create New theme
                                                     </div>
                                                 </div>
-
-
-                                                
-    
                                             </div> <!-- end col-->
 											
                                             <div class="col-xl-9">
@@ -179,7 +457,8 @@
                                                     <div id="calendar"></div>
                                                 </div>
                                             </div> <!-- end col -->
-
+										 --%>
+										 <div id="calendar"></div>
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
@@ -190,44 +469,80 @@
                                         <div class="modal-content">
                                             <div class="modal-header py-3 px-4 border-bottom-0 d-block">
                                                 <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                <h5 class="modal-title" id="modal-title">Event</h5>
+                                                <h5 class="modal-title" id="modal-title">태스크</h5>
                                             </div>
-                                            <div class="modal-body px-4 pb-4 pt-0">
+                                            <div class="modal-body px-4 pb-4 pt-0" id="schDialog">
                                                 <form class="needs-validation" name="event-form" id="form-event" novalidate>
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="mb-2">
-                                                                <label class="control-label form-label">태스크 내용</label>
-                                                                <input class="form-control" placeholder="Insert Event Name"
+                                                                <label class="control-label form-label">태스크 이름</label>
+                                                                <input class="form-control" placeholder="태스크 제목 입력"
                                                                     type="text" name="title" id="event-title" required />
-                                                                <div class="invalid-feedback">Please provide a valid event name</div>
+                                                                <div class="invalid-feedback">제목을 입력하세요</div>
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">태스크 내용</label>
+                                                                <input class="form-control" placeholder="태스크 내용 입력"
+                                                                    type="text" name="content" id="event-content" required />
+                                                                <div class="invalid-feedback">내용을 입력하세요</div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="mb-2">
-                                                                <label class="control-label form-label">Category</label>
-                                                                <select class="form-control form-select" name="category"
+                                                                <label class="control-label form-label">부모태스크</label>
+                                                                <select class="form-control form-select" name="parent" <%--name="category" --%>
                                                                     id="event-category" required>
-                                                                    <option value="bg-danger" selected>Danger</option>
-                                                                    <option value="bg-success">Success</option>
-                                                                    <option value="bg-primary">Primary</option>
-                                                                    <option value="bg-info">Info</option>
-                                                                    <option value="bg-dark">Dark</option>
-                                                                    <option value="bg-warning">Warning</option>
+                                                                    <option value="bg-danger" selected>프로젝트</option>
+                                                                    <option value="bg-success">태스크01</option>
+                                                                    <option value="bg-primary">태스크02</option>
+                                                                    <option value="bg-info">태스크03</option>
                                                                 </select>
-                                                                <div class="invalid-feedback">Please select a valid event category</div>
+                                                                <div class="invalid-feedback">부모태스크를 선택해주십시오</div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="control-label form-label">중요도</label>
+                                                                <select class="form-control form-select" name="priority" <%--name="category" --%>
+                                                                    id="event-category" required>
+                                                                    <option value="1" selected>High</option>
+                                                                    <option value="2">Medium</option>
+                                                                    <option value="3">Low</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">중요도를 선택해주십시오</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                                <label class="control-label form-label">담당자</label>
+                                                                <input class="form-control" placeholder="담당자 입력"
+                                                                    type="text" name="holder" id="event-holder" required />
+                                                                <div class="invalid-feedback">담당자를 입력하세요</div>
+                                                        </div>
+                                                        <div class="input-group mb-3">
+														    <div class="input-group-prepend">
+														    	<span class="input-group-text">시작일</span>
+														    </div>
+														    <input type="text" name="start" class="form-control" />
+														</div>
+														<div class="input-group mb-3">
+														    <div class="input-group-prepend">
+														    	<span class="input-group-text">종료일</span>
+														    </div>
+														    <input type="text" name="end" class="form-control" />
+														</div>
                                                     </div>
+                                                    <%--
                                                     <div class="row mt-2">
                                                         <div class="col-6">
-                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
+                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">삭제</button>
                                                         </div>
                                                         <div class="col-6 text-end">
-                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
+                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">닫기</button>
+                                                            <button type="submit" class="btn btn-success" id="btn-save-event">등록</button>
                                                         </div>
                                                     </div>
+                                                     --%>
                                                 </form>
                                             </div>
                                         </div> <!-- end modal-content-->
@@ -271,401 +586,11 @@
         </div>
         <!-- END wrapper -->
 
-        <!-- Right Sidebar -->
-        <div class="right-bar">
-            <div data-simplebar class="h-100">
-    
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs nav-bordered nav-justified" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link py-2" data-bs-toggle="tab" href="#chat-tab" role="tab">
-                            <i class="mdi mdi-message-text-outline d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link py-2" data-bs-toggle="tab" href="#tasks-tab" role="tab">
-                            <i class="mdi mdi-format-list-checkbox d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link py-2 active" data-bs-toggle="tab" href="#settings-tab" role="tab">
-                            <i class="mdi mdi-cog-outline d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content pt-0">
-                    <div class="tab-pane" id="chat-tab" role="tabpanel">
-                
-                        <form class="search-bar p-3">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form>
-
-                        <h6 class="fw-medium px-3 mt-2 text-uppercase">Group Chats</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-                                <span class="mb-0 mt-1">App Development</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-warning"></i>
-                                <span class="mb-0 mt-1">Office Work</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-danger"></i>
-                                <span class="mb-0 mt-1">Personal Group</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                <span class="mb-0 mt-1">Freelance</span>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium px-3 mt-3 text-uppercase">Favourites <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To an English person, it will seem like simplified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium px-3 mt-3 text-uppercase">Other Chats <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
-
-                        <div class="p-2 pb-4">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">If several languages coalesce the grammar of the resulting.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status online"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status busy"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The new common language will be more simple.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start">
-                                    <div class="position-relative me-2">
-                                        <span class="user-status away"></span>
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                    </div>
-                                    <div class="flex-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">One could refuse to pay expensive translators.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <div class="text-center mt-3">
-                                <a href="javascript:void(0);" class="btn btn-sm btn-white">
-                                    <i class="mdi mdi-spin mdi-loading me-2"></i>
-                                    Load more
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane" id="tasks-tab" role="tabpanel">
-                        <h6 class="fw-medium p-3 m-0 text-uppercase">Working Tasks</h6>
-                        <div class="px-2">
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">App Development<span class="float-end">75%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Database Repair<span class="float-end">37%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Backup Create<span class="float-end">52%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium px-3 mb-0 mt-4 text-uppercase">Upcoming Tasks</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Sales Reporting<span class="float-end">12%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Redesign Website<span class="float-end">67%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">New Admin Design<span class="float-end">84%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="d-grid p-3 mt-2">
-                            <a href="javascript: void(0);" class="btn btn-success waves-effect waves-light">Create Task</a>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane active" id="settings-tab" role="tabpanel">
-                        <h6 class="fw-medium px-3 m-0 py-2 font-13 text-uppercase bg-light">
-                            <span class="d-block py-1">Theme Settings</span>
-                        </h6>
-
-                        <div class="p-3">
-                            <div class="alert alert-warning" role="alert">
-                                <strong>Customize </strong> the overall color scheme, sidebar menu, etc.
-                            </div>
-
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Color Scheme</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="light" id="light-mode-check" checked>
-                                <label class="form-check-label" for="light-mode-check">Light Mode</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="dark" id="dark-mode-check">
-                                <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
-                            </div>
-
-                            <!-- Width -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Width</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="width" value="fluid" id="fluid-check" checked>
-                                <label class="form-check-label" for="fluid-check">Fluid</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="width" value="boxed" id="boxed-check">
-                                <label class="form-check-label" for="boxed-check">Boxed</label>
-                            </div>
-                   
-
-                            <!-- Topbar -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Topbar</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="topbar-color" value="dark" id="darktopbar-check" checked>
-                                <label class="form-check-label" for="darktopbar-check">Dark</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="topbar-color" value="light" id="lighttopbar-check">
-                                <label class="form-check-label" for="lighttopbar-check">Light</label>
-                            </div>
-
-
-                            <!-- Menu positions -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Menus Positon <small>(Leftsidebar and Topbar)</small></h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="menus-position" value="fixed" id="fixed-check" checked>
-                                <label class="form-check-label" for="fixed-check">Fixed</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="menus-position" value="scrollable" id="scrollable-check">
-                                <label class="form-check-label" for="scrollable-check">Scrollable</label>
-                            </div>
-
-
-                            <!-- Left Sidebar-->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Color</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-color" value="light" id="light-check" checked>
-                                <label class="form-check-label" for="light-check">Light</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-color" value="dark" id="dark-check">
-                                <label class="form-check-label" for="dark-check">Dark</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-color" value="brand" id="brand-check">
-                                <label class="form-check-label" for="brand-check">Brand</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-color" value="gradient" id="gradient-check">
-                                <label class="form-check-label" for="gradient-check">Gradient</label>
-                            </div>
-                    
-
-                            <!-- size -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-size" value="default" id="default-size-check" checked>
-                                <label class="form-check-label" for="default-size-check">Default</label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-size" value="condensed" id="condensed-check">
-                                <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small size)</small></label>
-                            </div>
-
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-size" value="compact" id="compact-check">
-                                <label class="form-check-label" for="compact-check">Compact <small>(Small size)</small></label>
-                            </div>
-                    
-
-                            <!-- User info -->
-                            <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Sidebar User Info</h6>
-                            <div class="form-check form-switch mb-1">
-                                <input class="form-check-input" type="checkbox" name="leftsidebar-user" value="fixed" id="sidebaruser-check">
-                                <label class="form-check-label" for="sidebaruser-check">Enable</label>
-                            </div>
-
-                            <div class="d-grid mt-4">
-                                <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
-
-                            <a href="https://wrapbootstrap.com/theme/minton-admin-dashboard-landing-template-WB0858DB6?ref=coderthemes"
-                                class="btn btn-danger mt-2" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </div> <!-- end slimscroll-menu-->
-        </div>
-        <!-- /Right-bar -->
-
-        <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
+        <jsp:include page="right.jsp" flush="false"/>
 
         <!-- Vendor js -->
         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
-
+		<%--
         <!-- plugin js -->
         <script src="${path}/Admin/dist/assets/libs/moment/min/moment.min.js"></script>
         <script src="${path}/Admin/dist/assets/libs/@fullcalendar/core/main.min.js"></script>
@@ -677,9 +602,9 @@
 
         <!-- Calendar init -->
         <script src="${path}/Admin/dist/assets/js/pages/calendar.init.js"></script>
-
+		 --%>
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-        
+        <script src="${path}/a00_com/jquery-ui.js"></script>
     </body>
 </html>
