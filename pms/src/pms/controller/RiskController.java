@@ -28,6 +28,12 @@ public class RiskController {
 		d.addAttribute("project",service2.getProject_name(no)); // 프로젝트명 불러오려고 추가했습니다
 		return "riskBoard";
 	}
+	// http://localhost:7080/pms/risk.do?method=riskBoardAll
+	@RequestMapping(params="method=riskBoardAll")
+	public String riskform(Model d) {
+		d.addAttribute("risklistAll", service.rBoardAll());
+		return "riskBoardAll";
+	}
 	// http://localhost:7080/pms/risk.do?method=riskRequest
 	@RequestMapping(params="method=riskRequest")
 	public String riskrequest(@RequestParam("no") int no,Model d) {

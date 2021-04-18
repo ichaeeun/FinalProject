@@ -24,9 +24,9 @@
 	<!-- App favicon -->
 	<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
 
-	<!-- third party css -->
-	<link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-	<link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+       <!-- third party css -->
+       <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+       <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
 	<!-- App css -->
 	<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
@@ -39,17 +39,23 @@
 	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<script src="${path}/a00_com/jquery.min.js"></script>
 	<script src="${path}/a00_com/popper.min.js"></script>
-	<script src="${path}/a00_com/bootstrap.min.js"></script>
+	
 	<script src="${path}/a00_com/jquery-ui.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$('.risk_item_request').on("click", function(){
-			console.log($(this).children().eq(8).children().val());
+
+		$('.risk_item').on("click", function(){
+			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
  			var risk_no = $(this).children().eq(8).children().val();
+ 			var no = $(this).children().eq(6).children().val();
+			console.log($(this).children().eq(6).children().val());	//배열에서 6번째 값의 안에 있는 input의 value값을 가져온다.
  			$('[name=risk_no]').val(risk_no);
- 			$('#detail_form').submit();
+ 			$('[name=no]').val(${ra.project_no});
+ 			
+ 			
+ 			location.href="${path}/risk.do?method=riskDetail&no="+no+"&risk_no="+risk_no;
+ 			//$('#detail_form').submit();
 		})
-		
 	});
 </script>
 </head>
@@ -75,6 +81,60 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
+                    <div class="row">
+						<div class="row" style="padding-top: 10px;">
+							<a href="${path }/task.do?method=view"><button
+									class="btn btn-primary btn-md">${project.project_name}
+								</button></a>
+							<%-- ${ViewMem.project_name} --%>
+						</div>
+						<div class="col-xl-12">
+							<ul class="nav nav-tabs nav-bordered" style="padding-top: 10px;">
+								<li class="nav-item"><a
+									href="${path }/task.do?method=view&no=${param.no}"
+									class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-book-open"></i></span> <span
+										class="d-none d-sm-inline-block">오버뷰</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/task.do?method=list&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-task"></i></span> <span
+										class="d-none d-sm-inline-block">태스크리스트</span>
+								</a></li>
+								<li class="nav-item"><a href="${path}/dashboard.do?method=list&no=${param.no}" class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bxs-dashboard"></i></span> <span
+										class="d-none d-sm-inline-block">대시보드</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/gantt.do?method=gantt&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class=" bx bx-bar-chart-square"></i></span> <span
+										class="d-none d-sm-inline-block">간트차트</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/cal.do?method=list&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-calendar"></i></span> <span
+										class="d-none d-sm-inline-block">캘린더</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/task.do?method=log&no=${param.no}"
+									class="nav-link"> <span class="d-inline-block d-sm-none"><i
+											class="bx bx-comment-dots"></i></span> <span
+										class="d-none d-sm-inline-block">활동로그</span>
+								</a></li>
+								<li class="nav-item"><a
+									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크</span>
+								</a></li>
+							</ul>
+						</div>
+					</div>
 
                         <!-- start page title -->
                         <div class="row">
@@ -95,7 +155,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                            			<c:if test="${mem.auth == 'wk'}">
+                            			<c:if test="${mem.auth == 'wk' || mem.auth == 'pm'}">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
                                                 <a href="${path}/risk.do?method=riskBoardCreate&no=${param.no}" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
@@ -110,8 +170,8 @@
                                         <!-- end row -->
                 
                                         <div class="table-responsive">
-                                  			<form action="${path}/risk.do?method=riskDetail&no=${param.no}" id="detail_form" method="post">
-                                  				<input type="hidden" value="" name="risk_no">
+                                            <form id="detail_form" method="post">
+                                            <input type="hidden" value="" name="risk_no">
                                             <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">
                                                     <tr>
@@ -126,14 +186,14 @@
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
                                                         <th>등록일</th>
-                                                        <th>리스크 상태</th>
+                                                        <th>프로젝트 번호</th>
                                                         <th>작성자</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                               	<c:forEach var="rl" items="${requestlist}">
-                                                    <tr class="risk_item_request">
+                                                <c:forEach var="ra" items="${risklistAll}">
+                                                    <tr class="risk_item">
                                                         <td>
                                                             <div class="form-check mb-0 font-16">
                                                                 <input class="form-check-input" type="checkbox" id="productlistCheck1">
@@ -141,39 +201,37 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                 			${rl.rnum}
+                                                 			${ra.rnum}
                                                         </td>
                                                         <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle"> ${rl.risk_title}</h5>
+                                                            <h5 class="m-0 d-inline-block align-middle">${ra.risk_title}</h5>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle"> ${rl.risk_content}</h5>
+                                                            <h5 class="m-0 d-inline-block align-middle">${ra.risk_content}</h5>
                                                         </td>
                                                         <td>
-                                                   			[${rl.risk_category}]
+                                                   			[${ra.risk_category}]
                                                         </td>
                                                         <td>
-                                                            <fmt:formatDate value="${rl.regdte}"/>
+                                                            <fmt:formatDate value="${ra.regdte}"/>
+                                                        </td>
+                                                        <td>
+                                                   				${ra.project_no}<input type="hidden" value="${ra.project_no}">
                                                         </td>
                                                         <td>
                                                             <div>
-                                                   				${rl.risk_status}
+                                                     			${ra.risk_writer}
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div>
-                                                     			${rl.risk_writer}
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                        	<input type="hidden" value="${rl.risk_no}">
+                                                        	<input type="hidden" value="${ra.risk_no}">
                                                         </td>
                                                     </tr>
                                               		</c:forEach>
                                                     <!-- 복붙해야할부분 -->
                                                 </tbody>
                                             </table>
-                                           	</form>
+                                    		</form>
                                         </div>
                                     </div>
                                 </div>

@@ -14,6 +14,7 @@ import pms.dto.UptStatus;
 public interface RiskDao {
 	public ArrayList<RiskBoard> rBoard(int project_no);
 	public ArrayList<RiskBoard> rBoard_request(int project_no);
+	public ArrayList<RiskBoard> rBoardAll();
 	public void insertBoard(RiskBoard insert);
 	public RiskBoard getBoard(int risk_no);
 	public void uptStatus(UptStatus upt_satus);

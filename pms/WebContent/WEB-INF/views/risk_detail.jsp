@@ -40,17 +40,11 @@
 		 		
 			});
 			
-			
-			
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
 			if(uptFinish == "Y"){
 				if(confirm("승인이 완료되었습니다. \n요청목록으로 돌아가시겠습니까?"))
 					location.href="${path}/risk.do?method=riskRequest&no=${param.no}";
 			}
-			
-			
-			
-			
 			
 			$("[name=fnames]").click(function(){
 				var filename = $(this).val();
