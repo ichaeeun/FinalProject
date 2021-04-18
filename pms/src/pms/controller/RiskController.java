@@ -1,7 +1,6 @@
 package pms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.RiskBoard;
 import pms.dto.UptStatus;
 import pms.service.RiskService;
+import pms.service.TaskDetailService;
 
 @Controller
 @RequestMapping("risk.do")
@@ -18,10 +18,14 @@ public class RiskController {
 	@Autowired(required = false)
 	private RiskService service;
 	
+	@Autowired(required=false)
+	private TaskDetailService service2; // 프로젝트명 불러오려고 추가했습니다
+	
 	// http://localhost:7080/pms/risk.do?method=riskBoard
 	@RequestMapping(params="method=riskBoard")
 	public String riskform(@RequestParam("no") int no,Model d) {
 		d.addAttribute("risklist", service.rBoard(no));
+		d.addAttribute("project",service2.getProject_name(no)); // 프로젝트명 불러오려고 추가했습니다
 		return "riskBoard";
 	}
 	// http://localhost:7080/pms/risk.do?method=riskRequest

@@ -10,6 +10,12 @@ WHERE a.task_no = 1000
 AND a.project_no = c.project_no
 AND a.pno = b.pno; -->
 	<!-- public Task taskDetail(int task_no);  -->
+	
+	<!-- public String getProject_name(int no) -->
+	<select id="getProject_name" resultType="pms_project" parameterType="int">
+		SELECT project_name FROM PMS_PROJECT where project_no = #{project_name}
+	</select>
+	
 	<select id="taskDetail" resultType="task" parameterType="int">
 		SELECT a.* , b.name, c.project_name
 		FROM project_task a, pms_member b, pms_project c

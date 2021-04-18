@@ -86,7 +86,7 @@
 											class="bx bx-task"></i></span> <span
 										class="d-none d-sm-inline-block">태스크리스트</span>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <span
+								<li class="nav-item"><a href="${path}/dashboard.do?method=list&no=${param.no}" class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bxs-dashboard"></i></span> <span
 										class="d-none d-sm-inline-block">대시보드</span>
@@ -110,7 +110,7 @@
 										class="d-none d-sm-inline-block">활동로그</span>
 								</a></li>
 								<li class="nav-item"><a
-									href="${path}/main.do?method=riskBoard" class="nav-link"> <span
+									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
 										class="d-none d-sm-inline-block">리스크</span>

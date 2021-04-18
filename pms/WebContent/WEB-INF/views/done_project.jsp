@@ -137,7 +137,7 @@ function goPage(page){
                                                         <td>${bd.end1}</td>
                                                         <td>${bd.pm_pno}</td>
                                                         <td>
-                                                            <span class="badge badge-soft-success">${bd.project_status}</span>
+                                                            <span class="badge badge-soft-danger">${bd.project_status}</span>
                                                         </td>
                                                         <td>
                                                             <ul class="list-inline table-action m-0">

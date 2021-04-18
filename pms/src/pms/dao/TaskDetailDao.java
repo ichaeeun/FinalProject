@@ -2,15 +2,18 @@ package pms.dao;
 
 import java.util.ArrayList;
 
-
 import org.springframework.stereotype.Repository;
 
 import pms.dto.Comment;
 import pms.dto.Task;
 import pms.dto.TaskFile;
+import pms.dto.pms_project;
 
 @Repository
 public interface TaskDetailDao {
+	
+	public pms_project getProject_name(int no);
+	
 	public Task taskDetail(int task_no); // 태스크 상세 조회 
 	public ArrayList<Task> subtaskList(int task_no); // 태스크 내에서 서브태스크 조회 
 	public int taskcurrval();

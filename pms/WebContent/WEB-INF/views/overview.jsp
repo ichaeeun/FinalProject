@@ -109,7 +109,7 @@
 											class="bx bx-task"></i></span> <span
 										class="d-none d-sm-inline-block">태스크리스트</span>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <span
+								<li class="nav-item"><a href="${path}/dashboard.do?method=list&no=${param.no}" class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bxs-dashboard"></i></span> <span
 										class="d-none d-sm-inline-block">대시보드</span>

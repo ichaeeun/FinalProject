@@ -40,7 +40,6 @@
 
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/bootstrap.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
 <%--
@@ -77,7 +76,7 @@
                     <div class="container-fluid">
 						<div class="row">
 							<div class="row" style="padding-top:10px;">
-														<a href="${path }/task.do?method=view&no=${param.no}"><button class="btn btn-primary btn-md">project1</button></a>
+														<a href="${path }/task.do?method=view&no=${param.no}"><button class="btn btn-primary btn-md">${project.project_name}</button></a>
 														</div> 
 							<div class="col-xl-12">
 									 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -118,7 +117,7 @@
 							                </a>
 							            </li>
 							            <li class="nav-item">
-							                <a href="${path}/main.do?method=riskBoard&no=${param.no}"  class="nav-link">
+							                <a href="${path}/risk.do?method=riskBoard&no=${param.no}"  class="nav-link">
 							                           <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
 							                           <span class="d-none d-sm-inline-block">리스크</span>
 							                </a>

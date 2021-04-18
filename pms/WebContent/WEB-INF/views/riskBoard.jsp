@@ -39,7 +39,7 @@
 	<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<script src="${path}/a00_com/jquery.min.js"></script>
 	<script src="${path}/a00_com/popper.min.js"></script>
-	<script src="${path}/a00_com/bootstrap.min.js"></script>
+	
 	<script src="${path}/a00_com/jquery-ui.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -90,7 +90,7 @@
 							<ul class="nav nav-tabs nav-bordered" style="padding-top: 10px;">
 								<li class="nav-item"><a
 									href="${path }/task.do?method=view&no=${param.no}"
-									class="nav-link active"> <span
+									class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-book-open"></i></span> <span
 										class="d-none d-sm-inline-block">오버뷰</span>
@@ -101,7 +101,7 @@
 											class="bx bx-task"></i></span> <span
 										class="d-none d-sm-inline-block">태스크리스트</span>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <span
+								<li class="nav-item"><a href="${path}/dashboard.do?method=list&no=${param.no}" class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bxs-dashboard"></i></span> <span
 										class="d-none d-sm-inline-block">대시보드</span>
@@ -125,7 +125,7 @@
 										class="d-none d-sm-inline-block">활동로그</span>
 								</a></li>
 								<li class="nav-item"><a
-									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link"> <span
+									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
 										class="d-none d-sm-inline-block">리스크</span>

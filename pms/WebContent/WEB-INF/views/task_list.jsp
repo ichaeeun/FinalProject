@@ -152,19 +152,19 @@ function addtask(){
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
+						                <a href="${path}/dashboard.do?method=list&no=${param.no}"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bxs-dashboard"></i></span>
 						                    <span class="d-none d-sm-inline-block">대시보드</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="${path}/gantt.do?method=gantt"  class="nav-link">
+						                <a href="${path}/gantt.do?method=gantt&no=${param.no}"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class=" bx bx-bar-chart-square"></i></span>
 						                    <span class="d-none d-sm-inline-block">간트차트</span>
 						                </a>
 						            </li>
 						            <li class="nav-item">
-						                <a href="#"  class="nav-link">
+						                <a href="${path}/cal.do?method=list&no=${param.no}"  class="nav-link">
 						                    <span class="d-inline-block d-sm-none"><i class="bx bx-calendar"></i></span>
 						                    <span class="d-none d-sm-inline-block">캘린더</span>
 						                </a>

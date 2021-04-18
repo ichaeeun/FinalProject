@@ -1,7 +1,6 @@
 package pms.service;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -16,6 +15,7 @@ import pms.dao.TaskDetailDao;
 import pms.dto.Comment;
 import pms.dto.Task;
 import pms.dto.TaskFile;
+import pms.dto.pms_project;
 
 @Service
 public class TaskDetailService {
@@ -28,6 +28,10 @@ public class TaskDetailService {
 	@Autowired(required=false)
 	private TaskDetailDao dao;
 	
+	
+	public pms_project getProject_name(int no) {
+		return dao.getProject_name(no);
+	}
 	public Task taskDetail(int task_no) {
 		Task task = dao.taskDetail(task_no);
 		if(task!=null) {

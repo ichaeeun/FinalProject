@@ -57,7 +57,7 @@
 		location.href="${path}/main.do?method=loginform";
 	}
 	else if(proc == "true"){
-		  alert("${mem.name}"+" ${mem.part}"+"님 반갑습니다.");
+		  alert("${mem.name}님 반갑습니다.");
 		  location.href="${path}/main.do?method=main";
 	} else if(proc == "false") {
 		  alert("로그인 정보가 없습니다.");
