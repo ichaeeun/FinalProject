@@ -29,7 +29,7 @@
 	</select>
 	<!-- public ArrayList<RiskBoard> rBoardAll() -->
 	<select id="rBoardAll" resultMap="riskMap">
-			SELECT *
+			SELECT a.* , b.PROJECT_NAME
 		 	from(
 		 		select rownum rnum, level, a.*
 		 		from RISKBOARD a
@@ -37,7 +37,7 @@
 				start with risk_parent_no=0
 				connect by prior risk_no = risk_parent_no
 				order siblings by risk_no DESC
-			)
+			)a, pms_project b WHERE a.project_no = b.PROJECT_NO
 	</select>
 	
 	<!-- public void insertBoard(RiskBoard insert); -->

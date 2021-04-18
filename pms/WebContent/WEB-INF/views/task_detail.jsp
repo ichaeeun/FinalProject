@@ -336,8 +336,8 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					  $("#deleteSubtaskModal").modal("hide");
-					  $("#warning-alert-modal").modal("show");
+					 /*  $("#deleteSubtaskModal").modal("hide");
+					  $("#warning-alert-modal").modal("show"); */
 					  location.href="${path}/task.do?method=list&no="+${detail.project_no};
 
 				  },

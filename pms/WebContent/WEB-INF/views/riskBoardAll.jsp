@@ -19,7 +19,7 @@
 	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 	<meta content="Coderthemes" name="author" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
+	
 	<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >	
 	<!-- App favicon -->
 	<link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
@@ -82,58 +82,6 @@
                     <!-- Start Content-->
                     <div class="container-fluid">
                     <div class="row">
-						<div class="row" style="padding-top: 10px;">
-							<a href="${path }/task.do?method=view"><button
-									class="btn btn-primary btn-md">${project.project_name}
-								</button></a>
-							<%-- ${ViewMem.project_name} --%>
-						</div>
-						<div class="col-xl-12">
-							<ul class="nav nav-tabs nav-bordered" style="padding-top: 10px;">
-								<li class="nav-item"><a
-									href="${path }/task.do?method=view&no=${param.no}"
-									class="nav-link"> <span
-										class="d-inline-block d-sm-none"><i
-											class="bx bx-book-open"></i></span> <span
-										class="d-none d-sm-inline-block">오버뷰</span>
-								</a></li>
-								<li class="nav-item"><a
-									href="${path}/task.do?method=list&no=${param.no}"
-									class="nav-link"> <span class="d-inline-block d-sm-none"><i
-											class="bx bx-task"></i></span> <span
-										class="d-none d-sm-inline-block">태스크리스트</span>
-								</a></li>
-								<li class="nav-item"><a href="${path}/dashboard.do?method=list&no=${param.no}" class="nav-link"> <span
-										class="d-inline-block d-sm-none"><i
-											class="bx bxs-dashboard"></i></span> <span
-										class="d-none d-sm-inline-block">대시보드</span>
-								</a></li>
-								<li class="nav-item"><a
-									href="${path}/gantt.do?method=gantt&no=${param.no}"
-									class="nav-link"> <span class="d-inline-block d-sm-none"><i
-											class=" bx bx-bar-chart-square"></i></span> <span
-										class="d-none d-sm-inline-block">간트차트</span>
-								</a></li>
-								<li class="nav-item"><a
-									href="${path}/cal.do?method=list&no=${param.no}"
-									class="nav-link"> <span class="d-inline-block d-sm-none"><i
-											class="bx bx-calendar"></i></span> <span
-										class="d-none d-sm-inline-block">캘린더</span>
-								</a></li>
-								<li class="nav-item"><a
-									href="${path}/task.do?method=log&no=${param.no}"
-									class="nav-link"> <span class="d-inline-block d-sm-none"><i
-											class="bx bx-comment-dots"></i></span> <span
-										class="d-none d-sm-inline-block">활동로그</span>
-								</a></li>
-								<li class="nav-item"><a
-									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
-										class="d-inline-block d-sm-none"><i
-											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크</span>
-								</a></li>
-							</ul>
-						</div>
 					</div>
 
                         <!-- start page title -->
@@ -186,7 +134,7 @@
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
                                                         <th>등록일</th>
-                                                        <th>프로젝트 번호</th>
+                                                        <th>프로젝트</th>
                                                         <th>작성자</th>
                                                         <th></th>
                                                     </tr>
@@ -216,7 +164,7 @@
                                                             <fmt:formatDate value="${ra.regdte}"/>
                                                         </td>
                                                         <td>
-                                                   				${ra.project_no}<input type="hidden" value="${ra.project_no}">
+                                                   				${ra.project_name}<input type="hidden" value="${ra.project_no}">
                                                         </td>
                                                         <td>
                                                             <div>
