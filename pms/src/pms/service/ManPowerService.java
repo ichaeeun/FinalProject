@@ -79,6 +79,10 @@ public class ManPowerService {
 	public void alertAuth(Member member) {
 		dao.alertAuth(member);
 	}
+	
+	public void insertProject(Member member) {
+		dao.insertProject(member);
+	}
 }
 
 

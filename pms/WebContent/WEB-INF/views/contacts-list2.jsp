@@ -20,20 +20,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="${path}/Admin/dist/assets/images/favicon.ico">
-
+			
         <!-- third party css -->
         <link href="${path}/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <link href="${path}/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
       <!-- App css -->
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
       <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
       <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
       <!-- icons -->
       <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 		<script src="${path}/a00_com/jquery.min.js"></script>
@@ -42,6 +40,27 @@
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
 	  	$(document).ready(function(){
+ 	  		$("#memShow").on("click",".project",function(){
+ 	  			$("#project-modal").modal("show"); 			
+				$("#projectBtn").on("click",function(){		
+					var project_no = $("#project-modal [name=pro]").val();
+					var pno = $(".project [name=pno]").val();
+ 		  			$.ajax({
+		  				type:"post",
+		  				url:"${path}/manpower.do?method=insertProject",
+		  				data:{"pno":pno, "project_no":project_no},
+		  				dataType:"json",
+		  				success:function(data){
+		  					console.log(data);
+		  					$("#project-modal").modal("hide");
+		  				},
+		  				error:function(err){
+		  					alert("에러발생:"+err);
+		  				}
+		  			}); 
+				});
+	  		}); 
+
 	  		$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
 				var pno = $(this).find('.pno').val();
@@ -49,26 +68,8 @@
 				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});	  		
-	  		
-	  		$("#memShow").on("click","#proadd-modal",function(){
-	  			var mem_name = $(this).find('.mem_name').val();
-	  			 $.ajax({
-			  			type:"post",
-			  			url:"${path}/manpower.do?method=addProject",
-			  			data:{
-			  				"name":mem_name
-			  			},	
-	  					dataType:"json",
-	  					success:function(data){
-	  						var mailInfo = data.mailMemList;
-	  						$("#proadd-modal").modal();
-	  						$("#proadd-modal [name=name]").val(data.name);					
-	  					},
-	  					error:function(err){
-	  						alert("에러발생");
-	  					}
-		  			 })
-	  		})
+
+
 	  	});
 	  </script>
     </head>
@@ -103,9 +104,9 @@
                                     <h4 class="page-title">인력현황</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                                            <li class="breadcrumb-item active">CRM</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Main</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">인력현황</a></li>
+                                            <li class="breadcrumb-item active">가용인원</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -116,7 +117,8 @@
                         </div>
                         <!-- end row -->
 						
-                        <div class="row" id="memShow">                        
+                        <div class="row" id="memShow"> 
+                                               
                         	<c:forEach var="mem" items="${memList2 }">
                             <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
@@ -124,19 +126,24 @@
                                         
                                         <div class="dropdown float-end">
                                             <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
+                                                <i class="mdi mdi-dots-vertical font-20">	
+                                                </i>
                                             </a>
-                                            
+
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <button class="dropdown-item goAdd" data-bs-toggle='modal' id="proadd-modal" data-bs-target='#proadd-modal'>
-                                                프로젝트 할당
-                                                <form>
-                                                	<input type="hidden" style="display:none" class="mem_name" name="mem_name" value="${mem.name }"/>
-                                                </form>
-                                                </button>
+                                            <a class='dropdown-item project'>
+                                            	<form>
+                                            		<input type="hidden" name="pno" value="${mem.pno }"/>
+                                            	</form>
+												<div data-bs-toggle="modal" data-bs-target="#project-add">
+													프로젝트 할당
+												</div>
+                                            </a>    
                                             </div>
                                         </div>
+                                        
                                         <i class='fas fa-user-circle fa-5x'></i>
+                                        
                                         <h4 class="mt-3 mb-1 goDetail">
                                         	<a class="text-dark mem_name" >${mem.name }</a>
                                         	<form>
@@ -148,10 +155,7 @@
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
-                            </c:forEach>
-
-                                
-                                           
+                            </c:forEach>                                         
                         </div>
                         <!-- end row -->
 
@@ -616,45 +620,37 @@
 
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
-                                        <!-- proadd-modal content -->
-                                        <div id="proadd-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Vendor js -->
+        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
+                                        <!-- project-modal content -->
+                                        <div class="modal fade" id="project-modal" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-    
                                                     <div class="modal-body">
                                                         <div class="text-center mt-2 mb-4">
                                                             <a href="index.html" class="text-success">
                                                                 <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
                                                             </a>
                                                         </div>
-
-														<!-- MessagingException -->
-    													<form class="px-3"  method="post" action="${path}/manpower.do?method=addProject"> 
                                                             <div class="mb-3">
-                                                                <label for="project" class="form-label">프로젝트</label>
+                                                                <label for="pro" class="form-label">프로젝트</label>
                                                                 <!-- 시작 -->
-                                                                <select name="project" class="form-control">
+                                                                <select name="pro" class="form-control">
                                                                 	<c:forEach var="pro" items="${allProject }">
-                                                                		<option value="${pro.project_no }">${pro.project_name }</option>
+                                                                		<option name="pro" value="${pro.project_no }">${pro.project_name }</option>
                                                                 	</c:forEach>
                                                                 </select>
+                                                            </div>                                                                                                                            
+                                                            <div class="mb-3 text-center">
+                                                                <button class="btn btn-primary" id="projectBtn">할당하기</button>
                                                             </div>
-    
-                                                            <div class="mb-3">
-                                                                <label for="name" class="form-label">사원명</label>
-                                                                <input name="name" id="name" class="form-control" type="text"/>
-                                                            </div>                                                                                                                              
-                                                       </form> 
-    
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-        <!-- Vendor js -->
-        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
-
-        <!-- App js -->
-        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
-        
+                                        </div><!-- /.modal -->        
     </body>
 </html>

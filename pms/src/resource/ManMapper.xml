@@ -76,7 +76,7 @@
 	</delete>
 	<!-- public ArrayList<pms_project> allProject(); -->
 	<select id="allProject" resultType="pms_project">
-		select distinct project_name
+		select distinct *
 		from pms_project
 	</select>
 	<!-- public void alertAuth(Member member); -->
@@ -86,6 +86,10 @@
 				part = #{part}
 			WHERE pno = #{pno}
 	</update>
+	<!-- public void insertProject(Member member); -->
+	<insert id="insertProject" parameterType="member">
+		INSERT INTO pms_member_project values(#{pno},#{project_no})
+	</insert>
 </mapper>   
 <!-- 
 <task 요청 페이지>

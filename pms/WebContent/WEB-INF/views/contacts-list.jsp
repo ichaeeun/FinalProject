@@ -255,9 +255,9 @@
                                     <h4 class="page-title">인력현황</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                                            <li class="breadcrumb-item active">CRM</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Main</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">인력현황</a></li>
+                                            <li class="breadcrumb-item active">전체인원</li>
                                         </ol>
                                     </div>
                                 </div>

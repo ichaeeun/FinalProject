@@ -152,8 +152,7 @@ public class ManPowerController {
 	
 	// http://localhost:7080/pms/manpower.do?method=addProject
 	@RequestMapping(params="method=addProject")
-	public String addProject(Model d,
-			@RequestParam("name") String name) {
+	public String addProject(Model d) {
 		
 		return "pageJsonReport";
 	}
@@ -164,4 +163,16 @@ public class ManPowerController {
 		service.alertAuth(member);
 		return "pageJsonReport";
 	}
+	// http://localhost:7080/pms/manpower.do?method=insertProject
+	@PostMapping(params="method=insertProject")
+	public String insertProject(Model d, Member member) {
+		service.insertProject(member);
+		return "pageJsonReport";
+	}
 }
+
+
+
+
+
+

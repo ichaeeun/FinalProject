@@ -45,6 +45,8 @@ public interface ManPowerDao {
 	public ArrayList<pms_project> allProject();
 	// 직급 변경
 	public void alertAuth(Member member);
+	// 프로젝트 할당
+	public void insertProject(Member member);
 }
 
 
