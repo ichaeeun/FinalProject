@@ -276,7 +276,7 @@
 															<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>                            
                                                         </td>
                                                         <td>
-                                                            ${bd.pm_pno}
+                                                            ${bd.name}
                                                         </td>
                                                         <td>
                                                         	<c:choose>

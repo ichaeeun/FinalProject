@@ -14,6 +14,15 @@ public class pms_projectSch {
 	private int blockSize;	// 한번에 보여줄 block의 크기
 	private int startBlock;	// block의 시작번호
 	private int endBlock;	// block의 마지막번호
+	private String name;	// PM_pno를 PM이름으로
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getProject_name() {
 		return project_name;
 	}

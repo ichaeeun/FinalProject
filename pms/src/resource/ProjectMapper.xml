@@ -13,10 +13,11 @@
 	<select id="pms_projectList" resultMap="pms_projectMap" parameterType="pms_projectSch">
 		SELECT *
 		FROM (
-			select rownum cnt, a.*
-			from pms_project a
+			select rownum cnt, a.*, b.name
+			from pms_project a, pms_member b
 			where project_name like '%'||#{project_name}||'%'
 			and project_status IN '진행'
+			and a.pm_pno = b.pno
 			order by project_no
 		)
 	</select>
@@ -24,10 +25,11 @@
 	<select id="pms_projectList2" resultMap="pms_projectMap" parameterType="pms_projectSch">
 		SELECT *
 		FROM (
-			select rownum cnt, a.*
-			from pms_project a
+			select rownum cnt, a.*, b.name
+			from pms_project a, pms_member b
 			where project_name like '%'||#{project_name}||'%'
 			and project_status IN '완료'
+			and a.pm_pno = b.pno
 			order by project_no
 		)
 	</select>
@@ -37,7 +39,7 @@
 	
 	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트 -->
 	<select id="projectList" resultType="pms_project" parameterType="int">
-		SELECT c.*
+		SELECT a.NAME, c.*
 		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
 		WHERE a.PNO = #{pno}
 			AND a.PNO = b.PNO
@@ -47,7 +49,7 @@
 	
 	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트(완료) -->
 	<select id="projectList2" resultType="pms_project" parameterType="int">
-		SELECT c.*
+		SELECT a.NAME, c.*
 		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
 		WHERE a.PNO = #{pno}
 			AND a.PNO = b.PNO
