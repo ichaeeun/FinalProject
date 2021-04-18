@@ -40,6 +40,10 @@
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
 	  	$(document).ready(function(){
+	 	    var mem = "${mem.id}";
+	 	    var authSession = "${mem.auth}";
+	 	    $("#auth").val(authSession);
+		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		  		
  	  		$("#memShow").on("click",".project",function(){
  	  			var pno = $(this).find('.pno').val();
  	  			// alert(pno);
@@ -79,7 +83,9 @@
     </head>
 
 <body class="loading">
-
+	<form>
+		<input type="hidden" value="${mem.auth }" id="auth"/>
+	</form>
         <!-- Begin page -->
         <div id="wrapper">
 
@@ -123,7 +129,7 @@
 						
                         <div class="row" id="memShow"> 
                                                
-                        	<c:forEach var="mem" items="${memList2 }">
+                        	<c:forEach var="memlist" items="${memList2 }">
                             <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
                                     <div class="card-body">
@@ -132,30 +138,31 @@
                                             <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-dots-vertical font-20">	
                                                 </i>
-                                            </a>
-
+                                            </a>                                         
+											<c:if test="${mem.auth == 'hp'}">
                                             <div class="dropdown-menu dropdown-menu-end">
-                                            <a class='dropdown-item project'>
+                                            <a class='dropdown-item project'>                 	
 												<div data-bs-toggle="modal" data-bs-target="#project-add">
 													프로젝트 할당
                                         		<form>
-											 		<input type="hidden" style="display:none;" class='pno' name="pno" value="${mem.pno }"/>
+											 		<input type="hidden" style="display:none;" class='pno' name="pno" value="${memlist.pno }"/>
 												</form>
-												</div>
+												</div>												
                                             </a>    
-                                            </div>
+                                            </div>  
+                                            </c:if>	                                          
                                         </div>
                                         
                                         <i class='fas fa-user-circle fa-5x'></i>
                                         
                                         <h4 class="mt-3 mb-1 goDetail">
-                                        	<a class="text-dark mem_name" >${mem.name }</a>
+                                        	<a class="text-dark mem_name" >${memlist.name }</a>
                                         	<form>
-											 	<input type="hidden" style="display:none;" class='pno' name="pno" value="${mem.pno }"/>
+											 	<input type="hidden" style="display:none;" class='pno' name="pno" value="${memlist.pno }"/>
 											</form>
                                         </h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } <br>
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
+                                        <p class="text-muted">${memlist.auth } <span> | </span>${memlist.part } <br>
+                                        <span> <a href="#" class="text-pink">${memlist.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
