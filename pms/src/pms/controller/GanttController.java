@@ -42,19 +42,6 @@ public class GanttController {
 	
 	@RequestMapping(params="method=insert")
 	public String insert(@RequestParam("no") int no,Gantt gantt,Model d) {
-		d.addAttribute("success","Y");
-		System.out.println("####insert####");
-		System.out.println("pno: " + gantt.getId());
-		System.out.println("start: " + gantt.getStart_date());
-		System.out.println("end: " + gantt.getEnd_date());
-		//System.out.println("duration: " + gantt.getDuration());
-		System.out.println("parent: " + gantt.getParent());
-		System.out.println("content: " + gantt.getText());
-		System.out.println("Priority: " + gantt.getPriority());
-		System.out.println("progress: " + gantt.getProgress());
-		System.out.println("sortorder: " + gantt.getSortorder());
-		System.out.println("holder: " + gantt.getHolder());
-		
 		Task task = service.insert_gantttotask(gantt,no);
 		service.insertTask(task);
 		d.addAttribute("no",no);
@@ -66,17 +53,6 @@ public class GanttController {
 	}
 	@RequestMapping(params="method=update")
 	public String update(@RequestParam("no") int no,Gantt gantt,Model d) {
-		System.out.println("####update####");
-		System.out.println("pno: " + gantt.getId());
-		System.out.println("start: " + gantt.getStart_date());
-		System.out.println("end: " + gantt.getEnd_date());
-		//System.out.println("duration: " + gantt.getDuration());
-		System.out.println("parent: " + gantt.getParent());
-		System.out.println("content: " + gantt.getText());
-		System.out.println("Priority: " + gantt.getPriority());
-		System.out.println("progress: " + gantt.getProgress());
-		System.out.println("sortorder: " + gantt.getSortorder());
-		System.out.println("holder: " + gantt.getHolder());
 		
 		if(gantt.getParent() == 0) {
 			service.uptProject(gantt,no);
@@ -98,8 +74,6 @@ public class GanttController {
 	
 	@RequestMapping(params="method=delete")
 	public String delete(@RequestParam("no") int no,@RequestParam("id") int id,Model d) {
-		System.out.println("####delete####");
-		System.out.println("task_no: " + id);
 		
 		service.deleteTask(id);
 		d.addAttribute("no",no);

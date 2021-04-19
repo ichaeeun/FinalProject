@@ -36,26 +36,15 @@ public class GanttService {
 	public ArrayList<Task> getTask(pms_project project) {
 		ArrayList<Task> t = new ArrayList<Task>();
 		t = dao.getTask(project);
-		/*
-		for(int i=0;i<t.size();i++) {
-			System.out.println(t.get(i).getStart());
-			System.out.println(t.get(i).getEnd());
-		}
-		*/
+
 		return dao.getTask(project);
 	}
 	
 	public ArrayList<Gantt> getGantt(ArrayList<Task> task) {
 		ArrayList<Gantt> gantt = new ArrayList<Gantt>(); 
-		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		//SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		//Date d = df.parse(day1);
-		//String formattedTime = output.format(d);
-		//d = df.parse(day2);
-		//String formattedTime2 = output.format(d);
 		
 		// 기한 저장
 		ArrayList<Integer> duration = new ArrayList<Integer>(); 
@@ -80,11 +69,7 @@ public class GanttService {
 				
 				calDateDays = Math.abs(calDateDays);
 				duration.add((int)calDateDays);
-				/*
-				System.out.println("duration: " + (int)calDateDays);
-				System.out.println("start_date: " + formattedTime1);
-				System.out.println("end_date: " + formattedTime2);
-				*/
+
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -100,7 +85,6 @@ public class GanttService {
 						task.get(i).getTask_priority().equals("Medium")?2:3,
 					0,task.get(i).getTask_no(),
 					task.get(i).getTask_parent_no(),getName(task.get(i).getPno()));
-			//System.out.println(getName(task.get(i).getPno()));
 			gantt.add(g);
 		}
 		
@@ -279,9 +263,9 @@ public class GanttService {
 	// gantt -> task
 	public Task insert_gantttotask(Gantt gantt, int project_no) {
 		Task task = new Task();
-		int pno = 9001;
+		//int pno = 9001;
 		//pno = dao.getMaxPno();
-		task.setPno(pno); 	// 미정
+		task.setPno(dao.getPnoUsingName(gantt.getHolder())); 	// 미정
 		task.setTask_no(0);	// mapper에서 task_no_seq로 처리
 
 		task.setProject_no(project_no);
@@ -318,31 +302,9 @@ public class GanttService {
 	public Task update_gantttotask(Gantt gantt,int project_no) {
 		Task task = new Task();
 		int pno = 0;
-		// view 단에서 holder 입력 시 자동으로 id도 셋팅되게
-		// holder가 입력되지 않았다면 pno,  
-		/*
-		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
-			pno = dao.getMaxPno();
-			task.setPno(pno+1); 	// 미정
-			task.setTask_no(0);	// mapper에서 task_no_seq로 처리
-		} 
-		else {
-			pno = getPnoUsingName(gantt.getHolder());
-			task.setPno(pno);
-			task.setTask_no(gantt.getId());
-		}
-		*/
-		if(gantt.getHolder().equals("") || gantt.getHolder() == null) {
-			//pno = dao.getMaxPno();
-			pno = 9000;
-			task.setPno(pno+1); 	// 미정
-		} 
-		else {
-			// holder 가 없는 사람이라면 , 동명이인이라면 => 할당된 사람만 select - option으로 고르게끔
-			pno = getPnoUsingName(gantt.getHolder());
-			task.setPno(pno);
-		}
-		
+
+		pno = getPnoUsingName(gantt.getHolder());
+		task.setPno(pno);
 		task.setTask_no(gantt.getId());
 		task.setProject_no(project_no);
 		task.setTask_name(gantt.getTitle());
@@ -373,8 +335,6 @@ public class GanttService {
 	}
 	
 	public void updateTask(Task task) {
-		//task.setStartdte(SwitchDate(task.getStartdte()));
-		//task.setEnddte(SwitchDate(task.getEnddte()));
 		dao.updateTask(task);
 	}
 
