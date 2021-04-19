@@ -6,7 +6,7 @@ import pms.dto.Log;
 import pms.dto.Member;
 import pms.dto.Task;
 import pms.dto.Overview;
-
+//pms.dao.OverviewDao
 public interface OverviewDao {
 	public ArrayList<Log> LogList(int no);
 	public ArrayList<Task> TaskList(int no);

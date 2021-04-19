@@ -144,4 +144,19 @@
 	 <websocket:handlers>
 	 	<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
 	 </websocket:handlers>	
+	 
+<!-- 
+#AOP 처리
+1. advice
+ -->	 
+<bean id="profilier" class="pms.util.Profilier"/>
+<!-- 
+2. aop 처리 
+-->
+<aop:config>
+	<aop:aspect id="traceAspect" ref="profilier">
+		<aop:pointcut expression="execution(public * pms.dao.OverviewDao..mTaskInsert(..))" id="taskInsert"/>
+		<aop:around method="trace" pointcut-ref="taskInsert"/>
+	</aop:aspect>
+</aop:config>	
 </beans>
