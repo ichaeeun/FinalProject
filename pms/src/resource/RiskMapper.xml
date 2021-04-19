@@ -3,20 +3,18 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
      
-   <!-- public ArrayList<RiskBoard> rBoard() -->
+   <!-- public ArrayList<RiskBoard> rBoard()  #{project_no}-->
 <mapper namespace="pms.dao.RiskDao">
 	<resultMap type="riskboard" id="riskMap"/>
 	<select id="rBoard" resultMap="riskMap" parameterType="int">
-	SELECT ROWNUM rnum1, b.*
- 	from(
+
  		select rownum rnum, level, a.*
  		from RISKBOARD a
  		where risk_status='승인'
+ 		and PROJECT_NO = #{project_no}
 		start with risk_parent_no=0
 		connect by prior risk_no = risk_parent_no
 		order siblings by risk_no DESC
-	)b
-	WHERE PROJECT_NO = #{project_no}
 	</select>
 	
 	<select id="rBoard_request" resultMap="riskMap" parameterType="int">

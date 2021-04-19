@@ -183,8 +183,8 @@
                                                         <th>제목</th>
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
-                                                        <th>등록일</th>
                                                         <th>리스크 상태</th>
+                                                        <th>등록일</th>
                                                         <th>작성자</th>
                                                         <th></th>
                                                     </tr>
@@ -199,7 +199,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                 			${rl.rnum1}
+                                                 			${rl.rnum}
                                                         </td>
                                                         <td>   
                                                             <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
@@ -211,12 +211,10 @@
                                                    			[${rl.risk_category}]
                                                         </td>
                                                         <td>
-                                                            <fmt:formatDate value="${rl.regdte}"/>
+                                                            ${rl.risk_status}
                                                         </td>
                                                         <td>
-                                                            <div>
-                                                   				${rl.risk_status}
-                                                            </div>
+                                                   			<fmt:formatDate value="${rl.regdte}"/>
                                                         </td>
                                                         <td>
                                                             <div>
