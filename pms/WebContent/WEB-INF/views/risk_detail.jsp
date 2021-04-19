@@ -245,7 +245,7 @@
 		                
                 </div> <!-- content -->
                 <!-- Footer Start -->
-                <jsp:include page="footer.jsp"/>
+              <%--   <jsp:include page="footer.jsp"/> --%>
                 <!-- end Footer -->
 
             </div>

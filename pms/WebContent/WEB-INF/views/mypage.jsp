@@ -42,7 +42,27 @@
 
 
 <script type="text/javascript">
-
+	$(document).ready(function(){
+		$("#uploadImg").on("change",ImgFile);
+	});
+	var sel_file;
+	function ImgFile(e){
+		var files= e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+			sel_file =f; 
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$("#img").attr("src",e.target.result).attr("width",50px);
+			}
+			reader.readAsDataURL(f);
+			
+		});
+	}
 </script>
 </head>
    <body class="loading">
@@ -84,11 +104,11 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                     	<div class="mt-3 mb-0">
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" id="img">
                                         </div>
                                         <div class="fileupload btn btn-success waves-effect waves-light mt-3">
                                             <span><i class="mdi mdi-cloud-upload me-1"></i>Upload Image</span>
-                                            <input type="file" class="upload">
+                                            <input type="file" class="upload" id="uploadImg">
                                         </div>
                                         <h4 class="mt-3 mb-0">${mem.name }</h4>
                                         <p class="text-muted">${mem.part }</p>
