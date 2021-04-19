@@ -119,7 +119,7 @@
 				return add;
 			}
 			$("#chId").on("click",function(){
-				var id = $("[name=id]").val();
+				var id = $("#signup-modal [name=id]").val();
 				$.ajax({
 					type:"post",
 					url:"${path}/manpower.do?method=chId",
@@ -140,7 +140,7 @@
 				})
 			})
 			$("#chEmail").on("click",function(){
-				var email = $("[name=email]").val();
+				var email = $("#signup-modal [name=email]").val();
 				$.ajax({
 					type:"post",
 					url:"${path}/manpower.do?method=chEmail",
@@ -162,33 +162,45 @@
 			})			
   			$("#signupBtn").click(function(){ 				
   				var insert = addMember();
-				if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
-							insert.part==""||insert.email==""){
-						alert('입력하지 않은 값이 있습니다.');
-					}
+				/* if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
+				insert.part==""||insert.email==""){
+					alert('입력하지 않은 값이 있습니다.');
+					return false;
+				} */
   				$.ajax({
   					type:"post",
   					url:"manpower.do?method=add_member",
   					data:insert,
   					dataType:"json",
   					success:function(){
-
   						$("#signup-modal").modal("hide");
+  						$("#info-mail-modal").modal("show");
   						ajaxSearch();
   						console.log(insert);
+  						
   					},
   					error:function(){
   						alert("에러발생");
   					}
   				});
-  				$("#addTask_task_name").val("");
-  				$("#signup-modal [name=name]").val("");
-  				$("#signup-modal [name=id]").val("");
-  				$("#signup-modal [name=pass]").val("");
-  				$("#signup-modal [name=email]").val("");
   			});
-  			
-	  		
+  			//////////// 계정 생성 후 메일 발송 여부 확인
+  			$("#info-mail-modal #mailY").click(function(){
+  				var subject = "AZZA 계정 정보입니다.";
+  				var receiver = $("#signup-modal [name=email]").val();
+  				var id = $("#signup-modal [name=id]").val();
+  				var pass = $("#signup-modal [name=pass]").val();
+  				var content = "회원아이디: "+id+", 비밀번호: "+pass;
+  				$("#sendMail [name=subject]").val(subject);
+  				$("#sendMail [name=receiver]").val(receiver);
+  				$("#sendMail [name=content]").val(content);
+  				$("#sendMail").submit();
+  				alert("계정정보 전송 완료");
+  			})
+	  		$("#info-mail-modal #mailN").click(function(){
+	  			$("#info-mail-modal").modal("hide");
+	  		})
+  		
 	  		//////////// 상세화면
 			$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
@@ -219,6 +231,8 @@
   					}
 	  			 })	  			 
 	  		})
+
+	  		
 	  		
 	  		///////// 인력 삭제
  	  		$("#memShow").on("click",".goDelete",function(){
@@ -267,6 +281,11 @@
 	  				 }) 
 	  			 });	
 			});
+			
+				$("#signup-modal [name=name]").val("");
+  				$("#signup-modal [name=id]").val("");
+  				$("#signup-modal [name=pass]").val("");
+  				$("#signup-modal [name=email]").val("");				
 	  	});
 		function goPage(page){
 			// 이전 페이지가 0이면 1
@@ -284,6 +303,13 @@
 	action="${path }/manpower.do?method=contacts_list" id="curPageFrm">
 	<form:hidden path="curPage"/>
 </form:form>
+<!-- 메일 발송 -->
+<form id="sendMail" method="post" action="${path }/mail.do?method=send"
+	style="display:none;">
+	<input type="hidden" name="subject"/>
+	<input type="hidden" name="receiver"/>
+	<input type="hidden" name="content"/>
+</form>
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -984,6 +1010,23 @@
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->							               
+                                        </div><!-- /.modal -->	
+                                        
+                                        <!-- 메일 발송 모달 -->
+                                        <div id="info-mail-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-body p-4">
+                                                        <div class="text-center">
+                                                            <i class="bx bxs-info-circle h1 text-info"></i>
+                                                            <h4 class="mt-2">계정 생성 완료!</h4>
+                                                            <p class="mt-3">계정 정보를 메일로 발송하시겠습니까?</p>
+                                                            <button type="button" id="mailY" class="btn btn-info my-2" data-bs-dismiss="modal">네</button>
+                                                            <button type="button" id="mailN" class="btn btn-info my-2" data-bs-dismiss="modal">아니요</button>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->                                        						               
     </body>
 </html>

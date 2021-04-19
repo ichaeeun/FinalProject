@@ -178,7 +178,7 @@ public class ManPowerController {
 	public String chId(@RequestParam("id") String id, Model d) {
 		int idCnt = service.chId(id);
 		System.out.println("아이디 수:"+idCnt);
-		if(idCnt==0) {
+		if(idCnt==0&&id!="") {
 			d.addAttribute("success","Y");
 		}else {
 			d.addAttribute("success","N");
@@ -189,7 +189,7 @@ public class ManPowerController {
 	@PostMapping(params="method=chEmail")
 	public String chEmail(@RequestParam("email") String email, Model d) {
 		int emailCnt = service.chEmail(email);
-		if(emailCnt==0) {
+		if(emailCnt==0&&email!="") {
 			d.addAttribute("success","Y");
 		}else {
 			d.addAttribute("success","N");

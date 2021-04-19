@@ -23,11 +23,16 @@ public class MailController {
 
 	// http://localhost:7080/pms/mail.do?method=send
 	@RequestMapping(params="method=send")
-	public String send(Mail send) throws MessagingException {
+	public String send(Mail send,
+			@RequestParam("subject") String subject,
+			@RequestParam("receiver") String receiver,
+			@RequestParam("content") String content) throws MessagingException {
 		System.out.println(send.getSubject());
+		System.out.println(send.getReceiver());
+		System.out.println(send.getContent());
 		service.sendMail(send);
 		// 메일 전송은 service단에서 처리
-		return "contacts-list";
+		return "redirect:/manpower.do?method=contacts_list";
 	} 
 	// 메일 모달에 값 넣기
 	@PostMapping(params="method=jsonMailList")
