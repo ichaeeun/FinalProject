@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import pms.dao.GanttDao;
 import pms.dto.Gantt;
+import pms.dto.ProjectAdd;
 import pms.dto.Task;
 import pms.dto.pms_project;
 
@@ -130,7 +132,8 @@ public class GanttService {
 		JSONObject result = new JSONObject();
 		// project 가 제일 위로 들어가야함
 		// project => gantt
-		g.put("id", project.getProject_no());
+		//g.put("id", project.getProject_no());
+		g.put("id", 1);
 		// 날짜 형식 변경
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -376,7 +379,11 @@ public class GanttService {
 	}
 
 	public void deleteTask(int task_no) {
-		dao.deleteTask(task_no);
+		// parent_no == task_no 인 애들 다 삭제 메서드
+		HashMap<String,Integer> hm = new HashMap();
+		hm.put("task_no", task_no);
+		hm.put("parent_no", task_no);
+		dao.deleteTask(hm);
 	}
 	
 	public String SwitchDate(String before) {
@@ -394,6 +401,18 @@ public class GanttService {
 		}
 		System.out.println("result: " + result);
 		return result;
+	}
+	
+	public ArrayList<String> getProjectAdd(int project_no){
+		ArrayList<ProjectAdd> proadd = new ArrayList<ProjectAdd>();
+		ArrayList<String> names = new ArrayList<String>();
+		proadd = dao.getProjectAdd(project_no);
+		
+		for(int i=0;i<proadd.size();i++) {
+			String name = dao.getName(proadd.get(i).getPno());
+			names.add(name);
+		}
+		return names;
 	}
 	
 }

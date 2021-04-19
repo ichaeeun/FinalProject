@@ -1,10 +1,11 @@
 package pms.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
 
-import pms.dto.Gantt;
+import pms.dto.ProjectAdd;
 import pms.dto.Task;
 import pms.dto.pms_project;
 
@@ -16,7 +17,8 @@ public interface GanttDao {
 	public void insertTask(Task task);
 	public int getMaxPno();
 	public void updateTask(Task task);
-	public void deleteTask(int task_no);
+	public void deleteTask(HashMap<String,Integer> hm);
 	public pms_project getProject(int project_no);
 	public void uptProject(pms_project project);
+	public ArrayList<ProjectAdd> getProjectAdd(int project_no);
 }

@@ -24,6 +24,7 @@ public class GanttController {
 	@RequestMapping(params="method=gantt")
 	public String gantt(@RequestParam("no") int no, Model d) {
 		d.addAttribute("no",no);
+		d.addAttribute("names",service.getProjectAdd(no));
 		d.addAttribute("project",service.getProject(no));
 		return "gantt";
 	}
@@ -33,6 +34,7 @@ public class GanttController {
 	public String data(@RequestParam("no") int no,Model d) {
 		d.addAttribute("no",no);
 		d.addAttribute("project",service.getProject(no));
+		d.addAttribute("names",service.getProjectAdd(no));
 		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
@@ -58,6 +60,7 @@ public class GanttController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("project",service.getProject(no));
+		d.addAttribute("names",service.getProjectAdd(no));
 		d.addAttribute("gantt",service.list(no));
 		return "pageJsonReport";
 	}
@@ -87,6 +90,7 @@ public class GanttController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("project",service.getProject(no));
+		d.addAttribute("names",service.getProjectAdd(no));
 		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
@@ -101,6 +105,7 @@ public class GanttController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("project",service.getProject(no));
+		d.addAttribute("names",service.getProjectAdd(no));
 		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";

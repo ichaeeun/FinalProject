@@ -30,6 +30,11 @@
 		select * from pms_project where project_no = #{project_no}
 	</select>
 	
+	<resultMap type="proadd" id="proaddMap"/>
+	<select id="getProjectAdd" resultMap="proaddMap" parameterType="int">
+		SELECT * FROM pms_member_project WHERE PROJECT_NO = #{project_no}
+	</select>
+	
 	<insert id="insertTask" parameterType="task">
 		insert into project_task values(
 			#{pno},#{project_no},task_no_seq.nextval,#{task_name},
@@ -61,8 +66,8 @@
 			where project_no = #{project_no}
 	</update>
 	
-	<delete id="deleteTask" parameterType="int">
-		delete from project_task where task_no = #{task_no}
+	<delete id="deleteTask" parameterType="hashmap">
+		delete from project_task where task_no = #{task_no} or task_parent_no = #{parent_no}
 	</delete>
 </mapper>  
  
