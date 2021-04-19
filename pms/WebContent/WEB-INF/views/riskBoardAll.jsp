@@ -133,10 +133,10 @@
                                                         <th>제목</th>
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
-                                                        <th>등록일</th>
+                                                        <th>리스크 상태</th>
                                                         <th>프로젝트</th>
                                                         <th>작성자</th>
-                                                        <th></th>
+                                                        <th>등록일</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -161,7 +161,7 @@
                                                    			[${ra.risk_category}]
                                                         </td>
                                                         <td>
-                                                            <fmt:formatDate value="${ra.regdte}"/>
+                                                            ${ra.risk_status}
                                                         </td>
                                                         <td>
                                                    				${ra.project_name}<input type="hidden" value="${ra.project_no}">
@@ -172,7 +172,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                        	<input type="hidden" value="${ra.risk_no}">
+                                                        	<fmt:formatDate value="${ra.regdte}"/><input type="hidden" value="${ra.risk_no}">
                                                         </td>
                                                     </tr>
                                               		</c:forEach>
