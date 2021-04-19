@@ -1,11 +1,8 @@
 package pms.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.dto.Member;
-import pms.dto.Task;
+import pms.dto.MemberSch;
 import pms.service.LoginService;
 import pms.service.ManPowerService;
 import pms.service.OverviewService;
@@ -61,7 +58,7 @@ public class LoginController {
 		
 		// http://localhost:7080/pms/main.do?method=main
 		@RequestMapping(params="method=main")
-		public String main(HttpSession session, @ModelAttribute("sch") Member sch, Model d) {
+		public String main(HttpSession session, @ModelAttribute("sch") MemberSch sch, Model d) {
 			// 세션 값
 			Member m = (Member)session.getAttribute("mem");
 			System.out.println(m.getAuth());

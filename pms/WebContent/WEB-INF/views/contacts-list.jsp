@@ -118,14 +118,61 @@
 				add.email = $("[name=email]").val();
 				return add;
 			}
+			$("#chId").on("click",function(){
+				var id = $("[name=id]").val();
+				$.ajax({
+					type:"post",
+					url:"${path}/manpower.do?method=chId",
+					data:{"id":id},
+					dataType:"json",
+					success:function(data){
+						if(data.success=="Y"){
+							alert('사용 가능한 아이디입니다.');
+							$("[name=pass]").focus();
+						}else{
+							alert('이미 존재하는 아이디입니다.');
+							$("[name=id]").val("").focus();
+						}
+					},
+					error:function(err){
+						alert("에러발생:"+err);
+					}
+				})
+			})
+			$("#chEmail").on("click",function(){
+				var email = $("[name=email]").val();
+				$.ajax({
+					type:"post",
+					url:"${path}/manpower.do?method=chEmail",
+					data:{"email":email},
+					dataType:"json",
+					success:function(data){
+						if(data.success=="Y"){
+							alert('사용 가능한 이메일입니다.');
+							$("[name=id]").focus();
+						}else{
+							alert('이미 존재하는 이메일입니다.');
+							$("[name=email]").val("").focus();
+						}
+					},
+					error:function(err){
+						alert("에러발생:"+err);
+					}
+				})
+			})			
   			$("#signupBtn").click(function(){ 				
   				var insert = addMember();
+				if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
+							insert.part==""||insert.email==""){
+						alert('입력하지 않은 값이 있습니다.');
+					}
   				$.ajax({
   					type:"post",
   					url:"manpower.do?method=add_member",
   					data:insert,
   					dataType:"json",
   					success:function(){
+
   						$("#signup-modal").modal("hide");
   						ajaxSearch();
   						console.log(insert);
@@ -219,12 +266,24 @@
 	  					 }
 	  				 }) 
 	  			 });	
-			})	
+			});
 	  	});
+		function goPage(page){
+			// 이전 페이지가 0이면 1
+			if(page==0) page=1;
+			var pageCount = '${sch.pageCount}';
+			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리
+			$("#curPageFrm [name=curPage]").val(page);
+			$("#curPageFrm").submit();
+		}
 	  </script>
     </head>
 
 <body class="loading">
+<form:form modelAttribute="sch" method="post" 
+	action="${path }/manpower.do?method=contacts_list" id="curPageFrm">
+	<form:hidden path="curPage"/>
+</form:form>
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -292,33 +351,27 @@
 
                         <div class="row mb-4">
                             <div class="col-sm-6">
-                                <div>
-                                    <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
-                                </div>
+<%--                                 <div>
+                                    <h5 class="font-14 text-body">Showing Page ${curPage } Of </h5>
+                                </div> --%>
                             </div>
                             <div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
-                                        <li class="page-item disabled">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
+                                            <a href="javascript:goPage(${sch.startBlock-1 })" class="page-link">
+                                            	<i class="mdi mdi-chevron-left"></i>
+                                            </a>
                                         </li>
+                                        <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+                                        	<li class="page-item ${sch.curPage==cnt?'active':'' }">
+                                            	<a href="javascript:goPage(${cnt })" class="page-link">${cnt }</a>
+                                        	</li>
+                                        </c:forEach>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                            <a href="javascript:goPage(${sch.endBlock+1 })" class="page-link">
+                                            	<i class="mdi mdi-chevron-right"></i>
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -778,14 +831,19 @@
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">이름</label>
                                                                 <input name="name" class="form-control" type="text" placeholder="이름"/>
+                                                                
+
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="email" class="form-label">이메일</label>
+                                                                <button id="chEmail">중복체크</button>
                                                                 <input name="email" class="form-control" type="email" placeholder="이메일"/>
                                                             </div>   
                                                             <div class="mb-3">
                                                                 <label for="id" class="form-label">아이디</label>
+                                                                <button id="chId">중복체크</button>
                                                                 <input name="id" class="form-control" type="text" placeholder="아이디"/>
+                                                                
                                                             </div>
                                                              <div class="mb-3">
                                                                 <label for="pass" class="form-label">비밀번호</label>

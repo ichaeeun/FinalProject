@@ -4,9 +4,19 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="pms.dao.ManPowerDao">
 	<!-- public ArrayList<Member> memList1(String name); -->
-	<select id="memList1" resultType="member" parameterType="String">
-		SELECT * FROM pms_member
+	<select id="memList1" resultType="member" parameterType="String">		
+		select *
+		from pms_member
 		where name like '%'||#{name}||'%'
+	</select>
+	<!-- public ArrayList<Member> showMem(MemberSch sch); -->
+	<select id="showMem" parameterType="memsch" resultType="member">
+		select *
+		from(
+			select rownum cnt, a.* from pms_member a
+			where name like '%'||#{name}||'%'
+		)
+		where cnt between #{start} and #{end}
 	</select>
 	<!-- public ArrayList<Integer> pnoList(HashMap<String,String> hm); -->
 	<!-- <resultMap type="int" id="pnoMap"/> -->
@@ -91,6 +101,24 @@
 	<insert id="insertProject" parameterType="member">
 		INSERT INTO pms_member_project values(#{pno},#{project_no})
 	</insert>
+	<!-- public int toCnt(MemberSch sch); -->
+	<select parameterType="memsch" resultType="int" id="toCnt">
+			select count(*) 
+			from pms_member
+			where name like '%'||#{name}||'%'
+	</select>
+	<!-- public int chId(String id); -->
+	<select id="chId" parameterType="String" resultType="int">
+	SELECT count(*)
+		FROM PMS_MEMBER
+		WHERE id = #{id}
+	</select>
+	<!-- public int chEmail(String email); -->
+	<select id="chEmail" parameterType="String" resultType="int">
+	SELECT count(*)
+		FROM PMS_MEMBER
+		WHERE email = #{email}
+	</select>	
 </mapper>   
 <!-- 
 <task 요청 페이지>

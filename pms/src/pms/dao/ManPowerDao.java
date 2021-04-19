@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Repository;
 
 import pms.dto.Member;
+import pms.dto.MemberSch;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 
@@ -23,6 +24,8 @@ public interface ManPowerDao {
 	// 가용인원 - 최종 조회
 	public Member memPoss(int pno);
 	
+	// 
+	public ArrayList<Member> showMem(MemberSch sch);
 	
 	
 	// 부서인원 - 부서목록
@@ -47,6 +50,13 @@ public interface ManPowerDao {
 	public void alertAuth(Member member);
 	// 프로젝트 할당
 	public void insertProject(Member member);
+	
+	// 총 데이터 건수
+	public int toCnt(MemberSch sch);
+	
+	// 계정생성 유효성 체크
+	public int chId(String id);
+	public int chEmail(String email);
 }
 
 

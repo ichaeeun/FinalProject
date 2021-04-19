@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Member;
+import pms.dto.MemberSch;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.service.ManPowerService;
@@ -27,12 +28,11 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=jsonContactList
 	@RequestMapping(params = "method=jsonContactList")
-	public String memList1(@ModelAttribute("sch") Member sch, Model d,
-			@RequestParam("name") String name) {
+	public String memList1(@RequestParam("name") String name, Model d) {
 		// 전체 인원
 		// if (sch.getName() == null) sch.setName("");
-		if(name==null) name="";
-		System.out.println("검색이름:"+name);
+		// if(name==null) name="";
+		// System.out.println("검색이름:"+sch.getName());
 		d.addAttribute("memList1",service.memList1(name));
 		// 부서 목록
 		d.addAttribute("partList", service.deptList());
@@ -41,19 +41,21 @@ public class ManPowerController {
 		return "pageJsonReport";
 	}
 	
-	@GetMapping(params="method=contacts_list")
-	public String showMem(Model d) {
+	// http://localhost:7080/pms/manpower.do?method=contacts_list
+	@RequestMapping(params="method=contacts_list")
+	public String showMem(Model d, @ModelAttribute("sch") MemberSch sch) {
 		d.addAttribute("partList", service.deptList());
 		d.addAttribute("authList", service.authList());
+		d.addAttribute("memList", service.showMem(sch));
 		return "contacts-list";
 	}
 	
-	@RequestMapping(params="method=allMan")
-	public String allMan(@RequestParam("shName") String name, Model d) {
-		if(name==null) name="";
-		d.addAttribute("memList1", service.memList1(name));
-		return "allMan";
-	}
+	/*
+	 * @RequestMapping(params="method=allMan") public String
+	 * allMan(@RequestParam("shName") String name, Model d) { if(name==null)
+	 * name=""; d.addAttribute("memList1", service.memList1(sch)); return "allMan";
+	 * }
+	 */
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_list2
 	@RequestMapping(params = "method=contacts_list2")
@@ -114,7 +116,8 @@ public class ManPowerController {
 	@RequestMapping(params = "method=contacts_profile")
 	public String contacts_profile(Model d, 
 			@RequestParam("ename") String ename, 
-			@RequestParam("pno") int pno) {
+			@RequestParam("pno") int pno,
+			MemberSch sch) {
 		  System.out.println("ename:"+ename);
 		  System.out.println("pno:"+pno);
 		  d.addAttribute("memDetail",service.memList1(ename)); 
@@ -169,6 +172,30 @@ public class ManPowerController {
 		service.insertProject(member);
 		return "pageJsonReport";
 	}
+	
+	// http://localhost:7080/pms/manpower.do?method=chId
+	@PostMapping(params="method=chId")
+	public String chId(@RequestParam("id") String id, Model d) {
+		int idCnt = service.chId(id);
+		System.out.println("아이디 수:"+idCnt);
+		if(idCnt==0) {
+			d.addAttribute("success","Y");
+		}else {
+			d.addAttribute("success","N");
+		}
+		return "pageJsonReport";
+	}
+	// http://localhost:7080/pms/manpower.do?method=chEmail
+	@PostMapping(params="method=chEmail")
+	public String chEmail(@RequestParam("email") String email, Model d) {
+		int emailCnt = service.chEmail(email);
+		if(emailCnt==0) {
+			d.addAttribute("success","Y");
+		}else {
+			d.addAttribute("success","N");
+		}
+		return "pageJsonReport";
+	}	
 }
 
 
