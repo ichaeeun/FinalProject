@@ -183,10 +183,10 @@
 	                    <div class="collapse" id="sidebarEcommerce">
 	                        <ul class="nav-second-level">
 	                            <li>
-	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
+	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 승인</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path}/risk.do?method=riskRequest&no=${param.no}">진행중인 리스크 요청</a>
+	                                <a href="${path}/risk.do?method=riskRequest&no=${param.no}">리스크 승인</a>
 	                            </li>
 	                        </ul>
 	                    </div>

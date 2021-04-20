@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -33,15 +34,59 @@
 
 <!-- icons -->
 <link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-
+<style>
+	tr th{text-align:center;}
+	tr td{text-align:center;}
+	#reno{cursor:pointer;}
+</style>
 
 <script type="text/javascript">
-	$(".data").click(function(){
-		$(location).attr("href", "${path}/taskdetail.do?method=list");
-	})
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".content-page",
+			data:{
+				title:'ex',
+				tlist:[]
+			},
+			methods:{		
+				fetchContacts:function(data){
+					var vm = this;
+					var tlist=[];
+					var url = "http://localhost:7080/pms/taskRequest.do?method=listJson";
+					fetch(url).then(function(response){
+							console.log("# 서버에서 온 response객체 #");
+							console.log(response);
+							return response.json();
+						}).then(function(json){
+							console.log("# 서버에서 온 json 객체 #");
+							console.log(json);
+							// 모델 데이터 할당
+							vm.tlist = json.tlist;
+						}).catch(function(err){
+							console.log("# 에러 발생 #");
+							console.log(err);
+						});
+				}
+			},
+			created(){
+				this.fetchContacts();
+			},
+		});	
+		
+		$(".tbody").on("click",".data",function(){
+			var task_no=$(this).find("#task_no").text();
+			location.href="${path}/taskdetail.do?method=list&task_no="+task_no;
+		})
+		
+	});
+	
 </script>
 </head>
    <body class="loading">
@@ -65,12 +110,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">태스크 요청</h4>
+                                    <h4 class="page-title">태스크 승인 요청</h4>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minton</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">태스크 요청</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">메인</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">요청관리</a></li>
+                                            <li class="breadcrumb-item active">승인요청</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -87,12 +132,12 @@
                                                 <thead class="table-light">
 	                                            <colgroup>
 	                                            	<col style="width:10%">
-	                                            	<col style="width:30%">
+	                                            	<col style="width:35%">
 	                                            	<col style="width:25%">
-	                                            	<col style="width:20%">
+	                                            	<col style="width:15%">
 	                                            	<col style="width:15%">
 	                                            </colgroup>                                                 
-                                                    <tr>
+                                                    <tr>        
                                                         <th scope="col">요청번호</th>
                                                         <th scope="col">태스크명</th>
                                                         <th scope="col">프로젝트명</th>
@@ -100,67 +145,17 @@
                                                         <th scope="col">요청일</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr class="data">
-                                                        <td>
-                                                            <a href="${path}/taskdetail.do?method=list" class="text-dark">1</a>
-                                                        </td>
-                                                        <td class="font-13">요구사항 파악 및 보고서 작성</td>
-                                                        <td>Project1</td>
-                                                        <td>
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                        </td> 
-                                                        <td>2021-04-03</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="${path}/taskdetail.do?method=list" class="text-dark">2</a>
-                                                        </td>
-                                                        <td class="font-13">요구사항 수정</td>
-                                                        <td>Project1</td>
-                                                        <td>
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                        </td> 
-                                                        <td>2021-04-03</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="${path}/taskdetail.do?method=list" class="text-dark">3</a>
-                                                        </td>
-                                                        <td class="font-13">메인 화면 구현</td>
-                                                        <td>Project1</td>
-                                                        <td>
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                        </td> 
-                                                        <td>2021-04-03</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="${path}/taskdetail.do?method=list" class="text-dark">4</a>
-                                                        </td>
-                                                        <td class="font-13">고객센터 페이지 구현</td>
-                                                        <td>Project3</td>
-                                                        <td>
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                        </td> 
-                                                        <td>2021-04-01</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="${path}/taskdetail.do?method=list" class="text-dark">5</a>
-                                                        </td>
-                                                        <td class="font-13">css 파일 수정</td>
-                                                        <td>Project2</td>
-                                                        <td>
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                            <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" alt="task-user" class="avatar-sm img-thumbnail rounded-circle"> 
-                                                        </td> 
-                                                        <td>2021-04-05</td>
-                                                    </tr>                                                                                                                                                            
+                                                <tbody class="tbody">
+                                                	<tr class="data" v-for="(t,idx) in tlist">
+                                                		<td style="text-align:center;" id="reno">
+                                                			{{idx+1}}
+                                                		</td>
+                                                		<td>{{t.task_name}}</td>
+                                                		<td>{{t.project_name}}</td>
+                                                		<td>{{t.name}}</td>
+                                                		<td>{{t.request_dte}}</td>
+                                                		<td style="display:none" id="task_no">{{t.task_no}}</td>
+                                                	</tr>                                                                                                                                                      
                                                 </tbody>
                                             </table>
                                         </div>
@@ -174,24 +169,7 @@
 
                 </div> <!-- content -->
 
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-                <!-- end Footer -->
+
 
             </div>
 

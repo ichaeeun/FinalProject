@@ -118,7 +118,8 @@
 	SELECT count(*)
 		FROM PMS_MEMBER
 		WHERE email = #{email}
-	</select>	
+	</select>
+
 </mapper>   
 <!-- 
 <task 요청 페이지>
