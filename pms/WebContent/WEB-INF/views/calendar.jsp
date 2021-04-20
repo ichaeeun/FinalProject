@@ -54,8 +54,12 @@
  
 --%>
 var date = {};
+var all;
+var createdid = "${mem.auth}";
    //$(document).ready(function(){
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function(e) {
+		
+		console.log(createdid);
 		var opts={
 				autoOpen:false,	// 초기에 로딩하지 않게 처리
 				width:"350px",
@@ -90,26 +94,29 @@ var date = {};
 		    	  
 		    	  opts.buttons = {
 		    			  "등록":function(){    				  
+		    			  
 		    				  alert("등록처리합니다");
-		    				  var sch = callSch();
+		    				  var sch = newSch();
 		    				  console.log("# 등록할 데이터 #");
 		    				  console.log(sch);
 		    				  
 		    				  // 화면에 출력
-		    				  if(sch.title){
+		    				  if(sch.title && sch.content){
 		    					  calendar.addEvent(sch);
 		    					  calendar.unselect();
-		    				  }    				  
+		    				  }		
+		    				  
 		    				  // ajax 처리 ( DB 등록 )
 		    				  $.ajax({
 		    					 type:"post",
-		    					 url:"${path}/calendar.do?method=insert",
+		    					 url:"${path}/cal.do?method=insert&no="+"${no}",
 		    					 dataType:"json",
 		    					 data:sch,
 		    					 success:function(data){
 		    						 if(data.success=="Y"){
 		    							// data.모델명
 		    							alert('등록 성공');
+		    							all = data.calendar;
 		    						 }
 		    					 },
 		    					 error:function(err){
@@ -168,34 +175,68 @@ var date = {};
 		    				// 1. 화면단 처리 변경
 		    				// 현재 캘린더 api의 속성 변경하기
 		    				var event = calendar.getEventById(sch.id);
-		    				console.log("수정할 값: " + sch);
+		    				console.log("####수정할 값####");
+		    				console.log(sch);
 		    				// 속성 값 변경 setProp
+		    				/*
 		    				event.setProp("title",sch.title);
-		    				event.setProp("textColor",sch.textColor);
-		    				event.setProp("backgroundColor",sch.backgroundColor);
-		    				event.setProp("borderColor",sch.borderColor);
+		    				//event.setProp("textColor",sch.textColor);
+		    				//event.setProp("backgroundColor",sch.backgroundColor);
+		    				//event.setProp("borderColor",sch.borderColor);
 		    				
 		    				// 확장 속성
-		    				event.setExtendedProp("writer",sch.writer);
+		    				//event.setExtendedProp("title",sch.title);
+		    				//event.setExtendedProp("groupId",sch.groupId);
+		    				event.setExtendedProp("holder",sch.holder);
 		    				event.setExtendedProp("content",sch.content);
+		    				event.setExtendedProp("parent",sch.parent);
+		    				event.setExtendedProp("priority",sch.priority);
+		    				event.setExtendedProp("start",sch.start);
+		    				event.setExtendedProp("end",sch.end);
 		    				event.setAllDay(sch.allDay);
 		    				
+		    				sch.id = $("[name=id]").val();
+						  sch.groupId = $("[name=groupId]").val();
+						  sch.backgroundColor = $("[name=backgroundColor]").val();
+						  sch.borderColor = $("[name=borderColor]").val();
+						  sch.textColor = $("[name=textColor]").val();
+						  sch.title=$("[name=title]").val();
+						  sch.content=$("[name=content]").val();
+						  sch.parent=$("[name=parent]").val();
+						  sch.priority=$("[name=priority]").val();
+						  sch.holder=$("[name=holder]").val();
+						  sch.allDay = false;
+						  sch.start = date.start.toISOString();
+						  sch.end = date.end.toISOString();
+						  */
 		    				// DB 변경
 		    				updateCall(sch);
 		    				$("#schDialog").dialog("close");
+		    				
 		    			},
 		    			"삭제":function(){
 		    				var idVal = $("[name=id]").val();
+		    				var groupIdVal = $("[name=groupId]").val();
 		    	            var event = calendar.getEventById(idVal);
 		    	            event.remove();
+		    	            
+		    	            if(groupIdVal == 1){
+		    	            	for(var i=0;i<all.length;i++){
+		    	            		if(idVal == all[i].groupId)
+		    	            			event = calendar.getEventById(all[i].id);
+		    	            		event.remove();
+		    	            	}
+		    	            }
+		    	            
 		    	            $.ajax({
 		    	            	type:"post",
-		    	            	url:"calendar.do?method=delete",
+		    	            	url:"${path}/cal.do?method=delete&no="+"${no}",
 		    	            	data:{id:idVal},
 		    	            	dataType:"json",
 		    	            	success:function(data){
 		    	            		if(data.success == "Y"){
 		    	            			alert("삭제 성공");
+		    	            			all = data.calendar;
 		    	            		}
 		    	            	},
 		    	            	error: function(err){
@@ -214,7 +255,8 @@ var date = {};
 		        }
 		    	*/
 		      },
-		      editable: true,
+		      //editable: true,
+		      editable: (createdid == "pm") ? true:false,
 		      dayMaxEvents: true, // allow "more" link when too many events
 		      events: function(info, successCallback, failureCallback){
 		    	  // ajax 처리로 데이터를 로딩 시킨다
@@ -228,7 +270,10 @@ var date = {};
 		    		  dataType:"json",
 		    		  success:function(data){
 		    			  console.log(data.calendar);
+		    			  console.log(data.parent);
+		    			  console.log(data.holder);
 		    			  successCallback(data.calendar);
+		    			  all = data.calendar;
 		    		  },
 		    		  error:function(err){
 		    			  console.log(err);
@@ -239,35 +284,79 @@ var date = {};
 
 		    calendar.render();
 		  });
+	
+		function newSch(){
+			  var sch = {};
+	            
+			  sch.id = 0;
+			  sch.groupId = 0;
+			  sch.backgroundColor = "red";
+			  sch.borderColor = "red";
+			  sch.textColor = "red";
+			  sch.title=$("[name=title]").val();
+			  sch.content=$("[name=content]").val();
+			  sch.parent=$("[name=parent]").val();
+			  sch.priority=$("[name=priority]").val();
+			  sch.holder=$("[name=holder]").val();
+			  sch.allDay = false;
+			  //sch.start = date.start.toISOString();
+			  var tmp = $("[name=start]").val();
+			  sch.start = changeDate(tmp);
+			  tmp = $("[name=end]").val();
+			  sch.end = changeDate(tmp);
+			  //sch.end = date.end.toISOString();
+			  
+			  console.log("###insert 확인###")
+			  console.log(sch);
+			  
+			  return sch;
+		  }
+		
+		  function changeDate(date){
+			  var parts = date.split('. ');
+			  var year = parts[0];
+			  var month = parts[1];
+			  var day = parts[2];
+			  
+			  var time = parts[3].split(":");
+			  var ampm = time[0].substring(0,2);
+			  var hour = time[0].substring(3,5);
+			  var min = time[1];
+			  var sec = time[2];
+			  
+			  if(ampm == "오후"){
+				  hour = Number(hour) + 12;
+			  }
+			  month = Number(month) - 1;
+			  var d = new Date(year,month,day,hour,min,sec);  
+		  	
+			  return d.toISOString();
+		  }
 		  
 		  // form 하위 요소객체에서 사용할 데이터를 json 형식을 만들어 준다
 		  function callSch(){
 			  var sch = {};
-			  sch.id=$("[name=id]").val();
+                  
+			  sch.id = $("[name=id]").val();
+			  sch.groupId = $("[name=groupId]").val();
+			  sch.backgroundColor = $("[name=backgroundColor]").val();
+			  sch.borderColor = $("[name=borderColor]").val();
+			  sch.textColor = $("[name=textColor]").val();
 			  sch.title=$("[name=title]").val();
-			  sch.writer=$("[name=writer]").val();
 			  sch.content=$("[name=content]").val();
-			  // Date타입은 화면에서 사용되는 형식으로 설정하여야 한다
-			  // 전역변수에 할당한 date.start/end의 ISO형태로 속성 할당
+			  sch.parent=$("[name=parent]").val();
+			  sch.priority=$("[name=priority]").val();
+			  sch.holder=$("[name=holder]").val();
+			  sch.allDay = false;
+			  var tmp = $("[name=start]").val();
+			  sch.start = changeDate(tmp);
+			  tmp = $("[name=end]").val();
+			  sch.end = changeDate(tmp);
+			  //sch.start = date.start.toISOString();
+			  //sch.end = date.end.toISOString();
 			  
-			  // ?? calendar api에서 사용되는 날짜 처리 방식이 ISO문자열 형식이기 때문이다
-			  // ex) Date ==> toISOString() 형식
-			  console.log("#####여기#######");
-			  console.log(date.start);
-			  sch.start = date.start.toISOString();
-			  console.log("#####여기#######");
-			  console.log(sch.start);
-			  sch.end = date.end.toISOString();
-			  //alert("등록할 시작일: " + sch.start);
-			  // 문자열이 "true"일 때, 그외는 false
-			  // sch.allDay : calendar로 처리할 데이터 boolean 형식으로 true/false
-			  // 으로 처리되어야 하는데 화면에 보이는 내용은 문자열로 되어있다
-			  // option value="true" 이 선택되어졌을 때 == 비교연산을 통해
-			  // true로 boolean값을 넘기고, 그 외는 false을 boolean값으로 전달
-			  sch.allDay=$("[name=allDay]").val() == "true";
-			  sch.backgroundColor=$("[name=backgroundColor]").val();
-			  sch.textColor=$("[name=textColor]").val();
-			  sch.borderColor=$("[name=borderColor]").val();
+			  console.log("###update 데이터 확인###")
+			  console.log(sch);
 			  
 			  return sch;
 		  }
@@ -276,14 +365,17 @@ var date = {};
 			  // 상세 내용을 event의 속성값으로 form객체 하위에 표현하기 위해 사용
 			  // form 하위 객체에 할당
 			  $("[name=id]").val(event.id);
+			  $("[name=groupId]").val(event.groupId);
 			  $("[name=title]").val(event.title);
 			  // calendar에서 추가된 속성들
 			  // ex) event.extendedProps
 			  //		calendar api 자체에서 지원되는 기본 속성이 아니고,
 			  //		사용자에 의해 DB관리가 필요한 속성을 처리할 때 사용
 			  var exProps = event.extendedProps;
-			  $("[name=writer]").val(exProps.writer);
+			  $("[name=holder]").val(exProps.holder);
 			  $("[name=content]").val(exProps.content);
+			  $("[name=priority]").val(exProps.priority);
+			  $("[name=parent]").val(exProps.parent);
 			  $("[name=start]").val(event.start.toLocaleString());
 			  $("[name=end]").val(event.end.toLocaleString());
 			  $("[name=allDay]").val(""+event.allDay);
@@ -296,13 +388,14 @@ var date = {};
 			  // callSch() 입력된 수정된 데이터를 요청값으로 전달
 			  $.ajax({
 				  type:"post",
-				  url:"calendar.do?method=update",
+				  url:"${path}/cal.do?method=update&no="+"${no}",
 				  data:sch,
 				  dataType:"json",
 				  success:function(data){
 					  // data.모델명
 					  if(data.success=="Y")
 						  alert("수정완료");
+					  all = data.calendar;
 				  },
 				  error:function(err){
 					  alert("에러발생: " + err);
@@ -312,18 +405,27 @@ var date = {};
 		  }
 		  function eventUpt(event){
 			  var sch = {};
-			sch.id = event.id;
-			sch.title = event.title;
-			sch.start = event.start.toISOString();
-			sch.end = event.end.toISOString();
-			sch.content = event.extendedProps.content;
-			sch.backgroundColor = event.backgroundColor;
-			sch.borderColor = event.borderColor;
-			sch.allDay = event.allDay;
-			sch.textColor = event.textColor;
-			
-			console.log("# 이벤트에 의한 수정 #");
-			console.log(sch);
+              
+			  sch.id = $("[name=id]").val();
+			  sch.groupId = $("[name=groupId]").val();
+			  sch.backgroundColor = $("[name=backgroundColor]").val();
+			  sch.borderColor = $("[name=borderColor]").val();
+			  sch.textColor = $("[name=textColor]").val();
+			  sch.title=$("[name=title]").val();
+			  sch.content=$("[name=content]").val();
+			  sch.parent=$("[name=parent]").val();
+			  sch.priority=$("[name=priority]").val();
+			  sch.holder=$("[name=holder]").val();
+			  sch.allDay = false;
+			  var tmp = $("[name=start]").val();
+			  sch.start = changeDate(tmp);
+			  tmp = $("[name=end]").val();
+			  sch.end = changeDate(tmp);
+			  //sch.start = date.start.toISOString();
+			  //sch.end = date.end.toISOString();
+			  
+			  console.log("###update 데이터 확인###")
+			  console.log(sch);
 			
 			updateCall(sch);
 		  }
@@ -473,6 +575,13 @@ var date = {};
                                             </div>
                                             <div class="modal-body px-4 pb-4 pt-0" id="schDialog">
                                                 <form class="needs-validation" name="event-form" id="form-event" novalidate>
+                                                
+                                                	<input type="hidden" name="id" />
+                                                	<input type="hidden" name="groupId" />
+                                                	<input type="hidden" name="backgroundColor"/>
+                                                	<input type="hidden" name="borderColor"/>
+                                                	<input type="hidden" name="textColor"/>
+                                                 
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="mb-2">
@@ -493,10 +602,10 @@ var date = {};
                                                                 <label class="control-label form-label">부모태스크</label>
                                                                 <select class="form-control form-select" name="parent" <%--name="category" --%>
                                                                     id="event-category" required>
-                                                                    <option value="bg-danger" selected>프로젝트</option>
-                                                                    <option value="bg-success">태스크01</option>
-                                                                    <option value="bg-primary">태스크02</option>
-                                                                    <option value="bg-info">태스크03</option>
+                                                                    <c:forEach var="p" items="${parent}">
+                                                                    <option value="${p}">${p}</option>
+                                                                    </c:forEach>
+                                                                    
                                                                 </select>
                                                                 <div class="invalid-feedback">부모태스크를 선택해주십시오</div>
                                                             </div>
@@ -505,7 +614,7 @@ var date = {};
                                                             <div class="mb-2">
                                                                 <label class="control-label form-label">중요도</label>
                                                                 <select class="form-control form-select" name="priority" <%--name="category" --%>
-                                                                    id="event-category" required>
+                                                                    id="event-category2" required>
                                                                     <option value="1" selected>High</option>
                                                                     <option value="2">Medium</option>
                                                                     <option value="3">Low</option>
@@ -515,9 +624,13 @@ var date = {};
                                                         </div>
                                                         <div class="mb-2">
                                                                 <label class="control-label form-label">담당자</label>
-                                                                <input class="form-control" placeholder="담당자 입력"
-                                                                    type="text" name="holder" id="event-holder" required />
-                                                                <div class="invalid-feedback">담당자를 입력하세요</div>
+                                                               <select class="form-control form-select" name="holder" <%--name="category" --%>
+                                                                    id="event-category3" required>
+                                                                    <c:forEach var="h" items="${holder}">
+                                                                    	<option value="${h}">${h}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                                <div class="invalid-feedback">담당자를 선택하세요</div>
                                                         </div>
                                                         <div class="input-group mb-3">
 														    <div class="input-group-prepend">
