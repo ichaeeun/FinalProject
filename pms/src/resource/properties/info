@@ -16,3 +16,7 @@ task_uploadTmp=/Users/workspace/.metadata/.plugins/org.eclipse.wst.server.core/t
 
 risk_upload=C:/Users/김영하/git/FinalProject/pms/WebContent/risk_upload/
 risk_uploadTmp=C:/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/pms/risk_upload/
+
+# 프로필 파일 업로드 
+profile=/Users/ichaeeun/git/FinalProject/pms/WebContent/profileImage/
+profileTmp=/Users/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/pms/profileImage/

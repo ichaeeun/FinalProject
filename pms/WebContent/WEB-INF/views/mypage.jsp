@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*" %>
+<% response.setCharacterEncoding("UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sql" uri="http://java.sun.com/jstl/sql"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -43,7 +45,34 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		/* var uri = "${showprofile.imgpath}";
+		var length =  "${fn:length(showprofile.imgpath)}";
+		var uri = "${fn:substring(showprofile.imgpath, 48, fn:length(showprofile.imgpath))}";
+		var encuri = encodeURI(uri)
+		$("#img").attr("src",encuri); */
+		//console.log("imgsrc:"+uri);
 		$("#uploadImg").on("change",ImgFile);
+		var success="${success}";
+		if(success=="Y") alert("수정완료!");
+		
+		$("#uptBtn").on("click",function(){
+			$("#check-modal").modal("show");
+		});
+		$("#continue").on("click",function(){
+			if($("#password1").val()!="${showprofile.pass }"){
+				alert("비밀번호를 확인해주세요");
+			}else{
+				if($("[name=pass]").val()!=$("[name=passconfirm]").val()){
+					alert("비밀번호/비밀번호 확인이 일치하지 않습니다");
+					$("#check-modal").modal("hide");
+					$("#password1").val("");
+				}else{
+					// alert("수정고!");
+					$("#frm").submit();
+				}
+			}
+		});
+		
 	});
 	var sel_file;
 	function ImgFile(e){
@@ -57,7 +86,7 @@
 			sel_file =f; 
 			var reader = new FileReader();
 			reader.onload = function(e){
-				$("#img").attr("src",e.target.result).attr("width",50px);
+				$("#img").attr("src",e.target.result).attr("width","160px").attr("height","160px");
 			}
 			reader.readAsDataURL(f);
 			
@@ -98,60 +127,69 @@
                             </div>
                         </div>     
                         <!-- end page title --> 
-                        
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card text-center">
+ 						<form id="frm" method="post" action="${path }/mypage.do?method=update&pno=${mem.pno }" enctype="multipart/form-data">  
+ 						<input type="hidden" name="pno" value="${mem.pno }"/>         
                                     <div class="card-body">
                                     	<div class="mt-3 mb-0">
-                                        <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" id="img">
+                                    	<c:if test="${empty showprofile.imgpath}">
+                                      <img src="${path}/Admin/dist/assets/images/users/default.png" alt="user-image" class="rounded-circle" id="img"> 
+                                       </c:if>
+                                       <c:if test="${not empty showprofile.imgpath}">
+                                       <c:set var = "length" value = "${fn:length(showprofile.imgpath)}"/>
+                                    <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
+                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 48, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img"> 
+                                       </c:if>
                                         </div>
                                         <div class="fileupload btn btn-success waves-effect waves-light mt-3">
                                             <span><i class="mdi mdi-cloud-upload me-1"></i>Upload Image</span>
-                                            <input type="file" class="upload" id="uploadImg">
+                                            <input type="file" class="upload" name="report" id="uploadImg">
                                         </div>
-                                        <h4 class="mt-3 mb-0">${mem.name }</h4>
-                                        <p class="text-muted">${mem.part }</p>
+                                        <h4 class="mt-3 mb-0">${showprofile.name }</h4>
+                                        <p class="text-muted">${showprofile.part }</p>
                                         <div class="text-start mt-3">
                                             <div class="table-responsive">
                                                 <table class="table table-borderless table-sm">
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row">이름 :</th>
-                                                            <td class="text-muted"><input class="form-control" name="name" value="${mem.name }"/></td>
+                                                            <th scope="row">이름 </th>
+                                                            <td class="text-muted"><input class="form-control" name="name" value="${showprofile.name }"/></td>
                                                         </tr>
                                                         <tr> 	
-                                                            <th scope="row">아이디 :</th>
-                                                            <td class="text-muted"><input  class="form-control" name="id" value="${mem.id }"/></td>
+                                                            <th scope="row">아이디 </th>
+                                                            <td class="text-muted"><input  class="form-control" name="id" value="${showprofile.id }"/></td>
                                                         </tr>
                                                         <tr> 	
-                                                            <th scope="row">비밀번호 :</th>
-                                                            <td class="text-muted"><input  class="form-control" name="pass" type="password" value="${mem.pass }"/></td>
+                                                            <th scope="row">비밀번호 </th>
+                                                            <td class="text-muted"><input  class="form-control" name="pass" type="password" value="${showprofile.pass }"/></td>
                                                         </tr>
                                                          <tr> 	
-                                                            <th scope="row">비밀번호확인 :</th>
-                                                            <td class="text-muted"><input class="form-control" name="passconfirm" type="password" value="${mem.pass }"/></td>
+                                                            <th scope="row">비밀번호확인 </th>
+                                                            <td class="text-muted"><input class="form-control" name="passconfirm" type="password" value="${showprofile.pass }"/></td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">이메일 :</th>
-                                                            <td class="text-muted"><input class="form-control" name="email" value="${mem.email }"/></td>
+                                                            <th scope="row">이메일 </th>
+                                                            <td class="text-muted"><input class="form-control" name="email" value="${showprofile.email }"/></td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">부서 </th>
-                                                            <td class="text-muted"><input class="form-control" name="part" value="${mem.part }"/></td>
+                                                            <td class="text-muted"><input class="form-control" name="part" value="${showprofile.part }" readonly/></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                               
                                                 <div class="text-center">
-                                                <button id="uptBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#check-modal">수정</button>
+                                                <button type="button" id="uptBtn" class="btn btn-primary">수정</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+									 </form>
                                 </div> <!-- end card-box -->
-
+								
                             </div> <!-- end col-->
-
 
                             <div class="col-lg-8 col-xl-8">
                                 <div class="card">
@@ -349,7 +387,6 @@
                       </a>
                   </div>
 
-                  <form action="#" class="px-3">
 
                       <div class="mb-3">
                       	 <h3>계속 하려면 비밀번호를 입력하세요</h3>
@@ -364,10 +401,9 @@
 
 
                       <div class="mb-3 text-center">
-                          <button class="btn btn-rounded btn-primary" type="button">계속</button>
+                          <button class="btn btn-rounded btn-primary" type="button" id="continue">계속</button>
                       </div>
 
-                  </form>
 
               </div>
           </div><!-- /.modal-content -->
