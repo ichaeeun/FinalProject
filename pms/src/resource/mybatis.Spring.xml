@@ -24,6 +24,7 @@
       	<typeAlias alias="mail" type="pms.dto.Mail"/>
       	<!-- 인력 페이징 추가 -->
       	<typeAlias alias="memsch" type="pms.dto.MemberSch"/>
+      	<typeAlias alias="taskrequest" type="pms.dto.TaskRequest"/>
    </typeAliases>
    <!-- 
    	3. sql이 저장되는 mapper.xml 등록
@@ -38,6 +39,10 @@
       <mapper resource="resource/TaskDetailMapper.xml"/>
       <mapper resource="resource/ProjectMapper.xml"/>
 	  <mapper resource="resource/GanttMapper.xml"/>
+<<<<<<< HEAD
 	  <mapper resource="resource/LogMapper.xml"/>
+=======
+	  <mapper resource="resource/TaskRequestMapper.xml"/>
+>>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
    </mappers>
 </configuration>
