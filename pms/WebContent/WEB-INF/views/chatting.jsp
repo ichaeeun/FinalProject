@@ -14,6 +14,7 @@
 <style type="text/css">
 table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
 .chatting { display:none!important; }
+.conversation-list { overflow:auto!important; }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -34,33 +35,37 @@ table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
 <%-- j-query --%>
 <script type="text/javascript" src="/springweb/a00_com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
+
+
 $(document).ready(function(){
 	// 1. 전역변수 웹소켓통신 처리한 변수선언.
 	var wsocket;
 	// 2. 접속시, 처리내용
-	$("#enterBtn").click(function(){
-		if(confirm("채팅서버에 접속하시겠습니까?")){
+var date = new Date().format("hh.mm");
 			//ws://192.168.0.47:7080/${path}/chat-ws.do
 				// 211.63.89.68
-			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do");
+			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do?");
 			wsocket.onopen=function(evt){
 				// 채팅서버에 접속되었을 때, 처리할 내용..
 				console.log(evt)
 				// 접속메시지 전송..
-				wsocket.send(
-						
-						$("#group").val()+":"+$("#id").val()+":연결 접속했습니다!"
-						
-				);
+				
+			var	show = "<li class='clearfix'><div class='chat-avatar'><i>"+date+"</i>";
+				show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
+		        show += "<i>${mem.name}</i>";
+		        show += "<p>연결 접속했습니다!</p></div></div>";
+		        show += "</li>";
+				wsocket.send(show);
+				$("#chatMessageArea").append(show);
 				
 			}
 			// 2.서버에서 메시지 받기.
 			wsocket.onmessage=function(evt){
 				var data = evt.data; // 메시지를 받음..
 				var user = data.split(":");
-				if(user[0]==$("#group").val()){ // 현재그룹과 동일여부 확인
+				if(user[0]==${mem.pno}){ // 현재그룹과 동일여부 확인
 					// 메시지만 전달 처리.
-					revMsg(user[1]+":"user[2]);
+					revMsg(user[1]+":"+user[2]);
 				}
 	/* 			$("#chatMessageArea").append(data+"<br>"); 
 				if(data.substring(0,4)=="msg:"){
@@ -73,10 +78,10 @@ $(document).ready(function(){
 			wsocket.onclose=function(){
 				alert("접속을 종료합니다!");
 				$("#chatMessageArea").text("");
-				$("#id").val("").focus();
+				$("#sendBtn").val("").focus();
 			}
-		}
-	});
+		
+
 	// .send()는 서버의 heandleTextMessage와 연동
 	$("#sendBtn").click(function(){
 		sendMsg();
@@ -86,17 +91,26 @@ $(document).ready(function(){
 			sendMsg();
 		}
 	});
+	
 	$("#exitBtn").click(function(){
-		wsocket.send("msg:"+$("#id").val()+":연결을 종료합니다.");
+		
+		wsocket.send("msg:"+${mem.name}+":연결을 종료합니다.");
 		wsocket.close();
 	});
+	var group = ${param.no};
 	function sendMsg(){
-		var id=$("#id").val();
+		var id= ${mem.name};
 		var msg = $("#msg").val();
-		wsocket.send(
-				 
-				
-				$("#group").val()+":"+id+":"+msg);	
+		
+		var date = new Date();
+		var show =""
+		show += group+"<li class='clearfix'><div class='chat-avatar'><i>"+date+"</i>";
+		show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
+        show += "<i>"+id+"</i>";
+        show += "<p>"+msg+"</p></div></div>";
+        show += "</li>";
+		wsocket.send(show);
+		alert(show);
 		$("#msg").val("");
 	}
 	
@@ -180,12 +194,12 @@ $(document).ready(function(){
                                         </div>
 
                                         <!-- start search box -->
-                                        <form class="search-bar mb-3">
+                               
                                             <div class="position-relative">
                                                 <input type="text" class="form-control form-control-light" placeholder="People, groups & messages${path}/Admin/dist.">
                                                 <span class="mdi mdi-magnify"></span>
                                             </div>
-                                        </form>
+                             
                                         <!-- end search box -->
 
                                         <h6 class="font-13 text-muted text-uppercase mb-2">Contacts</h6>
@@ -213,23 +227,7 @@ $(document).ready(function(){
                                                         </div>
                                                     </a>
 
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex align-items-start p-2">
-                                                            <div class="position-relative">
-                                                                <span class="user-status online"></span>
-                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="me-2 rounded-circle" height="42" alt="user" />
-                                                            </div>
-                                                            <div class="flex-1">
-                                                                <h5 class="mt-0 mb-0 font-14">
-                                                                    <span class="float-end text-muted fw-normal font-12">5:30am</span>
-                                                                    James Zavel
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted font-14">
-                                                                    <span class="w-75">Hey! a reminder for tomorrow's meeting${path}/Admin/dist.</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                 
 
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
@@ -268,77 +266,9 @@ $(document).ready(function(){
                                                         </div>
                                                     </a>
 
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex align-items-start p-2">
-                                                            <div class="position-relative">
-                                                                <span class="user-status do-not-disturb"></span>
-                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-3.jpg" class="me-2 rounded-circle" height="42" alt="user" />
-                                                            </div>
-                                                            <div class="flex-1">
-                                                                <h5 class="mt-0 mb-0 font-14">
-                                                                    <span class="float-end text-muted fw-normal font-12">Tue</span>
-                                                                    Michael H
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted font-14">
-                                                                    <span class="w-75">Are you free for 15 min? I would like to discuss something${path}/Admin/dist.</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                               
 
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex align-items-start p-2">
-                                                            <div class="position-relative">
-                                                                <span class="user-status"></span>
-                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-6.jpg" class="me-2 rounded-circle" height="42" alt="user" />
-                                                            </div>
-                                                            <div class="flex-1">
-                                                                <h5 class="mt-0 mb-0 font-14">
-                                                                    <span class="float-end text-muted fw-normal font-12">Tue</span>
-                                                                    Thomas R
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted font-14">
-                                                                    <span class="w-75">Let's have meeting today between me, you and Tony${path}/Admin/dist.</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
 
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex align-items-start p-2">
-                                                            <div class="position-relative">
-                                                                <span class="user-status online"></span>
-                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-8.jpg" class="me-2 rounded-circle" height="42" alt="user" />
-                                                            </div>
-                                                            <div class="flex-1">
-                                                                <h5 class="mt-0 mb-0 font-14">
-                                                                    <span class="float-end text-muted fw-normal font-12">Tue</span>
-                                                                    Thomas J
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted font-14">
-                                                                    <span class="w-75">Howdy?</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex align-items-start p-2">
-                                                            <div class="position-relative">
-                                                                <span class="user-status online"></span>
-                                                                <img src="${path}/Admin/dist/assets/images/users/avatar-4.jpg" class="me-2 rounded-circle" height="42" alt="user" />
-                                                            </div>
-                                                            <div class="flex-1">
-                                                                <h5 class="mt-0 mb-0 font-14">
-                                                                    <span class="float-end text-muted fw-normal font-12">Mon</span>
-                                                                        Ricky J
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted font-14">
-                                                                    <span class="w-75">Are you interested in learning?</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
 
                                                 </div> <!-- end slimscroll-->
                                             </div> <!-- End col -->
@@ -350,38 +280,10 @@ $(document).ready(function(){
                             <!-- end chat users-->
 
                             <!-- chat area -->
-                            <div class="col-xl-9 col-lg-8">
-
-                                <div class="card">
-                                    <div class="card-body py-2 px-3 border-bottom border-light">
-                                        <div class="d-flex py-1">
-                                            <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="me-2 rounded-circle" height="36" alt="Brandon Smith">
-                                            <div class="flex-1">
-                                                <h5 class="mt-0 mb-0 font-15">
-                                                    <a href="contacts-profile.html" class="text-reset">James Zavel</a>
-                                                </h5>
-                                                <p class="mt-1 mb-0 text-muted font-12">
-                                                    <small class="mdi mdi-circle text-success"></small> Online
-                                                </p>
-                                            </div>
-                                            <div id="tooltip-container">
-                                                <a href="javascript: void(0);" class="text-reset font-19 py-1 px-2 d-inline-block">
-                                                    <i class="fe-phone-call" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Voice Call"></i>
-                                                </a>
-                                                <a href="javascript: void(0);" class="text-reset font-19 py-1 px-2 d-inline-block">
-                                                    <i class="fe-video" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Video Call"></i>
-                                                </a>
-                                                <a href="javascript: void(0);" class="text-reset font-19 py-1 px-2 d-inline-block">
-                                                    <i class="fe-user-plus" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Users"></i>
-                                                </a>
-                                                <a href="javascript: void(0);" class="text-reset font-19 py-1 px-2 d-inline-block">
-                                                    <i class="fe-trash-2" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Chat"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <ul class="conversation-list chat-app-conversation" data-simplebar style="max-height: 460px">
+                            <div class="col-xl-9 col-lg-8" id="">
+                                <div class="card">                              
+                                    <div class="card-body" id="chatArea">
+                                        <ul id="chatMessageArea" class="conversation-list chat-app-conversation" style="max-height: 460px">
                                             <li class="clearfix">
                                                 <div class="chat-avatar">
                                                     <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded" alt="James Z" />
@@ -559,63 +461,8 @@ $(document).ready(function(){
                                                     <button class="btn btn-sm btn-link text-reset" data-bs-toggle="dropdown"
                                                         aria-expanded="false"><i class='mdi mdi-dots-vertical font-18'></i></button>
 
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="#">Copy Message</a>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
                                             </li>
-                                            <li class="clearfix odd">
-                                                <div class="chat-avatar">
-                                                    <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="Nik Patel" class="rounded" />
-                                                    <i>10:05</i>
-                                                </div>
-                                                <div class="conversation-text">
-                                                    <div class="ctext-wrap">
-                                                        <i>Nik Patel</i>
-                                                        <p>
-                                                            3pm it is. Sure, let's discuss about presentation format, it would be great to finalize today. 
-                                                            I am attaching the last year format and assets here${path}/Admin/dist.
-                                                        </p>
-                                                    </div>
-                                                    <div class="card mt-2 mb-1 shadow-none border text-start">
-                                                        <div class="p-2">
-                                                            <div class="row align-items-center">
-                                                                <div class="col-auto">
-                                                                    <div class="avatar-sm">
-                                                                        <span class="avatar-title bg-primary rounded">
-                                                                            PDF
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col ps-0">
-                                                                    <a href="javascript:void(0);"
-                                                                        class="text-muted fw-medium">minton-presentation.pdf</a>
-                                                                    <p class="mb-0">2.3 MB</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <!-- Button -->
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn btn-link btn-lg text-muted">
-                                                                        <i class="ri-download-fill"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="conversation-actions dropdown">
-                                                    <button class="btn btn-sm btn-link text-reset" data-bs-toggle="dropdown"
-                                                        aria-expanded="false"><i class='mdi mdi-dots-vertical font-18'></i></button>
-
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">Copy Message</a>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                      
                                         </ul>
 
                                         <div class="row">
@@ -625,7 +472,7 @@ $(document).ready(function(){
                                                         id="chat-form">
                                                         <div class="row">
                                                             <div class="col mb-2 mb-sm-0">
-                                                                <input type="text" class="form-control border-0" placeholder="Enter your text" name="msg" required="">
+                                                                <input type="text" class="form-control border-0" placeholder="Enter your text" id="msg" required="">
                                                                 <div class="invalid-feedback mt-2">
                                                                     Please enter your messsage
                                                                 </div>
@@ -634,7 +481,7 @@ $(document).ready(function(){
                                                                 <div class="btn-group">
                                                                     <a href="#" class="btn btn-light"><i class="fe-paperclip"></i></a>
                                                                     <div class="d-grid">
-                                                                        <button type="submit" class="btn btn-success chat-send"><i class='fe-send'></i></button>
+                                                                        <button type="button" id="sendBtn" class="btn btn-success chat-send"><i class='fe-send'></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end col -->
@@ -677,11 +524,42 @@ $(document).ready(function(){
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor js -->
-        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script> 
 
         <!-- App js -->
-        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-         <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+      <script src="${path}/Admin/dist/assets/js/app.min.js"></script>  
+
         
     </body>
+<script type="text/javascript">
+    Date.prototype.format = function (f) {
+        if (!this.valueOf()) return " ";
+        var weekKorName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+        var weekKorShortName = ["일", "월", "화", "수", "목", "금", "토"];
+        var weekEngName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var weekEngShortName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        var d = this;
+        return f.replace(/(yyyy|yy|MM|dd|KS|KL|ES|EL|HH|hh|mm|ss|a\/p)/gi, function ($1) {
+           switch ($1) {
+                case "yyyy": return d.getFullYear(); // 년 (4자리)
+                case "yy": return (d.getFullYear() % 1000).zf(2); // 년 (2자리)
+                case "MM": return (d.getMonth() + 1).zf(2); // 월 (2자리)
+                case "dd": return d.getDate().zf(2); // 일 (2자리)
+                case "KS": return weekKorShortName[d.getDay()]; // 요일 (짧은 한글)
+                case "KL": return weekKorName[d.getDay()]; // 요일 (긴 한글)
+                case "ES": return weekEngShortName[d.getDay()]; // 요일 (짧은 영어)
+                case "EL": return weekEngName[d.getDay()]; // 요일 (긴 영어)
+                case "HH": return d.getHours().zf(2); // 시간 (24시간 기준, 2자리)
+                case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2); // 시간 (12시간 기준, 2자리)
+                case "mm": return d.getMinutes().zf(2); // 분 (2자리)
+                case "ss": return d.getSeconds().zf(2); // 초 (2자리)
+                case "a/p": return d.getHours() < 12 ? "오전" : "오후"; // 오전/오후 구분
+                default: return $1;
+            }
+        });
+    };
+    String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+    String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+    Number.prototype.zf = function (len) { return this.toString().zf(len); };
+    </script>
 </html>

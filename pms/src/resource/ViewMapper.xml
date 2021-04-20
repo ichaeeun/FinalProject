@@ -101,7 +101,14 @@ SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project
 	SELECT DISTINCT pm.pno, pm.name FROM PMS_MEMBER pm, PMS_MEMBER_PROJECT pmp
 	WHERE pmp.project_no = #{no} and pm.pno=pmp.pno
 </select>
-
+<select id="getLog" resultType="log">
+	SELECT * FROM PMS_MEMBER pm 
+	join PROJECT_TASK pt 
+	ON pm.PNO = pt.PNO
+	JOIN PMS_MEMBER_PROJECT pmp
+	ON pm.PNO = pmp.pno
+	
+</select>
 
 </mapper>  
  

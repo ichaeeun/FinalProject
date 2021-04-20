@@ -102,7 +102,7 @@ public class TaskDetailController {
 	}; // 태스크 삭제 
 	
 	@RequestMapping(params="method=insertComment")  // 커멘트 추가 
-	public String insertComment(Comment com,Model d) {
+	public String insertComment(Comment com, Model d) {
 		service.insertComment(com);
 		d.addAttribute("success","Y");
 		return "pageJsonReport";

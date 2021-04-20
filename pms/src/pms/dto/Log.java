@@ -20,6 +20,13 @@ public class Log {
 		this.regdte = regdte;
 	}
 
+	public Log(int pno, int project_no, int task_no) {
+		super();
+		this.pno = pno;
+		this.project_no = project_no;
+		this.task_no = task_no;
+	}
+
 	public int getPno() {
 		return pno;
 	}

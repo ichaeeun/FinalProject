@@ -31,7 +31,7 @@
                         <a href="javascript:void(0);">Contact Us</a>
                     </div>
                 </div>
-                <div class="chatting" onclick="location.href='${path}/chatting.do'">
+                <div class="chatting" onclick="location.href='${path}/chatting.do?no='+${param.no}">
                  <i class="ri-discuss-fill"></i>
                 </div>
             </div>
