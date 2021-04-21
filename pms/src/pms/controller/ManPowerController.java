@@ -31,18 +31,9 @@ public class ManPowerController {
 	private MypageService service2;
 	// http://localhost:7080/pms/manpower.do?method=jsonContactList
 	@RequestMapping(params = "method=jsonContactList")
-	public String memList1(@RequestParam("name") String name, 
+	public String memList1(
 			@ModelAttribute("sch") MemberSch sch,
 			Model d) {
-		// 전체 인원
-		// if (sch.getName() == null) sch.setName("");
-		// if(name==null) name="";
-		// System.out.println("검색이름:"+sch.getName());
-		d.addAttribute("memList1",service.memList1(name));
-		// 부서 목록
-		d.addAttribute("partList", service.deptList());
-		// 권한 목록
-		d.addAttribute("authList", service.authList());
 		d.addAttribute("memList", service.showMem(sch));
 		return "pageJsonReport";
 	}
@@ -66,7 +57,7 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_list2
 	@RequestMapping(params = "method=contacts_list2")
-	public String memList(@ModelAttribute("sch") Member sch, Model d) {
+	public String memList(@ModelAttribute("sch") MemberSch sch, Model d) {
 		// 가용 인원
 		// pm이나 wk인 직원의 사원번호 가져오기
 		HashMap<String, String> hm = new HashMap<String, String>(); //

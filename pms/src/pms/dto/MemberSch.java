@@ -5,7 +5,7 @@ public class MemberSch {
 	private String name; // 이름 검색
 	// 2. 페이징 처리
 	private int count; // 총데이터 건수
-	private int pageSize; // 한 페이지에서 보여줄 데이터 건수
+	private int pageSize; // 한 페이지에서 보여줄 데이터 건수  pageSize curPage
 	private int pageCount; // 총 페이지 수 (count/pageSize)
 	private int curPage; // 현재 페이지
 	private int start; // 페이지의 시작 번호

@@ -80,10 +80,20 @@
 
 
 	  	});
+		function goPage(page){
+			// 이전 페이지가 0이면 1
+			if(page==0) page=1;
+			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리	
+			$("[name=curPage]").val(page);
+			$("#pageForm").submit();
+		};	  	
 	  </script>
     </head>
 
 <body class="loading">
+  <form:form modelAttribute="sch" method="post" id="pageForm">
+  	<form:hidden path="curPage"/>
+  </form:form>
 	<form>
 		<input type="hidden" value="${mem.auth }" id="auth"/>
 	</form>
@@ -185,33 +195,31 @@
                                     <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+							<div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
-                                        <li class="page-item disabled">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
+                                            <a href="javascript:goPage(${sch.startBlock-1 })" class="page-link"
+                                            	id="start" name="start" value="${sch.startBlock}">
+                                            	<i class="mdi mdi-chevron-left"></i>
+                                            </a>
                                         </li>
+                                        <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+                                        	<li class="page-item ${sch.curPage==cnt?'active':'' }"
+                                        		id="cur" name="cur" value="${sch.curPage }">
+                                            	<a href="javascript:goPage(${cnt })" class="page-link"
+                                            		id="cnt" name="cnt" value="${cnt }">${cnt }</a>
+                                        	</li>
+                                        </c:forEach>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
+                                            <a href="javascript:goPage(${sch.endBlock+1 })" class="page-link"
+                                            	id="end" name="end" value="${sch.endBlock}">
+                                            	<i class="mdi mdi-chevron-right"></i>
+                                            </a>
                                         </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                        </li>
-                                    </ul>
+                                    </ul>                                      
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                         <!-- end row -->
                         
