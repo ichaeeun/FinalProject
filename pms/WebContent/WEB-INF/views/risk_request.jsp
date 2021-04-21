@@ -152,7 +152,7 @@
                                                         <td>
                                                    			[${rl.risk_category}]
                                                         </td>
-                                                        <td>
+                                                        <td id="remo">
                                                    				${rl.risk_status}
                                                         </td>
                                                         <td>

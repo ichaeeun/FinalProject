@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 public class RiskBoard {
+	private int level;
 	private int rnum;
 	private int rnum1;
 	private int risk_no;
@@ -28,6 +29,16 @@ public class RiskBoard {
 		// TODO Auto-generated constructor stub
 	}
 	
+
+	public int getLevel() {
+		return level;
+	}
+
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 
 	public int getRnum1() {
 		return rnum1;

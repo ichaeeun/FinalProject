@@ -1,6 +1,7 @@
 package pms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,6 +57,15 @@ public class RiskController {
 	// http://localhost:7080/pms/risk.do?method=insert
 	@RequestMapping(params = "method=insert")
 	public String insertBoard(@RequestParam("no") int no,RiskBoard insert, Model d) {
+		System.out.println("project_no: " + no);
+		System.out.println("risk_no: " + insert.getRisk_no());
+		System.out.println("risk_category: " + insert.getRisk_category());
+		System.out.println("regdte: " + insert.getRegdte());
+		System.out.println("status: " + insert.getRisk_status());
+		System.out.println("content: " + insert.getRisk_content());
+		System.out.println("writer: " + insert.getRisk_writer());
+		System.out.println("risktitle: " + insert.getRisk_title());
+		System.out.println("parentno: " + insert.getRisk_parent_no());
 		service.insertBoard(no, insert);
 		d.addAttribute("proc","insert");
 		d.addAttribute("risklist",service.rBoard(no));
@@ -83,6 +93,21 @@ public class RiskController {
 		// viewer안에 선언한 모델명 - 파일다운로드뷰어에 같은 이름을 사용해준다.
 		// 컨테이너 안에 있는 viewer명.
 		return"downloadviewerrisk";
+	}
+	// http://localhost:7080/pms/risk.do?method=insForm
+	@RequestMapping(params = "method=insForm")
+	public String insForm(@RequestParam("no") int no, @ModelAttribute("riskboard") RiskBoard b, Model d) {
+		d.addAttribute("reply","Y");
+		System.out.println("project_no: " + no);
+		System.out.println("risk_no: " + b.getRisk_no());
+		System.out.println("risk_category: " + b.getRisk_category());
+		System.out.println("regdte: " + b.getRegdte());
+		System.out.println("status: " + b.getRisk_status());
+		System.out.println("content: " + b.getRisk_content());
+		System.out.println("writer: " + b.getRisk_writer());
+		System.out.println("risktitle: " + b.getRisk_title());
+		System.out.println("parentno: " + b.getRisk_parent_no());
+		return "riskBoardCreate";
 	}
 	
 	

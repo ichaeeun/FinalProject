@@ -21,7 +21,7 @@
 		SELECT rownum rnum, b.* from(
 			SELECT * FROM RISKBOARD 
 			where risk_status='미승인'
-			ORDER BY risk_no
+			ORDER BY risk_no desc
 			) b
 			WHERE PROJECT_NO = #{project_no}
 	</select>
@@ -43,7 +43,7 @@
 		INSERT INTO riskboard values(
 			riskBoard_seq.nextval,#{project_no},#{risk_title},
 			#{risk_content},#{risk_category},
-			0,sysdate,'미승인',#{risk_writer})
+			#{risk_parent_no},sysdate,'미승인',#{risk_writer})
 	</insert>
 	<select id="getBoard" resultType="riskboard" parameterType="int">
 		select * 

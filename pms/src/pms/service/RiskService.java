@@ -76,6 +76,7 @@ public class RiskService {
 		for(MultipartFile mpf : insert.getReport()) {
 			System.out.println(mpf.getOriginalFilename());
 			fname = mpf.getOriginalFilename();
+			System.out.println("파일이름@@@@@@@"+fname);
 			if(fname!=null&&!fname.trim().equals("")) {
 				tmpFile = new File(risk_uploadTmp+fname);
 				try {

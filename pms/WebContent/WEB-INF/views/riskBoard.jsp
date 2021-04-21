@@ -47,7 +47,7 @@
 		if(proc=="insert"){
 			alert("PM 리스크 요청페이지로 전송되었습니다.");
 		};
-		$('.risk_item').on("click", function(){
+		$('.risk_item').on("dblclick", function(){
 			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
  			var risk_no = $(this).children().eq(8).children().val();
  			$('[name=risk_no]').val(risk_no);
@@ -150,7 +150,7 @@
                         </div>     
                         <!-- end page title -->
                         <div class="row">
-                            <div class="col-lg-12">
+                        <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                             			<c:if test="${mem.auth == 'wk' || mem.auth == 'pm'}">
@@ -166,6 +166,7 @@
                                         </div>
                           				</c:if>
                                         <!-- end row -->
+                                        
                 
                                         <div class="table-responsive">
                                             <form action="${path}/risk.do?method=riskDetail&no=${param.no}" id="detail_form" method="post">
@@ -183,8 +184,8 @@
                                                         <th>제목</th>
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
-                                                        <th>리스크 상태</th>
                                                         <th>등록일</th>
+                                                        <th>리스크 상태</th>
                                                         <th>작성자</th>
                                                         <th></th>
                                                     </tr>
@@ -202,7 +203,12 @@
                                                  			${rl.rnum}
                                                         </td>
                                                         <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
+                                             				<c:forEach varStatus="sts" begin="1" end="${rl.level}">
+																<c:if test="${rl.level>1}">&nbsp;&nbsp;&nbsp;</c:if>
+																<c:if test="${rl.level>1 and sts.last}">
+											                  </c:if>
+											      			</c:forEach>
+											               <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
                                                         </td>
                                                         <td>
                                                             <h5 class="m-0 d-inline-block align-middle">${rl.risk_content}</h5>
@@ -211,10 +217,10 @@
                                                    			[${rl.risk_category}]
                                                         </td>
                                                         <td>
-                                                            ${rl.risk_status}
+                                                   			<fmt:formatDate value="${rl.regdte}"/>
                                                         </td>
                                                         <td>
-                                                   			<fmt:formatDate value="${rl.regdte}"/>
+                                                            ${rl.risk_status}
                                                         </td>
                                                         <td>
                                                             <div>
@@ -269,6 +275,8 @@
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+        <script type="text/javascript">
+        </script>
         
     </body>
 </html>
