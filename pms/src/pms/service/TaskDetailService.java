@@ -191,7 +191,6 @@ public class TaskDetailService {
 //			}
 //			}
 			
-			// # 다중 파일 처리 / 반복문 수행 
 				// 1) 파일명 지정 
 				System.out.println(mem.getReport()[0].getOriginalFilename());
 				fname = mem.getReport()[0].getOriginalFilename();
@@ -207,8 +206,6 @@ public class TaskDetailService {
 						// 해당 위치에 파일이 생성됨 
 						// 임시위치에서 다운로드할 폴더로 (z01_upload로) 복사 처리 
 						orgFile = new File(profile+fname);
-							
-						
 						// 복사처리 
 						// StandardCopyOption.REPLACE_EXISTING : 동일한 파일명 업로드 시 대체 처리 
 						Files.copy(tmpFile.toPath(), orgFile.toPath(),StandardCopyOption.REPLACE_EXISTING);

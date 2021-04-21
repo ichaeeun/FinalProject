@@ -80,13 +80,6 @@
 				alert("사원을 선택하세요");
 				return false;
 			} 
-			/* 
-			var sublengththis = $("#sublength").text();	// 서브태스크 갯수 
-			var addTask_taskName = $("#addTask_task_name").val();
-			var addTask_pName = $("#addTask_name option:checked").text();
-			var addTask_taskPriority = $("#addTask_task_priority").val();
-			var addTask_taskDate=$("#addTask_enddte").val();
-			var addTask_taskContent=$("#addTask_task_content").val(); */
             
 			var sch = taskVal();
 			console.log(sch);
