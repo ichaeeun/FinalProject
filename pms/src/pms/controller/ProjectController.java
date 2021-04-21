@@ -17,7 +17,6 @@ import pms.service.ProjectService;
 public class ProjectController {
 	@Autowired(required = false)
 	ProjectService service;
-	
 	// 진행 프로젝트 리스트_CEO,인사담당자 화면
 	// http://localhost:7080/pms/project.do?method=project_list
 	@RequestMapping(params="method=project_list")

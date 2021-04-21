@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+   
+<mapper namespace="pms.dao.MypageDao">
+<!--  public void showProfile(int pno)-->
+	<select id="showProfile" parameterType="int" resultType="member">
+		SELECT * FROM PMS_MEMBER WHERE pno=#{pno}
+	</select>
+	<!-- public void updateProfile(Member mem); -->
+	<update id="updateProfile" parameterType="member">
+		UPDATE pms_member 
+		 SET name=#{name},
+		 	id=#{id},
+		 	pass=#{pass},
+		 	email=#{email},
+		 	imgpath=#{imgpath}
+		 WHERE pno=#{pno}
+	</update>
+	
+	<!-- public void updateNoFile(Member mem); -->
+	<update id="updateNoFile" parameterType="member">
+		UPDATE pms_member 
+		 SET name=#{name},
+		 	id=#{id},
+		 	pass=#{pass},
+		 	email=#{email}
+		 WHERE pno=#{pno}
+	</update>
+</mapper>  
+ 

@@ -52,9 +52,9 @@
 		$("#img").attr("src",encuri); */
 		//console.log("imgsrc:"+uri);
 		$("#uploadImg").on("change",ImgFile);
-		/* var success="${success}";
-		if(success=="Y") alert("수정완료!");
-		 */
+		var success="${success}";
+		if(success=="Y") location.href="${path}/mypage.do?method=my&pno="+${mem.pno};
+		
 		$("#uptBtn").on("click",function(){
 			$("#check-modal").modal("show");
 		});

@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -144,7 +145,15 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <i class='fas fa-user-circle fa-5x'></i>
+                                         <c:if test="${empty mem.imgpath}">
+                                         <i class='fas fa-user-circle fa-7x'></i>
+                                   		<%-- <img src="${path}/Admin/dist/assets/images/users/default.png" width="20px" height="20px" alt="user-image" class="rounded-circle"> --%> 
+                                       </c:if>
+                                       <c:if test="${not empty mem.imgpath}">
+                                       <c:set var = "length" value = "${fn:length(mem.imgpath)}"/>
+                                    <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
+                             	     <img src="${path}/${fn:substring(mem.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
+                                       </c:if>
 										<form>
 											<input type="hidden" class="pno" name="pno" value="${mem.pno }"/>
 										</form>

@@ -44,6 +44,7 @@
 	  <mapper resource="resource/CalMapper.xml"/>
 	  <mapper resource="resource/LogMapper.xml"/>
 	  <mapper resource="resource/TaskRequestMapper.xml"/>
+	  <mapper resource="resource/MypageMapper.xml"/>
 
    </mappers>
 </configuration>

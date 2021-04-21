@@ -13,6 +13,7 @@ import pms.dto.Member;
 import pms.dto.MemberSch;
 import pms.service.LoginService;
 import pms.service.ManPowerService;
+import pms.service.MypageService;
 import pms.service.OverviewService;
 
 @Controller
@@ -25,7 +26,8 @@ public class LoginController {
 	private ManPowerService mservice;
 	@Autowired(required = false)
 	private OverviewService oservice;
-	
+	@Autowired(required=false)
+	private MypageService pservice;
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
 		public String loginform(@ModelAttribute("member") Member member) {		
@@ -91,7 +93,7 @@ public class LoginController {
 			d.addAttribute("authList", mservice.authList());		
 			d.addAttribute("memList1", mservice.memList1(sch.getName()));
 			d.addAttribute("member", new Member());		
-			
+			d.addAttribute("showprofile",pservice.showProfile(m.getPno()));
 			return page;		
 		}
 }

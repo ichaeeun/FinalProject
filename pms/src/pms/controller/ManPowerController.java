@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,15 @@ import pms.dto.MemberSch;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.service.ManPowerService;
+import pms.service.MypageService;
 
 @Controller
 @RequestMapping("manpower.do")
 public class ManPowerController {
 	@Autowired(required = false)
 	private ManPowerService service;
-
+	@Autowired(required=false)
+	private MypageService service2;
 	// http://localhost:7080/pms/manpower.do?method=jsonContactList
 	@RequestMapping(params = "method=jsonContactList")
 	public String memList1(@RequestParam("name") String name, 
@@ -201,6 +204,12 @@ public class ManPowerController {
 		}
 		return "pageJsonReport";
 	}	
+	
+	@ModelAttribute("showprofile")  //프로젝트 별 인원 공통 어트리뷰트 
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		return service2.showProfile(m.getPno());
+	}
 }
 
 
