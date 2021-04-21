@@ -9,5 +9,7 @@ import pms.dto.TaskRequest;
 @Repository
 public interface TaskRequestDao {
 	public ArrayList<TaskRequest> tlist();
+	public void tinsert(int task_no); 
+	public void tdelete(int task_no);
 	
 }

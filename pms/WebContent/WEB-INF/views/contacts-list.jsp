@@ -38,6 +38,10 @@
 		<script src="${path}/a00_com/popper.min.js"></script>
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
+		<style>
+			#chId{cursor:pointer;}
+			#chEmail{cursor:pointer;}
+		</style>
 	  <script>
 	  	$(document).ready(function(){
 	  		
@@ -48,6 +52,10 @@
 		    /////////// 조회와 검색
 		    // 검색 입력값
   			var shName = "";
+		    var start = $("#start").val(); 
+		    var end = $("#end").val(); 
+		    var cur = $("#cur").val(); 
+		    var cnt = $("#cnt").val(); 
   			console.log("shName:"+shName);
 			function ajaxSearch(){
 	  			$.ajax({
@@ -118,20 +126,34 @@
 				add.email = $("[name=email]").val();
 				return add;
 			}
+ 	  		$("#signupBtn").attr("disabled",true);
+ 	  		function validateEmail(sEmail){
+ 	  			var filter = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+ 	  			if(filter.test(sEmail)){
+ 	  				return true;
+ 	  			}else{
+ 	  				return false;
+ 	  			}
+ 	  		}
 			$("#chId").on("click",function(){
 				var id = $("#signup-modal [name=id]").val();
 				$.ajax({
 					type:"post",
 					url:"${path}/manpower.do?method=chId",
-					data:{"id":id},
+					data:{
+						"id":id
+						},
 					dataType:"json",
 					success:function(data){
 						if(data.success=="Y"){
-							alert('사용 가능한 아이디입니다.');
+							$("#chId").text("사용가능");
+							$("#chId").css("color","blue");
 							$("[name=pass]").focus();
 						}else{
-							alert('이미 존재하는 아이디입니다.');
+							$("#chId").text("사용불가");
+							$("#chId").css("color","red");
 							$("[name=id]").val("").focus();
+							$("#signupBtn").attr("disabled",true);
 						}
 					},
 					error:function(err){
@@ -148,25 +170,45 @@
 					dataType:"json",
 					success:function(data){
 						if(data.success=="Y"){
-							alert('사용 가능한 이메일입니다.');
+							$("#chEmail").text("사용가능");
+							$("#chEmail").css("color","blue");
 							$("[name=id]").focus();
+							$("#signupBtn").attr("disabled",false);
 						}else{
-							alert('이미 존재하는 이메일입니다.');
+							$("#chEmail").text("사용불가");
+							$("#chEmail").css("color","red");
 							$("[name=email]").val("").focus();
+							
 						}
 					},
 					error:function(err){
 						alert("에러발생:"+err);
 					}
 				})
-			})			
-  			$("#signupBtn").click(function(){ 				
+			})	
+			
+
+  			$("#signupBtn").click(function(){ 	
+  				var email = $("#signup-modal [name=email]").val();
+  				if(!validateEmail(email)){
+  					alert("이메일 형식이 잘못 되었습니다.");
+  					$("#signup-modal [name=email]").focus();
+  					return;
+  					$("#signup-modal [name=name]").val("");
+  	  				$("#signup-modal [name=id]").val("");
+  	  				$("#signup-modal [name=email]").val("");
+  	  				$("#signup-modal [name=pass]").val("");  
+  				}
   				var insert = addMember();
-				/* if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
+				if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
 				insert.part==""||insert.email==""){
 					alert('입력하지 않은 값이 있습니다.');
-					return false;
-				} */
+					return;
+					$("#signup-modal [name=name]").val("");
+	  				$("#signup-modal [name=id]").val("");
+	  				$("#signup-modal [name=pass]").val("");  
+	  				$("#signup-modal [name=email]").val("");
+				}
   				$.ajax({
   					type:"post",
   					url:"manpower.do?method=add_member",
@@ -182,6 +224,7 @@
   					error:function(){
   						alert("에러발생");
   					}
+  				
   				});
   			});
   			//////////// 계정 생성 후 메일 발송 여부 확인
@@ -200,7 +243,9 @@
 	  		$("#info-mail-modal #mailN").click(function(){
 	  			$("#info-mail-modal").modal("hide");
 	  		})
-  		
+				$("#signup-modal [name=name]").val("");
+  				$("#signup-modal [name=id]").val("");
+  				$("#signup-modal [name=pass]").val("");  		
 	  		//////////// 상세화면
 			$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
@@ -282,33 +327,50 @@
 	  			 });	
 			});
 			
-				$("#signup-modal [name=name]").val("");
-  				$("#signup-modal [name=id]").val("");
-  				$("#signup-modal [name=pass]").val("");
-  				$("#signup-modal [name=email]").val("");				
+
+  							
 	  	});
 		function goPage(page){
 			// 이전 페이지가 0이면 1
 			if(page==0) page=1;
-			var pageCount = '${sch.pageCount}';
+  			var name = shName;
+		    var start = $(".page-link #start").val(); 
+		    var end = $(".page-link #end").val(); 
+		    var cur = $(".page-link #cur").val(); 
+		    var cnt = $(".page-link #cnt").val();
+		    alert(name);
+		    alert(start);
+		    alert(end);
+		    alert(cur);
+		    alert(cnt);
 			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리
 			$("#curPageFrm [name=curPage]").val(page);
-			$("#curPageFrm").submit();
-		}
+			$("#pageFrm [name=name]").val(name);
+			$("#pageFrm [name=start]").val(start);
+			$("#pageFrm [name=end]").val(end);
+			$("#pageFrm [name=cur]").val(cur);
+			$("#pageFrm [name=count]").val(cnt);
+			$("#pageFrm").submit();
+		};
+
 	  </script>
     </head>
 
 <body class="loading">
-<form:form modelAttribute="sch" method="post" 
-	action="${path }/manpower.do?method=contacts_list" id="curPageFrm">
-	<form:hidden path="curPage"/>
-</form:form>
+
 <!-- 메일 발송 -->
 <form id="sendMail" method="post" action="${path }/mail.do?method=send"
 	style="display:none;">
 	<input type="hidden" name="subject"/>
 	<input type="hidden" name="receiver"/>
 	<input type="hidden" name="content"/>
+</form>
+<form id="pageFrm" action="${path}/manpower.do?method=jsonContactList">
+	<input type="hidden" name="name"/>
+	<input type="hidden" name="start"/>
+	<input type="hidden" name="end"/>
+	<input type="hidden" name="cur"/>
+	<input type="hidden" name="cnt"/>
 </form>
 
         <!-- Begin page -->
@@ -374,32 +436,37 @@
                         </div>
                        
                         <!-- end row -->
-
+						<!-- 페이징 -->
                         <div class="row mb-4">
                             <div class="col-sm-6">
 <%--                                 <div>
                                     <h5 class="font-14 text-body">Showing Page ${curPage } Of </h5>
                                 </div> --%>
                             </div>
+                            <!--  -->
                             <div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
                                         <li class="page-item">
-                                            <a href="javascript:goPage(${sch.startBlock-1 })" class="page-link">
+                                            <a href="javascript:goPage(${sch.startBlock-1 })" class="page-link"
+                                            	id="start" name="start" value="${sch.startBlock}">
                                             	<i class="mdi mdi-chevron-left"></i>
                                             </a>
                                         </li>
                                         <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
-                                        	<li class="page-item ${sch.curPage==cnt?'active':'' }">
-                                            	<a href="javascript:goPage(${cnt })" class="page-link">${cnt }</a>
+                                        	<li class="page-item ${sch.curPage==cnt?'active':'' }"
+                                        		id="cur" name="cur" value="${sch.curPage }">
+                                            	<a href="javascript:goPage(${cnt })" class="page-link"
+                                            		id="cnt" name="cnt" value="${cnt }">${cnt }</a>
                                         	</li>
                                         </c:forEach>
                                         <li class="page-item">
-                                            <a href="javascript:goPage(${sch.endBlock+1 })" class="page-link">
+                                            <a href="javascript:goPage(${sch.endBlock+1 })" class="page-link"
+                                            	id="end" name="end" value="${sch.endBlock}">
                                             	<i class="mdi mdi-chevron-right"></i>
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul>                                      
                                 </div>
                             </div>
                         </div>
@@ -857,17 +924,17 @@
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">이름</label>
                                                                 <input name="name" class="form-control" type="text" placeholder="이름"/>
-                                                                
+                                                                <input name="imgpath" type="hidden" val=""/>
 
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="email" class="form-label">이메일</label>
-                                                                <button id="chEmail">중복체크</button>
+                                                                &nbsp;<a id="chEmail" style="color:black;">중복체크</a>                      
                                                                 <input name="email" class="form-control" type="email" placeholder="이메일"/>
                                                             </div>   
                                                             <div class="mb-3">
                                                                 <label for="id" class="form-label">아이디</label>
-                                                                <button id="chId">중복체크</button>
+                                                                &nbsp;<a id="chId" style="color:black;">중복체크</a>   
                                                                 <input name="id" class="form-control" type="text" placeholder="아이디"/>
                                                                 
                                                             </div>
@@ -1028,5 +1095,9 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->                                        						               
+        <!-- Footable js -->
+        <script src="${path}/Admin/dist/assets/libs/footable/footable.all.min.js"></script>
+        <!-- Init js -->
+        <script src="${path}/Admin/dist/assets/js/pages/foo-tables.init.js"></script>
     </body>
 </html>

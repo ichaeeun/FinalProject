@@ -226,7 +226,7 @@
 	                    <div class="collapse" id="sidebarEcommerce">
 	                        <ul class="nav-second-level">
 	                            <li>
-	                                <a href="${path }/taskRequest.do?method=task_request">테스크 요청</a>
+	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
 	                            </li>
 	                            <li>
 	                                <a href="${path }/risk.do?method=riskBoard&no=${param.no}">리스크 요청</a>

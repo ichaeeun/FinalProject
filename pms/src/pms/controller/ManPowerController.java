@@ -28,7 +28,9 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=jsonContactList
 	@RequestMapping(params = "method=jsonContactList")
-	public String memList1(@RequestParam("name") String name, Model d) {
+	public String memList1(@RequestParam("name") String name, 
+			@ModelAttribute("sch") MemberSch sch,
+			Model d) {
 		// 전체 인원
 		// if (sch.getName() == null) sch.setName("");
 		// if(name==null) name="";
@@ -38,12 +40,14 @@ public class ManPowerController {
 		d.addAttribute("partList", service.deptList());
 		// 권한 목록
 		d.addAttribute("authList", service.authList());
+		d.addAttribute("memList", service.showMem(sch));
 		return "pageJsonReport";
 	}
 	
 	// http://localhost:7080/pms/manpower.do?method=contacts_list
 	@RequestMapping(params="method=contacts_list")
 	public String showMem(Model d, @ModelAttribute("sch") MemberSch sch) {
+		System.out.println("##현재페이지:"+sch.getCurPage());
 		d.addAttribute("partList", service.deptList());
 		d.addAttribute("authList", service.authList());
 		d.addAttribute("memList", service.showMem(sch));
@@ -143,6 +147,7 @@ public class ManPowerController {
 	public String add_member(Member ins, Model d){
 		service.addMember(ins);
 		d.addAttribute("success","Y");
+		
 		return "pageJsonReport";
 	}
 	

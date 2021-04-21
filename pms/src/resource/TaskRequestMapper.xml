@@ -15,6 +15,14 @@
 		AND a.pno = c.pno
 		AND a.task_no = d.task_no
 	</select>
+	<!-- public void tinsert(int task_no); -->
+	<insert id="tinsert" parameterType="int">
+		INSERT INTO task_request values(#{task_no},to_char(sysdate,'YYYY-MM-DD'))
+	</insert>	
+	<!-- public void tdelete(int task_no); -->
+	<delete id="tdelete" parameterType="int">
+		DELETE FROM task_request WHERE task_no=#{task_no}
+	</delete>
 </mapper>
 <!-- 
 # 태스크 승인요청 페이지 프로세스

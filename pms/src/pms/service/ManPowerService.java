@@ -22,6 +22,8 @@ public class ManPowerService {
 	}
 
 	// 페이징
+	// count curPage start end
+	// blockSize startBlock endBlock
 	public ArrayList<Member> showMem(MemberSch sch){
 		if(sch.getName()==null) sch.setName("");
 		// 1. 데이터 총 건수 할당
