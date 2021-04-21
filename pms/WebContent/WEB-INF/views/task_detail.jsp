@@ -47,7 +47,10 @@
   	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
 	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
-	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
+	   if(mem==""){
+			alert("세션이 만료되어 로그인화면으로 이동합니다.");
+			location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동
+		} 
 	   
 	   document.getElementById('addTask_startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
 	   document.getElementById('addTask_enddte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 

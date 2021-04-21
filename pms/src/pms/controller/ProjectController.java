@@ -86,7 +86,9 @@ public class ProjectController {
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){
 		Member m = (Member)session.getAttribute("mem");
-		return service2.showProfile(m.getPno());
+		int pno=0;
+		if(m!=null) pno = m.getPno();
+		return service2.showProfile(pno);
 	}
 
 }

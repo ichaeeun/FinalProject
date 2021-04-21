@@ -45,12 +45,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		/* var uri = "${showprofile.imgpath}";
-		var length =  "${fn:length(showprofile.imgpath)}";
-		var uri = "${fn:substring(showprofile.imgpath, 48, fn:length(showprofile.imgpath))}";
-		var encuri = encodeURI(uri)
-		$("#img").attr("src",encuri); */
-		//console.log("imgsrc:"+uri);
+		var mem = "${mem.id}";
+		console.log("id:"+mem);
+		if(mem==""){
+			alert("세션이 만료되어 로그인화면으로 이동합니다.");
+			location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동
+		}
+		
 		$("#uploadImg").on("change",ImgFile);
 		var success="${success}";
 		if(success=="Y") location.href="${path}/mypage.do?method=my&pno="+${mem.pno};

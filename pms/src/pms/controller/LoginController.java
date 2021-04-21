@@ -65,7 +65,6 @@ public class LoginController {
 			Member m = (Member)session.getAttribute("mem");
 			System.out.println(m.getAuth());
 			String page = "";
-			
 			if( m.getAuth().equals("pm")) {	
 				if(service.IsPm(m.getPno())!=null) {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
