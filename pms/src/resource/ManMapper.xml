@@ -38,7 +38,15 @@
 		)
 		where cnt between #{start} and #{end}
 	</select>
-	
+	<!-- public ArrayList<Member> showMem3(MemberSch sch); -->
+	<select id="showMem3" parameterType="memsch" resultType="member">
+		select *
+		from(
+			select rownum cnt, a.* from pms_member a
+			where part like '%'||#{part}||'%'
+		)
+		where cnt between #{start} and #{end}
+	</select>	
 	<!-- public ArrayList<Integer> pnoList(HashMap<String,String> hm); -->
 	<!-- <resultMap type="int" id="pnoMap"/> -->
 	<select id="pnoList" resultType="int" parameterType="hashmap">

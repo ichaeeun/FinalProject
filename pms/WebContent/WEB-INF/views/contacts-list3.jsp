@@ -41,11 +41,16 @@
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
-	  	$(document).ready(function(){	
-		  	$("select[name=deptValue]").change(function(){
-		  		var code = $("[name=deptValue] option:selected").val();
-		  		$("#frm").attr("action", "manpower.do?method=contacts_list3&dvalue="+code);
-		  		$("#frm").submit();
+	  	$(document).ready(function(){	  		
+	  		var part ="";
+	  		$("select option").each(function(){
+	  			if($(this).val()=="${param.part}"){
+	  				$(this).attr("selected","selected");
+	  			}
+	  		})
+		  	$("select").change(function(){
+		  		part = $("select option:selected").val();
+				location.href="${path}/manpower.do?method=contacts_list3&part="+part; 
 		  	});
 		  	$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
@@ -55,15 +60,23 @@
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});	
 		  	// 부서 select 고정
-		  	let dvalue = "${dvalue}";
-		  	$("#selectize-select").val(dvalue).prop("selected",true);
+		  	//let dvalue = "${dvalue}";
+		  	//$("#selectize-select").val(dvalue).prop("selected",true);
 	  	})
-	  	
+		function goPage(page){
+			// 이전 페이지가 0이면 1
+			if(page==0) page=1;
+			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리	
+			$("[name=curPage]").val(page);
+			$("#pageForm").submit();
+		};	  	  	
 	  </script>
     </head>
 
 <body class="loading">
-
+  <form:form modelAttribute="sch" method="post" id="pageForm">
+  	<form:hidden path="curPage"/>
+  </form:form>
         <!-- Begin page -->
         <div id="wrapper">
 
@@ -100,106 +113,100 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-<%--                             <div class="col-sm-8">
-                                <div>
-                                    <form class="d-flex align-items-start flex-wrap justify-content-sm-end">
-                                        <div class="d-flex align-items-start flex-wrap me-2">
-                                            <label for="membersearch-input" class="visually-hidden">검색</label>
-                                            <input type="search" class="form-control" id="membersearch-input" placeholder="검색">
-                                        </div>
-                                        <button type="button" class="btn btn-success mb-2 mb-sm-0"><i class="mdi mdi-cog"></i></button>
-                                    </form>
-                                    
+						<div class="col-sm-8">
+                                <div>                                   
                                 </div>
-                            </div><!-- end col--> --%>
+                            </div><!-- end col--> 
                             
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                     <select id="selectize-select" name="deptValue">
+                                     <select id="selectize-select" name="deptValue" id="deptValue">
                                      	   <option value="">-- 부서 선택 --</option>
                                            <c:forEach var="dept" items="${deptList }" varStatus="status">
-                                                  <option id="${dept.part}" name="partInfo" value="${dept.part}">${dept.part }</option>
+                                                  <option name="part" value="${dept.part}" >             
+                                                  	${dept.part }
+                                                  </option>
                                            </c:forEach>
                                      </select>
                                 </div>
                            </div>                            
                         </div>
-                        <!-- end row -->
-						<form method="post" id="frm" name="frm">
-							<input type="hidden" name="dvalue" value=""/>
-						</form>
+                        <!-- end row --> 
                         <div class="row" id="memShow">                  
-                        	<c:forEach var="mem" items="${memList3}">
-                            <div class="col-xl-3 col-sm-6 goDetail">
+                        	<c:forEach var="memlist" items="${memList3 }">
+                            <div class="col-xl-3 col-sm-6">
                                 <div class="text-center card">
                                     <div class="card-body">
                                         
                                         <div class="dropdown float-end">
                                             <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20"></i>
-                                            </a>
-                                            
+                                                <i class="mdi mdi-dots-vertical font-20">	
+                                                </i>
+                                            </a>                                         
+											<c:if test="${mem.auth == 'hp'}">
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
+                                            <a class='dropdown-item project'>                 	
+										
+                                            </a>    
+                                            </div>  
+                                            </c:if>	                                          
                                         </div>
-                                         <c:if test="${empty mem.imgpath}">
+                                        
+                                        <c:if test="${empty memlist.imgpath}">
                                          <i class='fas fa-user-circle fa-7x'></i>
                                    		<%-- <img src="${path}/Admin/dist/assets/images/users/default.png" width="20px" height="20px" alt="user-image" class="rounded-circle"> --%> 
                                        </c:if>
-                                       <c:if test="${not empty mem.imgpath}">
-                                       <c:set var = "length" value = "${fn:length(mem.imgpath)}"/>
+                                       <c:if test="${not empty memlist.imgpath}">
+                                       <c:set var = "length" value = "${fn:length(memlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/${fn:substring(mem.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
+                             	     <img src="${path}/${fn:substring(memlist.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
                                        </c:if>
-										<form>
-											<input type="hidden" class="pno" name="pno" value="${mem.pno }"/>
-										</form>
-                                        <h4 class="mt-3 mb-1"><a name="goDetail" class="text-dark">${mem.name }</a></h4>
-                                        <p class="text-muted">${mem.auth } <span> | </span>${mem.part } <br>
-                                        <span> <a href="#" class="text-pink">${mem.email }</a> </span></p>
+                                        <h4 class="mt-3 mb-1 goDetail">
+                                        	<a class="text-dark mem_name" >${memlist.name }</a>
+                                        	<form>
+											 	<input type="hidden" style="display:none;" class='pno' name="pno" value="${memlist.pno }"/>
+											</form>
+                                        </h4>
+                                        <p class="text-muted">${memlist.auth } <span> | </span>${memlist.part } <br>
+                                        <span> <a href="#" class="text-pink">${memlist.email }</a> </span></p>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
-                            </c:forEach>                                                                
+                            </c:forEach>                                                                 
                         </div>
                         <!-- end row -->
 
                         <div class="row mb-4">
                             <div class="col-sm-6">
-                                <div>
+<!--                                 <div>
                                     <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
-                                </div>
+                                </div> -->
                             </div>
-                    <div class="col-sm-6">
+							<div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
-                                        <li class="page-item disabled">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">2</a>
+                                            <a href="javascript:goPage(${sch.startBlock-1 })" class="page-link"
+                                            	id="start" name="start" value="${sch.startBlock}">
+                                            	<i class="mdi mdi-chevron-left"></i>
+                                            </a>
                                         </li>
+                                        <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+                                        	<li class="page-item ${sch.curPage==cnt?'active':'' }"
+                                        		id="cur" name="cur" value="${sch.curPage }">
+                                            	<a href="javascript:goPage(${cnt })" class="page-link"
+                                            		id="cnt" name="cnt" value="${cnt }">${cnt }</a>
+                                        	</li>
+                                        </c:forEach>
                                         <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
+                                            <a href="javascript:goPage(${sch.endBlock+1 })" class="page-link"
+                                            	id="end" name="end" value="${sch.endBlock}">
+                                            	<i class="mdi mdi-chevron-right"></i>
+                                            </a>
                                         </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                        </li>
-                                    </ul>
+                                    </ul>                                      
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                         <!-- end row -->
                         
@@ -264,12 +271,7 @@
                 <div class="tab-content pt-0">
                     <div class="tab-pane" id="chat-tab" role="tabpanel">
                 
-                        <form class="search-bar p-3">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form>
+
 
                         <h6 class="fw-medium px-3 mt-2 text-uppercase">Group Chats</h6>
 

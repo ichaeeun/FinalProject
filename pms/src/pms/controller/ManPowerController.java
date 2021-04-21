@@ -84,18 +84,15 @@ public class ManPowerController {
 	// http://localhost:7080/pms/manpower.do?method=contacts_list3
 
 	@RequestMapping(params = "method=contacts_list3")
-	public String memList3(@ModelAttribute("sch") Member sch, 
-			Model d, HttpServletRequest request) {
+	public String memList3(@ModelAttribute("sch") MemberSch sch,
+			Model d) {
 		// 부서 목록
+		if(sch.getName()==null) sch.setName("");
+		System.out.println("###curPage3 : "+sch.getCurPage());
+		System.out.println("###start : "+sch.getStart());
+		System.out.println("###part : "+sch.getPart());
 		d.addAttribute("deptList", service.deptList());
-		String dvalue = request.getParameter("dvalue");
-		if (dvalue == null)
-			dvalue = "";
-		d.addAttribute("dvalue",dvalue);
-		System.out.println("dvalue:" + dvalue);
-		System.out.println(service.memList3(dvalue).size());
-		d.addAttribute("memList3", service.memList3(dvalue));
-		System.out.println(service.memList3(dvalue).get(0).getName());
+		d.addAttribute("memList3", service.showMem3(sch));
 		return "contacts-list3";
 	}
 

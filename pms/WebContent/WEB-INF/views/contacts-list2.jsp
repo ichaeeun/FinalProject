@@ -189,12 +189,14 @@
                         </div>
                         <!-- end row -->
 
+						<!-- 페이징 -->
                         <div class="row mb-4">
                             <div class="col-sm-6">
-                                <div>
-                                    <h5 class="font-14 text-body">Showing Page 1 Of 12</h5>
-                                </div>
+<%--                                 <div>
+                                    <h5 class="font-14 text-body">Showing Page ${curPage } Of </h5>
+                                </div> --%>
                             </div>
+                            <!--  -->
 							<div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
@@ -219,7 +221,8 @@
                                         </li>
                                     </ul>                                      
                                 </div>
-                            </div>  
+                            </div>                            
+
                         </div>
                         <!-- end row -->
                         
