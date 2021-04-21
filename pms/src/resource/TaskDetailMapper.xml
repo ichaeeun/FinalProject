@@ -45,7 +45,8 @@ AND a.pno = b.pno; -->
 	<!-- public void insertSubtask(Task t); -->
 	<insert id="insertSubtask" parameterType="task">
 		INSERT INTO project_task 
-		values(#{pno},#{project_no},task_no_seq.nextval,#{task_name},'내용',#{task_priority},#{task_parent_no},
+		values(#{pno},#{project_no},task_no_seq.nextval,#{task_name},'내용',
+		#{task_priority},#{task_parent_no},
 			#{startdte},#{enddte},'진행')
 	</insert>
 	

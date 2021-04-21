@@ -22,6 +22,7 @@
       	<typeAlias alias="gantt" type="pms.dto.Gantt"/>
       	<typeAlias alias="view" type="pms.dto.Overview"/>
       	<typeAlias alias="mail" type="pms.dto.Mail"/>
+      	<typeAlias alias="cal" type="pms.dto.Calendar"/>
       	<!-- 인력 페이징 추가 -->
       	<typeAlias alias="memsch" type="pms.dto.MemberSch"/>
       	<typeAlias alias="taskrequest" type="pms.dto.TaskRequest"/>
@@ -39,6 +40,8 @@
       <mapper resource="resource/TaskDetailMapper.xml"/>
       <mapper resource="resource/ProjectMapper.xml"/>
 	  <mapper resource="resource/GanttMapper.xml"/>
+
+	  <mapper resource="resource/CalMapper.xml"/>
 	  <mapper resource="resource/LogMapper.xml"/>
 	  <mapper resource="resource/TaskRequestMapper.xml"/>
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+   
+<mapper namespace="pms.dao.CalDao">
+	
+	<select id="getTask" resultType="task" parameterType="String">
+		select * from project_task where task_name = #{task_name}
+	</select>
+	
+	<select id="getTaskUsingTaskno" resultType="task" parameterType="int">
+		select * from project_task where task_no = #{task_parent_no}
+	</select>
+	
+	<select id="getTaskNoUsingTaskName" resultType="task" parameterType="hashmap">
+		select * from project_task where task_name = #{task_name} and project_no = #{project_no}
+	</select>
+</mapper>  
+ 

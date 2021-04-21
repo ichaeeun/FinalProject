@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import oracle.net.aso.g;
+import pms.dto.Calendar;
 import pms.service.CalendarService;
 import pms.service.GanttService;
 
@@ -22,7 +24,11 @@ public class CalendarController {
 	@RequestMapping(params="method=list")
 	public String calendar(@RequestParam("no") int no,Model d) {
 		d.addAttribute("no",no);
+		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
+		d.addAttribute("calendar",service.calenList(no));
+		
 		return "calendar";
 	}
 	
@@ -30,8 +36,61 @@ public class CalendarController {
 	@RequestMapping(params="method=data")
 	public String list(@RequestParam("no") int no,Model d) {
 		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("holder",gservice.getProjectAdd(no));
+		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
-		System.out.println(service.calenList(no));
+		
+		return "pageJsonReport";
+	}
+	// http://localhost:7080/pms/cal.do?method=insert
+	@RequestMapping(params="method=insert")
+	public String insert(@RequestParam("no") int no,Calendar cal,Model d) {
+		
+		service.insertTask(cal,no);
+		
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("holder",gservice.getProjectAdd(no));
+		d.addAttribute("project",gservice.getProject(no));
+		d.addAttribute("calendar",service.calenList(no));
+		
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping(params="method=update")
+	public String update(@RequestParam("no") int no,Calendar cal, Model d) {
+		// update service
+		// parent == "0" or groupId == 0 이면 프로젝트
+		if(cal.getParent().equals("0")) {
+			service.updateProject(cal,no);
+		} else
+			service.updateTask(cal, no);
+		
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("holder",gservice.getProjectAdd(no));
+		d.addAttribute("project",gservice.getProject(no));
+		d.addAttribute("calendar",service.calenList(no));
+		
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping(params="method=delete")
+	public String delete(@RequestParam("no") int no,@RequestParam("id") int id, Model d) {
+		
+		gservice.deleteTask(id);
+		
+		d.addAttribute("no",no);
+		d.addAttribute("success","Y");
+		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("holder",gservice.getProjectAdd(no));
+		d.addAttribute("project",gservice.getProject(no));
+		d.addAttribute("calendar",service.calenList(no));
+		
 		return "pageJsonReport";
 	}
 	
