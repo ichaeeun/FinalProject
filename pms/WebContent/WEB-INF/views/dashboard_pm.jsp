@@ -83,7 +83,6 @@
                     <div class="container-fluid">
 						<div class="row">
 							<div class="md-4"> <h4 class="page-title project_no"> </h4></div>
-							
 							<!-- 대시보드 상단 4칸() 시작 -->
 							<div class="row">
 						        <div class="col-xl-3 col-md-6">
@@ -92,7 +91,7 @@
 						                    <div class="d-flex justify-content-between">
 						                        <div>
 						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">현재 프로젝트</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">10</span></h3>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">00</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -135,7 +134,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">리스크 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">태스크 수</h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">5</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
@@ -157,7 +156,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">태스크 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">리스크 수</h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">8</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 34.61%</span>
@@ -225,7 +224,7 @@
 	                                            </div>
 	                                            <div class="text-end">
 	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">5</span> </h3>
-	                                                <p class="text-muted mb-0">리스크 수</p>
+	                                                <p class="text-muted mb-0">태스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -244,7 +243,7 @@
 	                                            </div>
 	                                            <div class="text-end">
 	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">7</span> </h3>
-	                                                <p class="text-muted mb-1">태스크 수</p>
+	                                                <p class="text-muted mb-1">리스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>

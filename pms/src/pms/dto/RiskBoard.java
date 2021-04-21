@@ -22,6 +22,7 @@ public class RiskBoard {
 	private MultipartFile[] report;
 	private String[] fnames;
 	private ArrayList<RiskFile> fileInfo;
+	private int riskcnt; // 추가 // 대시보드
 	public RiskBoard() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -159,5 +160,11 @@ public class RiskBoard {
 	public void setRisk_status(String risk_status) {
 		this.risk_status = risk_status;
 	}
-
+	public int getRiskcnt() {
+		return riskcnt;
+	}
+	public void setRiskcnt(int riskcnt) {
+		this.riskcnt = riskcnt;
+	}
+	
 }

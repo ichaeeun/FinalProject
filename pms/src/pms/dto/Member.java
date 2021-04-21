@@ -26,7 +26,7 @@ public class Member {
 	private int project_no;
 	private String imgpath;
 	private MultipartFile[] report;		
-	
+	private int membercnt; // 추가 // 대시보드 
 		 	
 		 	
 	public MultipartFile[] getReport() {
@@ -124,4 +124,11 @@ public class Member {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+	public int getMembercnt() {
+		return membercnt;
+	}
+	public void setMembercnt(int membercnt) {
+		this.membercnt = membercnt;
+	}
+	
 }

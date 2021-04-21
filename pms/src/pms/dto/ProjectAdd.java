@@ -26,4 +26,5 @@ public class ProjectAdd {
 	public void setProject_no(int project_no) {
 		this.project_no = project_no;
 	}
+	
 }

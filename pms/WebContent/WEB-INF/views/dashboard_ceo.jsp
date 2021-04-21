@@ -84,8 +84,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Campaign Sent</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">865</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">CEO 화면</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">5</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
 						                                <span class="text-nowrap">Since last month</span>  
@@ -106,8 +106,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">New Leads</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">384</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">완료 프로젝트 수</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">5</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 3.27%</span>
 						                                <span class="text-nowrap">Since last month</span>  

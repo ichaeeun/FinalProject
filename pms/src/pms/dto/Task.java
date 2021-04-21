@@ -19,9 +19,15 @@ public class Task {
 	   private String name;	// 추가 // 디테일 화면에서 사원이름 조회 위함 
 	   private String project_name; // 추가 // 디테일 화면에서 프로젝트 이름 조회 위함 
 	   private MultipartFile[] report;		// 업로드 시 필요(파일 수정 시 업로드)
-	   private ArrayList<TaskFile> fileInfo; 	// 다운로드 시 필요 
+	   private ArrayList<TaskFile> fileInfo; 	// 다운로드 시 필요
 	   
-	   public Task() {
+	   private int tasktotal;	// 추가 //대시보드 화면
+	   private int taskcnt;		// 추가 // 대시보드 화면
+	   
+	   
+	   
+
+	public Task() {
 	      super();
 	      // TODO Auto-generated constructor stub
 	   }
@@ -129,6 +135,20 @@ public class Task {
 	public void setFileInfo(ArrayList<TaskFile> fileInfo) {
 		this.fileInfo = fileInfo;
 	}
-	   
+	public int getTasktotal() {
+		return tasktotal;
+	}
+
+	public void setTasktotal(int tasktotal) {
+		this.tasktotal = tasktotal;
+	}
+
+	public int getTaskcnt() {
+		return taskcnt;
+	}
+
+	public void setTaskcnt(int taskcnt) {
+		this.taskcnt = taskcnt;
+	}   
 	   
 	}

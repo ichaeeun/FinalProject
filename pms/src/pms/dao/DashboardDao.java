@@ -1,17 +1,15 @@
 package pms.dao;
 
-import java.util.ArrayList;
-
-
 import org.springframework.stereotype.Repository;
 
 import pms.dto.Member;
-import pms.dto.Project;
+import pms.dto.RiskBoard;
 import pms.dto.Task;
-import pms.dto.pms_project;
-import pms.dto.pms_projectSch;
 // pms.dao.DashboardDao
 @Repository
 public interface DashboardDao {
+	public Task getTaskNum(int proeject_no);
+	public RiskBoard getRiskNum(int proeject_no);
+	public Member getMemcnt(int proeject_no);
 	
 }

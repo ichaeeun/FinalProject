@@ -4,6 +4,24 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
    
 <mapper namespace="pms.dao.DashboardDao">
-
+	<!-- public Task getTaskNum(int proeject_no); -->
+	<select id="getTaskNum" parameterType="int" resultType="task">
+		SELECT count(*) tasktotal, count(CASE WHEN a.TASK_STATUS = '진행' THEN 1 end) taskcnt
+		FROM PROJECT_TASK a
+		WHERE a.PROJECT_NO = #{project_no}
+	</select>
+	<!-- public RiskBoard getRiskNum(int proeject_no); -->
+	<select id="getRiskNum" parameterType="int" resultType="riskboard">
+		SELECT count(*) riskcnt
+		FROM RISKBOARD a
+		WHERE a.PROJECT_NO = #{project_no}
+	</select>
+	<!-- public Member getMemcnt(int proeject_no); -->
+	<select id="getMemcnt" parameterType="int" resultType="member">
+	SELECT count(*) membercnt
+	FROM PMS_MEMBER_PROJECT a, PMS_MEMBER b, PMS_PROJECT c
+	WHERE a.PNO = b.PNO AND c.PROJECT_NO = a.PROJECT_NO
+	AND a.PROJECT_NO = #{project_no}
+	</select>
 </mapper>  
  
