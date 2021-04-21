@@ -15,6 +15,7 @@ import pms.dto.Log;
 import pms.dto.Member;
 import pms.dto.Task;
 import pms.service.GanttService;
+import pms.service.MypageService;
 import pms.service.OverviewService;
 
 @Controller
@@ -24,6 +25,8 @@ public class OverviewController {
 	private OverviewService service;
 	@Autowired(required = false)
 	private GanttService gservice;
+	@Autowired(required=false)
+	private MypageService service2;
 	
 //  http://localhost:7080/pms/task.do?method=list&no=1
 	@RequestMapping(params="method=list")
@@ -85,5 +88,11 @@ public class OverviewController {
 	@ModelAttribute("taskMember")
 	public ArrayList<Member> taskMember(@RequestParam int no){
 		return service.taskMember(no);
+	}
+	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		return service2.showProfile(m.getPno());
 	}
 }

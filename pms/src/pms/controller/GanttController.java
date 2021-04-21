@@ -2,23 +2,30 @@ package pms.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Gantt;
+import pms.dto.Member;
 import pms.dto.Project;
 import pms.dto.Task;
 import pms.dto.pms_project;
 import pms.service.GanttService;
+import pms.service.MypageService;
 
 @Controller
 @RequestMapping("gantt.do")
 public class GanttController {
 	@Autowired(required = false)
 	private GanttService service;
+	@Autowired(required=false)
+	private MypageService service2;
     
 	// http://localhost:7080/pms/gantt.do?method=gantt
 	@RequestMapping(params="method=gantt")
@@ -83,5 +90,10 @@ public class GanttController {
 		d.addAttribute("gantt",service.list(no));
 		
 		return "pageJsonReport";
+	}
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		return service2.showProfile(m.getPno());
 	}
 }
