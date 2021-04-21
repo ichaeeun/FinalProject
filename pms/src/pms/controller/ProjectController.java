@@ -1,5 +1,7 @@
 package pms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,16 +9,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pms.dto.Member;
 import pms.dto.pms_project;
 import pms.dto.pms_projectSch;
-
+import pms.service.MypageService;
 import pms.service.ProjectService;
 
 @Controller
 @RequestMapping("project.do")
 public class ProjectController {
 	@Autowired(required = false)
-	ProjectService service;
+	private ProjectService service;
+	@Autowired(required = false)
+	private MypageService service2;
 	// 진행 프로젝트 리스트_CEO,인사담당자 화면
 	// http://localhost:7080/pms/project.do?method=project_list
 	@RequestMapping(params="method=project_list")
@@ -76,6 +81,12 @@ public class ProjectController {
 		service.updateProject(update);
 		d.addAttribute("success", "Y");
 		return "pageJsonReport";
+	}
+	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		return service2.showProfile(m.getPno());
 	}
 
 }

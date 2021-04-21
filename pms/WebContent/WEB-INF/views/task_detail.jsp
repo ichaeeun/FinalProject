@@ -42,6 +42,9 @@
 
 	/* jQuery.noConflict();   */
    	  $(document).ready(function(){ 
+   	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+  	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+  	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
 	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
 	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
@@ -53,13 +56,6 @@
 	   if(approval=="Y"){
 		   $("#success-alert-modal").modal("show");
 	   }
-	   
-	   
-	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
-	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
-	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
-	   
-	 
 	   $("#insertComment_content").keypress(function(event){
 		  if(event.keyCode==13){
 			  $("#insertComment").click();
@@ -92,7 +88,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#addSubTaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -250,7 +247,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#updateSubtaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -307,8 +305,9 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					  $("#deleteSubtaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					 /*  $("#deleteSubtaskModal").modal("hide"); */
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -692,7 +691,8 @@
 
                                         <div class="mt-4">
                                             <div class="mt-4" id="subtaskList">
-												 <!-- 여기에 서브태스크 리스트 출력  -->   
+												 <!-- 여기에 서브태스크 리스트 출력  -->  
+												  
                                             </div> <!-- end sub tasks -->
                                         </div>
                                     </div>

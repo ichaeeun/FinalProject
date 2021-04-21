@@ -39,7 +39,7 @@
 	
 	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트 -->
 	<select id="projectList" resultType="pms_project" parameterType="int">
-		SELECT a.NAME, c.*
+		SELECT a.NAME, c.*,(SELECT name FROM PMS_MEMBER WHERE pno=c.PM_PNO) pm_name
 		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
 		WHERE a.PNO = #{pno}
 			AND a.PNO = b.PNO
@@ -49,7 +49,7 @@
 	
 	<!-- public ArrayList<pms_project> projectList(int pno) --><!-- 내가속한프로젝트리스트(완료) -->
 	<select id="projectList2" resultType="pms_project" parameterType="int">
-		SELECT a.NAME, c.*
+		SELECT a.NAME, c.*,(SELECT name FROM PMS_MEMBER WHERE pno=c.PM_PNO) pm_name
 		FROM PMS_MEMBER a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
 		WHERE a.PNO = #{pno}
 			AND a.PNO = b.PNO

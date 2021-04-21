@@ -277,7 +277,7 @@
                                                         </td>
                                                         <td>
                                                         	<c:choose>
-                                                        	<c:when test="${mem.auth=='wk'}">${bd.pm_pno}</c:when>
+                                                        	<c:when test="${mem.auth=='wk'}">${bd.pm_name}</c:when>
                                                         	<c:otherwise>${bd.name}</c:otherwise>
                                                         	</c:choose>
                                                         </td>

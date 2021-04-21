@@ -2,6 +2,8 @@ package pms.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pms.dto.Comment;
+import pms.dto.Member;
 import pms.dto.Task;
 import pms.dto.TaskFile;
+import pms.service.MypageService;
 import pms.service.TaskDetailService;
 
 @Controller
@@ -21,7 +25,8 @@ import pms.service.TaskDetailService;
 public class TaskDetailController {
 	@Autowired(required=false)
 	private TaskDetailService service;
-	
+	@Autowired(required=false)
+	private MypageService service2;
 	// http://localhost:8080/pms/taskdetail.do?method=list
 	@GetMapping(params="method=list") // 태스크 디테일 화면 출력 
 	public String list(@RequestParam("task_no") int task_no, Model d) {
@@ -187,7 +192,11 @@ public class TaskDetailController {
 	public ArrayList<Task> showMember(@RequestParam("task_no") int task_no){
 		return service.showMember(task_no);
 	}
-	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		return service2.showProfile(m.getPno());
+	}
 	
 	
 }

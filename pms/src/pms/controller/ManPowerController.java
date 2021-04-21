@@ -205,7 +205,7 @@ public class ManPowerController {
 		return "pageJsonReport";
 	}	
 	
-	@ModelAttribute("showprofile")  //프로젝트 별 인원 공통 어트리뷰트 
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){
 		Member m = (Member)session.getAttribute("mem");
 		return service2.showProfile(m.getPno());

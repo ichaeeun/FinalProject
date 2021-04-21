@@ -22,6 +22,7 @@ public class pms_project {
 	private String id;		// 추가_오버뷰화면
 	private String name;	// 추가_오버뷰화면
 	private int taskcount;	// 추가_오버뷰화면
+	private String pm_name;
 	
 	public pms_project(int project_no, String project_name, String project_content, String start1, String end1,
 			int pm_pno, String project_status) {
@@ -112,6 +113,12 @@ public class pms_project {
 	}
 	public void setTaskcount(int taskcount) {
 		this.taskcount = taskcount;
+	}
+	public String getPm_name() {
+		return pm_name;
+	}
+	public void setPm_name(String pm_name) {
+		this.pm_name = pm_name;
 	}
 	
 }

@@ -69,5 +69,4 @@ public class Project {
 	      this.project_status = project_status;
 	   }
 	   
-	   
 	}
