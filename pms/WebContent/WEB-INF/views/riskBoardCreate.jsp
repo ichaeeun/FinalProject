@@ -15,6 +15,10 @@
 <title>Insert title here</title>
 		<style>
 			footer .chatting{display:none;}
+			.uptTextarea{resize:none;
+						width:1560px;
+						height:500px;
+						border-color:"light-grey";}
 		</style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -46,23 +50,25 @@
 				});
 				
 				$("#sndBtn").click(function(){
-					$("[name=risk_content]").val( $("#snow-editor").text());
 					$("[name=risk_writer]").val("${mem.name}");
-					
+					var mem = "${mem.auth}";
+					if(mem=='pm') $("[name=risk_status]").val("승인");
+					if(mem=='wk') $("[name=risk_status]").val("미승인");
 					$("#riskboard").submit();
 				});
 				
 				$("#addFun").click(function(){
 					$("#fileArea").append($(".custom-file").eq(0).clone());
 				});
-		
-			});
-			function rm(obj){
+				
+				
+				function rm(obj){
 				var len=$("[type=file]").length;
-				if(len>1){
-					$(obj).parent().remove();
+					if(len>1){
+						$(obj).parent().remove();
+					}
 				}
-			}
+			});
 </script>
 </head>
 	<body class="loading">
@@ -135,6 +141,7 @@
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
                                              <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert&no=${param.no}" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
+ 	                                            <input type="hidden" name="risk_status" />
  	                                            <input type="hidden" name="risk_no" value="0"/>
  	                                            <c:if test="${reply == 'Y'}">
  	                                            	<form:input type="hidden" path="risk_parent_no"/>
@@ -151,9 +158,9 @@
 
                                                         <div class="mb-3">
              <!-- form: <--이걸로 하는 방법을 모름-->         	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
-                                                            <div id="snow-editor" style="height: 200px;">
-                                                        </div>
-                                                        <form:input path="risk_content" type="hidden"/>
+<%--                                                             <div id="snow-editor" style="height: 200px;">${riskboard.risk_content}</div> --%>
+                                                            <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
+<%--                                                         <form:input path="risk_content" type="hidden"/> --%>
 													<c:if test="${reply != 'Y'}">
                                                         <div class="row">
                                                             <div class="col-lg-6">

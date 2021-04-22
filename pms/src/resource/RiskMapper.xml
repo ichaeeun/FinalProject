@@ -43,7 +43,7 @@
 		INSERT INTO riskboard values(
 			riskBoard_seq.nextval,#{project_no},#{risk_title},
 			#{risk_content},#{risk_category},
-			#{risk_parent_no},sysdate,'미승인',#{risk_writer})
+			#{risk_parent_no},sysdate,#{risk_status},#{risk_writer})
 	</insert>
 	<select id="getBoard" resultType="riskboard" parameterType="int">
 		select * 
@@ -71,6 +71,30 @@
 		SELECT * FROM RISK_FILE
 		WHERE rnum=#{rnum}
 	</select>
+	
+	<update id="updateRisk" parameterType="riskboard">
+		update riskboard
+			set risk_title = #{risk_title},
+				risk_content = #{risk_content},
+				regdte = sysdate
+			where risk_no = #{risk_no}
+	</update>
+<!-- 	<update id="updateFile" parameterType="hashmap"> -->
+<!-- 		update risk_file -->
+<!-- 			set filename=#{filename} -->
+<!-- 		where fno = #{fno} -->
+			
+<!-- 	</update> -->
+	<delete id="deleteRisk" parameterType="int">
+		delete from riskboard
+		where risk_no in(
+			select risk_no
+			from riskboard r
+			start with risk_no=#{risk_no}
+			connect by prior risk_no = risk_parent_no
+		)
+	</delete>
+	
 
 </mapper>  
  

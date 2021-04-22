@@ -112,5 +112,13 @@ public class RiskService {
 		return rBoard;
 	}
 	
+	public void updateRisk(RiskBoard upt) {
+		dao.updateRisk(upt);
+	}
+	
+	public void deleteRisk(int risk_no) {
+		dao.deleteRisk(risk_no);
+	}
+	
 
 }

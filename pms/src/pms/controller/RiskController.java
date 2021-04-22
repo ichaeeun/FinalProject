@@ -1,7 +1,6 @@
 package pms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,6 +108,22 @@ public class RiskController {
 		System.out.println("parentno: " + b.getRisk_parent_no());
 		return "riskBoardCreate";
 	}
+	// http://localhost:7080/pms/risk.do?method=update
+	@RequestMapping(params="method=update")
+	public String update(RiskBoard upt) {
+		service.updateRisk(upt);
+		return "forward:/risk.do?method=riskDetail";
+	}	// 수정 후, 다시 조회 처리할 수 있게 하기 위하여 forward로
+		// 해당 controller 기능 메서드 호출..
+	
+	
+	// http://localhost:7080/pms/risk.do?method=delete
+	@RequestMapping(params="method=delete")
+	public String deleteRisk(@RequestParam("no") int no) {
+		service.deleteRisk(no);
+		return "risk_detail";
+	}
+	
 	
 	
 }

@@ -13,6 +13,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+			.uptTextarea{resize:none;
+						width:1560px;
+						height:500px;
+						border-color:"light-grey";}
+</style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -59,13 +65,30 @@
 		         	 // 답글 처리를 위한 데이터 처리.
 		         	 $("[name=risk_parent_no]").val($("[name=risk_no]").val());
 		         	 $("[name=risk_title]").val("RE:"+$("[name=risk_title]").text());
-		         	 $("[name=risk_content]").val( $("#snow-editor").text());
+		         	 $("[name=risk_content]").val(
+		        			 "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+
+		        			 "===== 이전 글 =====\n" +
+		        			 $("[name=risk_content]").text());
 		             $("form").attr("action", "${path}/risk.do?method=insForm&no=${param.no}");
 		             $("#app_form").submit();
 		          }
-		       })
+		       });
+		       
+		       $("#uptBtn").on("click",function(){
+		    	   var writer = $("[name=risk_writer]").val();
+		    	   if(mem.name == writer||mem.auth==pm){
+		    		   if(confirm("수정하시겠습니까?")){
+		    			   $("[name=proc]").val("upt");
+		    			   $("form").attr("action","${path}/risk.do?method=update&no=${param.no}")
+		    			   $("form").submit();
+		    		   }
+		    	   }else{
+		    		   alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
+		    	   }
+		       });
+		       
 		});
-
+		<%-- input형태로 되어있는게 아니기 때문에 클릭했을때 수정을 할 수 있는 화면으로 가야함 --%>
 		</script>
 </head>
 	<body class="loading">
@@ -153,8 +176,8 @@
                                                             <i class="ri-hashtag h2 m-0 text-muted"></i>
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1" name="risk_writer">작성자</p>
-                                                            <h5 class="mt-0 text-truncate">
+                                                            <p class="mb-1">작성자</p>
+                                                            <h5 class="mt-0 text-truncate" name="risk_writer">
                                                                 ${riskboard.risk_writer}
                                                             </h5>
                                                         </div>
@@ -184,7 +207,7 @@
                                         <div class="mt-4">
                                             <div>
                                                 <p class="mb-1">내용</p>
-                                                <h5 class="mt-0 text-truncate" name="risk_content">${riskboard.risk_content}</h5>
+                                                <textarea class="uptTextarea" name="risk_content" readonly>${riskboard.risk_content}</textarea>
                                             </div>
                                         </div>
                                         <div class="row">
