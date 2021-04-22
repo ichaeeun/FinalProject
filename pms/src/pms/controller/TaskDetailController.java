@@ -37,17 +37,12 @@ public class TaskDetailController {
 		return "task_detail";
 	}
 	
-//		// http://localhost:8080/pms/taskdetail.do?method=test
-//		@GetMapping(params="method=test") // 서브 태스크 리스트 출력 
-//		public String test(@RequestParam("task_no") int task_no, Model d) {
-//			service.taskFileList(task_no);
-//			d.addAttribute("detail",service.taskDetail(task_no));
-//			d.addAttribute("subdetail",service.subtaskList(task_no));
-//			d.addAttribute("taskcurrval",service.taskcurrval());
-//			d.addAttribute("comment",service.commentList(task_no));
-//			return "task_detail_sub_temp";
-//		}
-//	
+	@RequestMapping(params="method=detail") // 태스크 디테일 화면 출력 
+	public String detail(@RequestParam("task_no") int task_no, Model d) {
+		d.addAttribute("detail2",service.taskDetail(task_no));
+		return "pageJsonReport";
+	}
+	
 	
 	// http://localhost:8080/pms/taskdetail.do?method=sub
 	@GetMapping(params="method=sub") // 서브 태스크 리스트 출력 
