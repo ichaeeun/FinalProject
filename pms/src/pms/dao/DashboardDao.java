@@ -25,4 +25,7 @@ public interface DashboardDao {
 	public int getAllRisk();		// 전체 리스크
 	public int getDoingRisk();		// 진행 리스크
 	public int getAllmember();		// 전체 인원
+	
+	public ArrayList<pms_project> DoingProject(); // 진행중인 프로젝트 리스트
+	
 }

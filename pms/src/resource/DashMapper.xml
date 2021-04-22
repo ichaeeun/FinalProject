@@ -69,5 +69,12 @@
 		FROM PMS_MEMBER_PROJECT a
 		WHERE a.PROJECT_NO = #{project_no}
 	</select>
+	<!-- public ArrayList<pms_project> DoingProject(); -->
+	<select id="DoingProject" resultType="pms_project">
+		SELECT * 
+		FROM PMS_PROJECT a
+		WHERE a.PROJECT_STATUS = '진행'
+	</select>
+	
 </mapper>  
  

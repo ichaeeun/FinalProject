@@ -39,9 +39,14 @@ public class DashboardService {
 	public int getAllProject() {
 		return dao.getAllProject();
 	}
+	
 	public int getDoingProject() {
 		return dao.getDoingProject();
 		
+	}
+	public ArrayList<pms_project> DoingProject(){
+
+		return dao.DoingProject();
 	}
 	public int getAllTask() {
 		return dao.getAllTask();

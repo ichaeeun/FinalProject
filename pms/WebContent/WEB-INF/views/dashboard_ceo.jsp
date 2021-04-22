@@ -56,6 +56,17 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
+				  series: [${Math.round(totdoingday/totallday*100 )}],
+				  labels: ['프로젝트진행도(${totdoingday}/${totallday})']
+				  
+				};
+		var chart = new ApexCharts(document.querySelector("#chart1"), options);
+		chart.render();
+		var options = {
+				  chart: {
+				      height: 250,
+				      type: 'radialBar',
+				  },
 				  series: [${Math.round(doingtask/alltask*100)}],
 				  labels: ['태스크진행도(${doingtask}/${alltask})'],
 				};
@@ -193,7 +204,7 @@
 						    <!-- end row -->
 						
 							<div class="row">
-						    	<div class="col-xl-3 col-md-6">
+						    	<div class="col-xl-6 col-md-6">
 									<!-- Portlet card -->
 		                            <div class="card">
 										<div class="card-body">
