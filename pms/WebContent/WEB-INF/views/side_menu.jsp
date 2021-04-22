@@ -191,7 +191,7 @@
 	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path }/risk.do?method=riskBoard&no=${param.no}">리스크 요청</a>
+	                                <a href="${path }/risk.do?method=riskBoard&no=${mem.project_no}">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -234,7 +234,7 @@
                                <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
                            </li>
                            <li>
-                               <a href="${path }/risk.do?method=riskBoard&no=${param.no}">리스크 요청</a>
+                               <a href="${path }/risk.do?method=riskBoard&no=${mem.pno}">리스크 요청</a>
                            </li>
                        </ul>
                    </div>
