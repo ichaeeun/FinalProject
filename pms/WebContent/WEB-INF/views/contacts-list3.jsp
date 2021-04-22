@@ -138,19 +138,7 @@
                                 <div class="text-center card">
                                     <div class="card-body">
                                         
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20">	
-                                                </i>
-                                            </a>                                         
-											<c:if test="${mem.auth == 'hp'}">
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                            <a class='dropdown-item project'>                 	
-										
-                                            </a>    
-                                            </div>  
-                                            </c:if>	                                          
-                                        </div>
+
                                         
                                         <c:if test="${empty memlist.imgpath}">
                                          <i class='fas fa-user-circle fa-7x'></i>

@@ -90,7 +90,8 @@ public class LoginController {
 			d.addAttribute("partList", mservice.deptList());
 			// 권한 목록
 			d.addAttribute("authList", mservice.authList());		
-			d.addAttribute("memList1", mservice.memList1(sch.getName()));
+			d.addAttribute("memList", mservice.showMem(sch));
+			// d.addAttribute("memList1", mservice.memList1(sch.getName())); 
 			d.addAttribute("member", new Member());		
 			d.addAttribute("showprofile",pservice.showProfile(m.getPno()));
 			return page;		
