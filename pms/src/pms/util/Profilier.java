@@ -46,11 +46,10 @@ public class Profilier {
 			Object[] args = joinPoint.getArgs(); // 매개변수
 			for(Object ob:args) {
 				Task tk = (Task)ob;
-				service.taskIns(new Log(tk.getPno(),tk.getProject_no(),tk.getTask_no()));
+				service.taskIns(new Log(1,1,1000));
 				
 				System.out.println("이름:"+tk.getTask_name()+":"+tk.getTask_content()+tk.getPno()+tk.getPno());				
 			}
-
 			
 			System.out.println(className+"의"+methodName+"매개변수:"+args+"태스크가 추가되었습니다!");
 			System.out.println("수행시간:"+(finish-start)+"MS");
