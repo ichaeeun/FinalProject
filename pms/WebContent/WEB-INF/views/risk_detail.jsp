@@ -67,8 +67,7 @@
 		         	 $("[name=risk_title]").val("RE:"+$("[name=risk_title]").text());
 		         	 $("[name=risk_content]").val(
 		        			 "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+
-		        			 "===== 이전 글 =====\n" +
-		        			 $("[name=risk_content]").text());
+		        			 "===== 이전 글 =====\n"+$("[name=risk_content]").text());
 		             $("form").attr("action", "${path}/risk.do?method=insForm&no=${param.no}");
 		             $("#app_form").submit();
 		          }
@@ -76,11 +75,12 @@
 		       
 		       $("#uptBtn").on("click",function(){
 		    	   var writer = $("[name=risk_writer]").val();
-		    	   if(mem.name == writer||mem.auth==pm){
+		    	   if("${mem.name}" == writer||"${mem.auth}"=='pm'){
 		    		   if(confirm("수정하시겠습니까?")){
-		    			   $("[name=proc]").val("upt");
-		    			   $("form").attr("action","${path}/risk.do?method=update&no=${param.no}")
-		    			   $("form").submit();
+				         	 $("[name=risk_parent_no]").val($("[name=risk_no]").val());
+				         	 $("[name=risk_title]").val($("[name=risk_title]").text());
+				         	$("form").attr("action", "${path}/risk.do?method=uptForm&no=${param.no}");
+		    			   $("#app_form").submit();
 		    		   }
 		    	   }else{
 		    		   alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
@@ -133,10 +133,10 @@
                            			<input type="hidden" value="" name="risk_writer">
                            			<input type="hidden" value="" name="risk_status">
                            			<input type="hidden" value="" name="risk_parent_no">
-                           			<input type="hidden" value="" name="risk_content">
+<!--                            			<input type="hidden" value="" name="risk_content"> -->
                            			<input type="hidden" value="" name="ffname">
                            			<input type="hidden" value="" name="fnames">
-                           			<input type="hidden" name="proc"/>
+                           			<input type="hidden" name="proc" value=""/>
                            		<!-- form있던자리 -->
                                     <div class="card-body">
                                     
@@ -189,8 +189,8 @@
                                                             <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle">
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1" name="risk_status">상태</p>
-                                                            <h5 class="mt-0 text-truncate">
+                                                            <p class="mb-1">상태</p>
+                                                            <h5 class="mt-0 text-truncate" name="risk_status">
                                                                 ${riskboard.risk_status}
                                                             </h5>
                                                         </div>

@@ -53,11 +53,17 @@
 		if(proc=="insert"){
 			if("${mem.auth}" == 'wk'){
 				alert("PM 리스크 요청페이지로 전송되었습니다.");
-				$("#top-modal").modal("show");
+// 				$("#top-modal").modal("show");
 			}else{
 				alert("등록이 완료되었습니다.");
 			}
 		};
+		
+		if(proc=="update"){
+				alert("수정이 완료되었습니다.");
+				location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
+		};
+		
 		$('.risk_item').on("dblclick", function(){
 			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
  			var risk_no = $(this).children().eq(8).children().val();
@@ -92,7 +98,7 @@
                     <div class="container-fluid">
                     <div class="row">
 						<div class="row" style="padding-top: 10px;">
-							<a href="#"><button
+							<a href="${path }/task.do?method=view"><button
 									class="btn btn-primary btn-md">${project.project_name}
 								</button></a>
 							<%-- ${ViewMem.project_name} --%>
@@ -139,16 +145,8 @@
 									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크 현황</span>
+										class="d-none d-sm-inline-block">리스크</span>
 								</a></li>
-								<c:if test="${mem.auth=='pm' }">
-								 <li class="nav-item"><a
-									href="${path}/risk.do?method=riskRequest&no=${param.no}" class="nav-link "> <span
-										class="d-inline-block d-sm-none"><i
-											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크 요청</span>
-								</a></li>
-								</c:if>
 							</ul>
 						</div>
 					</div>

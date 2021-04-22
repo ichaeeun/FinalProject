@@ -109,17 +109,28 @@ public class RiskController {
 		System.out.println("risk_category: " + b.getRisk_category());
 		System.out.println("regdte: " + b.getRegdte());
 		System.out.println("status: " + b.getRisk_status());
-		System.out.println("content: " + b.getRisk_content());
+		System.out.println("content: " +b.getRisk_content());
 		System.out.println("writer: " + b.getRisk_writer());
 		System.out.println("risktitle: " + b.getRisk_title());
 		System.out.println("parentno: " + b.getRisk_parent_no());
 		return "riskBoardCreate";
 	}
+	// http://localhost:7080/pms/risk.do?method=uptForm
+	@RequestMapping(params = "method=uptForm")
+	public String uptForm(@RequestParam("no") int no, @ModelAttribute("riskboard") RiskBoard b, Model d) {
+		d.addAttribute("update","Y");
+
+		return "riskBoardCreate";
+	}
 	// http://localhost:7080/pms/risk.do?method=update
 	@RequestMapping(params="method=update")
-	public String update(RiskBoard upt) {
+	public String update(@RequestParam("no") int no,@ModelAttribute("riskboard") RiskBoard upt, Model d) {
+		System.out.println(upt.getRisk_title());
+		System.out.println(upt.getRisk_content());
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+upt.getRisk_no());
+		d.addAttribute("proc","update");
 		service.updateRisk(upt);
-		return "forward:/risk.do?method=riskDetail";
+		return "riskBoard";
 	}	// 수정 후, 다시 조회 처리할 수 있게 하기 위하여 forward로
 		// 해당 controller 기능 메서드 호출..
 	

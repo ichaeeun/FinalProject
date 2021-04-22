@@ -52,10 +52,21 @@
 				$("#sndBtn").click(function(){
 					$("[name=risk_writer]").val("${mem.name}");
 					var mem = "${mem.auth}";
+					$("[name=risk_no]").val(0);
 					if(mem=='pm') $("[name=risk_status]").val("승인");
 					if(mem=='wk') $("[name=risk_status]").val("미승인");
+					$("form").attr("action", "${path}/risk.do?method=insert&no=${param.no}");
 					$("#riskboard").submit();
 				});
+				$("#uptBtn").click(function(){
+					$("[name=risk_no]").val("${riskboard.risk_no}");
+					$("[name=risk_status]").val("승인");
+					$("[name=risk_writer]").val("${mem.name}");
+					$("form").attr("action", "${path}/risk.do?method=update&no=${param.no}");
+					$("#riskboard").submit();
+				})
+				
+				
 				
 				$("#addFun").click(function(){
 					$("#fileArea").append($(".custom-file").eq(0).clone());
@@ -139,10 +150,10 @@
                                                 <div class="tab-pane" id="general-info">
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
-                                             <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert&no=${param.no}" method="post" enctype="multipart/form-data">
+                                             <form:form id="riskboard" modelAttribute="riskboard" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
  	                                            <input type="hidden" name="risk_status" />
- 	                                            <input type="hidden" name="risk_no" value="0"/>
+ 	                                            <input type="hidden" name="risk_no" value=""/>
  	                                            <c:if test="${reply == 'Y'}">
  	                                            	<form:input type="hidden" path="risk_parent_no"/>
  	                                            </c:if>
@@ -158,7 +169,6 @@
 
                                                         <div class="mb-3">
              <!-- form: <--이걸로 하는 방법을 모름-->         	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
-<%--                                                             <div id="snow-editor" style="height: 200px;">${riskboard.risk_content}</div> --%>
                                                             <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
 <%--                                                         <form:input path="risk_content" type="hidden"/> --%>
 													<c:if test="${reply != 'Y'}">
@@ -205,9 +215,16 @@
 		                                                        <li class="previous list-inline-item">
 		                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
 		                                                        </li>
+		                                                        <c:if test="${update != 'Y'}">
 		                                                        <li class="next list-inline-item">
 		                                                            <button type="button" id="sndBtn" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
 		                                                        </li>
+		                                                        </c:if>
+		                                                        <c:if test="${update == 'Y'}">
+		                                                        <li class="next list-inline-item">
+		                                                            <button type="button" id="uptBtn" class="btn btn-success">수정<i class="mdi mdi-arrow-right ms-1"></i></button>
+		                                                        </li>
+		                                                        </c:if>
 		                                                    </ul>
 		                                          		</div>
 	                                                </div>
