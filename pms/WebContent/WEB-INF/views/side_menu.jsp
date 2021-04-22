@@ -175,11 +175,6 @@
                         </ul>
                     </div>                    
                 </li>  
-	                <li>
-                    <a href="${path }/taskRequest.do?method=requestlist">
-                        <span> 태스크 승인 요청 </span>
-                    </a>
-                </li>
  	      			<li>
 	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
 	                        <span> 요청 현황 </span>
