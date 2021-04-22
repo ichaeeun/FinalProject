@@ -511,7 +511,7 @@
                     <div class="container-fluid">
 						<div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+							<a href="#"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -554,9 +554,17 @@
 						            <li class="nav-item">
 						                <a href="${path}/risk.do?method=riskBoard&no=${detail.project_no }"  class="nav-link">
 						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
-						                           <span class="d-none d-sm-inline-block">리스크</span>
+						                           <span class="d-none d-sm-inline-block">리스크 현황</span>
 						                </a>
 						            </li>
+						            <c:if test="${mem.auth=='pm' }">
+								 <li class="nav-item"><a
+									href="${path}/risk.do?method=riskRequest&no=${param.no}" class="nav-link "> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크 요청</span>
+								</a></li>
+								</c:if>
 						         </ul> 
 							</div>
 						</div>

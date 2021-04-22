@@ -89,7 +89,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="row" style="padding-top: 10px;">
-							<a href="${path }/task.do?method=view"><button
+							<a href="#"><button
 									class="btn btn-primary btn-md">${project.project_name}
 								</button></a>
 							<%-- ${ViewMem.project_name} --%>
