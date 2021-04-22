@@ -13,6 +13,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+			.uptTextarea{resize:none;
+						width:1560px;
+						height:500px;
+						border-color:"light-grey";}
+</style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -36,6 +42,7 @@
 	 			var risk_no = ${riskboard.risk_no};
 	 			$('[name=risk_no]').val(risk_no);
 	 			console.log(risk_no);
+	 			 $("form").attr("action", "${path}/risk.do?method=uptStatus&no=${param.no}");
 		 		$('#app_form').submit();
 		 		
 			});
@@ -53,10 +60,35 @@
 					location.href="${path}/risk.do?method=download&no=${param.no}&filename="+filename;
 				}
 			});
-			
-			
+		      $("#rpBtn").click(function(){
+		          if(confirm("답글을 작성하시겠습니까?")){
+		         	 // 답글 처리를 위한 데이터 처리.
+		         	 $("[name=risk_parent_no]").val($("[name=risk_no]").val());
+		         	 $("[name=risk_title]").val("RE:"+$("[name=risk_title]").text());
+		         	 $("[name=risk_content]").val(
+		        			 "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+
+		        			 "===== 이전 글 =====\n" +
+		        			 $("[name=risk_content]").text());
+		             $("form").attr("action", "${path}/risk.do?method=insForm&no=${param.no}");
+		             $("#app_form").submit();
+		          }
+		       });
+		       
+		       $("#uptBtn").on("click",function(){
+		    	   var writer = $("[name=risk_writer]").val();
+		    	   if(mem.name == writer||mem.auth==pm){
+		    		   if(confirm("수정하시겠습니까?")){
+		    			   $("[name=proc]").val("upt");
+		    			   $("form").attr("action","${path}/risk.do?method=update&no=${param.no}")
+		    			   $("form").submit();
+		    		   }
+		    	   }else{
+		    		   alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
+		    	   }
+		       });
+		       
 		});
-
+		<%-- input형태로 되어있는게 아니기 때문에 클릭했을때 수정을 할 수 있는 화면으로 가야함 --%>
 		</script>
 </head>
 	<body class="loading">
@@ -95,9 +127,17 @@
                         </div>     
                         <!-- end page title -->
                                 <div class="card">
-                         	  	<form action="${path}/risk.do?method=uptStatus&no=${param.no}" id="app_form" method="post">
+                         	  	<form id="app_form" method="post">
                            			<input type="hidden" value="${riskboard.risk_no}" name="risk_no">
-                           		</form>
+                           			<input type="hidden" value="" name="risk_title">
+                           			<input type="hidden" value="" name="risk_writer">
+                           			<input type="hidden" value="" name="risk_status">
+                           			<input type="hidden" value="" name="risk_parent_no">
+                           			<input type="hidden" value="" name="risk_content">
+                           			<input type="hidden" value="" name="ffname">
+                           			<input type="hidden" value="" name="fnames">
+                           			<input type="hidden" name="proc"/>
+                           		<!-- form있던자리 -->
                                     <div class="card-body">
                                     
                                         <div class="dropdown float-end">
@@ -127,7 +167,7 @@
                                             </div>
                                         </div>
                                         <p class="text-primary">${riskboard.risk_writer}</p>
-                                        <h4 class="mb-1">${riskboard.risk_title}</h4>
+                                        <h4 class="mb-1" name="risk_title">${riskboard.risk_title}</h4>
                                         <div class="text-muted">
                                              <div class="row">
                                                 <div class="col-lg-4 col-sm-6">
@@ -137,7 +177,7 @@
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">작성자</p>
-                                                            <h5 class="mt-0 text-truncate">
+                                                            <h5 class="mt-0 text-truncate" name="risk_writer">
                                                                 ${riskboard.risk_writer}
                                                             </h5>
                                                         </div>
@@ -149,9 +189,15 @@
                                                             <img src="${path}/Admin/dist/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle">
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
-                                                            <p class="mb-1">상태</p>
+                                                            <p class="mb-1" name="risk_status">상태</p>
                                                             <h5 class="mt-0 text-truncate">
                                                                 ${riskboard.risk_status}
+                                                            </h5>
+                                                        </div>
+                                                        <div class="flex-1 overflow-hidden">
+                                                            <p class="mb-1">상위 글번호</p>
+                                                            <h5 class="mt-0 text-truncate" name="risk_parent_no">
+                                                                ${riskboard.risk_parent_no}
                                                             </h5>
                                                         </div>
                                                     </div>
@@ -161,7 +207,7 @@
                                         <div class="mt-4">
                                             <div>
                                                 <p class="mb-1">내용</p>
-                                                <h5 class="mt-0 text-truncate">${riskboard.risk_content}</h5>
+                                                <textarea class="uptTextarea" name="risk_content" readonly>${riskboard.risk_content}</textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -225,23 +271,20 @@
 												<c:if test="${riskboard.risk_status == '미승인'}">
 		                             				<button href="" id="adBtn" type="button" class="btn btn-primary">승인하기</button>
 		                             			</c:if>
+												<c:if test="${riskboard.risk_status == '승인'}">
+		                             				<button href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</button>
+		                             			</c:if>
 		                             		</c:if>
-											<c:if test="${mem.auth == 'pm'}">
-		                             		<a href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</a>
+		                             		<c:if test="${mem.auth == 'pm' || mem.name == riskboard.risk_writer}">
+		                             			<button href="" id="uptBtn" type="button" class="btn btn-warning">수정하기</button>
+		                             			<button href="" id="delBtn" type="button" class="btn btn-danger">삭제하기</button>
 		                             		</c:if>
 				       					</li>
 				                	</ul>
 				                </div>
+				                </form>
                           	</div>
                                 </div>
-                        <!-- end row -->
-                                 <!-- container-fluid 
-                                        <div class="row mb-2">
-                                            <div class="col-sm-6">
-                                                <a href="${path}/risk.do?method=riskBoardCreate" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
-                                            </div>
-                                        </div>
-                    -->
 		                
                 </div> <!-- content -->
                 <!-- Footer Start -->

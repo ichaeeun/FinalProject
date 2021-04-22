@@ -18,6 +18,35 @@
 		)
 		where cnt between #{start} and #{end}
 	</select>
+	<!-- public ArrayList<Member> showMem2(MemberSch sch); -->
+	<select id="showMem2" parameterType="memsch" resultType="member">
+		select *
+		from(
+			SELECT rownum cnt, d.* FROM pms_MEMBER d WHERE auth IN ('wk','pm')
+			and pno NOT in(SELECT pno FROM pms_member
+			WHERE pno in
+			(SELECT a.pno
+			FROM pms_member a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
+			where a.pno = b.pno
+			AND b.PROJECT_NO =c.PROJECT_NO
+			AND c.project_status NOT IN ('완료')))
+			or pno IN 
+			(SELECT pno FROM pms_member a
+			WHERE pno NOT IN (
+			SELECT DISTINCT pno 
+			FROM PMS_MEMBER_PROJECT))
+		)
+		where cnt between #{start} and #{end}
+	</select>
+	<!-- public ArrayList<Member> showMem3(MemberSch sch); -->
+	<select id="showMem3" parameterType="memsch" resultType="member">
+		select *
+		from(
+			select rownum cnt, a.* from pms_member a
+			where part like '%'||#{part}||'%'
+		)
+		where cnt between #{start} and #{end}
+	</select>	
 	<!-- public ArrayList<Integer> pnoList(HashMap<String,String> hm); -->
 	<!-- <resultMap type="int" id="pnoMap"/> -->
 	<select id="pnoList" resultType="int" parameterType="hashmap">

@@ -59,7 +59,7 @@
 				fetchContacts:function(data){
 					var vm = this;
 					var tlist=[];
-					var url = "http://localhost:7080/pms/taskRequest.do?method=listJson";
+					var url = "http://localhost:8080/pms/taskRequest.do?method=listJson";
 					fetch(url).then(function(response){
 							console.log("# 서버에서 온 response객체 #");
 							console.log(response);

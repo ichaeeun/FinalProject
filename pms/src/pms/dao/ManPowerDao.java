@@ -24,8 +24,12 @@ public interface ManPowerDao {
 	// 가용인원 - 최종 조회
 	public Member memPoss(int pno);
 	
-	// 
+	// 전체인원 페이징
 	public ArrayList<Member> showMem(MemberSch sch);
+	// 가용인원 합치기 페이징
+	public ArrayList<Member> showMem2(MemberSch sch);
+	// 부서인원 페이징
+	public ArrayList<Member> showMem3(MemberSch sch);
 	
 	
 	// 부서인원 - 부서목록

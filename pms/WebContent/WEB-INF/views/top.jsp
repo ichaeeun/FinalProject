@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -281,7 +282,15 @@
     
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                <c:if test="${empty showprofile.imgpath}">
+                                <i class='fas fa-user-circle fa-2x'></i>
+                                      <%-- <img src="${path}/Admin/dist/assets/images/users/default.png" width="20px" height="20px" alt="user-image" class="rounded-circle"> --%> 
+                                       </c:if>
+                                       <c:if test="${not empty showprofile.imgpath}">
+                                       <c:set var = "length" value = "${fn:length(showprofile.imgpath)}"/>
+                                    <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
+                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 48, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle"> 
+                                       </c:if>
                                 <span class="pro-user-name ms-1">
                                     ${mem.name} <i class="mdi mdi-chevron-down"></i> 
                                 </span>

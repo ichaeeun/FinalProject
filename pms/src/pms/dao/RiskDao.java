@@ -1,8 +1,7 @@
 package pms.dao;
 //pms.dao.RiskDao
 import java.util.ArrayList;
-
-
+import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +20,8 @@ public interface RiskDao {
 	public void insertRiskFile(RiskFile riskfile);
 	public ArrayList<RiskFile> getRiskFile(int fno);
 	public ArrayList<RiskFile> fileInfo(int fno);
-	
+	public void updateRisk(RiskBoard upt);
+	public void updateFile(HashMap<String, String> hs);
+	public void deleteRisk(int risk_no);
+	public void deleteFile(int risk_no);
 }

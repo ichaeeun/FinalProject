@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -15,6 +16,11 @@
 	<c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
 	<c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
 	<c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
+	<style type="text/css">
+		#abc{
+			overflow-y:hidden;
+		}
+	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 	<meta content="Coderthemes" name="author" />
@@ -45,9 +51,14 @@
 	$(document).ready(function(){
 		var proc="${proc}";
 		if(proc=="insert"){
-			alert("PM 리스크 요청페이지로 전송되었습니다.");
+			if("${mem.auth}" == 'wk'){
+				alert("PM 리스크 요청페이지로 전송되었습니다.");
+				$("#top-modal").modal("show");
+			}else{
+				alert("등록이 완료되었습니다.");
+			}
 		};
-		$('.risk_item').on("click", function(){
+		$('.risk_item').on("dblclick", function(){
 			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
  			var risk_no = $(this).children().eq(8).children().val();
  			$('[name=risk_no]').val(risk_no);
@@ -81,7 +92,7 @@
                     <div class="container-fluid">
                     <div class="row">
 						<div class="row" style="padding-top: 10px;">
-							<a href="${path }/task.do?method=view"><button
+							<a href="#"><button
 									class="btn btn-primary btn-md">${project.project_name}
 								</button></a>
 							<%-- ${ViewMem.project_name} --%>
@@ -128,8 +139,16 @@
 									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크</span>
+										class="d-none d-sm-inline-block">리스크 현황</span>
 								</a></li>
+								<c:if test="${mem.auth=='pm' }">
+								 <li class="nav-item"><a
+									href="${path}/risk.do?method=riskRequest&no=${param.no}" class="nav-link "> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크 요청</span>
+								</a></li>
+								</c:if>
 							</ul>
 						</div>
 					</div>
@@ -150,7 +169,7 @@
                         </div>     
                         <!-- end page title -->
                         <div class="row">
-                            <div class="col-lg-12">
+                        <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                             			<c:if test="${mem.auth == 'wk' || mem.auth == 'pm'}">
@@ -166,11 +185,13 @@
                                         </div>
                           				</c:if>
                                         <!-- end row -->
+                                        
                 
                                         <div class="table-responsive">
                                             <form action="${path}/risk.do?method=riskDetail&no=${param.no}" id="detail_form" method="post">
                                             <input type="hidden" value="" name="risk_no">
-                                            <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <table class="table table-centered w-100 dt-responsive nowrap" 
+                                            	id="products-datatable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th class="all" style="width: 20px;">
@@ -183,8 +204,8 @@
                                                         <th>제목</th>
                                                         <th>내용</th>
                                                         <th>리스크 카테고리</th>
-                                                        <th>리스크 상태</th>
                                                         <th>등록일</th>
+                                                        <th>리스크 상태</th>
                                                         <th>작성자</th>
                                                         <th></th>
                                                     </tr>
@@ -202,19 +223,25 @@
                                                  			${rl.rnum}
                                                         </td>
                                                         <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
+                                             				<c:forEach varStatus="sts" begin="1" end="${rl.level}">
+																<c:if test="${rl.level>1}">&nbsp;&nbsp;&nbsp;</c:if>
+																<c:if test="${rl.level>1 and sts.last}">
+											                  </c:if>
+											      			</c:forEach>
+											               <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
                                                         </td>
                                                         <td>
-                                                            <h5 class="m-0 d-inline-block align-middle">${rl.risk_content}</h5>
+                                                            <div id="abc">${fn:substring(rl.risk_content, 0, 10)}...</div>
+                                                            
                                                         </td>
                                                         <td>
                                                    			[${rl.risk_category}]
                                                         </td>
                                                         <td>
-                                                            ${rl.risk_status}
+                                                   			<fmt:formatDate value="${rl.regdte}"/>
                                                         </td>
                                                         <td>
-                                                   			<fmt:formatDate value="${rl.regdte}"/>
+                                                            ${rl.risk_status}
                                                         </td>
                                                         <td>
                                                             <div>
@@ -269,6 +296,29 @@
 
         <!-- App js -->
         <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+        <script type="text/javascript">
+        </script>
+        
+        
+                 <!-- Top modal content -->
+         <div id="top-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+             <div class="modal-dialog modal-top">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h4 class="modal-title" id="topModalLabel">Modal Heading</h4>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <h5>Text in a modal</h5>
+                         <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-primary">Save changes</button>
+                     </div>
+                 </div><!-- /.modal-content -->
+             </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
         
     </body>
 </html>

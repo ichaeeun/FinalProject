@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -44,7 +45,6 @@
 		</style>
 	  <script>
 	  	$(document).ready(function(){
-	  		
 	 	    var mem = "${mem.id}";
 	 	    var auth = "${mem.auth}";
 		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
@@ -52,17 +52,18 @@
 		    /////////// 조회와 검색
 		    // 검색 입력값
   			var shName = "";
-		    var start = $("#start").val(); 
-		    var end = $("#end").val(); 
-		    var cur = $("#cur").val(); 
-		    var cnt = $("#cnt").val(); 
+		    var start = "${sch.start}"
+		    var end = "${sch.endBlock}"
+		    var cur = "${sch.startBlock}"
+		    var cnt = "${sch.count}"
   			console.log("shName:"+shName);
-			function ajaxSearch(){
+/* 			function ajaxSearch(){
 	  			$.ajax({
 	  				type:"post",
 	  				url:"${path}/manpower.do?method=jsonContactList",
 	  				data:{
-	  					"name":shName
+	  					"name":shName,
+	  					"curPage":cur,  					
 	  				},
 	  				dataType:"json",
 	  				success:function(data){
@@ -105,13 +106,13 @@
 		  			}
 	  			});
 			};
-			ajaxSearch(); // 초기화면 호출하기 위함
+			ajaxSearch(); // 초기화면 호출하기 위함 */
 
 	  		// 검색 버튼
  	  		$("#searchBtn").click(function(){
  	  			shName = $("[name=shName]").val();
  	  			console.log(shName);
- 	  			ajaxSearch();
+ 	  			location.href="${path}/manpower.do?method=contacts_list&name="+shName;
 	  		}) 
 	  		
 	  		//////////// 계정 생성 모달
@@ -217,7 +218,7 @@
   					success:function(){
   						$("#signup-modal").modal("hide");
   						$("#info-mail-modal").modal("show");
-  						ajaxSearch();
+  						location.reload();
   						console.log(insert);
   						
   					},
@@ -226,6 +227,7 @@
   					}
   				
   				});
+  				location.reload();
   			});
   			//////////// 계정 생성 후 메일 발송 여부 확인
   			$("#info-mail-modal #mailY").click(function(){
@@ -294,7 +296,7 @@
 		  				success:function(data){
 		  					$("#danger-alert-modal").modal("hide");
 		  					$("#warning-alert-modal").modal("hide");
-		  					ajaxSearch();
+		  					location.reload();
 		  				},
 		  				error:function(err){
 		  					alert("에러 발생");
@@ -318,7 +320,7 @@
 	  					 success:function(data){
 	  						 console.log(data);
 	  						 $("#alert-modal").modal("hide");
-	  						 ajaxSearch();
+	  						  location.reload();
 	  					 },
 	  					 error:function(err){
 	  						 alert("에러발생:"+err);
@@ -333,31 +335,18 @@
 		function goPage(page){
 			// 이전 페이지가 0이면 1
 			if(page==0) page=1;
-  			var name = shName;
-		    var start = $(".page-link #start").val(); 
-		    var end = $(".page-link #end").val(); 
-		    var cur = $(".page-link #cur").val(); 
-		    var cnt = $(".page-link #cnt").val();
-		    alert(name);
-		    alert(start);
-		    alert(end);
-		    alert(cur);
-		    alert(cnt);
-			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리
-			$("#curPageFrm [name=curPage]").val(page);
-			$("#pageFrm [name=name]").val(name);
-			$("#pageFrm [name=start]").val(start);
-			$("#pageFrm [name=end]").val(end);
-			$("#pageFrm [name=cur]").val(cur);
-			$("#pageFrm [name=count]").val(cnt);
-			$("#pageFrm").submit();
+			// 이후 페이지는 페이지카운트+1 ==> 페이지카운트로 처리	
+			$("[name=curPage]").val(page);
+			$("#pageForm").submit();
 		};
 
 	  </script>
     </head>
 
 <body class="loading">
-
+  <form:form modelAttribute="sch" method="post" id="pageForm">
+  	<form:hidden path="curPage"/>
+  </form:form>
 <!-- 메일 발송 -->
 <form id="sendMail" method="post" action="${path }/mail.do?method=send"
 	style="display:none;">
@@ -365,13 +354,7 @@
 	<input type="hidden" name="receiver"/>
 	<input type="hidden" name="content"/>
 </form>
-<form id="pageFrm" action="${path}/manpower.do?method=jsonContactList">
-	<input type="hidden" name="name"/>
-	<input type="hidden" name="start"/>
-	<input type="hidden" name="end"/>
-	<input type="hidden" name="cur"/>
-	<input type="hidden" name="cnt"/>
-</form>
+
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -431,8 +414,47 @@
                         </div>
                         <!-- end row -->
 						
-                        <div class="row" id="memShow">
-                        <!-- 조회 검색 view단 -->
+                        <div class="row" id="memShow">                    
+                        	<c:forEach var="mlist" items="${memList }">
+	  						<div class='col-xl-3 col-sm-6'>		
+	  							<div class='text-center card'>
+	  								<div class='card-body'>
+	  									<div class='dropdown float-end'>
+	  										<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+	  											<i class='mdi mdi-dots-vertical font-20'></i>
+	  										</a>
+	  										<c:if test="${mem.auth=='hp' }">
+	  											<div class='dropdown-menu dropdown-menu-end'>
+                           						<a class='dropdown-item goMail' ><button name='mailPno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>
+                            					<a class='dropdown-item goDelete'><button name='deletePno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a>
+                            					<c:if test="${mlist.auth=='wk'||mlist.auth=='pm' }">
+                            						<a class='dropdown-item alertAuth'><button name='alertPno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#alert-modal'>직급 변경</button></a>
+                            					</c:if>
+                            					</div>
+	  										</c:if>
+										</div>               
+	  									<c:if test="${empty mlist.imgpath}">
+                                         <i class='fas fa-user-circle fa-7x'></i>
+                                   		<%-- <img src="${path}/Admin/dist/assets/images/users/default.png" width="20px" height="20px" alt="user-image" class="rounded-circle"> --%> 
+                                       </c:if>
+                                       <c:if test="${not empty mlist.imgpath}">
+                                       <c:set var = "length" value = "${fn:length(mlist.imgpath)}"/>
+                                    <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
+                             	     <img src="${path}/${fn:substring(mlist.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
+                                       </c:if>
+	  									<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'>
+	  										<a class='text-dark'>${mlist.name }</a>
+	  									<form style='display:none;'><input type='hidden' class='pno' name=pno value="${mlist.pno }"/>
+	  									</form>
+										</h4>
+										<p class='text-muted'>${mlist.auth }<span> | </span>${mlist.part }
+										<br><span> <a href='#' class='text-pink'>${mlist.email }</a> </span></p>
+										</div>
+										</div>
+										</div>
+                            </c:forEach>                                         
+                        </div>
+                            </div> <!-- end col -->                                    
                         </div>
                        
                         <!-- end row -->
@@ -444,7 +466,7 @@
                                 </div> --%>
                             </div>
                             <!--  -->
-                            <div class="col-sm-6">
+							<div class="col-sm-6">
                                 <div class="float-sm-end">
                                     <ul class="pagination pagination-rounded mb-sm-0">
                                         <li class="page-item">
@@ -468,7 +490,8 @@
                                         </li>
                                     </ul>                                      
                                 </div>
-                            </div>
+                            </div>                            
+
                         </div>
                         <!-- end row -->
                         

@@ -15,6 +15,10 @@
 <title>Insert title here</title>
 		<style>
 			footer .chatting{display:none;}
+			.uptTextarea{resize:none;
+						width:1560px;
+						height:500px;
+						border-color:"light-grey";}
 		</style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -39,29 +43,32 @@
 		<script src="${path}/a00_com/popper.min.js"></script>
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#mainBtn").click(function(){
-			location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
-		});
-		
-		$("#sndBtn").click(function(){
-			$("[name=risk_content]").val( $("#snow-editor").text());
-			$("[name=risk_writer]").val("${mem.name}");
-			$("#riskboard").submit();
-		});
-		
-		$("#addFun").click(function(){
-			$("#fileArea").append($(".custom-file").eq(0).clone());
-		});
-
-	});
-	function rm(obj){
-		var len=$("[type=file]").length;
-		if(len>1){
-			$(obj).parent().remove();
-		}
-	}
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#mainBtn").click(function(){
+					location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
+				});
+				
+				$("#sndBtn").click(function(){
+					$("[name=risk_writer]").val("${mem.name}");
+					var mem = "${mem.auth}";
+					if(mem=='pm') $("[name=risk_status]").val("승인");
+					if(mem=='wk') $("[name=risk_status]").val("미승인");
+					$("#riskboard").submit();
+				});
+				
+				$("#addFun").click(function(){
+					$("#fileArea").append($(".custom-file").eq(0).clone());
+				});
+				
+				
+				function rm(obj){
+				var len=$("[type=file]").length;
+					if(len>1){
+						$(obj).parent().remove();
+					}
+				}
+			});
 </script>
 </head>
 	<body class="loading">
@@ -86,7 +93,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
-                                    <h4 class="page-title">리스크 작성 페이지</h4>
+                                	<c:if test="${reply != 'Y'}">
+                                    	<h4 class="page-title">리스크 작성 페이지</h4>
+                                    </c:if>
+                                	<c:if test="${reply == 'Y'}">
+                                    	<h4 class="page-title">리스크 답글 페이지</h4>
+                                    </c:if>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
@@ -105,6 +117,7 @@
                                     <div class="card-body">
                                         
                                         <div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
+                                        <c:if test="${reply != 'Y'}">
                                             <ul class="twitter-bs-wizard-nav mb-2">
                                                 <li class="nav-item">
                                                     <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
@@ -112,13 +125,27 @@
                                                     </a>
                                                 </li>
                                             </ul>
+                                         </c:if>
+                                        <c:if test="${reply == 'Y'}">
+                                            <ul class="twitter-bs-wizard-nav mb-2">
+                                                <li class="nav-item">
+                                                    <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
+                                                        <span class="d-none d-sm-inline">리스크 답글 작성</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                         </c:if>
                                             <div class="tab-content twitter-bs-wizard-tab-content">
                                                 <div class="tab-pane" id="general-info">
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
                                              <form:form id="riskboard" modelAttribute="riskboard" action="${path}/risk.do?method=insert&no=${param.no}" method="post" enctype="multipart/form-data">
  	                                            <input type="hidden" name="risk_writer" />
+ 	                                            <input type="hidden" name="risk_status" />
  	                                            <input type="hidden" name="risk_no" value="0"/>
+ 	                                            <c:if test="${reply == 'Y'}">
+ 	                                            	<form:input type="hidden" path="risk_parent_no"/>
+ 	                                            </c:if>
                                                     <div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -131,9 +158,10 @@
 
                                                         <div class="mb-3">
              <!-- form: <--이걸로 하는 방법을 모름-->         	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
-                                                            <div id="snow-editor" style="height: 200px;">
-                                                        </div>
-                                                        <input type="hidden" name="risk_content" />
+<%--                                                             <div id="snow-editor" style="height: 200px;">${riskboard.risk_content}</div> --%>
+                                                            <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
+<%--                                                         <form:input path="risk_content" type="hidden"/> --%>
+													<c:if test="${reply != 'Y'}">
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
@@ -147,6 +175,21 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+	                                              	</c:if>
+													<c:if test="${reply == 'Y'}">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
+                                                                    <form:select path="risk_category" class="form-control select2" id="product-category">
+                                                                        <option value="답글">답글</option>
+                                                                        <option value="기타">기타</option>                       
+                                                                    </form:select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+	                                              	</c:if>
+	                                              	
                                                     </div>
                                                    	<div class="tab-pane" id="product-img">
                                                     	<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
@@ -168,6 +211,7 @@
 		                                                    </ul>
 		                                          		</div>
 	                                                </div>
+	                                                
                                                 </form:form>
                                                 
                                                 </div>
@@ -179,29 +223,6 @@
                             </div>
                         </div>
                         <!-- end row -->
-
-                        <!-- file preview template 
-                        <div class="d-none" id="uploadPreviewTemplate">
-                            <div class="card mt-1 mb-0 shadow-none border">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                        </div>
-                                        <div class="col ps-0">
-                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                            <p class="mb-0" data-dz-size></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            Button 
-                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                <i class="fe-x"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
                         
                     </div> <!-- container -->
 

@@ -2,16 +2,19 @@ package pms.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Member;
 import pms.dto.pms_project;
 import pms.service.ManPowerService;
-import pms.service.TaskDetailService;
+import pms.service.MypageService;
 
 @Controller
 @RequestMapping("mypage.do")
@@ -20,7 +23,7 @@ public class MypageController {
 	private ManPowerService service;
 	
 	@Autowired(required=false)
-	private TaskDetailService service2;
+	private MypageService service2;
 	// http://localhost:8080/pms/mypage.do?method=my
 	@RequestMapping(params="method=my")
 	public String mypage(@RequestParam("pno") int pno,Model d) {
@@ -29,7 +32,7 @@ public class MypageController {
 			  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));
 		  } 
 		  d.addAttribute("proList",proList);
-		  d.addAttribute("showprofile",service2.showProfile(pno));
+		  // d.addAttribute("showprofile",service2.showProfile(pno));
 		return "mypage";
 	}
 	// http://localhost:8080/pms/mypage.do?method=update 
@@ -38,8 +41,21 @@ public class MypageController {
 		System.out.println("#######"+m.getName());
 		service2.updateProfile(m);
 		d.addAttribute("success","Y");
-		d.addAttribute("showprofile",service2.showProfile(pno));
+		ArrayList<pms_project> proList = new ArrayList<pms_project>(); 
+	  for(int i=0;i<service.projectpno(pno).size();i++) {
+		  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));
+	  } 
+		d.addAttribute("proList",proList);
+		// d.addAttribute("showprofile",service2.showProfile(pno));
 		return "mypage";
+	}
+	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		int pno=0;
+		if(m!=null) pno = m.getPno();
+		return service2.showProfile(pno);
 	}
 	
 }

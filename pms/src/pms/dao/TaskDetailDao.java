@@ -46,7 +46,4 @@ public interface TaskDetailDao {
 	
 	public void deleteTaskFile(int fileno);
 	
-	public void updateProfile(Member mem);  // 멤버 프로필 변경 
-	public void updateNoFile(Member mem);
-	public Member showProfile(int pno);
 }

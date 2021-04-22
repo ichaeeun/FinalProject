@@ -42,9 +42,15 @@
 
 	/* jQuery.noConflict();   */
    	  $(document).ready(function(){ 
+   	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+  	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
+  	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
 	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
-	   if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 
+	   if(mem==""){
+			alert("세션이 만료되어 로그인화면으로 이동합니다.");
+			location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동
+		} 
 	   
 	   document.getElementById('addTask_startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
 	   document.getElementById('addTask_enddte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
@@ -53,13 +59,6 @@
 	   if(approval=="Y"){
 		   $("#success-alert-modal").modal("show");
 	   }
-	   
-	   
-	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
-	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
-	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
-	   
-	 
 	   $("#insertComment_content").keypress(function(event){
 		  if(event.keyCode==13){
 			  $("#insertComment").click();
@@ -92,7 +91,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#addSubTaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -250,7 +250,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#updateSubtaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -307,8 +308,9 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					  $("#deleteSubtaskModal").modal("hide");
-					  $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					 /*  $("#deleteSubtaskModal").modal("hide"); */
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -509,7 +511,7 @@
                     <div class="container-fluid">
 						<div class="row">
 						   <div class="row" style="padding-top:10px;">
-							<a href="${path }/task.do?method=view"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
+							<a href="#"><button class="btn btn-primary btn-md">${detail.project_name }</button></a>
 							</div> 
 							<div class="col-xl-12">
 								 <ul class="nav nav-tabs nav-bordered" style="padding-top:10px;">
@@ -552,9 +554,17 @@
 						            <li class="nav-item">
 						                <a href="${path}/risk.do?method=riskBoard&no=${detail.project_no }"  class="nav-link">
 						                           <span class="d-inline-block d-sm-none"><i class="bx bx-info-circle"></i></span>
-						                           <span class="d-none d-sm-inline-block">리스크</span>
+						                           <span class="d-none d-sm-inline-block">리스크 현황</span>
 						                </a>
 						            </li>
+						            <c:if test="${mem.auth=='pm' }">
+								 <li class="nav-item"><a
+									href="${path}/risk.do?method=riskRequest&no=${param.no}" class="nav-link "> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크 요청</span>
+								</a></li>
+								</c:if>
 						         </ul> 
 							</div>
 						</div>
@@ -692,7 +702,8 @@
 
                                         <div class="mt-4">
                                             <div class="mt-4" id="subtaskList">
-												 <!-- 여기에 서브태스크 리스트 출력  -->   
+												 <!-- 여기에 서브태스크 리스트 출력  -->  
+												  
                                             </div> <!-- end sub tasks -->
                                         </div>
                                     </div>

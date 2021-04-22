@@ -35,8 +35,9 @@ public class LoginController {
 	@Autowired(required=false)
 	private DashboardService dservice;
 	@Autowired(required=false)
-	private ProjectService pservice;
-	
+	private ProjectService proservice;
+	@Autowired(required=false)
+	private MypageService pservice;
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
 		public String loginform(@ModelAttribute("member") Member member) {		
@@ -74,7 +75,6 @@ public class LoginController {
 			Member m = (Member)session.getAttribute("mem");
 			System.out.println(m.getAuth());
 			String page = "";
-			
 			if( m.getAuth().equals("pm")) {	
 				if(service.IsPm(m.getPno())!=null) {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
@@ -87,7 +87,7 @@ public class LoginController {
 				
 				
 				
-				pms_project project = pservice.getProject( m.getProject_no() ); // 프로젝트 번호로 프로젝트 정보 가져오기
+				pms_project project = proservice.getProject( m.getProject_no() ); // 프로젝트 번호로 프로젝트 정보 가져오기
 				
 				// 시작일과 종료일, 현재일, 전체일, 진행도=(현재일-시작일)/전체일 이고 현재일이 종료일보다 크면 현재일은 종료일로 고정
 			
@@ -152,9 +152,10 @@ public class LoginController {
 			d.addAttribute("partList", mservice.deptList());
 			// 권한 목록
 			d.addAttribute("authList", mservice.authList());		
-			d.addAttribute("memList1", mservice.memList1(sch.getName()));
+			d.addAttribute("memList", mservice.showMem(sch));
+			// d.addAttribute("memList1", mservice.memList1(sch.getName())); 
 			d.addAttribute("member", new Member());		
-			
+			d.addAttribute("showprofile",pservice.showProfile(m.getPno()));
 			return page;		
 		}
 }

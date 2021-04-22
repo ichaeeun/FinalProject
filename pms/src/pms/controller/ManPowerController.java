@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,27 +20,20 @@ import pms.dto.MemberSch;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.service.ManPowerService;
+import pms.service.MypageService;
 
 @Controller
 @RequestMapping("manpower.do")
 public class ManPowerController {
 	@Autowired(required = false)
 	private ManPowerService service;
-
+	@Autowired(required=false)
+	private MypageService service2;
 	// http://localhost:7080/pms/manpower.do?method=jsonContactList
 	@RequestMapping(params = "method=jsonContactList")
-	public String memList1(@RequestParam("name") String name, 
+	public String memList1(
 			@ModelAttribute("sch") MemberSch sch,
 			Model d) {
-		// 전체 인원
-		// if (sch.getName() == null) sch.setName("");
-		// if(name==null) name="";
-		// System.out.println("검색이름:"+sch.getName());
-		d.addAttribute("memList1",service.memList1(name));
-		// 부서 목록
-		d.addAttribute("partList", service.deptList());
-		// 권한 목록
-		d.addAttribute("authList", service.authList());
 		d.addAttribute("memList", service.showMem(sch));
 		return "pageJsonReport";
 	}
@@ -63,37 +57,26 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_list2
 	@RequestMapping(params = "method=contacts_list2")
-	public String memList(@ModelAttribute("sch") Member sch, Model d) {
+	public String memList(@ModelAttribute("sch") MemberSch sch, Model d) {
 		// 가용 인원
 		// pm이나 wk인 직원의 사원번호 가져오기
-		HashMap<String, String> hm = new HashMap<String, String>(); //
-		ArrayList<Integer> pno = service.pnoList(hm);
-		Object[] pnoNum = pno.toArray();
-		// 해당 사원이 맡은 or 맡았던 프로젝트 넘버 가져오기
-		int[] project_no = new int[pnoNum.length];
-		ArrayList<ProjectAdd> add = new ArrayList<ProjectAdd>();
-		System.out.println(pno.size());
-		// 담당 프로젝트 가져오기, 상태 가져오기
-		int sum = 0;
-		ArrayList<Member> memList2 = new ArrayList<Member>();
-		for (int i = 0; i < pno.size(); i++) {
-			add = service.projectList(pno.get(i));
-			for (int j = 0; j < add.size(); j++) {
-				System.out.println(add.get(j).getProject_no());
-				String status = service.status(add.get(j).getProject_no());
-				System.out.println(status);
-				if (status.equals("진행")) {
-					sum++;
-				}
-			}
-			if (sum == 0||project_no==null) {
-				System.out.println("전부 완료인 애들의 사원 번호: " + pno.get(i));
-				System.out.println(service.memPoss(pno.get(i)).getName());
-				memList2.add(service.memPoss(pno.get(i)));
-			}
-			sum = 0;
-		}
-		d.addAttribute("memList2", memList2);
+		/*
+		 * HashMap<String, String> hm = new HashMap<String, String>(); //
+		 * ArrayList<Integer> pno = service.pnoList(hm); Object[] pnoNum =
+		 * pno.toArray(); // 해당 사원이 맡은 or 맡았던 프로젝트 넘버 가져오기 int[] project_no = new
+		 * int[pnoNum.length]; ArrayList<ProjectAdd> add = new ArrayList<ProjectAdd>();
+		 * System.out.println(pno.size()); // 담당 프로젝트 가져오기, 상태 가져오기 int sum = 0;
+		 * ArrayList<Member> memList2 = new ArrayList<Member>(); for (int i = 0; i <
+		 * pno.size(); i++) { add = service.projectList(pno.get(i)); for (int j = 0; j <
+		 * add.size(); j++) { System.out.println(add.get(j).getProject_no()); String
+		 * status = service.status(add.get(j).getProject_no());
+		 * System.out.println(status); if (status.equals("진행")) { sum++; } } if (sum ==
+		 * 0||project_no==null) { System.out.println("전부 완료인 애들의 사원 번호: " + pno.get(i));
+		 * System.out.println(service.memPoss(pno.get(i)).getName());
+		 * memList2.add(service.memPoss(pno.get(i))); } sum = 0; }
+		 * d.addAttribute("memList2", memList2);
+		 */
+		d.addAttribute("memList2",service.showMem2(sch));
 		d.addAttribute("allProject",service.allProject());
 		return "contacts-list2";
 	}
@@ -101,18 +84,15 @@ public class ManPowerController {
 	// http://localhost:7080/pms/manpower.do?method=contacts_list3
 
 	@RequestMapping(params = "method=contacts_list3")
-	public String memList3(@ModelAttribute("sch") Member sch, 
-			Model d, HttpServletRequest request) {
+	public String memList3(@ModelAttribute("sch") MemberSch sch,
+			Model d) {
 		// 부서 목록
+		if(sch.getName()==null) sch.setName("");
+		System.out.println("###curPage3 : "+sch.getCurPage());
+		System.out.println("###start : "+sch.getStart());
+		System.out.println("###part : "+sch.getPart());
 		d.addAttribute("deptList", service.deptList());
-		String dvalue = request.getParameter("dvalue");
-		if (dvalue == null)
-			dvalue = "";
-		d.addAttribute("dvalue",dvalue);
-		System.out.println("dvalue:" + dvalue);
-		System.out.println(service.memList3(dvalue).size());
-		d.addAttribute("memList3", service.memList3(dvalue));
-		System.out.println(service.memList3(dvalue).get(0).getName());
+		d.addAttribute("memList3", service.showMem3(sch));
 		return "contacts-list3";
 	}
 
@@ -201,6 +181,14 @@ public class ManPowerController {
 		}
 		return "pageJsonReport";
 	}	
+	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		int pno=0;
+		if(m!=null) pno = m.getPno();
+		return service2.showProfile(pno);
+	}
 }
 
 
