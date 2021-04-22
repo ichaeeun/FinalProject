@@ -36,5 +36,30 @@ public class DashboardService {
 	public Member getMemcnt(int proeject_no) {
 		return dao.getMemcnt(proeject_no);
 	}
-
+	public int getAllProject() {
+		return dao.getAllProject();
+	}
+	public int getDoingProject() {
+		return dao.getDoingProject();
+		
+	}
+	public int getAllTask() {
+		return dao.getAllTask();
+		
+	}
+	public int getDoingTask() {
+		return dao.getDoingTask();
+	}
+	public int getAllRisk() {
+		return dao.getAllRisk();
+	}
+	public int getDoingRisk() {
+		return dao.getDoingRisk();
+	}
+	public int getAllmember() {
+		return dao.getAllmember();
+	}
+	public int getMembercnt(int proeject_no) {
+		return dao.getMembercnt(proeject_no);
+	}
 }	

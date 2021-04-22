@@ -1,5 +1,9 @@
 package pms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.dto.Member;
 import pms.dto.MemberSch;
+import pms.dto.pms_project;
+import pms.service.DashboardService;
 import pms.service.LoginService;
 import pms.service.ManPowerService;
 import pms.service.OverviewService;
+import pms.service.ProjectService;
 
 @Controller
 @RequestMapping("main.do")
@@ -25,6 +32,10 @@ public class LoginController {
 	private ManPowerService mservice;
 	@Autowired(required = false)
 	private OverviewService oservice;
+	@Autowired(required=false)
+	private DashboardService dservice;
+	@Autowired(required=false)
+	private ProjectService pservice;
 	
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
@@ -68,6 +79,47 @@ public class LoginController {
 				if(service.IsPm(m.getPno())!=null) {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
 				}
+				
+				System.out.println(m.getProject_no()); // 멤버의 프로젝트 번호()로 프로젝트의 정보 가져오기
+				d.addAttribute("task",dservice.getTaskNum( m.getProject_no() ));
+				d.addAttribute("risk",dservice.getRiskNum( m.getProject_no() ));
+				d.addAttribute("membercnt",dservice.getMembercnt( m.getProject_no() ));
+				
+				
+				
+				pms_project project = pservice.getProject( m.getProject_no() ); // 프로젝트 번호로 프로젝트 정보 가져오기
+				
+				// 시작일과 종료일, 현재일, 전체일, 진행도=(현재일-시작일)/전체일 이고 현재일이 종료일보다 크면 현재일은 종료일로 고정
+			
+
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+				try {
+					Date start = df.parse(project.getStart1());	// 시작일
+					Date end = df.parse(project.getEnd1());		// 완료일
+					Date today = new Date();					// 현재날짜
+
+					long startday = Math.abs( start.getTime() / (24*60*60*1000) ); // 시작일수(숫자값)
+					long endday = Math.abs( end.getTime() / (24*60*60*1000) ); // 종료일수(숫자값)
+					long todayday = Math.abs( today.getTime() / (24*60*60*1000) ); // 현재일수(숫자값)
+					long allday = endday - startday;			// 분모:프로젝트총숫자
+					// 진행숫자(현재-시작= 진행수)
+					long doday = todayday - startday;			// 분자:프로젝트진행일
+					if(todayday>endday) {	// 만약 오늘날짜가 종료일보다 크다면
+						doday = endday - startday;
+					}
+					
+					// 프로젝트 dto에 나타낼 값 set으로 설정(총기간, 진행일)
+					project.setAllday(allday);
+					project.setDoday(doday);
+					
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				d.addAttribute("project", project); 
+				
 				page = "dashboard_pm";
 			}else if(m.getAuth().equals("wk")) {
 				
@@ -81,7 +133,18 @@ public class LoginController {
 				System.out.println("######"+oservice.TaskListAll(m.getPno()));
 				page = "task_list_all";
 			}
-			else if(m.getAuth().equals("ceo")) {page = "dashboard_ceo";}
+			else if(m.getAuth().equals("ceo")) {
+			
+				d.addAttribute("allproject", dservice.getAllProject());
+				d.addAttribute("doingproject", dservice.getDoingProject());
+				d.addAttribute("alltask", dservice.getAllTask());
+				d.addAttribute("doingtask", dservice.getDoingTask());
+				d.addAttribute("allrisk", dservice.getAllRisk());
+				d.addAttribute("doingrisk", dservice.getDoingRisk());
+				d.addAttribute("allmember", dservice.getAllmember());
+				
+				page = "dashboard_ceo";
+			}
 			else if(m.getAuth().equals("hp")) {page = "contacts-list";}
 			// 전체 인원
 			if (sch.getName() == null) sch.setName("");

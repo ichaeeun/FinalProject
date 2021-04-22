@@ -18,10 +18,56 @@
 	</select>
 	<!-- public Member getMemcnt(int proeject_no); -->
 	<select id="getMemcnt" parameterType="int" resultType="member">
-	SELECT count(*) membercnt
-	FROM PMS_MEMBER_PROJECT a, PMS_MEMBER b, PMS_PROJECT c
-	WHERE a.PNO = b.PNO AND c.PROJECT_NO = a.PROJECT_NO
-	AND a.PROJECT_NO = #{project_no}
+		SELECT count(*) membercnt
+		FROM PMS_MEMBER_PROJECT a, PMS_MEMBER b, PMS_PROJECT c
+		WHERE a.PNO = b.PNO AND c.PROJECT_NO = a.PROJECT_NO
+		AND a.PROJECT_NO = #{project_no}
+	</select>
+	<!-- CEO화면에 뿌려줄 데이터 -->
+	<!-- public int getAllProject(); -->
+	<select id="getAllProject" resultType="int">
+		SELECT count(*) allproject
+		FROM PMS_PROJECT a
+	</select>
+	<!-- public int getDoingProject(); -->
+	<select id="getDoingProject" resultType="int">
+		SELECT count(*) doingproject
+		FROM PMS_PROJECT a
+		where a.PROJECT_STATUS = '진행'
+	</select>
+	<!-- public int getAllTask(); -->
+	<select id="getAllTask" resultType="int">
+		SELECT count(*) alltask
+		FROM PROJECT_TASK a
+	</select>
+	<!-- public int getDoingTask(); -->
+	<select id="getDoingTask" resultType="int">
+		SELECT count(*) doingtask
+		FROM PROJECT_TASK a
+		where a.TASK_STATUS = '진행'
+	</select>
+	<!-- public int getAllRisk(); -->
+	<select id="getAllRisk" resultType="int">
+		SELECT count(*) allrisk
+		FROM RISKBOARD a
+	</select>
+	
+	<!-- public int getDoingRisk(); -->
+	<select id="getDoingRisk" resultType="int">
+		SELECT count(*) doingrisk
+		FROM RISKBOARD a
+		where a.RISK_STATUS = '미승인'
+	</select>
+	<!-- public int getAllmember(); -->
+	<select id="getAllmember" resultType="int">
+		SELECT count(*) allmember
+		FROM PMS_MEMBER
+	</select>
+	<!-- public int getMembercnt(int proeject_no); -->
+	<select id="getMembercnt" parameterType="int" resultType="int">
+		SELECT count(*) membercnt
+		FROM PMS_MEMBER_PROJECT a
+		WHERE a.PROJECT_NO = #{project_no}
 	</select>
 </mapper>  
  
