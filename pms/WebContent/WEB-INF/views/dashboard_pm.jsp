@@ -56,6 +56,9 @@
       }else{
     	  $(".project_no").text("project_no: "+project_no);
       }
+      if(project_no!="" || project_no!="0"){
+      
+      
       // 파이차트 그리기
       var options = {
 				  chart: {
@@ -85,7 +88,7 @@
 				  stroke: {
 					    lineCap: "round",
 					},
-				  series: [${Math.round(project.doday/project.allday*100 )}],
+				  series: [Math.round(${project.doday/project.allday*100 })],
 				  labels: ['${project.project_name}(${project.doday}/${project.allday})'],
 				};
 		var chart = new ApexCharts(document.querySelector("#chart1"), options);
@@ -95,7 +98,7 @@
 			      height: 250,
 			      type: 'radialBar',
 			  },
-			  series: [${Math.round(task.taskcnt/task.tasktotal*100)}],
+			  series: [Math.round(${task.taskcnt/task.tasktotal*100})],
 			  labels: ['태스크진행도(${task.taskcnt}/${task.tasktotal})']
 			};
 		var chart = new ApexCharts(document.querySelector("#chart2"), options);
@@ -105,11 +108,13 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
-				  series: [${Math.round(risk.riskcnt/risk.riskcnt*100)}],
+				  series: [Math.round(${risk.riskcnt/risk.riskcnt*100})],
 				  labels: ['리스크진행도(${risk.riskcnt}/${risk.riskcnt})'],
 				};
 		var chart = new ApexCharts(document.querySelector("#chart3"), options);
 		chart.render();
+		
+      }
    });
 </script>
 </head>
@@ -137,6 +142,7 @@
                     <div class="container-fluid">
 						<div class="row">
 							<div class="md-4"> <h4 class="page-title project_no"> </h4></div>
+							<c:if test="${mem.project_no !=null || mem.project_no!='0' }">
 							<!-- 대시보드 상단 4칸() 시작 -->
 							<div class="row">
 						        <div class="col-xl-3 col-md-6">
@@ -349,12 +355,13 @@
 						    </div>
 						    <!-- end row -->
 						
-						    
+						    </c:if>
 						
 						    
 							
 						</div>
 					</div>
+						
         		<footer class="footer">
 		            <div class="container-fluid">
 		                <div class="row">

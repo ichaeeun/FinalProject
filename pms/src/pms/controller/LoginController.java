@@ -80,13 +80,12 @@ public class LoginController {
 			if( m.getAuth().equals("pm")) {	
 				if(service.IsPm(m.getPno())!=null) {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
-				}
+				
 				
 				System.out.println(m.getProject_no()); // 멤버의 프로젝트 번호()로 프로젝트의 정보 가져오기
 				d.addAttribute("task",dservice.getTaskNum( m.getProject_no() ));
 				d.addAttribute("risk",dservice.getRiskNum( m.getProject_no() ));
 				d.addAttribute("membercnt",dservice.getMembercnt( m.getProject_no() ));
-				
 				
 				
 				pms_project project = proservice.getProject( m.getProject_no() ); // 프로젝트 번호로 프로젝트 정보 가져오기
@@ -121,8 +120,14 @@ public class LoginController {
 				}
 				
 				d.addAttribute("project", project); 
-				
+				 
 				page = "dashboard_pm";
+				}
+				else {
+					
+					page ="project_list"; 
+				}
+				d.addAttribute("boardList", proservice.projectList(m.getPno()));
 			}else if(m.getAuth().equals("wk")) {
 				
 				d.addAttribute("TaskListAll", oservice.TaskListAll(m.getPno()));

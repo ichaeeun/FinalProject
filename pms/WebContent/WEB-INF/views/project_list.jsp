@@ -38,6 +38,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		
+		
 		var mem = "${mem.id}";
 		if(mem==""){
 			alert("로그인 하세요");
@@ -45,9 +47,29 @@
 		}
 		
 		$("#insertProject").click(function(){
+			
+			
+			// 유효성검사 추가(모든값을 입력하세요)
+			var project_name = $("#project_name").val();
+			var project_content = $("#project_content").val();
+			var start1 = $("#start1").val();
+			var end1 = $("#end1").val();	
+			var pm_pno = $("#pm_pno").val();
+			var project_status = $("#project_status").val();
+			
+			if(project_name =="" || project_content==""||start1==""||end1==""||pm_pno==""||project_status=="" ){// 유효성검사 추가
+				alert("모든 값을 입력하세요!!");
+				return false;
+			}
+			if(start1>=end1){// 유효성검사 추가(종료일이 시작일보다 앞서면)
+				alert("종료일은 시작일보다 이후로 입력하세요!!");
+				return false;
+			}
+			
 			var sch = ProV();
 			console.log("##등록할 데이터 확인 ##");
 			console.log(sch);
+			
 			$.ajax({
 				type:"post",
 				url:"project.do?method=insert",
@@ -184,19 +206,19 @@
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="start1" class="form-label">시작일</label>
-                                                                    <input type="date" value="" class="form-control" id="start1" placeholder="Date">
+                                                                    <input type="date" value="" class="form-control" id="start1" min="" max="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="end1" class="form-label">종료일</label>
-                                                                    <input type="date" value="" class="form-control" id="end1" placeholder="Date">
+                                                                    <input type="date" value="" class="form-control" id="end1" min="" max="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label for="pm_pno" class="form-label">PM번호</label>
-                                                                    <input type="text" value="${mem.pno}" class="form-control" id="pm_pno">
+                                                                    <input type="text" value="${mem.pno}" class="form-control" id="pm_pno" readonly>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">

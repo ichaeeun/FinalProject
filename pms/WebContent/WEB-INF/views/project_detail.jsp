@@ -41,7 +41,28 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	
+	
+	
 	$("#updateProject").click(function(){
+		// 유효성검사 추가(모든값을 입력하세요)
+		var project_name = $("#project_name").val();
+		var project_content = $("#project_content").val();
+		var start1 = $("#start1").val();
+		var end1 = $("#end1").val();	
+		var pm_pno = $("#pm_pno").val();
+		var project_status = $("#project_status").val();
+		
+		if(project_name =="" || project_content==""||start1==""||end1==""||pm_pno==""||project_status=="" ){// 유효성검사 추가
+			alert("모든 값을 입력하세요!!");
+			return false;
+		}
+		if(start1>=end1){// 유효성검사 추가(종료일이 시작일보다 앞서면)
+			alert("종료일은 시작일보다 이후로 입력하세요!!");
+			return false;
+		}
+		
+			
 		var sch = ProV();
 		console.log("##등록할 데이터 확인 ##");
 		console.log(sch);
