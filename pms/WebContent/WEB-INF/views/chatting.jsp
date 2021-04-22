@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -39,34 +40,48 @@ table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
 
 $(document).ready(function(){
 	// 1. 전역변수 웹소켓통신 처리한 변수선언.
-	var wsocket;
+var wsocket;
 	// 2. 접속시, 처리내용
-var date = new Date().format("hh.mm");
+			var date = new Date().format("hh.mm");
 			//ws://192.168.0.47:7080/${path}/chat-ws.do
 				// 211.63.89.68
-			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do?");
+			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do?no="+"${no}");
 			wsocket.onopen=function(evt){
 				// 채팅서버에 접속되었을 때, 처리할 내용..
 				console.log(evt)
 				// 접속메시지 전송..
-				
-			var	show = "<li class='clearfix'><div class='chat-avatar'><i>"+date+"</i>";
+			var id = "${mem.name}";
+			var	show = "<li class='clearfix odd'><div class='chat-avatar'>";
+				show += "<c:if test='${empty mem.imgpath}'><img src='${path}/Admin/dist/assets/images/users/default.png'";
+				show += "alt='user-image class='rounded-circle' id='img'> </c:if>";
+                show += "<c:if test='${not empty mem.imgpath}'>";
+                show += "<c:set var = 'length' value = '${fn:length(showprofile.imgpath)}'/>";
+                show += "<img src='${path}/${fn:substring(showprofile.imgpath, 48, length)}' alt='user-image' width='160px' height='160px' class='rounded-circle' id='img'></c:if>";		
+				show +=	"<i>"+date+"</i>";
 				show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
-		        show += "<i>${mem.name}</i>";
-		        show += "<p>연결 접속했습니다!</p></div></div>";
+		        show += "<i>"+id+"</i>";
+		        show += "<p>접속 되었습니다</p></div></div>";
 		        show += "</li>";
-				wsocket.send(show);
-				$("#chatMessageArea").append(show);
+	
+				wsocket.send("${no}:"+id+":"+date+":연결접속되었습니다");
+				
+				$("#chatMessageArea").append(show);			
 				
 			}
 			// 2.서버에서 메시지 받기.
 			wsocket.onmessage=function(evt){
 				var data = evt.data; // 메시지를 받음..
+				
 				var user = data.split(":");
-				if(user[0]==${mem.pno}){ // 현재그룹과 동일여부 확인
+				if(user[0]=="${no}"){ // 현재그룹과 동일여부 확인
 					// 메시지만 전달 처리.
-					revMsg(user[1]+":"+user[2]);
+					revMsg(user[1]+":"+user[2]+":"+user[3]);	
+					  console.log(user[0]);
+					    console.log(user[1]);
+					    console.log(user[2]);
+					    console.log(user[3]);
 				}
+				 
 	/* 			$("#chatMessageArea").append(data+"<br>"); 
 				if(data.substring(0,4)=="msg:"){
 					// 메시지만 전달 처리..
@@ -94,30 +109,51 @@ var date = new Date().format("hh.mm");
 	
 	$("#exitBtn").click(function(){
 		
-		wsocket.send("msg:"+${mem.name}+":연결을 종료합니다.");
+		wsocket.send("msg:"+"${mem.name}"+":연결을 종료합니다.");
 		wsocket.close();
 	});
-	var group = ${param.no};
+	
 	function sendMsg(){
-		var id= ${mem.name};
-		var msg = $("#msg").val();
-		
-		var date = new Date();
-		var show =""
-		show += group+"<li class='clearfix'><div class='chat-avatar'><i>"+date+"</i>";
+	var date = new Date().format("hh.mm");
+	var msg = $("#msg").val();
+	var	show = "<li class='clearfix odd'><div class='chat-avatar'>";
+		show += "<c:if test='${empty mem.imgpath}'><img src='${path}/Admin/dist/assets/images/users/default.png'";
+		show += "alt='user-image class='rounded-circle' id='img'> </c:if>";
+        show += "<c:if test='${not empty mem.imgpath}'>";
+        show += "<c:set var = 'length' value = '${fn:length(showprofile.imgpath)}'/>";
+        show += "<img src='${path}/${fn:substring(showprofile.imgpath, 48, length)}' alt='user-image' width='160px' height='160px' class='rounded-circle' id='img'></c:if>";		
+		show +=	"<i>"+date+"</i>";
 		show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
-        show += "<i>"+id+"</i>";
+        show += "<i>${mem.name}</i>";
         show += "<p>"+msg+"</p></div></div>";
         show += "</li>";
-		wsocket.send(show);
+        
+   		wsocket.send("${no}:${mem.name}:"+date+":"+msg);
 		alert(show);
 		$("#msg").val("");
+		
+		 $("#chatMessageArea").append(show);	
+		
 	}
 	
 	function revMsg(msg){
-		$("#chatMessageArea").append(msg+"<br>");
+ 	var msgm = msg.split(":");
+	var	show = "<li class='clearfix'><div class='chat-avatar'>";		
+		show +=	"<i>"+msgm[1]+"</i>";
+		show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
+        show += "<i>"+msgm[0]+"</i>";
+        show += "<p>"+msgm[2]+"</p></div></div>";
+        show += "</li>";
+        var mname = "${mem.name}";
+       if(mname == msgm[0]){
+    	  
+       }else{
+    	   $("#chatMessageArea").append(show);   	  
+       }
+       
+		
 		// 자동 스크롤처리.. (메시지 내용)
-		var mx = parseInt($("#chatMessageArea").height() );
+		var mx = parseInt($("#chatMessageArea").height());
 		$("#chatArea").scrollTop(mx);
 	}
 });
@@ -175,7 +211,6 @@ var date = new Date().format("hh.mm");
                             <div class="col-xl-3 col-lg-4" style="display:none;">
                                 <div class="card">
                                     <div class="card-body">
-
                                         <div class="d-flex align-items-start align-items-start mb-3">
                                             <img src="${path}/Admin/dist/assets/images/users/avatar-1.jpg" class="me-2 rounded-circle" height="42" alt="Brandon Smith">
                                             <div class="flex-1">
@@ -306,8 +341,7 @@ var date = new Date().format("hh.mm");
                                         <div class="row">
                                             <div class="col">
                                                 <div class="mt-2 bg-light p-3 rounded">
-                                                    <form class="needs-validation" novalidate="" name="chat-form"
-                                                        id="chat-form">
+
                                                         <div class="row">
                                                             <div class="col mb-2 mb-sm-0">
                                                                 <input type="text" class="form-control border-0" placeholder="Enter your text" id="msg" required="">
@@ -324,7 +358,7 @@ var date = new Date().format("hh.mm");
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row-->
-                                                    </form>
+                                                  
                                                 </div> 
                                             </div> <!-- end col-->
                                         </div>
