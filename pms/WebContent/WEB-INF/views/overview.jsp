@@ -136,8 +136,16 @@
 									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크</span>
+										class="d-none d-sm-inline-block">리스크 현황</span>
 								</a></li>
+								<c:if test="${mem.auth=='pm' }">
+								 <li class="nav-item"><a
+									href="${path}/risk.do?method=riskRequest&no=${param.no}" class="nav-link"> <span
+										class="d-inline-block d-sm-none"><i
+											class="bx bx-info-circle"></i></span> <span
+										class="d-none d-sm-inline-block">리스크 요청</span>
+								</a></li>
+								</c:if>
 							</ul>
 						</div>
 					</div>

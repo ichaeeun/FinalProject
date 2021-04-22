@@ -176,21 +176,26 @@
                     </div>                    
                 </li>  
 	                <li>
+                    <a href="${path }/taskRequest.do?method=requestlist">
+                        <span> 태스크 승인 요청 </span>
+                    </a>
+                </li>
+ 	                <%-- <li>
 	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
-	                        <span> 요청 관리 </span>
+	                        <span> 요청 현황 </span>
 	                        <span class="menu-arrow"></span>
 	                    </a>
 	                    <div class="collapse" id="sidebarEcommerce">
 	                        <ul class="nav-second-level">
 	                            <li>
-	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 승인</a>
+	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
 	                            </li>
 	                            <li>
-	                                <a href="${path}/risk.do?method=riskRequest&no=${param.no}">리스크 승인</a>
+	                                <a href="${path }/risk.do?method=riskBoard&no=${param.no}">리스크 요청</a>
 	                            </li>
 	                        </ul>
 	                    </div>
-	                </li>                                                
+	                </li>                --%>                                               
                 </c:if>
                 
                 <c:if test="${mem.auth == 'wk' }">
@@ -218,7 +223,12 @@
                         </ul>
                     </div>
                 </li>
- 	                <li>
+                 <li>
+                    <a href="${path }/taskRequest.do?method=requestlist">
+                        <span> 태스크 승인 요청 </span>
+                    </a>
+                </li>
+ 	                <%-- <li>
 	                    <a href="#sidebarEcommerce" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarEcommerce">
 	                        <span> 요청 현황 </span>
 	                        <span class="menu-arrow"></span>
@@ -233,7 +243,7 @@
 	                            </li>
 	                        </ul>
 	                    </div>
-	                </li>                  
+	                </li>                --%>   
                 </c:if>
                 
                 
