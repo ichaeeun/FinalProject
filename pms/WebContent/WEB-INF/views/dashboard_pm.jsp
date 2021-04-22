@@ -108,8 +108,8 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
-				  series: [Math.round(${risk.riskcnt/risk.riskcnt*100})],
-				  labels: ['리스크진행도(${risk.riskcnt}/${risk.riskcnt})'],
+				  series: [${Math.round(risk.riskcnt/risk.riskcnt*100)}],
+				  labels: ['리스크진행도(${risk.riskcnt}/${risk.risktotal})'],
 				};
 		var chart = new ApexCharts(document.querySelector("#chart3"), options);
 		chart.render();
@@ -186,7 +186,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">태스크 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">전체 태스크 수</h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${task.tasktotal}</span></h3>
 						                        </div>
 						                        <div class="avatar-sm">
@@ -204,8 +204,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">리스크 수</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${risk.riskcnt}</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">전체 리스크 수</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${risk.risktotal}</span></h3>
 						                        </div>
 						                        <div class="avatar-sm">
 						                            <span class="avatar-title bg-soft-primary rounded">
@@ -267,8 +267,8 @@
 	                                                    data-thickness=".15"/>
 	                                            </div>
 	                                            <div class="text-end">
-	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${task.tasktotal}</span> </h3>
-	                                                <p class="text-muted mb-0">태스크 수</p>
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${task.taskcnt}</span> </h3>
+	                                                <p class="text-muted mb-0">완료 태스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -281,13 +281,13 @@
 	                                        <div class="d-flex justify-content-between align-items-center">
 	                                            <div class="knob-chart" dir="ltr">
 	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#6c757d"
-	                                                    data-bgColor="#e2e3e5" value="${Math.round(risk.riskcnt/risk.riskcnt*100)}"
+	                                                    data-bgColor="#e2e3e5" value="${Math.round(risk.riskcnt/risk.risktotal*100)}"
 	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
 	                                                    data-thickness=".15"/>
 	                                            </div>
 	                                            <div class="text-end">
 	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${risk.riskcnt}</span> </h3>
-	                                                <p class="text-muted mb-1">리스크 수</p>
+	                                                <p class="text-muted mb-1">완료 리스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>

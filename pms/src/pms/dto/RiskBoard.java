@@ -23,6 +23,7 @@ public class RiskBoard {
 	private MultipartFile[] report;
 	private String[] fnames;
 	private ArrayList<RiskFile> fileInfo;
+	private int risktotal; // 추가 // 대시보드
 	private int riskcnt; // 추가 // 대시보드
 	public RiskBoard() {
 		super();
@@ -176,6 +177,12 @@ public class RiskBoard {
 	}
 	public void setRiskcnt(int riskcnt) {
 		this.riskcnt = riskcnt;
+	}
+	public int getRisktotal() {
+		return risktotal;
+	}
+	public void setRisktotal(int risktotal) {
+		this.risktotal = risktotal;
 	}
 	
 }

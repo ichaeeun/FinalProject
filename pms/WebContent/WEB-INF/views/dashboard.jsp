@@ -103,7 +103,7 @@
 				      type: 'radialBar',
 				  },
 				  series: [${Math.round(risk.riskcnt/risk.riskcnt*100)}],
-				  labels: ['리스크진행도(${risk.riskcnt}/${risk.riskcnt})'],
+				  labels: ['리스크진행도(${risk.riskcnt}/${risk.risktotal})'],
 				};
 		var chart = new ApexCharts(document.querySelector("#chart3"), options);
 		chart.render();
@@ -250,7 +250,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">태스크 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">전체 태스크 수</h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${task.tasktotal}</span></h3>
 						                            <!-- 
 						                            <p class="mb-0 text-muted">
@@ -274,8 +274,8 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">리스크 수</h5>
-						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${risk.riskcnt}</span></h3>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">전체 리스크 수</h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${risk.risktotal}</span></h3>
 						                            <!-- 
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
@@ -347,8 +347,8 @@
 	                                                    data-thickness=".15"/>
 	                                            </div>
 	                                            <div class="text-end">
-	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${task.tasktotal}</span> </h3>
-	                                                <p class="text-muted mb-0">태스크 수</p>
+	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${task.taskcnt}</span> </h3>
+	                                                <p class="text-muted mb-0">완료 태스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -367,7 +367,7 @@
 	                                            </div>
 	                                            <div class="text-end">
 	                                                <h3 class="mb-1 mt-0"> <span data-plugin="counterup">${risk.riskcnt}</span> </h3>
-	                                                <p class="text-muted mb-1">리스크 수</p>
+	                                                <p class="text-muted mb-1">완료 리스크 수</p>
 	                                            </div>
 	                                        </div>
 	                                    </div>

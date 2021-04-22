@@ -47,8 +47,6 @@
 		}
 		
 		$("#insertProject").click(function(){
-			
-			
 			// 유효성검사 추가(모든값을 입력하세요)
 			var project_name = $("#project_name").val();
 			var project_content = $("#project_content").val();

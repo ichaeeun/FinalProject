@@ -6,13 +6,13 @@
 <mapper namespace="pms.dao.DashboardDao">
 	<!-- public Task getTaskNum(int proeject_no); -->
 	<select id="getTaskNum" parameterType="int" resultType="task">
-		SELECT count(*) tasktotal, count(CASE WHEN a.TASK_STATUS = '진행' THEN 1 end) taskcnt
+		SELECT count(*) tasktotal, count(CASE WHEN a.TASK_STATUS = '완료' THEN 1 end) taskcnt
 		FROM PROJECT_TASK a
 		WHERE a.PROJECT_NO = #{project_no}
 	</select>
 	<!-- public RiskBoard getRiskNum(int proeject_no); -->
 	<select id="getRiskNum" parameterType="int" resultType="riskboard">
-		SELECT count(*) riskcnt
+		SELECT count(*) risktotal, count(CASE WHEN a.RISK_STATUS = '승인' THEN 1 end) riskcnt
 		FROM RISKBOARD a
 		WHERE a.PROJECT_NO = #{project_no}
 	</select>
@@ -44,7 +44,7 @@
 	<select id="getDoingTask" resultType="int">
 		SELECT count(*) doingtask
 		FROM PROJECT_TASK a
-		where a.TASK_STATUS = '진행'
+		where a.TASK_STATUS = '완료'
 	</select>
 	<!-- public int getAllRisk(); -->
 	<select id="getAllRisk" resultType="int">
@@ -56,7 +56,7 @@
 	<select id="getDoingRisk" resultType="int">
 		SELECT count(*) doingrisk
 		FROM RISKBOARD a
-		where a.RISK_STATUS = '미승인'
+		where a.RISK_STATUS = '승인'
 	</select>
 	<!-- public int getAllmember(); -->
 	<select id="getAllmember" resultType="int">
