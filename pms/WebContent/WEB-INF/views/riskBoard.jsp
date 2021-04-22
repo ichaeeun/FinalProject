@@ -16,11 +16,6 @@
 	<c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
 	<c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
 	<c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
-	<style type="text/css">
-		#abc{
-			overflow-y:hidden;
-		}
-	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 	<meta content="Coderthemes" name="author" />
@@ -63,6 +58,10 @@
 				alert("수정이 완료되었습니다.");
 				location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
 		};
+		
+		if(proc=="delete"){
+			alert("삭제가 완료되었습니다.");
+		}
 		
 		$('.risk_item').on("dblclick", function(){
 			console.log($(this).children().eq(8).children().val());	//배열에서 8번째 값의 안에 있는 input의 value값을 가져온다.
@@ -145,7 +144,7 @@
 									href="${path}/risk.do?method=riskBoard&no=${param.no}" class="nav-link active"> <span
 										class="d-inline-block d-sm-none"><i
 											class="bx bx-info-circle"></i></span> <span
-										class="d-none d-sm-inline-block">리스크</span>
+										class="d-none d-sm-inline-block">리스크 현황</span>
 								</a></li>
 							</ul>
 						</div>
@@ -229,8 +228,7 @@
 											               <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
                                                         </td>
                                                         <td>
-                                                            <div id="abc">${fn:substring(rl.risk_content, 0, 10)}...</div>
-                                                            
+                                                            <div>${fn:substring(rl.risk_content, 0, 10)}...</div>
                                                         </td>
                                                         <td>
                                                    			[${rl.risk_category}]

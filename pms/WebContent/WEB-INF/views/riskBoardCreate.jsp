@@ -73,13 +73,13 @@
 				});
 				
 				
+			});
 				function rm(obj){
 				var len=$("[type=file]").length;
 					if(len>1){
 						$(obj).parent().remove();
 					}
 				}
-			});
 </script>
 </head>
 	<body class="loading">
@@ -168,7 +168,7 @@
                                                         </div>
 
                                                         <div class="mb-3">
-             <!-- form: <--이걸로 하는 방법을 모름-->         	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label>
+ <!-- form: <--이걸로 하는 방법을 모름--> 			       	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label><br>
                                                             <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
 <%--                                                         <form:input path="risk_content" type="hidden"/> --%>
 													<c:if test="${reply != 'Y'}">
@@ -213,16 +213,19 @@
 		                                       			<div class="dropzone-previews mt-3" id="file-previews">
 		                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
 		                                                        <li class="previous list-inline-item">
-		                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i> 리스크 작성 화면으로 </button>
+		                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left">
+		                                                            </i> 리스크 작성 화면으로 </button>
 		                                                        </li>
 		                                                        <c:if test="${update != 'Y'}">
 		                                                        <li class="next list-inline-item">
-		                                                            <button type="button" id="sndBtn" class="btn btn-success">제출<i class="mdi mdi-arrow-right ms-1"></i></button>
+		                                                            <button type="button" id="sndBtn" class="btn btn-success">제출
+		                                                            <i class="mdi mdi-arrow-right ms-1"></i></button>
 		                                                        </li>
 		                                                        </c:if>
 		                                                        <c:if test="${update == 'Y'}">
 		                                                        <li class="next list-inline-item">
-		                                                            <button type="button" id="uptBtn" class="btn btn-success">수정<i class="mdi mdi-arrow-right ms-1"></i></button>
+		                                                            <button type="button" id="uptBtn" class="btn btn-success">수정
+		                                                            <i class="mdi mdi-arrow-right ms-1"></i></button>
 		                                                        </li>
 		                                                        </c:if>
 		                                                    </ul>

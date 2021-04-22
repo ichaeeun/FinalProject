@@ -14,6 +14,7 @@ public interface RiskDao {
 	public ArrayList<RiskBoard> rBoard(int project_no);
 	public ArrayList<RiskBoard> rBoard_request(int project_no);
 	public ArrayList<RiskBoard> rBoardAll();
+	public ArrayList<RiskBoard> rBoard_requestwk(String risk_writer);
 	public void insertBoard(RiskBoard insert);
 	public RiskBoard getBoard(int risk_no);
 	public void uptStatus(UptStatus upt_satus);

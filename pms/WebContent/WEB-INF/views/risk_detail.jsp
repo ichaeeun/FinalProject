@@ -74,8 +74,8 @@
 		       });
 		       
 		       $("#uptBtn").on("click",function(){
-		    	   var writer = $("[name=risk_writer]").val();
-		    	   if("${mem.name}" == writer||"${mem.auth}"=='pm'){
+		    	   var writer = "${riskboard.risk_writer}";
+		    	   if("${mem.name}" == writer ||"${mem.auth}"=='pm'){
 		    		   if(confirm("수정하시겠습니까?")){
 				         	 $("[name=risk_parent_no]").val($("[name=risk_no]").val());
 				         	 $("[name=risk_title]").val($("[name=risk_title]").text());
@@ -86,6 +86,11 @@
 		    		   alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
 		    	   }
 		       });
+		       
+		       $("#delBtn").on("click",function(){
+		    	   console.log("test111111111111111111111111111");
+		    	   location.href="${path}/risk.do?method=delete&no=${riskboard.risk_no}";
+		       })
 		       
 		});
 		<%-- input형태로 되어있는게 아니기 때문에 클릭했을때 수정을 할 수 있는 화면으로 가야함 --%>
@@ -238,7 +243,7 @@
                                                         </div>
                                                     </div>
 												</c:forEach>
-                                             	</div>
+                                             	</div><br>
 										</div>
                         <!-- file preview template -->
 			                        <div class="d-none" id="uploadPreviewTemplate">
@@ -276,7 +281,9 @@
 		                             			</c:if>
 		                             		</c:if>
 		                             		<c:if test="${mem.auth == 'pm' || mem.name == riskboard.risk_writer}">
-		                             			<button href="" id="uptBtn" type="button" class="btn btn-warning">수정하기</button>
+		                             			<c:if test="${riskboard.risk_status == '승인'}">
+		                             				<button href="" id="uptBtn" type="button" class="btn btn-warning">수정하기</button>
+		                             			</c:if>
 		                             			<button href="" id="delBtn" type="button" class="btn btn-danger">삭제하기</button>
 		                             		</c:if>
 				       					</li>

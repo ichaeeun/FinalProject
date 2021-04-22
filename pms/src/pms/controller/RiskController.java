@@ -26,13 +26,25 @@ public class RiskController {
 	private TaskDetailService service2; // 프로젝트명 불러오려고 추가했습니다
 	@Autowired(required=false)
 	private MypageService service3;
+	
+	
 	// http://localhost:7080/pms/risk.do?method=riskBoard
 	@RequestMapping(params="method=riskBoard")
 	public String riskform(@RequestParam("no") int no,Model d) {
 		d.addAttribute("risklist", service.rBoard(no));
+		System.out.println(no+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		d.addAttribute("project",service2.getProject_name(no)); // 프로젝트명 불러오려고 추가했습니다
 		return "riskBoard";
 	}
+	
+	@RequestMapping(params="method=riskRequestwk")
+	public String riskrequestwk(Model d,HttpSession session) {
+		Member mem = (Member)session.getAttribute("mem");
+		d.addAttribute("riskrequestwk",service.rBoard_requestwk(mem.getName()));
+		return "risk_request_wk";
+	}
+	
+	
 	// http://localhost:7080/pms/risk.do?method=riskBoardAll
 	@RequestMapping(params="method=riskBoardAll")
 	public String riskform(Model d) {
@@ -43,7 +55,7 @@ public class RiskController {
 	@RequestMapping(params="method=riskRequest")
 	public String riskrequest(@RequestParam("no") int no,Model d) {
 		d.addAttribute("requestlist",service.rBoard_request(no));
-		d.addAttribute("project",service2.getProject_name(no)); // 프로젝트명 불러오려고 추가했습니다
+		d.addAttribute("project",service2.getProject_name(no)); 
 		return"risk_request";		
 	}
 	// http://localhost:7080/pms/risk.do?method=riskDetail
@@ -62,21 +74,13 @@ public class RiskController {
 	// http://localhost:7080/pms/risk.do?method=insert
 	@RequestMapping(params = "method=insert")
 	public String insertBoard(@RequestParam("no") int no,RiskBoard insert, Model d) {
-		System.out.println("project_no: " + no);
-		System.out.println("risk_no: " + insert.getRisk_no());
-		System.out.println("risk_category: " + insert.getRisk_category());
-		System.out.println("regdte: " + insert.getRegdte());
-		System.out.println("status: " + insert.getRisk_status());
-		System.out.println("content: " + insert.getRisk_content());
-		System.out.println("writer: " + insert.getRisk_writer());
-		System.out.println("risktitle: " + insert.getRisk_title());
-		System.out.println("parentno: " + insert.getRisk_parent_no());
 		service.insertBoard(no, insert);
 		d.addAttribute("proc","insert");
 		d.addAttribute("risklist",service.rBoard(no));
 		d.addAttribute("project",service2.getProject_name(no)); // 프로젝트명 불러오려고 추가했습니다
 		return "riskBoard";
 	}
+	
 	// http://localhost:7080/pms/risk.do?method=uptStatus
 	@RequestMapping(params = "method=uptStatus")
 	public String uptStatus (@RequestParam("no") int no, @RequestParam("risk_no") int risk_no, Model d) {
@@ -131,16 +135,18 @@ public class RiskController {
 		d.addAttribute("proc","update");
 		service.updateRisk(upt);
 		return "riskBoard";
-	}	// 수정 후, 다시 조회 처리할 수 있게 하기 위하여 forward로
-		// 해당 controller 기능 메서드 호출..
+	}
 	
 	
 	// http://localhost:7080/pms/risk.do?method=delete
 	@RequestMapping(params="method=delete")
-	public String deleteRisk(@RequestParam("no") int no) {
+	public String deleteRisk(@RequestParam("no") int no, Model d) {
+		d.addAttribute("proc","delete");
 		service.deleteRisk(no);
-		return "risk_detail";
+		System.out.println(no+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return "forward:risk.do?method=riskBoard";
 	}
+	
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){
 		Member m = (Member)session.getAttribute("mem");

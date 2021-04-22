@@ -4,7 +4,8 @@
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -129,14 +130,8 @@
                                                                 <label class="form-check-label" for="productlistCheck">&nbsp;</label>
                                                             </div>
                                                         </th>
-                                                        <th class="all">번호</th>
-                                                        <th>제목</th>
-                                                        <th>내용</th>
-                                                        <th>리스크 카테고리</th>
-                                                        <th>리스크 상태</th>
-                                                        <th>프로젝트</th>
-                                                        <th>작성자</th>
-                                                        <th>등록일</th>
+                                                        <th class="all">번호</th><th>제목</th><th>내용</th><th>리스크 카테고리</th>
+                                                        <th>리스크 상태</th><th>프로젝트</th><th>작성자</th><th>등록일</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -148,32 +143,14 @@
                                                                 <label class="form-check-label" for="productlistCheck1">&nbsp;</label>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                 			${ra.rnum}
-                                                        </td>
-                                                        <td>   
-                                                            <h5 class="m-0 d-inline-block align-middle">${ra.risk_title}</h5>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="m-0 d-inline-block align-middle">${ra.risk_content}</h5>
-                                                        </td>
-                                                        <td>
-                                                   			[${ra.risk_category}]
-                                                        </td>
-                                                        <td>
-                                                            ${ra.risk_status}
-                                                        </td>
-                                                        <td>
-                                                   				${ra.project_name}<input type="hidden" value="${ra.project_no}">
-                                                        </td>
-                                                        <td>
-                                                            <div>
-                                                     			${ra.risk_writer}
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                        	<fmt:formatDate value="${ra.regdte}"/><input type="hidden" value="${ra.risk_no}">
-                                                        </td>
+                                                        <td>${ra.rnum}</td>
+                                                        <td><h5 class="m-0 d-inline-block align-middle">${ra.risk_title}</h5></td>
+                                                        <td><div>${fn:substring(ra.risk_content, 0, 10)}...</div></td>
+                                                        <td>[${ra.risk_category}]</td>
+                                                        <td>${ra.risk_status}</td>
+                                                        <td>${ra.project_name}<input type="hidden" value="${ra.project_no}"></td>
+                                                        <td><div>${ra.risk_writer}</div></td>
+                                                        <td><fmt:formatDate value="${ra.regdte}"/><input type="hidden" value="${ra.risk_no}"></td>
                                                     </tr>
                                               		</c:forEach>
                                                     <!-- 복붙해야할부분 -->
