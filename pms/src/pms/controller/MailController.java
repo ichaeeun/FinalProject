@@ -31,7 +31,6 @@ public class MailController {
 		System.out.println(send.getReceiver());
 		System.out.println(send.getContent());
 		service.sendMail(send);
-		// 메일 전송은 service단에서 처리
 		return "redirect:/manpower.do?method=contacts_list";
 	} 
 	// 메일 모달에 값 넣기

@@ -59,9 +59,6 @@
 				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});	
-		  	// 부서 select 고정
-		  	//let dvalue = "${dvalue}";
-		  	//$("#selectize-select").val(dvalue).prop("selected",true);
 	  	})
 		function goPage(page){
 			// 이전 페이지가 0이면 1

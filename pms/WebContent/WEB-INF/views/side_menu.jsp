@@ -183,8 +183,8 @@
 	                    <div class="collapse" id="sidebarEcommerce">
 	                        <ul class="nav-second-level">
 	                            <li>
-	                                <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
-	                            </li>
+	                                <a href="${path }/taskRequest.do?method=requestlist&pno=${mem.pno}&auth=${mem.auth}">테스크 요청</a>
+	                            </li> 
 	                            <li>
 	                                <a href="${path }/risk.do?method=riskRequest&no=${mem.project_no}">리스크 요청</a>
 	                            </li>
@@ -226,7 +226,7 @@
                    <div class="collapse" id="sidebarEcommerce">
                        <ul class="nav-second-level">
                            <li>
-                               <a href="${path }/taskRequest.do?method=requestlist">테스크 요청</a>
+                               <a href="${path }/taskRequest.do?method=requestlist&pno=${mem.pno}&auth=${mem.auth}">테스크 요청</a>
                            </li>
                            <li>
                                <a href="${path }/risk.do?method=riskRequestwk&no=${mem.pno}">리스크 요청</a>

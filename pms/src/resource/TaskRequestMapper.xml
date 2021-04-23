@@ -3,7 +3,7 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="pms.dao.TaskRequestDao">	
-	<!-- public ArrayList<TaskRequest> tlist(); -->
+	<!-- public ArrayList<TaskRequest> tlist(Member member); -->
 	<select resultType="taskrequest" id="tlist">
 		SELECT a.*, b.project_name, c.name, 
 		to_char(d.request_dte,'YYYY-MM-DD') AS request_dte
@@ -14,7 +14,35 @@
 		AND a.project_no=b.project_no
 		AND a.pno = c.pno
 		AND a.task_no = d.task_no
+		and a.pno=#{pno}
 	</select>
+	
+	<!-- pm -->
+	<!-- 	public ArrayList<TaskRequest> tlistP(Member member);-->
+	<select id="tlistP" parameterType="member" resultType="taskrequest">
+		SELECT a.PROJECT_NO,a.project_name,a.pm_pno, 
+			b.name,b.auth,c.task_no,c.task_name,d.*
+		FROM PMS_PROJECT a, pms_member b,
+			PROJECT_TASK c, task_request d
+		WHERE a.pm_pno=b.PNO
+		AND a.PROJECT_NO =c.PROJECT_NO
+		AND c.task_no=d.TASK_NO
+		and b.auth='pm' AND a.pm_pno=#{pno}
+	</select>
+	<!-- public ArrayList<TaskRequest> tlistW(Member member); -->
+	<select id="tlistW" parameterType="member" resultType="taskrequest">
+		SELECT a.*,b.pno,b.task_name,c.project_no,
+			c.PROJECT_NAME,c.PM_PNO,d.auth,e.name
+		FROM TASK_REQUEST a, project_task b,
+			pms_project c, pms_member d, pms_member e
+		WHERE a.task_no = b.task_no
+		AND b.PROJECT_NO =c.PROJECT_NO
+		AND b.PNO =d.PNO
+		AND c.PM_PNO =e.PNO 
+		AND d.auth='wk' AND d.pno=#{pno}
+	</select>
+	
+	
 	<!-- public void tinsert(int task_no); -->
 	<insert id="tinsert" parameterType="int">
 		INSERT INTO task_request values(#{task_no},to_char(sysdate,'YYYY-MM-DD'))

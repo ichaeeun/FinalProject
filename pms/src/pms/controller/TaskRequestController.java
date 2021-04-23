@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Member;
 import pms.dto.TaskRequest;
@@ -24,8 +25,18 @@ public class TaskRequestController {
 	
 	// http://localhost:7080/pms/taskRequest.do?method=listJson
 	@RequestMapping(params="method=listJson")
-	public String tlist(Model d) {
-		d.addAttribute("tlist",service.tlist());
+	public String tlist(Model d,
+			@RequestParam("pno") int pno,
+			@RequestParam("auth") String auth,
+			Member member) {
+		d.addAttribute("pno",pno);
+		d.addAttribute("auth",auth);
+		if(auth.equals("pm")) 
+			d.addAttribute("tlist",service.tlistP(member));
+		if(auth.equals("wk")) 
+			d.addAttribute("tlist",service.tlistW(member));	
+		System.out.println("####no:"+pno);
+		System.out.println("####auth:"+auth);
 		return "pageJsonReport";
 	}
 	

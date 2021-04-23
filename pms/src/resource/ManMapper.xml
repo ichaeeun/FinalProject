@@ -22,7 +22,8 @@
 	<select id="showMem2" parameterType="memsch" resultType="member">
 		select *
 		from(
-			SELECT rownum cnt, d.* FROM pms_MEMBER d WHERE auth IN ('wk','pm')
+			SELECT rownum cnt, d.* FROM pms_MEMBER d 
+			WHERE d.auth = 'wk'
 			and pno NOT in(SELECT pno FROM pms_member
 			WHERE pno in
 			(SELECT a.pno
@@ -32,11 +33,12 @@
 			AND c.project_status NOT IN ('완료')))
 			or pno IN 
 			(SELECT pno FROM pms_member a
-			WHERE pno NOT IN (
+			WHERE auth = 'wk'
+			and pno NOT IN (
 			SELECT DISTINCT pno 
 			FROM PMS_MEMBER_PROJECT))
 		)
-		where cnt between #{start} and #{end}
+		where cnt BETWEEN #{start} and #{end}
 	</select>
 	<!-- public ArrayList<Member> showMem3(MemberSch sch); -->
 	<select id="showMem3" parameterType="memsch" resultType="member">
@@ -113,11 +115,14 @@
 		delete from pms_member
 		where pno = #{pno}
 	</delete>
-	<!-- public ArrayList<pms_project> allProject(); -->
+	<!-- public ArrayList<pms_project> allProject(int pno); -->
 	<select id="allProject" resultType="pms_project">
-		select distinct *
-		from pms_project
-		where project_status like '진행'
+		SELECT * FROM pms_project
+		WHERE project_status='진행'
+		AND project_no 
+		NOT IN
+		(SELECT project_no FROM pms_member_project 
+		WHERE pno=#{pno})
 	</select>
 	<!-- public void alertAuth(Member member); -->
 	<update id="alertAuth" parameterType="member">

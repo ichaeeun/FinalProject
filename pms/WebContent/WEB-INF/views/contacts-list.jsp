@@ -47,6 +47,9 @@
 	  	$(document).ready(function(){
 	 	    var mem = "${mem.id}";
 	 	    var auth = "${mem.auth}";
+	 	    var authSession = "${mem.auth}";
+	 	    $("#auth").val(authSession);
+	 	    
 		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
 		 	
 		    /////////// 조회와 검색
@@ -258,7 +261,6 @@
 	  		/////// 메일 발송	  		
 	  		$("#memShow").on("click",".goMail",function(){
 	  			 var pno = $(this).find("[name=mailPno]").val();
-	  			 // alert(pno);
 	  			 $.ajax({
 		  			type:"post",
 		  			url:"${path}/mail.do?method=jsonMailList",
@@ -303,7 +305,6 @@
 		  				}
 		  			})
 	  			})
-
 	  		}); 
 	  		
 			//////// 직급 변경
@@ -328,7 +329,51 @@
 	  				 }) 
 	  			 });	
 			});
-			
+			//$("[name='projectPno']").click(function(){
+ 	  		$("#memShow").on("click",".projectAdd",function(){
+	  			var pno = $(this).find("[name=projectPno]").val();
+ 	  			alert(pno);
+ 	  			$("#project-modal").modal("show"); 	
+ 	  			$.ajax({
+ 	  				type:"post",
+ 	  				url:"${path}/manpower.do?method=showProject",
+ 	  				data:{"pno":pno},
+ 	  				dataType:"json",
+ 	  				success:function(data){
+	 	  					var all = data.allProject;
+	 	  					console.log(data);
+	 	  					console.log("##프로젝트###");
+	 	  					console.log(all); 	  					
+	 	  					var show="";
+	 	  					$.each(all,function(idx,p){ 
+	 	  						show+="<option name='pro' value='"+p.project_no+"'>"+p.project_name+"</option>";
+	 	  					});
+	 	  					$("#projectShow").html(show);	  					
+	 	  			},
+	 	  			error:function(err){
+	 	  				alert("에러발생:"+err);
+	 	  			}  				
+ 	  			})	  					  			
+				$("#projectBtn").on("click",function(){		
+					var project_no = $("#project-modal [name=pro]").val();
+					//alert(pno);
+					//alert(project_no);
+ 		  			$.ajax({
+		  				type:"post",
+		  				url:"${path}/manpower.do?method=insertProject",
+		  				data:{"pno":pno, "project_no":project_no},
+		  				dataType:"json",
+		  				success:function(data){
+		  					console.log(data);
+		  					$("#project-modal").modal("hide");
+		  					window.location.reload();
+		  				},
+		  				error:function(err){
+		  					alert("에러발생:"+err);
+		  				}
+		  			}); 
+				});
+	  		}); 			
 
   							
 	  	});
@@ -427,6 +472,17 @@
 	  											<div class='dropdown-menu dropdown-menu-end'>
                            						<a class='dropdown-item goMail' ><button name='mailPno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>
                             					<a class='dropdown-item goDelete'><button name='deletePno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a>
+                            					<c:if test="${mlist.auth=='wk' }">
+                            					<a class='dropdown-item projectAdd'>
+                            						<button name='projectPno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#project-add'>프로젝트 할당</button>
+                            					</a>
+                            					</c:if>
+<%--                             					<div data-bs-toggle="modal" data-bs-target="#project-add">
+													프로젝트 할당
+                                        		<form>
+											 		<input type="hidden" style="display:none;" class='pno' name="pno" value="${memlist.pno }"/>
+												</form>
+												</div> --%>		
                             					<c:if test="${mlist.auth=='wk'||mlist.auth=='pm' }">
                             						<a class='dropdown-item alertAuth'><button name='alertPno' type='button' value="${mlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#alert-modal'>직급 변경</button></a>
                             					</c:if>
@@ -1117,7 +1173,34 @@
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->                                        						               
+                                        </div><!-- /.modal -->   
+                                         
+                                        <div class="modal fade" id="project-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="text-center mt-2 mb-4">
+                                                            <a href="index.html" class="text-success">
+                                                                <span><img src="${path }/Admin/dist/assets/images/logo-dark.png" alt="" height="24"></span>
+                                                            </a>
+                                                        </div>
+                                                        <input type="hidden" name="memPno" value="${mem.pno }"/>
+                                                            <div class="mb-3">
+                                                                <label for="pro" class="form-label">프로젝트</label>
+                                                                <!-- 시작 -->
+                                                                <select name="pro" class="form-control" id="projectShow">
+<%--                                                                 	<c:forEach var="pro" items="${allProject }">
+                                                                		<option name="pro" value="${pro.project_no }">${pro.project_name }</option>
+                                                                	</c:forEach> --%>
+                                                                </select>
+                                                            </div>                                                                                                                            
+                                                            <div class="mb-3 text-center">
+                                                                <button class="btn btn-primary" id="projectBtn">할당하기</button>
+                                                            </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->                                                                                						               
         <!-- Footable js -->
         <script src="${path}/Admin/dist/assets/libs/footable/footable.all.min.js"></script>
         <!-- Init js -->

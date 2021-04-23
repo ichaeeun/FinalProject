@@ -49,7 +49,7 @@ public interface ManPowerDao {
 	public void deleteMember(int pno);
 	
 	// 프로젝트 리스트
-	public ArrayList<pms_project> allProject();
+	public ArrayList<pms_project> allProject(int pno);
 	// 직급 변경
 	public void alertAuth(Member member);
 	// 프로젝트 할당

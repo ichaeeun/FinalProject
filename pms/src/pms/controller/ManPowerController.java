@@ -40,8 +40,8 @@ public class ManPowerController {
 	
 	// http://localhost:7080/pms/manpower.do?method=contacts_list
 	@RequestMapping(params="method=contacts_list")
-	public String showMem(Model d, @ModelAttribute("sch") MemberSch sch) {
-		System.out.println("##현재페이지:"+sch.getCurPage());
+	public String showMem(Model d, 
+			@ModelAttribute("sch") MemberSch sch) {
 		d.addAttribute("partList", service.deptList());
 		d.addAttribute("authList", service.authList());
 		d.addAttribute("memList", service.showMem(sch));
@@ -77,7 +77,6 @@ public class ManPowerController {
 		 * d.addAttribute("memList2", memList2);
 		 */
 		d.addAttribute("memList2",service.showMem2(sch));
-		d.addAttribute("allProject",service.allProject());
 		return "contacts-list2";
 	}
 
@@ -102,15 +101,12 @@ public class ManPowerController {
 			@RequestParam("ename") String ename, 
 			@RequestParam("pno") int pno,
 			MemberSch sch) {
-		  System.out.println("ename:"+ename);
-		  System.out.println("pno:"+pno);
 		  d.addAttribute("memDetail",service.memList1(ename)); 
 		  ArrayList<pms_project> proList = new ArrayList<pms_project>(); 
 		  for(int i=0;i<service.projectpno(pno).size();i++) {
 			  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));
 		  } 
 		  d.addAttribute("proList",proList);
-
 		return "contacts-profile";
 	}
 
@@ -122,12 +118,13 @@ public class ManPowerController {
 		return "pageJsonReport";
 	}
 	*/
+	
+
 	// http://localhost:7080/pms/manpower.do?method=add_member
 	@PostMapping(params = "method=add_member")
 	public String add_member(Member ins, Model d){
 		service.addMember(ins);
-		d.addAttribute("success","Y");
-		
+		d.addAttribute("success","Y");		
 		return "pageJsonReport";
 	}
 	
@@ -137,11 +134,20 @@ public class ManPowerController {
 		service.deleteMember(pno);
 		return "pageJsonReport";
 	}
-	
+
+	// http://localhost:7080/pms/manpower.do?method=showProject
+	@RequestMapping(params="method=showProject")
+	public String showProject(Model d,
+			@RequestParam("pno") int pno) {
+		System.out.println("## no:"+pno);
+		System.out.println("## 데이터 건수:"+service.allProject(pno).size());
+		//allProject
+		d.addAttribute("allProject",service.allProject(pno));
+		return "pageJsonReport";
+	}		
 	// http://localhost:7080/pms/manpower.do?method=addProject
 	@RequestMapping(params="method=addProject")
 	public String addProject(Model d) {
-		
 		return "pageJsonReport";
 	}
 	

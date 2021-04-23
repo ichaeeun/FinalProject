@@ -52,14 +52,15 @@
 		var vm = new Vue({
 			el:".content-page",
 			data:{
-				title:'ex',
 				tlist:[]
 			},
 			methods:{		
 				fetchContacts:function(data){
 					var vm = this;
 					var tlist=[];
-					var url = "http://localhost:8080/pms/taskRequest.do?method=listJson";
+					var pno=${param.pno}
+					var auth="${param.auth}";
+					var url = "http://localhost:7080/pms/taskRequest.do?method=listJson&pno="+${param.pno}+"&auth="+auth;
 					fetch(url).then(function(response){
 							console.log("# 서버에서 온 response객체 #");
 							console.log(response);
@@ -75,9 +76,9 @@
 						});
 				}
 			},
-			created(){
+			mounted(){
 				this.fetchContacts();
-			},
+			}
 		});	
 		
 		$(".tbody").on("click",".data",function(){
@@ -90,7 +91,6 @@
 </script>
 </head>
    <body class="loading">
-
         <!-- Begin page -->
         <div id="wrapper">
             <jsp:include page="top.jsp" flush="false"/>
