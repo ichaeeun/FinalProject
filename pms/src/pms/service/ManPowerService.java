@@ -49,7 +49,9 @@ public class ManPowerService {
 	public ArrayList<Member> showMem2(MemberSch sch){
 		if(sch.getName()==null) sch.setName("");
 		// 1. 데이터 총 건수 할당
-		sch.setCount(dao.toCnt(sch));
+		sch.setCount(dao.toCnt2(sch));
+		if(sch.getCount()==0)
+			sch.setCount(1);
 		// 2. pageSize 할당 (한 페이지에 조회될 데이터 수)
 		sch.setPageSize(8);
 		// 3. 총 페이지 수 할당 (총건수/페이지크기) 해서 올림하기
@@ -85,7 +87,7 @@ public class ManPowerService {
 	public ArrayList<Member> showMem3(MemberSch sch){
 		if(sch.getPart()==null) sch.setPart("");
 		// 1. 데이터 총 건수 할당
-		sch.setCount(dao.toCnt(sch));
+		sch.setCount(dao.toCnt3(sch));
 		// 2. pageSize 할당 (한 페이지에 조회될 데이터 수)
 		sch.setPageSize(8);
 		// 3. 총 페이지 수 할당 (총건수/페이지크기) 해서 올림하기

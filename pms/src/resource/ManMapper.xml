@@ -141,6 +141,35 @@
 			from pms_member
 			where name like '%'||#{name}||'%'
 	</select>
+	<!-- public int toCnt2(MemberSch sch); -->
+	<select parameterType="memsch" resultType="int" id="toCnt2">
+			select count(*)
+		from(
+			SELECT rownum cnt, d.* FROM pms_MEMBER d 
+			WHERE d.auth = 'wk'
+			and pno NOT in(SELECT pno FROM pms_member
+			WHERE pno in
+			(SELECT a.pno
+			FROM pms_member a, PMS_MEMBER_PROJECT b, PMS_PROJECT c
+			where a.pno = b.pno
+			AND b.PROJECT_NO =c.PROJECT_NO
+			AND c.project_status NOT IN ('완료')))
+			or pno IN 
+			(SELECT pno FROM pms_member a
+			WHERE auth = 'wk'
+			and pno NOT IN (
+			SELECT DISTINCT pno 
+			FROM PMS_MEMBER_PROJECT))
+		)
+	</select>
+	<!-- public int toCnt3(MemberSch sch); -->
+	<select parameterType="memsch" resultType="int" id="toCnt3">
+			select count(*) 
+			from pms_member
+			where part like '%'||#{part}||'%'
+	</select>	
+	
+	
 	<!-- public int chId(String id); -->
 	<select id="chId" parameterType="String" resultType="int">
 	SELECT count(*)

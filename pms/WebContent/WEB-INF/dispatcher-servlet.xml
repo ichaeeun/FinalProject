@@ -122,6 +122,7 @@
     	</bean>
 	</mvc:interceptor>
 	-->
+	<!-- 다국어 처리 -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> 	
 	</bean>
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

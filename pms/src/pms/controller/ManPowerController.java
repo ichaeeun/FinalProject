@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pms.dto.Member;
 import pms.dto.MemberSch;
@@ -77,6 +78,8 @@ public class ManPowerController {
 		 * d.addAttribute("memList2", memList2);
 		 */
 		d.addAttribute("memList2",service.showMem2(sch));
+		d.addAttribute("partList", service.deptList());
+		d.addAttribute("authList", service.authList());		
 		return "contacts-list2";
 	}
 
@@ -165,28 +168,44 @@ public class ManPowerController {
 	}
 	
 	// http://localhost:7080/pms/manpower.do?method=chId
-	@PostMapping(params="method=chId")
+	@RequestMapping(params="method=chId")
 	public String chId(@RequestParam("id") String id, Model d) {
 		int idCnt = service.chId(id);
-		System.out.println("아이디 수:"+idCnt);
-		if(idCnt==0&&id!="") {
-			d.addAttribute("success","Y");
-		}else {
-			d.addAttribute("success","N");
-		}
+//		System.out.println("아이디 수:"+idCnt);
+//		if(idCnt==0&&id!="") {
+//			d.addAttribute("success","Y");
+//		}else {
+//			d.addAttribute("success","N");
+//		}
+		d.addAttribute("id",idCnt);
+		System.out.println("####id:"+id);
 		return "pageJsonReport";
 	}
 	// http://localhost:7080/pms/manpower.do?method=chEmail
-	@PostMapping(params="method=chEmail")
+	@RequestMapping(params="method=chEmail")
 	public String chEmail(@RequestParam("email") String email, Model d) {
 		int emailCnt = service.chEmail(email);
-		if(emailCnt==0&&email!="") {
-			d.addAttribute("success","Y");
-		}else {
-			d.addAttribute("success","N");
-		}
+//		if(emailCnt==0&&email!="") {
+//			d.addAttribute("success","Y");
+//		}else {
+//			d.addAttribute("success","N");
+//		}
+		d.addAttribute("email",emailCnt);
+		System.out.println("####email:"+email);
 		return "pageJsonReport";
 	}	
+
+	@RequestMapping(params="method=signAble")
+	public String signAble(@RequestParam("emailCheck") int emailCheck, 
+			@RequestParam("pwdCheck") int pwdCheck, 
+			@RequestParam("idCheck") int idCheck,
+			Model d) {
+		if(emailCheck==1&&idCheck==1&&pwdCheck==1) {
+			d.addAttribute("success","Y");
+		}else 
+			d.addAttribute("success","N");
+		return "pageJsonReport";
+	}				
 	
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){

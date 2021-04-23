@@ -44,13 +44,101 @@
 			#chEmail{cursor:pointer;}
 		</style>
 	  <script>
+		var idCheck=0;
+		var emailCheck=0;
+		var pwdCheck=0;	
+		signupCheck();
+		function checkPass(){
+			var pass = $("#signup-modal [name=pass]").val();
+			var repass = $("#signup-modal [name=repass]").val();
+			if(repass==""||pass!=repass){
+				$("#chPass").html("비밀번호가 일치하지 않습니다.").css("color","red");
+				$("#signupBtn").prop("disabled",true);
+			}else if(pass=repass&&pass!=""&&repass!=""){
+				pwdCheck=1;
+				$("#chPass").html("비밀번호가 일치합니다.").css("color","blue");				
+				if(idCheck==1&&pwdCheck==1&emailCheck==1){
+					$("#signupBtn").prop("disabled",false);
+				}		
+				signupCheck();
+			}
+		}
+		
+		function checkId(){
+			var id = $("#signup-modal [name=id]").val();
+			$.ajax({
+				type:"post",
+				url:"${path}/manpower.do?method=chId",
+				data:{
+					"id":id
+					},
+				dataType:"json",
+				success:function(data){
+						if(data.id>=1||data.id==null){
+							$("#signupBtn").prop("disabled",true);
+							$("#chId").html("이미 존재하는 아이디입니다.").css("color","red");
+						}else if(data.id==0){
+							idCheck=1;
+							$("#chId").html("사용 가능한 아이디입니다.").css("color","blue");
+							if(idCheck==1&&pwdCheck==1&emailCheck==1){
+								$("#signupBtn").prop("disabled",false);
+							}							
+							signupCheck();
+						}
+				},
+				error:function(err){
+					alert("에러발생:"+err);
+				}
+			})
+		}
+		
+		function checkEmail(){
+			var email = $("#signup-modal [name=email]").val();
+			$.ajax({
+				type:"post",
+				url:"${path}/manpower.do?method=chEmail",
+				data:{
+					"email":email
+					},
+				dataType:"json",
+				success:function(data){
+						if(data.email>=1||data.email==null){
+							$("#signupBtn").prop("disabled",true);
+							$("#chEmail").html("이미 존재하는 이메일입니다.").css("color","red");
+						}else if(data.email==0){
+							emailCheck=1;
+							$("#chEmail").html("사용 가능한 이메일입니다.").css("color","blue");
+							if(idCheck==1&&pwdCheck==1&emailCheck==1){
+								$("#signupBtn").prop("disabled",false);
+								signupCheck();
+							}
+						}
+				},
+				error:function(err){
+					alert("에러발생:"+err);
+				}
+			})
+		}
+		
+ 		function signupCheck(){
+			var id = $(".mb-3 [name=id]").val();
+			var email = $(".mb-3 [name=email]").val();
+			var pass = $(".mb-3 [name=pass]").val();
+			var repass = $(".mb-3 [name=repass]").val();
+			var name = $(".mb-3 [name=name]").val();
+			if(id==""||email==""||pass==""||repass==""||name==""){
+				$("#signupBtn").prop("disabled",true);
+			}
+		} 	
+			
 	  	$(document).ready(function(){
+	  		signupCheck();
 	 	    var mem = "${mem.id}";
 	 	    var auth = "${mem.auth}";
 	 	    var authSession = "${mem.auth}";
 	 	    $("#auth").val(authSession);
 	 	    
-		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
+		    if(mem==""||auth=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		
 		 	
 		    /////////// 조회와 검색
 		    // 검색 입력값
@@ -130,89 +218,8 @@
 				add.email = $("[name=email]").val();
 				return add;
 			}
- 	  		$("#signupBtn").attr("disabled",true);
- 	  		function validateEmail(sEmail){
- 	  			var filter = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
- 	  			if(filter.test(sEmail)){
- 	  				return true;
- 	  			}else{
- 	  				return false;
- 	  			}
- 	  		}
-			$("#chId").on("click",function(){
-				var id = $("#signup-modal [name=id]").val();
-				$.ajax({
-					type:"post",
-					url:"${path}/manpower.do?method=chId",
-					data:{
-						"id":id
-						},
-					dataType:"json",
-					success:function(data){
-						if(data.success=="Y"){
-							$("#chId").text("사용가능");
-							$("#chId").css("color","blue");
-							$("[name=pass]").focus();
-						}else{
-							$("#chId").text("사용불가");
-							$("#chId").css("color","red");
-							$("[name=id]").val("").focus();
-							$("#signupBtn").attr("disabled",true);
-						}
-					},
-					error:function(err){
-						alert("에러발생:"+err);
-					}
-				})
-			})
-			$("#chEmail").on("click",function(){
-				var email = $("#signup-modal [name=email]").val();
-				$.ajax({
-					type:"post",
-					url:"${path}/manpower.do?method=chEmail",
-					data:{"email":email},
-					dataType:"json",
-					success:function(data){
-						if(data.success=="Y"){
-							$("#chEmail").text("사용가능");
-							$("#chEmail").css("color","blue");
-							$("[name=id]").focus();
-							$("#signupBtn").attr("disabled",false);
-						}else{
-							$("#chEmail").text("사용불가");
-							$("#chEmail").css("color","red");
-							$("[name=email]").val("").focus();
-							
-						}
-					},
-					error:function(err){
-						alert("에러발생:"+err);
-					}
-				})
-			})	
-			
-
   			$("#signupBtn").click(function(){ 	
-  				var email = $("#signup-modal [name=email]").val();
-  				if(!validateEmail(email)){
-  					alert("이메일 형식이 잘못 되었습니다.");
-  					$("#signup-modal [name=email]").focus();
-  					return;
-  					$("#signup-modal [name=name]").val("");
-  	  				$("#signup-modal [name=id]").val("");
-  	  				$("#signup-modal [name=email]").val("");
-  	  				$("#signup-modal [name=pass]").val("");  
-  				}
   				var insert = addMember();
-				if(insert.name==""||insert.id==""||insert.pass==""||insert.auth==""||
-				insert.part==""||insert.email==""){
-					alert('입력하지 않은 값이 있습니다.');
-					return;
-					$("#signup-modal [name=name]").val("");
-	  				$("#signup-modal [name=id]").val("");
-	  				$("#signup-modal [name=pass]").val("");  
-	  				$("#signup-modal [name=email]").val("");
-				}
   				$.ajax({
   					type:"post",
   					url:"manpower.do?method=add_member",
@@ -221,17 +228,16 @@
   					success:function(){
   						$("#signup-modal").modal("hide");
   						$("#info-mail-modal").modal("show");
-  						location.reload();
-  						console.log(insert);
-  						
+  						console.log(insert); 						
   					},
   					error:function(){
   						alert("에러발생");
   					}
-  				
   				});
-  				location.reload();
   			});
+  			
+  			
+  			
   			//////////// 계정 생성 후 메일 발송 여부 확인
   			$("#info-mail-modal #mailY").click(function(){
   				var subject = "AZZA 계정 정보입니다.";
@@ -243,8 +249,8 @@
   				$("#sendMail [name=receiver]").val(receiver);
   				$("#sendMail [name=content]").val(content);
   				$("#sendMail").submit();
-  				alert("계정정보 전송 완료");
   			})
+  		
 	  		$("#info-mail-modal #mailN").click(function(){
 	  			$("#info-mail-modal").modal("hide");
 	  		})
@@ -353,7 +359,8 @@
 	 	  			error:function(err){
 	 	  				alert("에러발생:"+err);
 	 	  			}  				
- 	  			})	  					  			
+ 	  			})	  		
+ 	  			
 				$("#projectBtn").on("click",function(){		
 					var project_no = $("#project-modal [name=pro]").val();
 					//alert(pno);
@@ -1008,19 +1015,24 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="email" class="form-label">이메일</label>
-                                                                &nbsp;<a id="chEmail" style="color:black;">중복체크</a>                      
-                                                                <input name="email" class="form-control" type="email" placeholder="이메일"/>
+                                                                &nbsp;<span id="chEmail"></span>                      
+                                                                <input onInput="checkEmail()"  name="email" class="form-control" type="text" placeholder="이메일"/>
                                                             </div>   
                                                             <div class="mb-3">
                                                                 <label for="id" class="form-label">아이디</label>
-                                                                &nbsp;<a id="chId" style="color:black;">중복체크</a>   
-                                                                <input name="id" class="form-control" type="text" placeholder="아이디"/>
+                                                                &nbsp;<span id="chId"></span>   
+                                                                <input onInput="checkId()" name="id" class="form-control" type="text" placeholder="아이디"/>
                                                                 
                                                             </div>
                                                              <div class="mb-3">
                                                                 <label for="pass" class="form-label">비밀번호</label>
-                                                                <input name="pass" class="form-control" type="password" placeholder="비밀번호"/>
+                                                                <input onInput="checkPass()" name="pass" class="form-control" type="password" placeholder="비밀번호"/>
                                                             </div>
+                                                             <div class="mb-3">
+                                                                <label for="pass" class="form-label">비밀번호 재입력</label>
+                                                                &nbsp;<span id="chPass" style="color:black;"></span>   
+                                                                <input onInput="checkPass()" name="repass" class="form-control" type="password" placeholder="비밀번호"/>
+                                                            </div>                                                            
                                                             <div class="mb-3">
                                                                 <label for="part" class="form-label">부서</label>
                                                                 <select name="part" class="form-control">

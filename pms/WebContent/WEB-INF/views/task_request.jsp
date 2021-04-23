@@ -141,7 +141,7 @@
                                                         <th scope="col">요청번호</th>
                                                         <th scope="col">태스크명</th>
                                                         <th scope="col">프로젝트명</th>
-                                                        <th scope="col">담당자</th>
+                                                        <th scope="col">담당PM</th>
                                                         <th scope="col">요청일</th>
                                                     </tr>
                                                 </thead>
