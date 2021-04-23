@@ -9,7 +9,9 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+  
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -65,7 +67,14 @@
 	}
 
    $(document).ready(function(){
-      
+	   <%--
+	   $("#selectLan").val("${param.lang}")
+	      $("#selectLan").change(function(){
+	    	 if($(this).val()!=""){
+	    		 location.href="${path}/main.do?method=loginform1?lang="+$(this).val();
+	    	 }
+	      });
+	      --%>
    });
 </script>
 </head>
@@ -77,6 +86,15 @@
                     <div class="col-md-8 col-lg-6 col-xl-4">
                         <div class="card">
 
+<!-- 
+
+<select class="form-control" id="selectLan">
+  	<option value=""><spring:message code="chlang"/></option>
+  	<option value="ko"><spring:message code="ko"/></option>
+  	<option value="en"><spring:message code="en"/></option>
+  	
+  </select>
+ -->
                             <div class="card-body p-4">
                                 
                                 <div class="text-center w-75 m-auto">

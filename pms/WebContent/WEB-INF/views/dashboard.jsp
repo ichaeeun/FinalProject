@@ -361,7 +361,7 @@
 	                                        <div class="d-flex justify-content-between align-items-center">
 	                                            <div class="knob-chart" dir="ltr">
 	                                                <input data-plugin="knob" data-width="70" data-height="70" data-fgColor="#6c757d"
-	                                                    data-bgColor="#e2e3e5" value="${Math.round(risk.riskcnt/risk.riskcnt*100)}"
+	                                                    data-bgColor="#e2e3e5" value="${Math.round(risk.riskcnt/risk.risktotal*100)}"
 	                                                    data-skin="tron" data-angleOffset="0" data-readOnly=true
 	                                                    data-thickness=".15"/>
 	                                            </div>
