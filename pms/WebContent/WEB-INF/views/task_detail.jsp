@@ -19,12 +19,12 @@
 
 <!-- plugin css -->
 <link href="${path }/Admin/dist/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
- <!-- Plugins css -->
+<%--  <!-- Plugins css -->
  <link href="${path }/Admin/dist/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
  <link href="${path }/Admin/dist/assets/libs/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
  <link href="${path }/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
  <link href="${path }/Admin/dist/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
- <link href="${path }/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+ <link href="${path }/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" /> --%>
 
 <!-- App css -->
 <link href="${path }/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
@@ -36,16 +36,15 @@
 <!-- icons -->
 <link href="${path }/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 <script src="${path}/a00_com/jquery.min.js"></script>
-<script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
-<script type="text/javascript">
+<%-- <script src="${path}/a00_com/popper.min.js"></script> --%>
+<%-- <script src="${path}/a00_com/jquery-ui.js"></script> --%>
 
-	/* jQuery.noConflict();   */
-   	  $(document).ready(function(){ 
+        
+<script type="text/javascript">
+	   $(document).ready(function(){ 
    	   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
   	   $("#commentList").load("${path}/taskdetail.do?method=commentList&task_no="+${detail.task_no});
   	   $("#fileList").load("${path}/taskdetail.do?method=taskFileList&task_no="+${detail.task_no});
-	 /*   $("time.timeago").timeago(); */
 	   var mem = "${mem.id}";
 	   if(mem==""){
 			alert("세션이 만료되어 로그인화면으로 이동합니다.");
@@ -90,9 +89,11 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					  $("#addSubTaskModal").modal("hide");
+					location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
+					 /*  $("#addSubTaskModal").modal("hide"); */
 					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
-					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
+					 /*  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
+					/*  location.reload(); */
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -250,8 +251,9 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#updateSubtaskModal").modal("hide");
+					  location.reload();
 					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
-					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
+					 /*  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -290,13 +292,33 @@
 		 
 		 
 		 $("#subtaskList").on("click",".deletesub",function(){
+			 var deletesub={};
 			 var item=$(this).closest(".upt");
 			 var task_no = item.find(".task_no").text();
-			 $("#deleteSub_task_no").val(task_no);
-			 $("#deleteSubtaskModal").modal("show");
+			 deletesub.task_no = task_no
+			/*  $("#deleteSub_task_no").val(task_no); */
+			/*  $("#deleteSubtaskModal").modal("show"); */
+			 $.ajax({
+				  type:"post",
+				  url:"${path}/taskdetail.do?method=deleteSub",
+				  data:deletesub,
+				  dataType:"json",
+				  success:function(data){
+					  if(data.success=="Y")
+					  console.log(data);
+					 /*  $("#deleteSubtaskModal").modal("hide"); */
+					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					  /* location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
+					 location.reload(); 
+				  },
+				  error:function(err){
+					  alert("에러발생: "+err);
+					  console.log(err);
+				  }
+			}); 
 		 });
 		 
-		 $("#deleteSubtaskBtn").click(function(){
+		/*  $("#deleteSubtaskBtn").click(function(){
 			 var deletesub={};
 			 deletesub.task_no= Number($("#deleteSub_task_no").val());
 			 console.log(deletesub.task_no);
@@ -308,16 +330,14 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					 /*  $("#deleteSubtaskModal").modal("hide"); */
-					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
-					  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
+					  location.reload();
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
 					  console.log(err);
 				  }
 			}); 
-		 });
+		 }); */
 		 
 		 $("#deleteTaskBtn").click(function(){
 			 var deletetask={};
@@ -355,8 +375,7 @@
 				  success:function(data){
 					  if(data.request=="Y")
 					  console.log(data);
-					  $("#requestModal").modal("hide");
-					  $("#success-alert-modal2").modal("show");
+					 location.reload();
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -384,7 +403,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					 // $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
-				 	  location.href="${path}/taskdetail.do?method=list&task_no="+taskNo;
+				 	 /*  location.href="${path}/taskdetail.do?method=list&task_no="+taskNo; */
+				 	 location.reload();
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -599,7 +619,7 @@
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <!-- item-->
                                                 <div  id="noing">
-                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status=="완료"}'>disabled</c:if>">
+                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status!="진행"}'>disabled</c:if>">
                                                     <div data-bs-toggle="modal" data-bs-target="#RequestModal"><i class='mdi mdi-check-circle-outline me-1'></i>승인요청</div>
                                                 </a>
                                                 </div>
@@ -637,6 +657,7 @@
                                         </c:if>
                                         <c:if test="${detail.task_status=='완료' }">&nbsp;&nbsp;<span class="badge badge-soft-danger p-1" id="task_priority">${detail.task_status }</span></c:if>
                                         <c:if test="${detail.task_status=='진행' }">&nbsp;&nbsp;<span class="badge badge-soft-success p-1" id="task_priority">${detail.task_status }</span></c:if>
+                                        <c:if test="${detail.task_status=='요청' }">&nbsp;&nbsp;<span class="badge badge-soft-primary p-1" id="task_priority">승인 ${detail.task_status }중</span></c:if>
                                         <h4 class="mb-1" id="task_name">${detail.task_name }</h4>
                                         <div class="mt-4">
                                         <h5>Description:</h5>
@@ -1163,28 +1184,26 @@
 
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
+ <!-- Vendor js -->
+<script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
 
-        <!-- Vendor js -->
-        <script src="${path}/Admin/dist/assets/js/vendor.min.js"></script>
+<!-- Plugins js -->
+<script src="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.js"></script>
 
-        <!-- Plugins js -->
-        <script src="${path}/Admin/dist/assets/libs/dropzone/min/dropzone.min.js"></script>
+<!-- Init js-->
+<script src="${path}/Admin/dist/assets/js/pages/form-fileuploads.init.js"></script>
 
-        <!-- Init js-->
-        <script src="${path}/Admin/dist/assets/js/pages/form-fileuploads.init.js"></script>
+<!-- App js -->
+<script src="${path}/Admin/dist/assets/js/app.min.js"></script>
+<!-- Plugins Js -->
+<script src="${path}/Admin/dist/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+<script src="${path}/Admin/dist/assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="${path}/Admin/dist/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="${path}/Admin/dist/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+<script src="${path}/Admin/dist/assets/libs/select2/js/select2.min.js"></script>
+ <script src="${path}/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="${path}/Admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-        <!-- App js -->
-        <script src="${path}/Admin/dist/assets/js/app.min.js"></script>
-        <!-- Plugins Js -->
-        <script src="${path}/Admin/dist/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/mohithg-switchery/switchery.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/select2/js/select2.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-        <script src="${path}/Admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-
-        <script src="${path}/Admin/dist/assets/js/pages/form-advanced.init.js"></script>
-        
+<script src="${path}/Admin/dist/assets/js/pages/form-advanced.init.js"></script>
 </body>
 </html>
