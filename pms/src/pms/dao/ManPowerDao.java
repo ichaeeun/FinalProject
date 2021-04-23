@@ -57,6 +57,10 @@ public interface ManPowerDao {
 	
 	// 총 데이터 건수
 	public int toCnt(MemberSch sch);
+	// 가용인원 총 데이터 건수
+	public int toCnt2(MemberSch sch);
+	// 부서 총 데이터 건수
+	public int toCnt3(MemberSch sch);
 	
 	// 계정생성 유효성 체크
 	public int chId(String id);

@@ -44,11 +44,33 @@
 	 	    var mem = "${mem.id}";
 	 	    var authSession = "${mem.auth}";
 	 	    $("#auth").val(authSession);
-		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	  		  		
- 	  		$("#memShow").on("click",".project",function(){
- 	  			var pno = $(this).find('.pno').val();
- 	  			// alert(pno);
- 	  			$("#project-modal").modal("show"); 			
+		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	
+		    
+ 	  		$("#memShow").on("click",".projectAdd",function(){
+	  			var pno = $(this).find("[name=projectPno]").val();
+ 	  			alert(pno);
+ 	  			$("#project-modal").modal("show"); 	
+ 	  			$.ajax({
+ 	  				type:"post",
+ 	  				url:"${path}/manpower.do?method=showProject",
+ 	  				data:{"pno":pno},
+ 	  				dataType:"json",
+ 	  				success:function(data){
+	 	  					var all = data.allProject;
+	 	  					console.log(data);
+	 	  					console.log("##프로젝트###");
+	 	  					console.log(all); 	  					
+	 	  					var show="";
+	 	  					$.each(all,function(idx,p){ 
+	 	  						show+="<option name='pro' value='"+p.project_no+"'>"+p.project_name+"</option>";
+	 	  					});
+	 	  					$("#projectShow").html(show);	  					
+	 	  			},
+	 	  			error:function(err){
+	 	  				alert("에러발생:"+err);
+	 	  			}  				
+ 	  			})	  		
+ 	  			
 				$("#projectBtn").on("click",function(){		
 					var project_no = $("#project-modal [name=pro]").val();
 					//alert(pno);
@@ -68,7 +90,7 @@
 		  				}
 		  			}); 
 				});
-	  		}); 
+	  		}); 	
 
 	  		$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
@@ -79,6 +101,52 @@
 			});	  		
 
 
+
+ 	  		$("#memShow").on("click",".projectAdd",function(){
+	  			var pno = $(this).find("[name=projectPno]").val();
+ 	  			alert(pno);
+ 	  			$("#project-modal").modal("show"); 	
+ 	  			$.ajax({
+ 	  				type:"post",
+ 	  				url:"${path}/manpower.do?method=showProject",
+ 	  				data:{"pno":pno},
+ 	  				dataType:"json",
+ 	  				success:function(data){
+	 	  					var all = data.allProject;
+	 	  					console.log(data);
+	 	  					console.log("##프로젝트###");
+	 	  					console.log(all); 	  					
+	 	  					var show="";
+	 	  					$.each(all,function(idx,p){ 
+	 	  						show+="<option name='pro' value='"+p.project_no+"'>"+p.project_name+"</option>";
+	 	  					});
+	 	  					$("#projectShow").html(show);	  					
+	 	  			},
+	 	  			error:function(err){
+	 	  				alert("에러발생:"+err);
+	 	  			}  				
+ 	  			})	  		
+ 	  			
+				$("#projectBtn").on("click",function(){		
+					var project_no = $("#project-modal [name=pro]").val();
+					//alert(pno);
+					//alert(project_no);
+ 		  			$.ajax({
+		  				type:"post",
+		  				url:"${path}/manpower.do?method=insertProject",
+		  				data:{"pno":pno, "project_no":project_no},
+		  				dataType:"json",
+		  				success:function(data){
+		  					console.log(data);
+		  					$("#project-modal").modal("hide");
+		  					window.location.reload();
+		  				},
+		  				error:function(err){
+		  					alert("에러발생:"+err);
+		  				}
+		  			}); 
+				});			
+ 	  		});	
 	  	});
 		function goPage(page){
 			// 이전 페이지가 0이면 1
@@ -145,24 +213,20 @@
                                 <div class="text-center card">
                                     <div class="card-body">
                                         
-                                        <div class="dropdown float-end">
-                                            <a class="text-body dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-20">	
-                                                </i>
-                                            </a>                                         
-											<c:if test="${mem.auth == 'hp'}">
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                            <a class='dropdown-item project'>                 	
-												<div data-bs-toggle="modal" data-bs-target="#project-add">
-													프로젝트 할당
-                                        		<form>
-											 		<input type="hidden" style="display:none;" class='pno' name="pno" value="${memlist.pno }"/>
-												</form>
-												</div>												
-                                            </a>    
-                                            </div>  
-                                            </c:if>	                                          
-                                        </div>
+	  									<div class='dropdown float-end'>
+	  										<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+	  											<i class='mdi mdi-dots-vertical font-20'></i>
+	  										</a>
+	  										<c:if test="${mem.auth=='hp' }">
+	  											<div class='dropdown-menu dropdown-menu-end'>
+                            					<c:if test="${memlist.auth=='wk' }">
+                            					<a class='dropdown-item projectAdd'>
+                            						<button name='projectPno' type='button' value="${memlist.pno }" class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#project-add'>프로젝트 할당</button>
+                            					</a>
+                            					</c:if>
+                            					</div>
+	  										</c:if>
+										</div>          
                                         
                                         <c:if test="${empty memlist.imgpath}">
                                          <i class='fas fa-user-circle fa-7x'></i>
@@ -171,7 +235,7 @@
                                        <c:if test="${not empty memlist.imgpath}">
                                        <c:set var = "length" value = "${fn:length(memlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/${fn:substring(memlist.imgpath, 46, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
+                             	     <img src="${path}/${fn:substring(memlist.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
                                        </c:if>
                                         
                                         <h4 class="mt-3 mb-1 goDetail">
@@ -652,12 +716,6 @@
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
 
-        <!-- Vendor js -->
-        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
-
-        <!-- App js -->
-        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
-                                        <!-- project-modal content -->
                                         <div class="modal fade" id="project-modal" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -671,10 +729,10 @@
                                                             <div class="mb-3">
                                                                 <label for="pro" class="form-label">프로젝트</label>
                                                                 <!-- 시작 -->
-                                                                <select name="pro" class="form-control">
-                                                                	<c:forEach var="pro" items="${allProject }">
+                                                                <select name="pro" class="form-control" id="projectShow">
+<%--                                                                 	<c:forEach var="pro" items="${allProject }">
                                                                 		<option name="pro" value="${pro.project_no }">${pro.project_name }</option>
-                                                                	</c:forEach>
+                                                                	</c:forEach> --%>
                                                                 </select>
                                                             </div>                                                                                                                            
                                                             <div class="mb-3 text-center">
@@ -683,6 +741,13 @@
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->        
+                                        </div><!-- /.modal -->     
+        <!-- Vendor js -->
+        <script src="${path }/Admin/dist/assets/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="${path }/Admin/dist/assets/js/app.min.js"></script>
+
+                                             
     </body>
 </html>
