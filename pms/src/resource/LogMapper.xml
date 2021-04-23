@@ -7,7 +7,27 @@
 <insert id="taskIns" parameterType="log">
 INSERT INTO project_log VALUES(
 #{pno},#{project_no},
-sysdate,#{task_no})
+sysdate,#{task_no},#{status})
 </insert>
-
+<select id="taskLog" resultType="log">
+SELECT pm.name, pt.task_name, pt.task_no, pl.regdte
+FROM PMS_MEMBER pm, PROJECT_TASK pt, PROJECT_LOG pl
+WHERE pm.pno = pl.PNO
+AND pt.TASK_NO = pl.TASK_NO 
+AND pl.status = 't'
+</select>
+<select id="reqLog" resultType="log">
+SELECT pm.name, pt.task_name, pt.task_no, pl.regdte
+FROM PMS_MEMBER pm, PROJECT_TASK pt, PROJECT_LOG pl
+WHERE pm.pno = pl.PNO
+AND pt.TASK_NO = pl.TASK_NO 
+AND pl.status = 'r'
+</select>
+<select id="projLog" resultType="log">
+SELECT pm.name, pp.PROJECT_NO , pp.PROJECT_NAME , pl.regdte
+FROM PMS_MEMBER pm, PMS_PROJECT pp , PROJECT_LOG pl
+WHERE pm.pno = pl.PNO
+AND pp.PROJECT_NO = pl.PROJECT_NO 
+AND pl.status = 'p'
+</select>
 </mapper>

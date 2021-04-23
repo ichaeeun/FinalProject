@@ -6,5 +6,5 @@ import pms.dto.Log;
 
 @Repository
 public interface LogDao {
-	public void taskIns(Log ins);
+	public void taskIns(Log log);
 }

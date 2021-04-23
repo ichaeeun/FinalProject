@@ -7,12 +7,19 @@ public class Log {
 	private int task_no;
 	private String regdte;
 	private String task_name;
-	
+	private String status;
 	public Log() {
 		super();
 		// TODO Auto-generated constructor stub
 	}	
-	
+	public Log(int pno, int project_no, int task_no, String status) {
+		super();
+		this.pno = pno;
+		this.project_no = project_no;
+		this.task_no = task_no;
+		this.status = status;
+	}
+
 	public Log(String regdte, int pno, String name ) {
 		super();
 		this.pno = pno;
