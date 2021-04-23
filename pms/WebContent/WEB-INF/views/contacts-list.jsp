@@ -503,7 +503,7 @@
                                        <c:if test="${not empty mlist.imgpath}">
                                        <c:set var = "length" value = "${fn:length(mlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/profileImage/${mlist.imgpath}" alt="user-image" width="160px" height="160px" class="rounded-circle" > 
+                             	     <img src="${path}/profileImage/${mlist.imgpath}" alt="user-image"  width="90px" height="90px" class="rounded-circle" > 
                                        </c:if>
 	  									<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'>
 	  										<a class='text-dark'>${mlist.name }</a>

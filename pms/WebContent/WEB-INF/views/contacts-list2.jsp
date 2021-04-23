@@ -236,7 +236,7 @@
                                        <c:set var = "length" value = "${fn:length(memlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
 <<<<<<< HEAD
-                             	     <img src="${path}/profileImage/${memlist.imgpath}" alt="user-image" width="160px" height="160px" class="rounded-circle" > 
+                             	     <img src="${path}/profileImage/${memlist.imgpath}" alt="user-image"   width="90px" height="90px"class="rounded-circle" > 
 =======
                              	     <img src="${path}/${fn:substring(memlist.imgpath, 48, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
 >>>>>>> branch 'origin' of https://github.com/dearseul/FinalProject.git
