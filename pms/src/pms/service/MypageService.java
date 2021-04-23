@@ -26,6 +26,9 @@ public class MypageService {
 	
 	
 	 public Member showProfile(int pno) {
+//		 Member mem = dao.showProfile(pno);
+//		 String imgpath = dao.showProfile(pno).getImgpath().substring(48);
+//		 mem.setImgpath(imgpath);
 		 return dao.showProfile(pno);
 	 }
 	 
@@ -67,7 +70,8 @@ public class MypageService {
 						// 파일명, 업로드위치, 제목 
 						// String id, String pass, String name, String email, String imgpath
 						System.out.println(profile+fname);
-						dao.updateProfile(new Member(mem.getId(),mem.getPass(),mem.getName(),mem.getEmail(),profile+fname,mem.getPno()));
+//						dao.updateProfile(new Member(mem.getId(),mem.getPass(),mem.getName(),mem.getEmail(),profile+fname,mem.getPno()));
+						dao.updateProfile(new Member(mem.getId(),mem.getPass(),mem.getName(),mem.getEmail(),fname,mem.getPno()));
 						
 					} catch (IllegalStateException e) {
 						// TODO Auto-generated catch block

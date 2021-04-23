@@ -34,9 +34,9 @@ public class DashBoardController {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		try {
-			Date start = df.parse(project.getStart1());	// 시작일(4.1)
-			Date end = df.parse(project.getEnd1());		// 완료일(4.30)
-			Date today = new Date();					// 현재날짜(4.22)
+			Date start = df.parse(project.getStart1());	// 시작일
+			Date end = df.parse(project.getEnd1());		// 완료일
+			Date today = new Date();					// 현재날짜
 			// 진행도
 			long startday = Math.abs( start.getTime() / (24*60*60*1000) ); // 시작일수(숫자값)
 			long endday = Math.abs( end.getTime() / (24*60*60*1000) ); // 종료일수(숫자값)

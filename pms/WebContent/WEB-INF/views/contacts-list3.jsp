@@ -144,7 +144,7 @@
                                        <c:if test="${not empty memlist.imgpath}">
                                        <c:set var = "length" value = "${fn:length(memlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/${fn:substring(memlist.imgpath, 46, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
+                             	     <img src="${path}/profileImage/${memlist.imgpath}" alt="user-image"  width="90px" height="90px"  class="rounded-circle" > 
                                        </c:if>
                                         <h4 class="mt-3 mb-1 goDetail">
                                         	<a class="text-dark mem_name" >${memlist.name }</a>
