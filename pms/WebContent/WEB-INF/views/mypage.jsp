@@ -141,7 +141,7 @@
                                        <c:if test="${not empty showprofile.imgpath}">
                                        <c:set var = "length" value = "${fn:length(showprofile.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 48, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img"> 
+                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 46, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img"> 
                                        </c:if>
                                         </div>
                                         <div class="fileupload btn btn-success waves-effect waves-light mt-3">

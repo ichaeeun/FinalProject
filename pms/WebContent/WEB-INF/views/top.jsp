@@ -289,7 +289,7 @@
                                        <c:if test="${not empty showprofile.imgpath}">
                                        <c:set var = "length" value = "${fn:length(showprofile.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 48, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle"> 
+                             	     <img src="${path}/${fn:substring(showprofile.imgpath, 46, length)}" alt="user-image" width="160px" height="160px" class="rounded-circle"> 
                                        </c:if>
                                 <span class="pro-user-name ms-1">
                                     ${mem.name} <i class="mdi mdi-chevron-down"></i> 
