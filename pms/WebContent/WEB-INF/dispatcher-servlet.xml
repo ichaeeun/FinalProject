@@ -156,8 +156,9 @@
 -->
 <aop:config>
 	<aop:aspect id="traceAspect" ref="profilier">
-		<aop:pointcut expression="execution(public * pms.dao.OverviewDao..mTaskInsert(..))" id="taskInsert"/>
+		<aop:pointcut expression="execution(public * pms.dao.OverviewDao..mTaskInsert(..)) || execution(public * pms.dao.ManPowerDao..insertProject(..)) || execution(public * pms.dao.TaskDetailDao..requestApp(..)) ||execution(public * pms.dao.TaskDetailDao..approval(..))" id="taskInsert"/>		
 		<aop:around method="trace" pointcut-ref="taskInsert"/>
 	</aop:aspect>
+
 </aop:config>	
 </beans>

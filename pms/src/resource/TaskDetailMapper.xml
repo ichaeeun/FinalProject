@@ -167,5 +167,10 @@ AND a.pno = b.pno; -->
 	<delete id="deleteTaskFile" parameterType="int">
 		DELETE FROM task_file WHERE fileno=#{fileno} 
 	</delete>
+	
+	<select id="getMaxTask_no" resultType="int">
+		SELECT max(task_no) FROM project_task
+	</select>
+	
 </mapper>  
  

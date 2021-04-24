@@ -33,12 +33,15 @@ public class CalendarService {
 		// project => calendar, id = 1로 설정
 		Calendar p = new Calendar(1,0,"0",project.getProject_name(),
 				gservice.getName(project.getPm_pno()),project.getProject_content(),project.getStart1(),project.getEnd1(),
-				1,false,"#ffffff",	"#FF0000", "#000000");
+				1,false,"#ffffff",	"#f1556c", "#000000");
 		cal.add(p);
 		// task => calendar 
 		for(int index=0;index<t.size();index++) {
 			Calendar c = new Calendar(
-					t.get(index).getTask_no(),t.get(index).getTask_parent_no(),
+					t.get(index).getTask_no(),
+					// groupId, 부모no = 1이면 태스크이므로 그룹 아이디를 자기자신으로,
+					// 			부모no != 1이면 서브태스크이므로 부모태스크 그대로 지정
+					t.get(index).getTask_parent_no()==1?t.get(index).getTask_no():t.get(index).getTask_parent_no(),
 					getTaskUsingTaskno(t.get(index).getTask_parent_no()) == null?project.getProject_name():
 						getTaskUsingTaskno(t.get(index).getTask_parent_no()).getTask_name(),
 					t.get(index).getTask_name(),
@@ -48,8 +51,8 @@ public class CalendarService {
 						t.get(index).getTask_priority().equals("Medium")?2:3,
 					false,
 					"#ffffff",
-					t.get(index).getTask_priority().equals("High")?"#FF0000":
-						t.get(index).getTask_priority().equals("Medium")?"#FFFF00":"#00FF00",
+					t.get(index).getTask_priority().equals("High")?"#f1556c":
+						t.get(index).getTask_priority().equals("Medium")?"#f7b84b":"#1abc9c",
 					"#000000"
 					);
 			cal.add(c);

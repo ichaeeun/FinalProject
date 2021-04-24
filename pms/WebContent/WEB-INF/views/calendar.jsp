@@ -1,3 +1,5 @@
+calendar
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
@@ -91,7 +93,7 @@ var createdid = "${mem.auth}";
 		    	  // 다른 함수에서 활용할 수 있게한다
 		    	  date.start = arg.start; // arg.start 데이터 유형은 Date이다
 		    	  date.end = arg.end;
-		    	  
+		    	  if("${mem.auth}" =="pm"){
 		    	  opts.buttons = {
 		    			  "등록":function(){    				  
 		    			  
@@ -141,6 +143,7 @@ var createdid = "${mem.auth}";
 		    	  $("#schDialog").dialog(opts);
 		    	  // 등록 화면 로딩
 		    	  $("#schDialog").dialog("open");
+		    	  }
 		      },
 		      
 		      eventDrop:function(arg){
@@ -167,6 +170,7 @@ var createdid = "${mem.auth}";
 		    	detail(arg.event);
 		    	// 2. 기능별 버튼에 대한 처리
 //		    	$("#schDialog").dialog("open");
+		    	if("${mem.auth}" =="pm"){
 		    	opts.buttons = {
 		    			"수정":function(){
 		    				// 수정 후, json 데이터 가져오기
@@ -247,6 +251,7 @@ var createdid = "${mem.auth}";
 		    	            $("#schDialog").dialog("close");
 		    			}
 		    	}
+		    	}
 		    	$("#schDialog").dialog(opts);
 		        $("#schDialog").dialog("open")
 		    	/*
@@ -313,6 +318,8 @@ var createdid = "${mem.auth}";
 		  }
 		
 		  function changeDate(date){
+			  console.log(date);  
+		  
 			  var parts = date.split('. ');
 			  var year = parts[0];
 			  var month = parts[1];
@@ -404,8 +411,11 @@ var createdid = "${mem.auth}";
 			  });
 		  }
 		  function eventUpt(event){
+			  console.log("####??####");
+			  console.log(event.end);  
+		  
 			  var sch = {};
-              
+              /*
 			  sch.id = $("[name=id]").val();
 			  sch.groupId = $("[name=groupId]").val();
 			  sch.backgroundColor = $("[name=backgroundColor]").val();
@@ -421,6 +431,32 @@ var createdid = "${mem.auth}";
 			  sch.start = changeDate(tmp);
 			  tmp = $("[name=end]").val();
 			  sch.end = changeDate(tmp);
+			  */
+			  ///////////////////
+			  sch.id = event.id;
+			  sch.groupId = event.groupId;
+			  sch.backgroundColor = event.backgroundColor;
+			  sch.borderColor = event.borderColor;
+			  sch.textColor = event.textColor;
+			  sch.title= event.title;
+			  sch.content= event.extendedProps.content;
+			  sch.parent= event.extendedProps.parent;
+			  sch.priority= event.extendedProps.priority;
+			  sch.holder= event.extendedProps.holder;
+			  sch.allDay = false;
+			  //var tmp = event.start;
+			  sch.start = event.start.toISOString();
+			  console.log("###데이터 확인###");
+			  console.log(sch.start);
+			  //tmp = event.end;
+			  sch.end = event.end.toISOString();
+			  console.log("###데이터 확인###");
+			  console.log(sch.end);
+			  
+			  //sch.start = date.start.toISOString();
+			  //sch.end = date.end.toISOString();
+			  
+			  
 			  //sch.start = date.start.toISOString();
 			  //sch.end = date.end.toISOString();
 			  
@@ -539,35 +575,6 @@ var createdid = "${mem.auth}";
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                        <%--
-                                            <div class="col-xl-3">
-                                                <div class="d-grid">
-                                                    <button class="btn btn-lg font-16 btn-primary" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> Create New Event</button>
-                                                </div>
-                                                <div id="external-events">
-                                                    <br>
-                                                    <p class="text-muted">Drag and drop your event or click in the calendar</p>
-                                                    <div class="external-event bg-success" data-class="bg-success">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>New Theme Release
-                                                    </div>
-                                                    <div class="external-event bg-info" data-class="bg-info">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>My Event
-                                                    </div>
-                                                    <div class="external-event bg-warning" data-class="bg-warning">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Meet manager
-                                                    </div>
-                                                    <div class="external-event bg-danger" data-class="bg-danger">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Create New theme
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col-->
-											
-                                            <div class="col-xl-9">
-                                                <div class="mt-4 mt-xl-0">
-                                                    <div id="calendar"></div>
-                                                </div>
-                                            </div> <!-- end col -->
-										 --%>
 										 <div id="calendar"></div>
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->

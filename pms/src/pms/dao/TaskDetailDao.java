@@ -46,4 +46,5 @@ public interface TaskDetailDao {
 	
 	public void deleteTaskFile(int fileno);
 	
+	public int getMaxTask_no();
 }

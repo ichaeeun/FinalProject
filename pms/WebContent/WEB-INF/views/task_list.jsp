@@ -64,8 +64,8 @@ function doubleSubmitCheck(){
 }
 
 
-document.getElementById('startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
 
+document.getElementById('startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
 $("#btnAddTask").click(function(){
 	if(doubleSubmitCheck()) return;
 	// 반복 클릭으로 인한 다중 submit방지
@@ -98,8 +98,7 @@ $("#btnAddTask").click(function(){
 		alert("마감날짜를 선택해주세요");
 		endObj.focus();
 		isValid=false;
-	}
-	
+	}	
 	if(isValid){
 		// 유효성 check에 해당하지 않을 때만, 서버에 요청값으로 전송처리	
 	var sch = addtask(); //  리턴값이 입력된 객체 데이터
@@ -122,14 +121,12 @@ $("#btnAddTask").click(function(){
 			  $("#success-alert-modal").modal("show");
 			  $("#success-alert-modal .btn").click(function(){
 				  window.location.reload(true);
-			  });
-			 
+			  });			 
 		  },
 		  error:function(err){
 			  alert("에러발생: "+err);
 			  console.log(err);
-		  }
-		 
+		  }		 
 	});  
 	}
 });

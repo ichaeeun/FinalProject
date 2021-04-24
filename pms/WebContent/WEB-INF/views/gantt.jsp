@@ -1,3 +1,5 @@
+gantt
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"%>
@@ -102,6 +104,9 @@ var names = [];
 	   //gantt.config.order_branch = true;
 	   if("${project.project_status}" == "완료")
 		   gantt.config.readonly = true;
+	   
+	   
+	   //for(var idx=0;idx<)
 	   	
 	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
 	   gantt.init("gantt_here");
@@ -134,18 +139,19 @@ var names = [];
 			{name:"title", height:30, map_to:"title", type:"textarea", focus:true, label:"title"},
 		    {name:"description", height:50, map_to:"text", type:"textarea", focus:true},
 		    
-		    {name:"parent",height:25, type:"parent", map_to:"parent", filter:function(id, task){ 
-		        if(task.$level > 1){         
-		            return false;     
-		        }else{  
-		            return true; 
-		        } 
+		    {name:"parent",height:25, type:"parent", map_to:"parent", 
+		    	filter:function(id, task){
+			        if(task.$level > 1){         
+			            return false;     
+			        }else{  
+			            return true; 
+			        }
 		    }},
 		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
 		    //{name:"holder",    height:30, type:"textarea", map_to:"holder"},
 		    {name:"holder",    height:30, type:"select", map_to:"holder", options:names},
-		    {name:"duration", height:30, map_to:{start_date:"start_date",end_date:"end_date"}, type:"time", time_format:["%d","%m","%Y","%H:%i"]},
-		    
+		    {name:"duration", height:30, map_to:{start_date:"start_date",end_date:"end_date"}, 
+		    	type:"time", time_format:["%d","%m","%Y","%H:%i"], autofix_end:false},
 		];
 		// lightbox 내부 섹션 이름 변경
 		/* gantt.locale.labels.section_title="Title";
@@ -160,7 +166,6 @@ var names = [];
 		gantt.locale.labels.section_parent = "부모 태스크";
 		gantt.locale.labels.section_duration = "작업 기한";
 		
-
 		// 서브태스크의 + 버튼 삭제
 		gantt.templates.grid_row_class = function( start, end, task ){
 		    if ( task.$level > 1 ){
@@ -168,8 +173,6 @@ var names = [];
 		    }
 		    return "";
 		};
-		//gantt.config.grid_resizer_attribute = "gridresizer";
-		//gantt.config.min_duration = 60*60*1000;
 		
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 			//var task = gantt.getTask(task_id);
@@ -181,11 +184,14 @@ var names = [];
 		    	alert("태스크 내용 작성!!");
 		        return false;
 		    }
+
+		    if(id != 1){
 			var ptask = gantt.getTask(task.parent);
-			if(task.start_date < ptask.start_date) { alert("시작일이 부모태스크보다 빠릅니다"); return false; }
-			else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }
-			else if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
-			else if(task.start_date == task.end_date) { alert("시작일과 종료일이 같습니다"); return false; }
+				if(task.start_date < ptask.start_date) { alert("시작일이 부모태스크보다 빠릅니다"); return false; }
+				else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }
+		    }
+			if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
+			else if(task.start_date.toISOString() == task.end_date.toISOString()) { alert("시작일과 종료일이 같습니다"); return false; }
 			
 		    return true;
 		});
@@ -205,15 +211,25 @@ var names = [];
 			
 		});
 		
+		gantt.attachEvent("onBeforeLightbox", function(id){
+		  	if(id == 1){
+			//gantt.getTask(1).readonly_property = "parent";
+		  		//gantt.config.lightbox.readonly_property = "parent";
+		  		gantt.config.lightbox.readonly_property = "parent";
+		  		gantt.config.readonly_property = "holder";
+		  		//gantt.config.readonly_property = "parent";
+		  		//gantt.config.lightbox.readonly = "holder";
+		  		//gantt.config.lightbox.section_parent.readonly_prop = true;
+		  	}
+		  	//gantt.config.lightbox.section.readonly = true;
+		  	//gantt.config.readonly_property = "parent";
+		  return true;
+		});
+		
 		gantt.attachEvent("onLightbox", function (task_id){
 			console.log("####onLightbox#####");
 			var child = gantt.getChildren(task_id);
 			var task = gantt.getTask(task_id);
-			if(task.$level == 0){
-				console.log("project");
-			}
-			
-			
 			
 			
 			/*
@@ -498,8 +514,8 @@ var names = [];
 		console.log(item);
 			 
 	  var sch = callSch(item);
-	  //console.log("##return upt Sch##");
-	  //console.log(sch);
+	  console.log("##return upt Sch##");
+	  console.log(sch);
 	  $.ajax({
 		  type:"post",
 		  url:"${path}/gantt.do?method=update&no="+'${no}',
@@ -732,10 +748,11 @@ var names = [];
 
 	function callSch(gantt){
 		console.log("###callSch###");
-		console.log(gantt);
+		console.log(gantt);console.log(gantt.id);
 	  var sch = {}; var tmp_start; var tmp_end;
 	  sch.title = gantt.title;
-	  sch.parent = gantt.parent;
+	  if(gantt.id == 1) sch.parent = "0";
+	  else sch.parent = gantt.parent;
 	  sch.progress = gantt.progress;
 	  sch.sortorder = gantt.sortorder; 
 	  sch.id = gantt.id;	
