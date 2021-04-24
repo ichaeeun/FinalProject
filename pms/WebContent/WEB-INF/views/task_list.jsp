@@ -45,7 +45,12 @@
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	
+
+var mem = "${mem.id}";
+if(mem==""){
+	alert("로그인 하세요");
+	location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동	
+}
 
 $("#btnAddTaskForm").click(function(){
 	$("#addTaskModal").modal("show");

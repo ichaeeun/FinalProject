@@ -78,6 +78,11 @@ public class Member {
 		this.email = email;
 		this.pno=pno;
 	}
+	public Member(int pno, String imgpath) {
+		super();
+		this.pno = pno;
+		this.imgpath = imgpath;
+	}
 	public Member(String name) {
 		super();
 		this.name = name;
