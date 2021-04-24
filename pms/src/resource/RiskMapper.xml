@@ -65,6 +65,10 @@
 		from riskboard 
 		where risk_no = #{risk_no}
 	</select>
+	<select id="fileInfo" resultType="riskfile" parameterType="int">
+		SELECT * FROM RISK_FILE
+		WHERE rnum=#{rnum}
+	</select>
 	<!-- public void uptStatus (UptStatus upt_satus) -->
 	<update id="uptStatus" parameterType="uptstatus">
 		UPDATE RISKBOARD 
@@ -82,10 +86,6 @@
 		INSERT INTO risk_file values(riskfile_seq.nextval,#{name},riskBoard_seq.currval,
 				#{filename},#{filepath},sysdate)
 	</insert>
-	<select id="fileInfo" resultType="riskfile" parameterType="int">
-		SELECT * FROM RISK_FILE
-		WHERE rnum=#{rnum}
-	</select>
 	
 	<update id="updateRisk" parameterType="riskboard">
 		update riskboard
@@ -94,12 +94,21 @@
 				regdte = sysdate
 			where risk_no = #{risk_no}
 	</update>
-<!-- 	<update id="updateFile" parameterType="hashmap"> -->
-<!-- 		update risk_file -->
-<!-- 			set filename=#{filename} -->
-<!-- 		where fno = #{fno} -->
-			
-<!-- 	</update> -->
+<!--     <update id="updateFile" parameterType="hashmap"> -->
+<!--           update riskfile -->
+<!--             set filename = #{filename} -->
+<!--          where no = #{no} -->
+<!--               and filename = #{orgFname} -->
+<!--     </update> -->
+	<update id="updateFile" parameterType="hashmap">
+		UPDATE RISK_FILE 
+			SET filename = #{filename},
+				uptdte = sysdate
+			WHERE fno = #{fno}
+				and filename = #{orgFname}
+	</update>
+
+
 	<delete id="deleteRisk" parameterType="int">
 		delete from riskboard
 		where risk_no in(
@@ -109,7 +118,13 @@
 			connect by prior risk_no = risk_parent_no
 		)
 	</delete>
-	
+	<!-- 
+	<select id="uptlist" >
+		SELECT a.*, b.* 
+		FROM (SELECT * FROM RISK_FILE rf)a, RISKBOARD b
+		WHERE a.rnum = b.RISK_NO
+	</select>
+	 -->
 
 </mapper>  
  

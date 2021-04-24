@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pms.controller.LogController;
 import pms.dao.OverviewDao;
 import pms.dao.TaskDetailDao;
 import pms.dto.Log;

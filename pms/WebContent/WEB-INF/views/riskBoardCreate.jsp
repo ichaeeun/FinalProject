@@ -44,6 +44,9 @@
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 		<script type="text/javascript">
+		
+		console.log("${riskboard.fileInfo}");
+		
 			$(document).ready(function(){
 				$("#mainBtn").click(function(){
 					location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
@@ -203,12 +206,15 @@
                                                     </div>
                                                    	<div class="tab-pane" id="product-img">
                                                     	<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
+<%--                                                     	<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts"> --%>
 		                                                    <div id="fileArea">
 			                                                 	<div class="custom-file">
+<%-- 			                                                 	<span>기존 업로드 파일</span>${finf.filename} --%>
 			                                                 		<input name="report" type="file"/>
 			                                                 		<span onclick="rm(this)"> [X] </span><br>
 			                                               		</div>
 		                                               		</div>
+<%-- 		                                               	</c:forEach> --%>
                                                     <!-- Preview -->
 		                                       			<div class="dropzone-previews mt-3" id="file-previews">
 		                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
