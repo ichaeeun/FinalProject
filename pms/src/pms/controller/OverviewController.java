@@ -73,7 +73,8 @@ public class OverviewController {
 //  http://localhost:7080/pms/task.do?method=log
 	@RequestMapping(params="method=log")
 	public String taskLog(@RequestParam("no") int no,Log log, Model d) {
-		
+
+		d.addAttribute("project",gservice.getProject(no));		
 		d.addAttribute("taskLog",rservice.taskLog(no));
 		d.addAttribute("projLog",rservice.projLog(no));
 		d.addAttribute("reqLog",rservice.reqLog(no));

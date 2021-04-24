@@ -163,19 +163,19 @@
                                             <c:forEach var="task" items="${taskLog}">                                          
                                                 <tr>
                                                 	<td>${task.regdte}</td>
-                                                    <td>${task.name}님이 ${task.task_name}(${task.task_no}) 태스크를 생성했습니다.</td>											
+                                                    <td>${task.name}님이 <span style="color:#526dee;">${task.task_name}(${task.task_no})</span> 태스크를 생성했습니다.</td>											
                                                 </tr>                                             
                                             </c:forEach>     
                                             <c:forEach var="req" items="${reqLog}">                                          
                                                 <tr>
                                                 	<td>${req.regdte}</td>
-                                                    <td>${req.name}님이 ${req.task_name}(${req.task_no}) 승인요청 하였습니다.</td>											
+                                                    <td>${req.name}님이 ${req.task_name}(${req.task_no}) <span style="color:#526dee; font-weight:900;">승인요청</span> 하였습니다.</td>											
                                                 </tr>                                              
                                             </c:forEach>      
                                             <c:forEach var="ass" items="${projLog}">                                          
                                                 <tr>
                                                 	<td>${ass.regdte}</td>
-                                                   <td>${ass.name}님이 ${ass.project_name}(${ass.project_no}) 에 할당되었습니다.</td>
+                                                   <td>${ass.name}님이 <span style="color:#526dee;">${ass.project_name}(${ass.project_no})</span> 에 할당되었습니다.</td>
                                                 </tr>                                             
                                             </c:forEach>                                      
                                             </tbody>
