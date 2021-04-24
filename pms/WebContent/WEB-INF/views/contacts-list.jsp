@@ -47,10 +47,37 @@
 		var idCheck=0;
 		var emailCheck=0;
 		var pwdCheck=0;	
+		var regExp = 
+			new RegExp("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i");
 		signupCheck();
+		// name pass 
+/* 		function veriEmail(email){
+			var regExp = 
+				new RegExp("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i");
+			return regExp.test(email);
+		} */
+		function checkName(){
+			var name = $("#signup-modal [name=name]").val();
+			if(name==""){
+				$("#chName").html("입력 필수 항목입니다.").css("color","red");
+			}else{
+				$("#chName").html("");
+			}
+		}
+		function checkPass2(){
+			var name = $("#signup-modal [name=pass]").val();
+			if(name==""){
+				$("#chPassPre").html("입력 필수 항목입니다.").css("color","red");
+			}else{
+				$("#chPassPre").html("");
+			}
+		}		
 		function checkPass(){
 			var pass = $("#signup-modal [name=pass]").val();
-			var repass = $("#signup-modal [name=repass]").val();
+			var repass = $("#signup-modal [name=repass]").val();			
+			if(pass==""){
+				$("#chPass").html("입력 필수 항목입니다.").css("color","red");
+			}
 			if(repass==""||pass!=repass){
 				$("#chPass").html("비밀번호가 일치하지 않습니다.").css("color","red");
 				$("#signupBtn").prop("disabled",true);
@@ -65,7 +92,8 @@
 		}
 		
 		function checkId(){
-			var id = $("#signup-modal [name=id]").val();
+			var id = $("#signup-modal [name=id]").val().trim();
+			if(id==null) id="";
 			$.ajax({
 				type:"post",
 				url:"${path}/manpower.do?method=chId",
@@ -91,9 +119,12 @@
 				}
 			})
 		}
-		
+/* 		function verifyEmail(email){
+			 var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		}	 */
 		function checkEmail(){
-			var email = $("#signup-modal [name=email]").val();
+			var email = $("#signup-modal [name=email]").val().trim();			
+			if(email==null) email="";
 			$.ajax({
 				type:"post",
 				url:"${path}/manpower.do?method=chEmail",
@@ -102,16 +133,18 @@
 					},
 				dataType:"json",
 				success:function(data){
-						if(data.email>=1||data.email==null){
+						if(data.email>=1){
 							$("#signupBtn").prop("disabled",true);
 							$("#chEmail").html("이미 존재하는 이메일입니다.").css("color","red");
-						}else if(data.email==0){
+						}else if(data.email!=""||data.email==0||regExp.test(data.email)){
 							emailCheck=1;
 							$("#chEmail").html("사용 가능한 이메일입니다.").css("color","blue");
 							if(idCheck==1&&pwdCheck==1&emailCheck==1){
 								$("#signupBtn").prop("disabled",false);
 								signupCheck();
 							}
+						}else if(!regExp.test(data.email)){
+							$("#chEmail").html("이메일 형식을 확인해주세요.").css("color","red");
 						}
 				},
 				error:function(err){
@@ -126,9 +159,14 @@
 			var pass = $(".mb-3 [name=pass]").val();
 			var repass = $(".mb-3 [name=repass]").val();
 			var name = $(".mb-3 [name=name]").val();
+			checkName(); checkPass2(); 
+			if(id=="") $("#chId").html("입력 필수 항목입니다.").css("color","red");
+			if(email=="") $("#chEmail").html("입력 필수 항목입니다.").css("color","red");
+			if(repass=="") $("#chPass").html("입력 필수 항목입니다.").css("color","red");
 			if(id==""||email==""||pass==""||repass==""||name==""){
 				$("#signupBtn").prop("disabled",true);
 			}
+			
 		} 	
 			
 	  	$(document).ready(function(){
@@ -148,56 +186,6 @@
 		    var cur = "${sch.startBlock}"
 		    var cnt = "${sch.count}"
   			console.log("shName:"+shName);
-/* 			function ajaxSearch(){
-	  			$.ajax({
-	  				type:"post",
-	  				url:"${path}/manpower.do?method=jsonContactList",
-	  				data:{
-	  					"name":shName,
-	  					"curPage":cur,  					
-	  				},
-	  				dataType:"json",
-	  				success:function(data){
-	  					console.log(data);
-	  					var mlist = data.memList1;
-	  					var show = "";
-	  					$.each(mlist,function(idx,m){
-	  						
-	  						show+= "<div class='col-xl-3 col-sm-6'>";			
-	  						show+= "<div class='text-center card'>";
-	  						show+= "<div class='card-body'>";
-	  						show+= "<div class='dropdown float-end'>";
-	  						show+= "<a class='text-body dropdown-toggle' href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-	  						show+= "<i class='mdi mdi-dots-vertical font-20'></i></a>";
-	  						// 인사부 일 때에만 계정 발송, 인력 삭제가 가능함
-	  						if(auth == 'hp'){
-	  							show+= "<div class='dropdown-menu dropdown-menu-end'>";
-                           		show+= "<a class='dropdown-item goMail' ><button name='mailPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mail-modal'>계정 발송</button></a>";
-                            	show+= "<a class='dropdown-item goDelete'><button name='deletePno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#danger-alert-modal'>인력 삭제</button></a>";
-                            	if(m.auth == 'wk' || m.auth == 'pm'){
-                            		show+= "<a class='dropdown-item alertAuth'><button name='alertPno' type='button' value='"+m.pno+"' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#alert-modal'>직급 변경</button></a>";
-                            	}
-                            	show+= "</div>";
-	  						}
-                            show+= "</div>";                           
-	  						show+= "<i class='fas fa-user-circle fa-5x'></i>";
-	  						show+= "<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'><a class='text-dark'>";
-	  						show+= m.name+"</a>";
-	  						show+= "<form style='display:none;'><input type='hidden' class='pno' name=pno value='"+m.pno+"''/></form>";
-	  						show+= "</h4>";
-	  						show+= "<p class='text-muted'>"+m.auth+"<span> | </span>"+m.part;
-	  						show+= "<br><span> <a href='#' class='text-pink'>"+m.email+"</a> </span></p>";
-	  						show+= "</div></div></div>";
-	  					});
-	  					$("#memShow").html(show);
-	  				},
-		  			error:function(err){
-		  				alert("에러 발생:"+err);
-		  				console.log(err);
-		  			}
-	  			});
-			};
-			ajaxSearch(); // 초기화면 호출하기 위함 */
 
 	  		// 검색 버튼
  	  		$("#searchBtn").click(function(){
@@ -503,15 +491,15 @@
                                        <c:if test="${not empty mlist.imgpath}">
                                        <c:set var = "length" value = "${fn:length(mlist.imgpath)}"/>
                                     <!--   <img src="" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img">  -->
-                             	     <img src="${path}/profileImage/${mlist.imgpath}" alt="user-image"  width="90px" height="90px" class="rounded-circle" > 
+                             	     <img src="${path}/${fn:substring(mlist.imgpath, 46, length)}" alt="user-image" width="95px" height="95px" class="rounded-circle"> 
                                        </c:if>
 	  									<h4 class='mt-3 mb-1 name goDetail' name='mt-3 mb-1 name'>
-	  										<a class='text-dark'>${mlist.name }</a>
+	  										<a class='text-dark' style="cursor:pointer;">${mlist.name }</a>
 	  									<form style='display:none;'><input type='hidden' class='pno' name=pno value="${mlist.pno }"/>
 	  									</form>
 										</h4>
 										<p class='text-muted'>${mlist.auth }<span> | </span>${mlist.part }
-										<br><span> <a href='#' class='text-pink'>${mlist.email }</a> </span></p>
+										<br><span> <a class='text-pink'>${mlist.email }</a> </span></p>
 										</div>
 										</div>
 										</div>
@@ -1009,7 +997,8 @@
                                                         </div> -->
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">이름</label>
-                                                                <input name="name" class="form-control" type="text" placeholder="이름"/>
+                                                                &nbsp;<span id="chName"></span>
+                                                                <input onInput="checkName()" name="name" class="form-control" type="text" placeholder="이름"/>
                                                                 <input name="imgpath" type="hidden" val=""/>
 
                                                             </div>
@@ -1026,7 +1015,8 @@
                                                             </div>
                                                              <div class="mb-3">
                                                                 <label for="pass" class="form-label">비밀번호</label>
-                                                                <input onInput="checkPass()" name="pass" class="form-control" type="password" placeholder="비밀번호"/>
+                                                                &nbsp;<span id="chPassPre"></span>
+                                                                <input onInput="checkPass() checkPass2()" name="pass" class="form-control" type="password" placeholder="비밀번호"/>
                                                             </div>
                                                              <div class="mb-3">
                                                                 <label for="pass" class="form-label">비밀번호 재입력</label>
@@ -1051,7 +1041,7 @@
                                                                 
                                                             </div>                                                                                                                               
                                                             <div class="mb-3 text-center">
-                                                                <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="signupBtn">계정생성</button>
+                                                                <button type="button" onclick="veriEmail()" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="signupBtn">계정생성</button>
                                                             </div>
                                                     </div>
                                                 </div><!-- /.modal-content -->

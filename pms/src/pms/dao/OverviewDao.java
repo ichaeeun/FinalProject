@@ -21,4 +21,7 @@ public interface OverviewDao {
 	public ArrayList<Overview> ViewMem(int no);
 	public void mTaskInsert(Task t); // 메인태스크 추가
 	public ArrayList<Member> taskMember(int no); // tasklist에 maintask추가 select option
+	
+	// 채팅
+	public ArrayList<Member> chatProfile(Member m); // 채팅에 보여질 프로필.
 }

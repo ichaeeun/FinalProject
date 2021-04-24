@@ -19,7 +19,7 @@ public class ChattingController {
 	private MypageService service;
 	@Autowired(required = false)
 	private MypageDao dao;
-
+	
 	// http://localhost:7080/pms/chatting.do
 		// 192.168.0.47:7080
 		@RequestMapping("chatting.do")
@@ -39,7 +39,7 @@ public class ChattingController {
 			return service.showProfile(pno);
 		}
 		
-	
+
 }
 
 

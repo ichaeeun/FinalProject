@@ -33,4 +33,5 @@ AND pp.PROJECT_NO = pl.PROJECT_NO
 AND pp.PROJECT_NO = #{no}
 AND pl.status = 'p'
 </select>
+
 </mapper>
