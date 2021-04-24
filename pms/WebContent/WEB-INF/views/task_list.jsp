@@ -565,7 +565,7 @@ function checkExistData(value, dataName) {
                               <div class="text-center">
                                   <i class="bx bx-check-double h1 text-white"></i>
                                   <h4 class="mt-2 text-white">Well Done!</h4>
-                                  <p class="mt-3 text-white">태스크가 완료되었습니다!</p>
+                                  <p class="mt-3 text-white">태스크 추가 되었습니다!</p>
                                   <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">Continue</button>
                               </div>
                           </div>

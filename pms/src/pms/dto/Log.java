@@ -4,6 +4,7 @@ public class Log {
 	private int pno;
 	private String name;
 	private int project_no;
+	private String project_name;
 	private int task_no;
 	private String regdte;
 	private String task_name;
@@ -34,6 +35,18 @@ public class Log {
 		this.task_no = task_no;
 	}
 
+	public String getProject_name() {
+		return project_name;
+	}
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public int getPno() {
 		return pno;
 	}

@@ -15,6 +15,7 @@ import pms.dto.Log;
 import pms.dto.Member;
 import pms.dto.Task;
 import pms.service.GanttService;
+import pms.service.LogService;
 import pms.service.MypageService;
 import pms.service.OverviewService;
 
@@ -27,6 +28,8 @@ public class OverviewController {
 	private GanttService gservice;
 	@Autowired(required=false)
 	private MypageService service2;
+	@Autowired(required = false)
+	private LogService rservice;
 	
 //  http://localhost:7080/pms/task.do?method=list&no=1
 	@RequestMapping(params="method=list")
@@ -66,12 +69,15 @@ public class OverviewController {
 		d.addAttribute("project",gservice.getProject(no));
 		return "overview";
 	}
-
+	// 로그
 //  http://localhost:7080/pms/task.do?method=log
 	@RequestMapping(params="method=log")
 	public String taskLog(@RequestParam("no") int no,Log log, Model d) {
-		d.addAttribute("LogList",service.LogList(no));
-		d.addAttribute("project",gservice.getProject(no));
+
+		d.addAttribute("project",gservice.getProject(no));		
+		d.addAttribute("taskLog",rservice.taskLog(no));
+		d.addAttribute("projLog",rservice.projLog(no));
+		d.addAttribute("reqLog",rservice.reqLog(no));
 		return "log";
 	}
 	
@@ -97,4 +103,6 @@ public class OverviewController {
 		if(m!=null) pno = m.getPno();
 		return service2.showProfile(pno);
 	}
+	
+
 }
