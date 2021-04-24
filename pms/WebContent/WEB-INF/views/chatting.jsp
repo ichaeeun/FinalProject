@@ -129,7 +129,7 @@ var wsocket;
         show += "</li>";
         
    		wsocket.send("${no}:${mem.name}:"+date+":"+msg);
-		alert(show);
+	/* 	alert(show); */
 		$("#msg").val("");
 		
 		 $("#chatMessageArea").append(show);	
@@ -319,7 +319,7 @@ var wsocket;
                                 <div class="card">                              
                                     <div class="card-body" id="chatArea">
                                         <ul id="chatMessageArea" class="conversation-list chat-app-conversation" style="max-height: 460px">
-                                            <li class="clearfix">
+                                          <%--   <li class="clearfix">
                                                 <div class="chat-avatar">
                                                     <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded" alt="James Z" />
                                                     <i>10:00</i>
@@ -332,7 +332,7 @@ var wsocket;
                                                         </p>
                                                     </div>
                                                 </div>                                          
-                                            </li>
+                                            </li> --%>
                                          
                                      
                                               

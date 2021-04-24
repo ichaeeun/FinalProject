@@ -4,7 +4,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.Log;
 import pms.dto.Member;
@@ -17,9 +20,9 @@ public class LogController {
 	private LogService service;
 	@Autowired(required=false)
 	private MypageService service2;
-	public void taskIns(Log ins) { 
-		service.taskIns(ins);
-	};
+	
+
+
 	
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){
@@ -28,4 +31,5 @@ public class LogController {
 		if(m!=null) pno = m.getPno();
 		return service2.showProfile(pno);
 	}
+	
 }

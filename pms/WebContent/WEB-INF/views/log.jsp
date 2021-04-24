@@ -39,7 +39,17 @@
 
 		<!-- icons -->
 		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		
+		<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+		<script type="text/javascript">
 
+		$(document).ready(function() {
+
+		    $('#basic-datatabl').DataTable( {
+		        "order": [[ 0, "desc" ]]
+		    } );
+		} );
+		</script>
     </head>
 
     <body class="loading">
@@ -140,23 +150,34 @@
                                       		현재까지 활동들이 보여집니다.
                                             <code style="display:none;">$().DataTable();</code>.
                                         </p>
-                                        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                        <table id="basic-datatabl" class="table dt-responsive nowrap w-100">
                                         <col width="10%">
                                         <col width="90%">
                                             <thead>
                                                 <tr>
-                                                  <th>발생시간</th>
-                                                    <th>log</th>                                                
+                                                  <th id="sort">발생시간</th>
+                                                  <th>log</th>                                                
                                                 </tr>
                                             </thead>                                      
                                             <tbody>
-                                            <c:forEach var="log" items="${LogList}">                                          
+                                            <c:forEach var="task" items="${taskLog}">                                          
                                                 <tr>
-                                                	<td>${log.regdte}</td>
-                                                    <td>${log.name}님의 ${log.task_name} 태스크를 생성했습니다.</td>											
-                                                </tr>
-                                                
-                                            </c:forEach>                                               
+                                                	<td>${task.regdte}</td>
+                                                    <td>${task.name}님이 ${task.task_name}(${task.task_no}) 태스크를 생성했습니다.</td>											
+                                                </tr>                                             
+                                            </c:forEach>     
+                                            <c:forEach var="req" items="${reqLog}">                                          
+                                                <tr>
+                                                	<td>${req.regdte}</td>
+                                                    <td>${req.name}님이 ${req.task_name}(${req.task_no}) 승인요청 하였습니다.</td>											
+                                                </tr>                                              
+                                            </c:forEach>      
+                                            <c:forEach var="ass" items="${projLog}">                                          
+                                                <tr>
+                                                	<td>${ass.regdte}</td>
+                                                   <td>${ass.name}님이 ${ass.project_name}(${ass.project_no}) 에 할당되었습니다.</td>
+                                                </tr>                                             
+                                            </c:forEach>                                      
                                             </tbody>
                                         </table>
 
@@ -173,22 +194,7 @@
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> &copy; Minton theme by <a href="">Coderthemes</a> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+              <jsp:include page="footer.jsp"></jsp:include>
                 <!-- end Footer -->
 
             </div>
