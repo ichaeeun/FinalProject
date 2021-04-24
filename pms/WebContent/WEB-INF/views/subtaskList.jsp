@@ -48,7 +48,7 @@ text-decoration:line-through;
 								<div class="form-check">
 									<input type="hidden" class="task_status" value="${sub.task_status }"/>
 									<input class="form-check-input" type="checkbox"
-										id="tasktodayCheck" <c:if test="${detail.task_status=='완료' }">disabled</c:if> <c:if test="${sub.task_status=='완료' }">checked</c:if>>
+										id="tasktodayCheck" <c:if test="${detail.task_status=='완료'||!(mem.pno==sub.pno || mem.auth=='pm')}">disabled</c:if> <c:if test="${sub.task_status=='완료' }">checked</c:if>>
 									<div id="subtaskId">
 										<label class="form-check-label"
 											for="tasktodayCheck"><div class="task_no">${sub.task_no }</div></label>

@@ -619,7 +619,7 @@
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <!-- item-->
                                                 <div  id="noing">
-                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${!(mem.pno==detail.pno || mem.auth=="pm")||detail.task_status!="진행"}'>disabled</c:if>">
+                                                <a href="javascript:void(0);" class="dropdown-item <c:if test='${(mem.pno!=detail.pno)||detail.task_status!="진행"}'>disabled</c:if>">
                                                     <div data-bs-toggle="modal" data-bs-target="#RequestModal"><i class='mdi mdi-check-circle-outline me-1'></i>승인요청</div>
                                                 </a>
                                                 </div>
