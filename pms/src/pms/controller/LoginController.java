@@ -45,7 +45,7 @@ public class LoginController {
 	@Autowired(required=false)
 	private MypageService pservice;
 	@Autowired(required = false)
-	private LocaleResolver localResolver;
+	private LocaleResolver localeResolver;
 	
 	
 	
@@ -227,5 +227,62 @@ public class LoginController {
 			d.addAttribute("member", new Member());		
 			d.addAttribute("showprofile",pservice.showProfile(m.getPno()));
 			return page;		
+		}
+		
+		// http://localhost:7080/pms/main.do?method=choiceLan
+		@RequestMapping(params="method=choiceLan")
+		public String choiceLan(@RequestParam("lang") String lang, HttpServletRequest request,HttpServletResponse response, Model d) {
+			System.out.println("선택한 언어: "+lang);
+			Locale locale = new Locale(lang);
+			localeResolver.setLocale(request, response, locale);
+			d.addAttribute("allproject", dservice.getAllProject());
+			//d.addAttribute("doingproject", dservice.getDoingProject());	
+			
+			// 진행중인 프로젝트 리스트 받기
+			ArrayList<pms_project> doingproject = dservice.DoingProject();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			long totallday = 0;
+			long totdoingday = 0;
+			for(int i=0; i<doingproject.size(); i++) {	// 배열크기만큼 반복
+				
+				try {
+					Date start = df.parse(doingproject.get(i).getStart1());
+					Date end = df.parse(doingproject.get(i).getEnd1());
+					Date today = new Date();
+					// 진행도
+					long startday = Math.abs( start.getTime() / (24*60*60*1000) ); // 시작일수(숫자값)
+					long endday = Math.abs( end.getTime() / (24*60*60*1000) ); // 종료일수(숫자값)
+					long todayday = Math.abs( today.getTime() / (24*60*60*1000) ); // 현재일수(숫자값)
+					long allday = endday - startday;			// 분모:프로젝트총숫자
+					// 진행숫자(현재-시작= 진행수)
+					long doday = todayday - startday;			// 분자:프로젝트진행일
+					if(todayday>endday) {	// 만약 오늘날짜가 종료일보다 크다면
+						doday = endday - startday;
+					}
+					doingproject.get(i).setAllday(allday);
+					doingproject.get(i).setDoday(doday);
+					totallday += allday;
+					totdoingday += doday;
+					
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			}
+			// 프로젝트 전체일과 진행일 모델에 int값으로 넘기기
+			d.addAttribute("totallday", totallday);	
+			d.addAttribute("totdoingday", totdoingday);
+			
+			// 모델에 int값으로 설정
+			d.addAttribute("doingproject", dservice.getDoingProject());
+			d.addAttribute("alltask", dservice.getAllTask());
+			d.addAttribute("doingtask", dservice.getDoingTask());
+			d.addAttribute("allrisk", dservice.getAllRisk());
+			d.addAttribute("doingrisk", dservice.getDoingRisk());
+			d.addAttribute("allmember", dservice.getAllmember());
+			
+			return "dashboard_ceo";
 		}
 }
