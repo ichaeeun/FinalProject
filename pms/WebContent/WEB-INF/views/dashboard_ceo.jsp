@@ -59,7 +59,7 @@
 	 $("#selectLan").val("${param.lang}");
 		$("#selectLan").change(function(){
 			if($(this).val()!=""){
-				location.href="${path}/choiceLan.do?lang="+$(this).val();
+				location.href="${path}/main.do?method=choiceLan&lang="+$(this).val();
 			}
  	});
 	   
