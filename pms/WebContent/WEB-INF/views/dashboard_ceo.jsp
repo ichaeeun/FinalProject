@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="form"	uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -15,6 +16,10 @@
 <c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
 <c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
 <c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
+<style type="text/css">
+.select-wrap { text-align: right; }
+#selectLan {width: 200px; display: inline-block; margin-right: 36px; margin-top: 10px; }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -50,6 +55,15 @@
 --%>
 
    $(document).ready(function(){
+	 // 다국어 처리
+	 $("#selectLan").val("${param.lang}");
+		$("#selectLan").change(function(){
+			if($(this).val()!=""){
+				location.href="${path}/main.do?method=choiceLan&lang="+$(this).val();
+			}
+ 	});
+	   
+	   
 	// 파이차트에 들어갈 데이터
 		var options = {
 				  chart: {
@@ -105,7 +119,13 @@
 
 			<div class="content-page">
                 <div class="content">
-
+                <div class="select-wrap">
+				  <select class="form-control" id="selectLan">
+				  	<option value=""><spring:message code="chlang"/></option>
+				  	<option value="ko"><spring:message code="ko"/></option>
+				  	<option value="en"><spring:message code="en"/></option>
+				  </select>
+				  </div>
                     <!-- Start Content-->
                     <div class="container-fluid">
 						<div class="row">
@@ -117,7 +137,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">전체 프로젝트 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent"><spring:message code='Total_number_of_projects'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${allproject}</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
@@ -139,7 +159,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">진행 프로젝트 수</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads"><spring:message code='Number_of_projects_in_progress'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${doingproject}</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 3.27%</span>
@@ -161,7 +181,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">전체인원</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals"><spring:message code='Total_number_of_people'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${allmember }</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
@@ -183,7 +203,7 @@
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
-						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">총 태스크</h5>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue"><spring:message code='Total_number_of_tasks'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${alltask }</span></h3>
 						                            <p class="mb-0 text-muted">
 						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 34.61%</span>
@@ -213,7 +233,7 @@
 		                                        <a data-bs-toggle="collapse" href="#cardCollpase21" role="button" aria-expanded="false" aria-controls="cardCollpase21"><i class="mdi mdi-minus"></i></a>
 		                                    	<a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>
 		                                    </div>
-		                                    <h4 class="header-title mb-0">프로젝트 진행도</h4>
+		                                    <h4 class="header-title mb-0"><spring:message code='Project_Progress'/></h4>
 											<div id="cardCollpase21" class="collapse pt-3 show" dir="ltr">
 		                                    	<div id="chart1" class="apex-charts" data-colors="#48c2e7"></div>
 		                                	</div> <!-- collapsed end -->
@@ -230,7 +250,7 @@
 		                                        <a data-bs-toggle="collapse" href="#cardCollpase21" role="button" aria-expanded="false" aria-controls="cardCollpase21"><i class="mdi mdi-minus"></i></a>
 		                                    	<a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>
 		                                    </div>
-		                                    <h4 class="header-title mb-0">태스크 진행도</h4>
+		                                    <h4 class="header-title mb-0"><spring:message code='Task_Progress'/></h4>
 											<div id="cardCollpase21" class="collapse pt-3 show" dir="ltr">
 		                                    	<div id="chart2" class="apex-charts" data-colors="#48c2e7"></div>
 		                                	</div> <!-- collapsed end -->
@@ -247,7 +267,7 @@
 		                                        <a data-bs-toggle="collapse" href="#cardCollpase21" role="button" aria-expanded="false" aria-controls="cardCollpase21"><i class="mdi mdi-minus"></i></a>
 		                                    	<a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>
 		                                    </div>
-		                                    <h4 class="header-title mb-0">리스크 진행도</h4>
+		                                    <h4 class="header-title mb-0"><spring:message code='Risk_Progress'/></h4>
 											<div id="cardCollpase21" class="collapse pt-3 show" dir="ltr">
 		                                    	<div id="chart3" class="apex-charts" data-colors="#48c2e7"></div>
 		                                	</div> <!-- collapsed end -->

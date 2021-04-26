@@ -109,5 +109,10 @@ SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project
 	ON pm.PNO = pmp.pno
 </select>
 
+<select id="chatProfile" resultType="member" parameterType="member">
+SELECT pno, imgpath FROM PMS_MEMBER
+	WHERE 1=1
+	And pno like '%'|| #{pno} ||'%' 
+</select>
 </mapper>  
  

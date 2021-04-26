@@ -50,5 +50,11 @@ public class OverviewService {
 	public ArrayList<Member> taskMember(int no){ //project_no
 		return dao.taskMember(no);
 	}
+	// 채팅 프로필
+	public ArrayList<Member> chatProfile(Member m){
+		if (m.getImgpath() == null)  m.setImgpath("");
+		
+		return dao.chatProfile(m);
+	};
 
 }

@@ -122,7 +122,12 @@ public class RiskController {
 	// http://localhost:7080/pms/risk.do?method=uptForm
 	@RequestMapping(params = "method=uptForm")
 	public String uptForm(@RequestParam("no") int no, @ModelAttribute("riskboard") RiskBoard b, Model d) {
+		System.out.println(b.getRisk_no());
+		System.out.println(b.getFileInfo());
+		System.out.println(b.getFnames());
+		System.out.println(b.getRisk_content());
 		d.addAttribute("update","Y");
+		d.addAttribute("riskboard",service.getBoard(b.getRisk_no()));
 
 		return "riskBoardCreate";
 	}
@@ -131,6 +136,7 @@ public class RiskController {
 	public String update(@RequestParam("no") int no,@ModelAttribute("riskboard") RiskBoard upt, Model d) {
 		System.out.println(upt.getRisk_title());
 		System.out.println(upt.getRisk_content());
+		System.out.println(upt.getFnames());
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+upt.getRisk_no());
 		d.addAttribute("proc","update");
 		service.updateRisk(upt);
@@ -140,11 +146,11 @@ public class RiskController {
 	
 	// http://localhost:7080/pms/risk.do?method=delete
 	@RequestMapping(params="method=delete")
-	public String deleteRisk(@RequestParam("no") int no, Model d) {
+	public String deleteRisk(@RequestParam("no") int no, @RequestParam("risk_no") int risk_no, Model d) {
+		System.out.println(risk_no+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		d.addAttribute("proc","delete");
-		service.deleteRisk(no);
-		System.out.println(no+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		return "forward:risk.do?method=riskBoard";
+		service.deleteRisk(risk_no);
+		return "riskBoard";
 	}
 	
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  

@@ -4,14 +4,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pms.dto.Member;
 import pms.dto.pms_project;
 import pms.service.DashboardService;
+import pms.service.MypageService;
 import pms.service.ProjectService;
 import pms.service.TaskDetailService;
 
@@ -24,10 +29,12 @@ public class DashBoardController {
 	private ProjectService pservice;
 	@Autowired(required=false)
 	private TaskDetailService service2; // 프로젝트명 불러오려고 추가했습니다
+	@Autowired(required=false)
+	private MypageService dservice;
 	
 	// http://localhost:7080/pms/dashboard.do?method=list
 	@RequestMapping(params="method=list")
-	public String gantt(@RequestParam("no") int no, Model d) {
+	public String gantt(@RequestParam("no") int no, Model d,HttpSession session) {
 		d.addAttribute("no", no);
 		
 		pms_project project = pservice.getProject(no);
@@ -60,11 +67,18 @@ public class DashBoardController {
 		d.addAttribute("project",project); // 프로젝트명 불러오려고 추가했습니다 // 프로젝트정보
 		
 		
-		
 		d.addAttribute("task",service.getTaskNum(no));
 		d.addAttribute("risk",service.getRiskNum(no));
 		d.addAttribute("member",service.getMemcnt(no));
 		return "dashboard";
+	}
+	
+	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
+	public Member showMember(HttpSession session){
+		Member m = (Member)session.getAttribute("mem");
+		int pno=0;
+		if(m!=null) pno = m.getPno();
+		return dservice.showProfile(pno);
 	}
 	
 }

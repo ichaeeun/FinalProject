@@ -39,6 +39,14 @@ table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
 
 
 $(document).ready(function(){
+
+var mem = "${mem.id}";
+if(mem==""){
+	alert("로그인 하세요");
+	location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동	
+}
+	
+	
 	// 1. 전역변수 웹소켓통신 처리한 변수선언.
 var wsocket;
 	// 2. 접속시, 처리내용
@@ -129,7 +137,7 @@ var wsocket;
         show += "</li>";
         
    		wsocket.send("${no}:${mem.name}:"+date+":"+msg);
-		alert(show);
+	/* 	alert(show); */
 		$("#msg").val("");
 		
 		 $("#chatMessageArea").append(show);	
@@ -139,6 +147,7 @@ var wsocket;
 	function revMsg(msg){
  	var msgm = msg.split(":");
 	var	show = "<li class='clearfix'><div class='chat-avatar'>";		
+		show += "<img src='${path}/Admin/dist/assets/images/users/default.png'"
 		show +=	"<i>"+msgm[1]+"</i>";
 		show +="</div><div class='conversation-text'><div class='ctext-wrap'>";
         show += "<i>"+msgm[0]+"</i>";
@@ -153,6 +162,7 @@ var wsocket;
        
 		
 		// 자동 스크롤처리.. (메시지 내용)
+		
 		var mx = parseInt($("#chatMessageArea").height());
 		$("#chatArea").scrollTop(mx);
 	}
@@ -319,7 +329,7 @@ var wsocket;
                                 <div class="card">                              
                                     <div class="card-body" id="chatArea">
                                         <ul id="chatMessageArea" class="conversation-list chat-app-conversation" style="max-height: 460px">
-                                            <li class="clearfix">
+                                          <%--   <li class="clearfix">
                                                 <div class="chat-avatar">
                                                     <img src="${path}/Admin/dist/assets/images/users/avatar-5.jpg" class="rounded" alt="James Z" />
                                                     <i>10:00</i>
@@ -332,7 +342,7 @@ var wsocket;
                                                         </p>
                                                     </div>
                                                 </div>                                          
-                                            </li>
+                                            </li> --%>
                                          
                                      
                                               

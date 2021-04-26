@@ -15,7 +15,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 			.uptTextarea{resize:none;
-						width:1560px;
+						width:1050px;
 						height:500px;
 						border-color:"light-grey";}
 </style>
@@ -44,7 +44,6 @@
 	 			console.log(risk_no);
 	 			 $("form").attr("action", "${path}/risk.do?method=uptStatus&no=${param.no}");
 		 		$('#app_form').submit();
-		 		
 			});
 			
 			var uptFinish = "${uptFinish}";		// 컨트롤러에서의 모델값을 받아온다.
@@ -60,6 +59,7 @@
 					location.href="${path}/risk.do?method=download&no=${param.no}&filename="+filename;
 				}
 			});
+			
 		      $("#rpBtn").click(function(){
 		          if(confirm("답글을 작성하시겠습니까?")){
 		         	 // 답글 처리를 위한 데이터 처리.
@@ -73,23 +73,29 @@
 		          }
 		       });
 		       
-		       $("#uptBtn").on("click",function(){
-		    	   var writer = "${riskboard.risk_writer}";
-		    	   if("${mem.name}" == writer ||"${mem.auth}"=='pm'){
-		    		   if(confirm("수정하시겠습니까?")){
-				         	 $("[name=risk_parent_no]").val($("[name=risk_no]").val());
-				         	 $("[name=risk_title]").val($("[name=risk_title]").text());
-				         	$("form").attr("action", "${path}/risk.do?method=uptForm&no=${param.no}");
-		    			   $("#app_form").submit();
+				$("#uptBtn").on("click",function(){
+					var writer = "${riskboard.risk_writer}";
+					var filename = $("[name=ffname]").val();
+					console.log(filename);
+		    		if("${mem.name}" == writer ||"${mem.auth}"=='pm'){
+		    			if(confirm("수정하시겠습니까?")){
+		   					$("[name=ffname]").val(filename);
+							$("[name=risk_parent_no]").val($("[name=risk_no]").val());
+							$("[name=risk_title]").val($("[name=risk_title]").text());
+				        	$("form").attr("action", "${path}/risk.do?method=uptForm&no=${param.no}");
+		    				$("#app_form").submit();
 		    		   }
-		    	   }else{
-		    		   alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
-		    	   }
-		       });
+					}else{
+		    		 	alert("수정권한이 없습니다. \n 작성자와 PM만 수정이 가능합니다.")
+		    		}
+				});
 		       
 		       $("#delBtn").on("click",function(){
-		    	   console.log("test111111111111111111111111111");
-		    	   location.href="${path}/risk.do?method=delete&no=${riskboard.risk_no}";
+		    	   var risk_no = $("[name=risk_no]").val();
+		    	   if(confirm("삭제하시겠습니까?")){
+			    	   console.log("test111111111111111111111111111");
+			    	   location.href="${path}/risk.do?method=delete&no=${param.no}&risk_no="+risk_no;
+		    	   }
 		       })
 		       
 		});
@@ -139,7 +145,6 @@
                            			<input type="hidden" value="" name="risk_status">
                            			<input type="hidden" value="" name="risk_parent_no">
 <!--                            			<input type="hidden" value="" name="risk_content"> -->
-                           			<input type="hidden" value="" name="ffname">
                            			<input type="hidden" value="" name="fnames">
                            			<input type="hidden" name="proc" value=""/>
                            		<!-- form있던자리 -->
@@ -216,8 +221,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
+                                                	<h4 class="header-title">첨부 파일</h4>
 		                                   	<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts">
-                                                    <div class="col-xl-4" name="fnames">
+                                                   <div class="col-xl-4" name="fnames">
                                                         <div class="card mb-1 shadow-none border">
                                                             <div class="p-2">
                                                                 <div class="row align-items-center">
@@ -233,7 +239,6 @@
                                                                         <p class="mb-0"></p>
                                                                     </div>
                                                                     <div class="col-auto">
-                                                                        <!-- Button -->
                                                                         <a href="javascript:void(0);" class="btn btn-link btn-lg text-muted">
                                                                             <i class="ri-download-2-line"></i>
                                                                         </a>

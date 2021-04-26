@@ -13,6 +13,7 @@
         <title>Developer Tasks List</title>
         <style type="text/css">
         table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
+         .chatting { display:none!important; }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -35,6 +36,11 @@
 <script>
 $(document).ready(function(){
 
+	var mem = "${mem.id}";
+	if(mem==""){
+		alert("로그인 하세요");
+		location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동	
+	}
 });
 </script>
     </head>

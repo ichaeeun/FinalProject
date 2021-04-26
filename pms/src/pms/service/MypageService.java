@@ -2,6 +2,7 @@ package pms.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -23,7 +24,7 @@ public class MypageService {
 	
 	@Autowired(required=false)
 	private MypageDao dao;
-	
+	private int i=1;
 	
 	 public Member showProfile(int pno) {
 //		 Member mem = dao.showProfile(pno);
@@ -37,6 +38,20 @@ public class MypageService {
 			String fname = null;
 			File tmpFile = null; // 임시위치 
 			File orgFile = null; // 업로드 위치 
+			
+//			if(i == 1) {
+//			      try {
+//			    	  profile = new String(profile.getBytes("ISO-8859-1"), "UTF-8");
+//			    	  profileTmp = new String(profileTmp.getBytes("ISO-8859-1"), "UTF-8");
+//			      } catch (UnsupportedEncodingException e) {
+//			         // TODO Auto-generated catch block
+//			         e.printStackTrace();
+//			      }
+//			      }
+//			      
+//			      System.out.println(profile);
+//			      System.out.println(profileTmp);
+//			
 			
 			File pathFile = new File(profileTmp); //폴더 객체 생성 
 			//.listFiles() : 해당 폴더 객체 안에 있는 파일을 가져오기 
@@ -52,6 +67,15 @@ public class MypageService {
 				// 1) 파일명 지정 
 				System.out.println(mem.getReport()[0].getOriginalFilename());
 				fname = mem.getReport()[0].getOriginalFilename();
+				if(i == 1) {
+				      try {
+				    	  fname = new String(fname.getBytes("ISO-8859-1"), "UTF-8");
+				      } catch (UnsupportedEncodingException e) {
+				         // TODO Auto-generated catch block
+				         e.printStackTrace();
+				      }
+				      }
+				i++;
 				// 파일을 등록하지 않았을 때 제외 처리 <input type="file">
 				if(fname!=null && !fname.trim().equals("")) {
 					// 임시파일 객체 선언(경로 + 파일명)  

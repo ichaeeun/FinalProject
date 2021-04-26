@@ -183,7 +183,8 @@ public class ManPowerController {
 	}
 	// http://localhost:7080/pms/manpower.do?method=chEmail
 	@RequestMapping(params="method=chEmail")
-	public String chEmail(@RequestParam("email") String email, Model d) {
+	public String chEmail(@RequestParam("email") String email,
+			Model d) {
 		int emailCnt = service.chEmail(email);
 //		if(emailCnt==0&&email!="") {
 //			d.addAttribute("success","Y");

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,6 +111,7 @@ public class RiskService {
 	public RiskBoard getBoard(int risk_no) {
 		RiskBoard rBoard = dao.getBoard(risk_no);
 		rBoard.setFileInfo(dao.fileInfo(risk_no));
+		System.out.println(rBoard.getFileInfo());
 		for(int i = 0; i<dao.fileInfo(risk_no).size(); i++) {
 			System.out.println(dao.fileInfo(risk_no).get(i).getFilename());			
 		}
@@ -117,7 +119,60 @@ public class RiskService {
 	}
 	
 	public void updateRisk(RiskBoard upt) {
-		dao.updateRisk(upt);
+		int no = upt.getRisk_no();
+		if(upt.getFnames()!=null&&upt.getFnames().length>0) {
+			String fname = null;
+			String orgFname = null;
+			File tmpFile = null;
+			File orgFile = null;
+			MultipartFile mpf = null;
+			
+			File pathFile = new File(risk_uploadTmp);
+			for(File f : pathFile.listFiles()) {
+				System.out.println("삭제할 파일 : "+f.getName());
+				f.delete();
+			}
+			for(int idx=0; idx<upt.getReport().length; idx++) {
+				mpf = upt.getReport()[idx];
+				fname = mpf.getOriginalFilename();
+				orgFname = upt.getFnames()[idx];
+				if(fname != null && !fname.trim().equals("")) {
+					tmpFile = new File(risk_uploadTmp+orgFname);
+					if(tmpFile.exists()) {
+						tmpFile.delete();
+					}
+					orgFile = new File(risk_upload+orgFname);
+					if(orgFile.exists()) {
+						orgFile.delete();
+					}
+					tmpFile = new File(risk_uploadTmp+fname);
+					orgFile = new File(risk_upload+fname);
+					try {
+						mpf.transferTo(tmpFile);
+						
+						Files.copy(tmpFile.toPath(), orgFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("# 상태 에러 : " + e.getMessage());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("# 파일 에러 : " + e.getMessage());
+					} catch(Exception e) {
+						System.out.println("# 기타 에러 : " + e.getMessage());
+					}
+					HashMap<String, String> hs = new HashMap<String, String>();
+					hs.put("no", ""+no);
+					hs.put("fname", fname);
+					hs.put("orgFname", upt.getFnames()[idx]);
+					dao.updateFile(hs);
+					
+				}
+			}
+			
+			dao.updateRisk(upt);
+		}
 	}
 	
 	public void deleteRisk(int risk_no) {

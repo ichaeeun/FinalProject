@@ -108,7 +108,6 @@
                             			<c:if test="${mem.auth == 'wk' || mem.auth == 'pm'}">
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
-                                                <a href="${path}/risk.do?method=riskBoardCreate&no=${param.no}" class="btn btn-danger mb-2" id="regBtn">리스크 작성하기</a>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="float-sm-end">

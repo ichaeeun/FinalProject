@@ -138,7 +138,7 @@
 	                                            	<col style="width:15%">
 	                                            </colgroup>                                                 
                                                     <tr>        
-                                                        <th scope="col">요청번호</th>
+                                                        <th scope="col" style="cursor:pointer;">요청번호</th>
                                                         <th scope="col">태스크명</th>
                                                         <th scope="col">프로젝트명</th>
                                                         <th scope="col">담당PM</th>
