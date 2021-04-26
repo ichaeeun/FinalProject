@@ -89,9 +89,9 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no};
-					 /*  $("#addSubTaskModal").modal("hide"); */
-					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					/* location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
+					   $("#addSubTaskModal").modal("hide"); 
+					$("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); 
 					 /*  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
 					/*  location.reload(); */
 				  },
@@ -251,8 +251,8 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					  $("#updateSubtaskModal").modal("hide");
-					  location.reload();
-					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					 /*  location.reload(); */
+					   $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); 
 					 /*  location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
 				  },
 				  error:function(err){
@@ -307,9 +307,9 @@
 					  if(data.success=="Y")
 					  console.log(data);
 					 /*  $("#deleteSubtaskModal").modal("hide"); */
-					  /* $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); */
+					 $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no}); 
 					  /* location.href="${path}/taskdetail.do?method=list&task_no="+${detail.task_no}; */
-					 location.reload(); 
+					 /* location.reload();  */
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -402,9 +402,9 @@
 				  success:function(data){
 					  if(data.success=="Y")
 					  console.log(data);
-					 // $("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
+					$("#subtaskList").load("${path}/taskdetail.do?method=sub&task_no="+${detail.task_no});
 				 	 /*  location.href="${path}/taskdetail.do?method=list&task_no="+taskNo; */
-				 	 location.reload();
+				 	/*  location.reload(); */
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
