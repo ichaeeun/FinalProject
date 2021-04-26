@@ -11,6 +11,7 @@ public class Gantt {
 	private int sortorder;
 	private int parent;
 	private String holder;
+	private String status;
 	
 	public Gantt() {
 		super();
@@ -18,7 +19,7 @@ public class Gantt {
 	}
 
 	public Gantt(int id, String start_date, String end_date, String title, String text, int priority, float progress,
-			int sortorder, int parent, String holder) {
+			int sortorder, int parent, String holder, String status) {
 		super();
 		this.id = id;
 		this.start_date = start_date;
@@ -30,6 +31,7 @@ public class Gantt {
 		this.sortorder = sortorder;
 		this.parent = parent;
 		this.holder = holder;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -55,7 +57,7 @@ public class Gantt {
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -110,6 +112,14 @@ public class Gantt {
 
 	public void setHolder(String holder) {
 		this.holder = holder;
-	}	
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 }

@@ -84,7 +84,8 @@ public class GanttService {
 					task.get(i).getTask_priority().equals("High")?1:
 						task.get(i).getTask_priority().equals("Medium")?2:3,
 					0,task.get(i).getTask_no(),
-					task.get(i).getTask_parent_no(),getName(task.get(i).getPno()));
+					task.get(i).getTask_parent_no(),getName(task.get(i).getPno()),
+					task.get(i).getTask_status());
 			gantt.add(g);
 		}
 		
@@ -142,6 +143,7 @@ public class GanttService {
 		g.put("priority",1);
 		// pno 를 이용해 이름 가져오기
 		g.put("holder", getName(project.getPm_pno()));
+		g.put("status", project.getProject_status());
 		
 		array.add(g);
 		g = new JSONObject();
@@ -159,6 +161,7 @@ public class GanttService {
 			g.put("open", true);
 			g.put("priority", gantt.get(index).getPriority());
 			g.put("holder", gantt.get(index).getHolder());
+			g.put("status", gantt.get(index).getStatus());
 			System.out.println("gantt"+index+": "+g.toJSONString());
 			array.add(g);
 			g = new JSONObject();
@@ -277,7 +280,7 @@ public class GanttService {
 		task.setTask_parent_no(gantt.getParent());
 		task.setStartdte(gantt.getStart_date());
 		task.setEnddte(gantt.getEnd_date());
-		task.setTask_status("진행");
+		task.setTask_status(gantt.getStatus());
 		
 		return task;
 	}
@@ -315,7 +318,8 @@ public class GanttService {
 		task.setTask_parent_no(gantt.getParent());
 		task.setStartdte(gantt.getStart_date());
 		task.setEnddte(gantt.getEnd_date());
-		task.setTask_status("진행");
+		task.setTask_status(gantt.getStatus());
+		//task.setTask_status("진행");
 		
 		return task;
 	}

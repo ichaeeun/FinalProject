@@ -1,5 +1,3 @@
-gantt
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"%>
@@ -64,7 +62,7 @@ var names = [];
 			url:"${path}/gantt.do?method=data&no="+'${no}',
 			dataType:"json",
 			success:function(data){
-				g = data.gantt;
+				//g = data.gantt;
 				var tes = data.gantt.substring(8,data.gantt.length-1);
 				//console.log(data.gantt);
 				console.log(tes);
@@ -72,6 +70,7 @@ var names = [];
 				var arrayList = new Array(tes);
 				
 				var j = JSON.parse(tes);
+				g = j
 				for(var i=0;i<j.length;i++){
 					holder.push(j[i].holder);
 					if("${mem.name}" == j[i].holder){
@@ -104,9 +103,6 @@ var names = [];
 	   //gantt.config.order_branch = true;
 	   if("${project.project_status}" == "완료")
 		   gantt.config.readonly = true;
-	   
-	   
-	   //for(var idx=0;idx<)
 	   	
 	   gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
 	   gantt.init("gantt_here");
@@ -149,7 +145,7 @@ var names = [];
 		    }},
 		    {name:"priority",   height:25, map_to:"priority", type:"select", options:opts},
 		    //{name:"holder",    height:30, type:"textarea", map_to:"holder"},
-		    {name:"holder",    height:30, type:"select", map_to:"holder", options:names},
+		    {name:"holder",    height:30, type:"select", map_to:"holder", options:names, readonly:true},
 		    {name:"duration", height:30, map_to:{start_date:"start_date",end_date:"end_date"}, 
 		    	type:"time", time_format:["%d","%m","%Y","%H:%i"], autofix_end:false},
 		];
@@ -175,7 +171,64 @@ var names = [];
 		};
 		
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-			//var task = gantt.getTask(task_id);
+			var t = gantt.getTask(id);
+			
+			if(task.status == "완료"){
+				alert("완료 상태의 태스크는 수정할 수 없습니다.");	
+				return false;
+			}
+			
+			if(task.$level == 0){
+				var child = gantt.getChildren(id);
+				
+				for(var i=0;i<child.length;i++){
+					var c = gantt.getTask(child[i]);
+					console.log(c);
+					if(task.start_date > c.start_date){
+						alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+						return false;
+					} else if (task.end_date < c.end_date){
+						alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+						return false;
+					}
+				}
+				if(t.parent != task.parent){
+					alert("프로젝트의 부모는 변경할 수 없습니다.");
+					return false;
+				}
+				if(t.holder != task.holder){
+					alert("프로젝트의 담당자는 변경할 수 없습니다.");
+					return false;
+				}
+			}
+			
+			// t.parent != task.parent
+			if(task.$level == 1){
+				var child = gantt.getChildren(id);
+				
+				for(var i=0;i<child.length;i++){
+					var c = gantt.getTask(child[i]);
+					console.log(c);
+					if(task.start_date > c.start_date){
+						alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+						return false;
+					} else if (task.end_date < c.end_date){
+						alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+						return false;
+					}
+				}
+				if(child == "") {
+					return true;
+				}
+					
+				else {
+					if(t.parent != task.parent){
+						alert("자식이 있는 태스크의 부모는 변경할 수 없습니다.");
+						return false;
+					}
+				}
+			}
+			
 			if(!task.title){
 		        alert("태스크 제목 작성!!");
 		        return false;
@@ -192,6 +245,8 @@ var names = [];
 		    }
 			if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
 			else if(task.start_date.toISOString() == task.end_date.toISOString()) { alert("시작일과 종료일이 같습니다"); return false; }
+			
+			
 			
 		    return true;
 		});
@@ -230,7 +285,7 @@ var names = [];
 			console.log("####onLightbox#####");
 			var child = gantt.getChildren(task_id);
 			var task = gantt.getTask(task_id);
-			
+			console.log(task.status);
 			
 			/*
 		    var start = task.start_date; start.setHours(start.getHours() + 9);
@@ -322,16 +377,56 @@ var names = [];
 			            if(mode == modes.move)
 			                task.start_date = new Date(task.end_date - diff);
 			    	}
+			    	
+			    	var diff2 = task.start_date - original.start_date;
+			        gantt.eachTask(function(child){
+			            child.start_date = new Date(+child.start_date + diff2);
+			            child.end_date = new Date(+child.end_date + diff2);
+			            gantt.refreshTask(child.id, true);
+			        },id );
 		    
 				}
 		    }
 		});
-		
-		gantt.attachEvent("onAfterTaskDrag", function(id, mode, e){
-		    console.log("#######onAfterTaskDrag########");
-		    console.log(id);
-		    
+		/*
+		gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+		    var modes = gantt.config.drag_mode;
+		    if(mode == modes.move){
+		        var diff = task.start_date - original.start_date;
+		        gantt.eachTask(function(child){
+		            child.start_date = new Date(+child.start_date + diff);
+		            child.end_date = new Date(+child.end_date + diff);
+		            gantt.refreshTask(child.id, true);
+		        },id );
+		    }
 		});
+		*/
+		//rounds positions of the child items to scale
+		gantt.attachEvent("onAfterTaskDrag", function(id, mode, e){
+		    var modes = gantt.config.drag_mode;
+		    if(mode == modes.move ){
+		        var state = gantt.getState();
+		        gantt.eachTask(function(child){          
+		            child.start_date = gantt.roundDate({
+		                date:child.start_date, 
+		                unit:state.scale_unit, 
+		                step:state.scale_step
+		            });         
+		            child.end_date = gantt.calculateEndDate(child.start_date, 
+		                child.duration, gantt.config.duration_unit);
+		            gantt.updateTask(child.id);
+		        },id );
+		    }
+		});
+		gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
+			var task = gantt.getTask(id);
+		
+		    if(task.status == "완료"){
+		        return false;      //denies dragging if the global task index is odd
+		    }
+		    return true;           //allows dragging if the global task index is even
+		});
+		
 		/*
 		
 		var task = gantt.getTask(id);
@@ -742,6 +837,7 @@ var names = [];
 	  
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
+	  sch.status = "진행";
 	  
 	  return sch;
 	}
@@ -768,6 +864,7 @@ var names = [];
 	  
 	  sch.holder = gantt.holder;
 	  sch.priority = Number(gantt.priority);
+	  sch.status = gantt.status;
 	  console.log("#########convert##########");
 	  console.log(sch.start_date);
 	  console.log(sch.end_date);

@@ -1,5 +1,3 @@
-calendar
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
@@ -57,11 +55,15 @@ calendar
 --%>
 var date = {};
 var all;
+var title;
+var holder;
+var parent;
 var createdid = "${mem.auth}";
    //$(document).ready(function(){
 	document.addEventListener('DOMContentLoaded', function(e) {
 		
 		console.log(createdid);
+		
 		var opts={
 				autoOpen:false,	// 초기에 로딩하지 않게 처리
 				width:"350px",
@@ -93,20 +95,52 @@ var createdid = "${mem.auth}";
 		    	  // 다른 함수에서 활용할 수 있게한다
 		    	  date.start = arg.start; // arg.start 데이터 유형은 Date이다
 		    	  date.end = arg.end;
+		    	  var selectOption = document.getElementById("event-category");
+				  console.log(selectOption);
 		    	  if("${mem.auth}" =="pm"){
 		    	  opts.buttons = {
 		    			  "등록":function(){    				  
-		    			  
-		    				  alert("등록처리합니다");
+		    						  
+		    				  
 		    				  var sch = newSch();
 		    				  console.log("# 등록할 데이터 #");
 		    				  console.log(sch);
-		    				  
-		    				  // 화면에 출력
-		    				  if(sch.title && sch.content){
+		    				  for(var i=0;i<all.length;i++){
+		  			    		if(sch.parent == all[i].title){
+		  			    			var pleft = all[i].start;
+		  			    			var pright = all[i].end;
+		  			    		}
+		  		    		}
+		    				  console.log("##등록##");console.log(pleft);console.log(pright);
+		    				  //var pleft = all[0].start;
+		    			      //var pright = all[0].end;
+		    			      
+							  
+		    				  // 공통
+		    				 if(!sch.title) {
+		    					  alert("태스크 제목 입력 누락");
+		    					  return false;
+		    				  } else if(!sch.content){
+		    					  alert("태스크 내용 입력 누락");
+		    					  return false;
+		    				  } else if (title.indexOf(sch.title) >= 0){
+		    					  alert("태스크 제목 중복!!\n다른 제목으로 입력해주십시오.");
+		    					  return false;
+		    				  } else if (pleft > sch.start){
+		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+		    					  return false;
+		    				  } else if(pright < sch.end){
+		    					  alert("부모 태스크의 종료날짜보다 느립니다.");
+		    					  return false;
+		    				  } else if (sch.start > sch.end){
+		    					  alert("시작날짜가 종료날짜보다 느립니다.");
+		    					  return false;
+		    				  }
+		    					  
+			    			  if(sch.title && sch.content){
 		    					  calendar.addEvent(sch);
 		    					  calendar.unselect();
-		    				  }		
+		    				  } 
 		    				  
 		    				  // ajax 처리 ( DB 등록 )
 		    				  $.ajax({
@@ -119,6 +153,9 @@ var createdid = "${mem.auth}";
 		    							// data.모델명
 		    							alert('등록 성공');
 		    							all = data.calendar;
+		    							title = data.titles; // 모든 태스크 이름
+		    							parent = data.parent; // 프로젝트, 태스크 이름
+		    			    			holder = data.holder;
 		    						 }
 		    					 },
 		    					 error:function(err){
@@ -156,18 +193,85 @@ var createdid = "${mem.auth}";
 		      eventClick: function(arg) {
 		      	// 삭제 : 화면에서 삭제
 		      	// event의 날짜 저장
-		    	  date.start = arg.event.start;
-		    	  date.end = arg.event.end;
+		    	  //date.start = arg.event.start;
+		    	  //date.end = arg.event.end;
 		    	// 있는 일정 클릭 시
 		    	// 상세 화면 보이기(등록되어 있는 데이터 출력)
 		    	// ajax를 통해서 수정/삭제
 		    	// arg.event : 해당 상세 정보를 가지고 있다
 		    	console.log("#등록된 일정 클릭#");
 		    	console.log(arg.event);
+		    	detail(arg.event);
+		    	var selectOption = document.getElementById("event-category");
+		    	//selectOption = selectOption.options[selectOption.selectedIndex].value;
+		    	var h = $("#event-category option:selected").val();
+		    	
+				//console.log(selectOption);
+				console.log(h);
+		    	var idx = title.indexOf(arg.event.title);
+		    	title.splice(idx,1);
+		    	// 프로젝트, 태스크 수정 시 날짜 범위 설정
+		    	if(arg.event.id == 1) { // 프로젝트
+		    		alert("프로젝트 선택");
+		    		var leftLimit = all[0].end;
+			    	var rightLimit = all[0].start;
+		    		for(var i=0;i<all.length;i++){
+		    			if(all[i].parent == parent[0]){
+		    				if(leftLimit > all[i].start){
+		    					leftLimit = all[i].start;
+		    				}
+		    				if(rightLimit < all[i].end){
+		    					rightLimit = all[i].end;
+		    				}
+		    			}
+		    		}
+		    		console.log("제한범위");console.log(leftLimit);console.log(rightLimit);
+		    	}
+		    	else if(parent.indexOf(arg.event.title) >= 0){ // 태스크
+		    		alert("태스크 선택");
+		    		var leftLimit = all[0].end;
+			    	var rightLimit = all[0].start;
+		    		var pleft = all[0].start;
+			    	var pright = all[0].end;
+		    		// 서브 태스크 범위 못벗어나게
+		    		for(var i=0;i<all.length;i++){
+		    			if(arg.event.title == all[i].parent){
+		    				if(leftLimit > all[i].start){
+		    					leftLimit = all[i].start;
+		    				}
+		    				if(rightLimit < all[i].end){
+		    					rightLimit = all[i].end;
+		    				}
+		    			}
+		    		}
+		    		console.log("제한범위");console.log(pleft);console.log(pright);
+		    		console.log("제한범위");console.log(leftLimit);console.log(rightLimit);
+		    	} else { // 서브태스크
+		    		// 부모 태스크 범위 못벗어나게
+		    		alert("서브태스크 선택");
+		    		var pleft = all[0].start;
+			    	var pright = all[0].end;
+			    	var exProps = arg.event.extendedProps;
+		    		for(var i=0;i<all.length;i++){
+			    		if(exProps.parent == all[i].title){
+			    			pleft = all[i].start;
+			    			pright = all[i].end;
+			    		}
+		    		}
+		    		console.log("제한범위");console.log(pleft);console.log(pright);
+		    	}
+		    	/*
+		    	var tmp = all[0].start;
+		    	console.log(tmp);
+		    	console.log(tmp2<arg.event.end.toISOString());
+		    	*/
+		    	var zz = callSch();
+		    	var originalP = zz.parent;
+		    	
 		    	// 각 form에 값 추가
 		    	// 1. 화면로딩
 		    	//		2번 이상 중복된 함수 사용이 필요한 부분은 모듈로 분리 처리
-		    	detail(arg.event);
+		    	
 		    	// 2. 기능별 버튼에 대한 처리
 //		    	$("#schDialog").dialog("open");
 		    	if("${mem.auth}" =="pm"){
@@ -176,18 +280,96 @@ var createdid = "${mem.auth}";
 		    				// 수정 후, json 데이터 가져오기
 		    				// 화면에 form 하위에 있는 요소객체의 값을 가져오는 부분
 		    				var sch = callSch();
+		    				console.log(sch.parent);
+		    				console.log(originalP);
+		    			  // 공통
+	    				 if(!sch.title) {
+	    					  alert("태스크 제목 입력 누락");
+	    					  return false;
+	    				  } else if(!sch.content){
+	    					  alert("태스크 내용 입력 누락");
+	    					  return false;
+	    				  } else if (title.indexOf(sch.title) >= 0){
+	    					  alert("태스크 제목 중복!!\n다른 제목으로 입력해주십시오.");
+	    					  return false;
+	    				  } else if (sch.start > sch.end){
+	    					  alert("시작날짜가 종료날짜보다 느립니다.");
+	    					  return false;
+	    				  }
+	    				 // 프로젝트
+			    		  if(sch.id == 1){
+			    			  if(leftLimit < sch.start) {
+			    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+			    				  return false;
+			    			  }
+			    			  else if(rightLimit > sch.end) {
+			    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+								  return false;
+			    			  } else if(sch.parent != ""){
+			    				  alert("프로젝트의 부모태스크는 설정하실 수 없습니다.");
+			    				  return false;
+			    			  }
+		    			  } else if(sch.parent == parent[0]){ // 태스크
+		    				  if(leftLimit < sch.start) {
+			    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+			    				  return false;
+			    			  }
+			    			  else if(rightLimit > sch.end) {
+			    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+								  return false;
+			    			  }
+		    				  if(pleft > sch.start){
+		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+		    					  return false;
+		    				  } else if(pright < sch.end){
+		    					  alert("부모 태스크의 종료날짜보다 느립니다.");
+		    					  return false;
+		    				  } 
+		    				  if(originalP != sch.parent){
+		    					  alert("태스크의 부모는 프로젝트 이외의 것으로 변경하실 수 없습니다.");
+		    					  return false;
+		    				  }
+		    			  } else {	// 서브태스크
+		    				  for(var i=0;i<all.length;i++){
+		  			    		if(sch.parent == all[i].title){
+		  			    			pleft = all[i].start;
+		  			    			pright = all[i].end;
+		  			    		}
+		  		    		}
+		    			  		console.log("서브태스크");
+		    					console.log(pleft);console.log(pright);
+		    			  
+			    				  if(pleft > sch.start){
+			    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+			    					  return false;
+			    				  } else if(pright < sch.end){
+			    					  alert("부모 태스크의 종료날짜보다 느립니다.");
+			    					  return false;
+			    				  }
+		    			  }
+		    			
+		    			  
+	    				  
+		    			  
 		    				// 1. 화면단 처리 변경
 		    				// 현재 캘린더 api의 속성 변경하기
+		    				
 		    				var event = calendar.getEventById(sch.id);
 		    				console.log("####수정할 값####");
-		    				console.log(sch);
-		    				// 속성 값 변경 setProp
-		    				/*
-		    				event.setProp("title",sch.title);
-		    				//event.setProp("textColor",sch.textColor);
-		    				//event.setProp("backgroundColor",sch.backgroundColor);
-		    				//event.setProp("borderColor",sch.borderColor);
 		    				
+		    				console.log(event);
+		    				console.log(sch.start);
+		    				console.log(sch.end);
+		    				// 속성 값 변경 setProp
+		    				
+		    				event.setProp("title",sch.title);
+		    				event.setProp("groupId",sch.groupId);
+		    				event.setProp("textColor",sch.textColor);
+		    				event.setProp("backgroundColor",sch.backgroundColor);
+		    				event.setProp("borderColor",sch.borderColor);
+		    				event.setAllDay(sch.allDay);
+		    				event.setProp("start",sch.start);
+		    				event.setProp("end",sch.end);
 		    				// 확장 속성
 		    				//event.setExtendedProp("title",sch.title);
 		    				//event.setExtendedProp("groupId",sch.groupId);
@@ -195,10 +377,10 @@ var createdid = "${mem.auth}";
 		    				event.setExtendedProp("content",sch.content);
 		    				event.setExtendedProp("parent",sch.parent);
 		    				event.setExtendedProp("priority",sch.priority);
-		    				event.setExtendedProp("start",sch.start);
-		    				event.setExtendedProp("end",sch.end);
-		    				event.setAllDay(sch.allDay);
+		    				//event.setExtendedProp("start",sch.start);
+		    				//event.setExtendedProp("end",sch.end);
 		    				
+		    				/*
 		    				sch.id = $("[name=id]").val();
 						  sch.groupId = $("[name=groupId]").val();
 						  sch.backgroundColor = $("[name=backgroundColor]").val();
@@ -214,21 +396,35 @@ var createdid = "${mem.auth}";
 						  sch.end = date.end.toISOString();
 						  */
 		    				// DB 변경
-		    				updateCall(sch);
+		    				//updateCall(sch);
 		    				$("#schDialog").dialog("close");
 		    				
 		    			},
 		    			"삭제":function(){
 		    				var idVal = $("[name=id]").val();
-		    				var groupIdVal = $("[name=groupId]").val();
+		    				var sch = callSch();
+		    				//var groupIdVal = $("[name=groupId]").val();
 		    	            var event = calendar.getEventById(idVal);
-		    	            event.remove();
+		    	            //event.remove();
 		    	            
-		    	            if(groupIdVal == 1){
-		    	            	for(var i=0;i<all.length;i++){
-		    	            		if(idVal == all[i].groupId)
-		    	            			event = calendar.getEventById(all[i].id);
-		    	            		event.remove();
+		    	            if(idVal == 1){
+		    	            	alert("프로젝트는 삭제할 수 없습니다.");
+		    	            	return false;
+		    	            } else {
+		    	            	if(parent[0] == sch.parent) { // 태스크
+		    	            		if(confirm("하위 태스크도 함께 삭제될 수 있습니다.\n계속 진행하시겠습니까?")){
+		    	            			event.remove();
+		    	            			for(var i=0;i<all.length;i++){
+		    	            				if(sch.title == all[i].parent)
+		    	            					event = calendar.getEventById(all[i].id);
+		    	            				event.remove();
+		    	            			}
+		    	            		}
+		    	            	} else { // 서브태스크
+		    	            		if(confirm("해당 태스크를 삭제하시겠습니까?")){
+		    	            			//event = calendar.getEventById(idVal);
+		    		    	            event.remove();
+		    	            		}
 		    	            	}
 		    	            }
 		    	            
@@ -241,6 +437,8 @@ var createdid = "${mem.auth}";
 		    	            		if(data.success == "Y"){
 		    	            			alert("삭제 성공");
 		    	            			all = data.calendar;
+		    	            			title = data.titles; // 모든 태스크 이름
+		    							parent = data.parent; // 프로젝트, 태스크 이름
 		    	            		}
 		    	            	},
 		    	            	error: function(err){
@@ -279,6 +477,8 @@ var createdid = "${mem.auth}";
 		    			  console.log(data.holder);
 		    			  successCallback(data.calendar);
 		    			  all = data.calendar;
+		    			  title = data.titles; // 모든 태스크 이름
+						  parent = data.parent; // 프로젝트, 태스크 이름
 		    		  },
 		    		  error:function(err){
 		    			  console.log(err);
@@ -295,9 +495,11 @@ var createdid = "${mem.auth}";
 	            
 			  sch.id = 0;
 			  sch.groupId = 0;
-			  sch.backgroundColor = "red";
-			  sch.borderColor = "red";
-			  sch.textColor = "red";
+			  if($("[name=priority]").val() == 1) sch.backgroundColor = "#f1556c";
+			  else if($("[name=priority]").val() == 2) sch.backgroundColor = "#f7b84b";
+			  else sch.backgroundColor = "#1abc9c";
+			  sch.borderColor = "#000000";
+			  sch.textColor = "#ffffff";
 			  sch.title=$("[name=title]").val();
 			  sch.content=$("[name=content]").val();
 			  sch.parent=$("[name=parent]").val();
@@ -346,9 +548,14 @@ var createdid = "${mem.auth}";
                   
 			  sch.id = $("[name=id]").val();
 			  sch.groupId = $("[name=groupId]").val();
+			  if($("[name=priority]").val() == 1) sch.backgroundColor = "#f1556c";
+			  else if($("[name=priority]").val() == 2) sch.backgroundColor = "#f7b84b";
+			  else sch.backgroundColor = "#1abc9c";
+			  /*
 			  sch.backgroundColor = $("[name=backgroundColor]").val();
 			  sch.borderColor = $("[name=borderColor]").val();
 			  sch.textColor = $("[name=textColor]").val();
+			  */
 			  sch.title=$("[name=title]").val();
 			  sch.content=$("[name=content]").val();
 			  sch.parent=$("[name=parent]").val();
@@ -403,6 +610,8 @@ var createdid = "${mem.auth}";
 					  if(data.success=="Y")
 						  alert("수정완료");
 					  all = data.calendar;
+	    			  title = data.titles; // 모든 태스크 이름
+					  parent = data.parent; // 프로젝트, 태스크 이름
 				  },
 				  error:function(err){
 					  alert("에러발생: " + err);
@@ -465,6 +674,7 @@ var createdid = "${mem.auth}";
 			
 			updateCall(sch);
 		  }
+		  
 		   $(document).ready(function(){
 		      
 		   });

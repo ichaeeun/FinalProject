@@ -41,7 +41,9 @@ public class CalendarService {
 					t.get(index).getTask_no(),
 					// groupId, 부모no = 1이면 태스크이므로 그룹 아이디를 자기자신으로,
 					// 			부모no != 1이면 서브태스크이므로 부모태스크 그대로 지정
+					/*
 					t.get(index).getTask_parent_no()==1?t.get(index).getTask_no():t.get(index).getTask_parent_no(),
+					*/t.get(index).getTask_no(),
 					getTaskUsingTaskno(t.get(index).getTask_parent_no()) == null?project.getProject_name():
 						getTaskUsingTaskno(t.get(index).getTask_parent_no()).getTask_name(),
 					t.get(index).getTask_name(),
@@ -115,6 +117,19 @@ public class CalendarService {
 		names.add(name);
 		for(int i=0;i<t.size();i++) {
 			if(t.get(i).getTask_parent_no() == 1)
+				names.add(t.get(i).getTask_name());
+		}
+		
+		return  names;
+	}
+	
+	public ArrayList<String> Titles(int project_no){
+		ArrayList<String> names = new ArrayList<String>();
+		ArrayList<Task> t = new ArrayList<Task>();
+		pms_project project = gdao.getProject(project_no);
+		t = gdao.getTask(project);
+		
+		for(int i=0;i<t.size();i++) {
 				names.add(t.get(i).getTask_name());
 		}
 		

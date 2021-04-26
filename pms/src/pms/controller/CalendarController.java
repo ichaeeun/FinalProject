@@ -1,5 +1,7 @@
 package pms.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import oracle.net.aso.g;
 import pms.dto.Calendar;
 import pms.dto.Member;
 import pms.service.CalendarService;
@@ -31,6 +32,7 @@ public class CalendarController {
 	public String calendar(@RequestParam("no") int no,Model d) {
 		d.addAttribute("no",no);
 		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("titles",service.Titles(no));
 		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
@@ -44,6 +46,7 @@ public class CalendarController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("titles",service.Titles(no));
 		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
@@ -59,6 +62,7 @@ public class CalendarController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("titles",service.Titles(no));
 		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
@@ -78,6 +82,7 @@ public class CalendarController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("titles",service.Titles(no));
 		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
@@ -93,6 +98,7 @@ public class CalendarController {
 		d.addAttribute("no",no);
 		d.addAttribute("success","Y");
 		d.addAttribute("parent",service.getTitles(no));
+		d.addAttribute("titles",service.Titles(no));
 		d.addAttribute("holder",gservice.getProjectAdd(no));
 		d.addAttribute("project",gservice.getProject(no));
 		d.addAttribute("calendar",service.calenList(no));
@@ -106,4 +112,5 @@ public class CalendarController {
 		if(m!=null) pno = m.getPno();
 		return service2.showProfile(pno);
 	}
+	
 }
