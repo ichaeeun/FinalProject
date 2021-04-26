@@ -172,11 +172,23 @@ var names = [];
 		
 		gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 			var t = gantt.getTask(id);
-			
+			console.log(t.parent);
+			console.log(task.parent);
 			if(task.status == "완료"){
 				alert("완료 상태의 태스크는 수정할 수 없습니다.");	
 				return false;
 			}
+			
+			if(!task.title){
+		        alert("태스크 제목 작성!!");
+		        return false;
+		    }
+		    if(!task.text){
+		    	alert("태스크 내용 작성!!");
+		        return false;
+		    }
+		    if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
+			else if(task.start_date.toISOString() == task.end_date.toISOString()) { alert("시작일과 종료일이 같습니다"); return false; }
 			
 			if(task.$level == 0){
 				var child = gantt.getChildren(id);
@@ -192,7 +204,7 @@ var names = [];
 						return false;
 					}
 				}
-				if(t.parent != task.parent){
+				if(t.parent != task.parent){ // t.parent != "0"
 					alert("프로젝트의 부모는 변경할 수 없습니다.");
 					return false;
 				}
@@ -203,8 +215,11 @@ var names = [];
 			}
 			
 			// t.parent != task.parent
-			if(task.$level == 1){
+			else if(task.$level == 1){
 				var child = gantt.getChildren(id);
+				var ptask = gantt.getTask(task.parent);
+				if(task.start_date < ptask.start_date) { alert("시작일이 부모태스크보다 빠릅니다"); return false; }
+				else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }
 				
 				for(var i=0;i<child.length;i++){
 					var c = gantt.getTask(child[i]);
@@ -227,26 +242,12 @@ var names = [];
 						return false;
 					}
 				}
-			}
-			
-			if(!task.title){
-		        alert("태스크 제목 작성!!");
-		        return false;
-		    }
-		    if(!task.text){
-		    	alert("태스크 내용 작성!!");
-		        return false;
-		    }
-
-		    if(id != 1){
-			var ptask = gantt.getTask(task.parent);
+			} else { // sub_task
+				var ptask = gantt.getTask(task.parent);
 				if(task.start_date < ptask.start_date) { alert("시작일이 부모태스크보다 빠릅니다"); return false; }
-				else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }
-		    }
-			if(task.start_date > task.end_date) { alert("시작일이 종료일보다 느립니다"); return false; }
-			else if(task.start_date.toISOString() == task.end_date.toISOString()) { alert("시작일과 종료일이 같습니다"); return false; }
-			
-			
+				else if(task.end_date > ptask.end_date) { alert("종료일이 부모태스크보다 느립니다"); return false; }	
+				
+			}
 			
 		    return true;
 		});
@@ -377,16 +378,17 @@ var names = [];
 			            if(mode == modes.move)
 			                task.start_date = new Date(task.end_date - diff);
 			    	}
-			    	
-			    	var diff2 = task.start_date - original.start_date;
-			        gantt.eachTask(function(child){
-			            child.start_date = new Date(+child.start_date + diff2);
-			            child.end_date = new Date(+child.end_date + diff2);
-			            gantt.refreshTask(child.id, true);
-			        },id );
+			    }
+			}
+	    	var diff2 = task.start_date - original.start_date;
+	        gantt.eachTask(function(child){
+	            child.start_date = new Date(+child.start_date + diff2);
+	            child.end_date = new Date(+child.end_date + diff2);
+	            gantt.refreshTask(child.id, true);
+	        },id );
 		    
-				}
-		    }
+				
+		    
 		});
 		/*
 		gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
@@ -626,7 +628,7 @@ var names = [];
 					console.log(tes);
 					
 					var arrayList = new Array(tes);
-					
+					holder = [];
 					var j = JSON.parse(tes);
 					for(var i=0;i<j.length;i++){
 						holder.push(j[i].holder);
@@ -643,6 +645,7 @@ var names = [];
 					}
 					leftLimit = arrstart_date[0];
 					rightLimit = arrend_date[0];
+					names = [];
 					for(var j=0;j<data.names.length;j++) {
 						var tmp = {key : data.names[j], label : data.names[j]}
 						names.push(tmp);
@@ -680,7 +683,7 @@ var names = [];
 					console.log(tes);
 					
 					var arrayList = new Array(tes);
-					
+					holder = [];
 					var j = JSON.parse(tes);
 					for(var i=0;i<j.length;i++){
 						holder.push(j[i].holder);
@@ -697,6 +700,7 @@ var names = [];
 					}
 					leftLimit = arrstart_date[0];
 					rightLimit = arrend_date[0];
+					names = [];
 					for(var j=0;j<data.names.length;j++) {
 						var tmp = {key : data.names[j], label : data.names[j]}
 						names.push(tmp);
@@ -734,7 +738,7 @@ var names = [];
 					console.log(tes);
 					
 					var arrayList = new Array(tes);
-					
+					holder = [];
 					var j = JSON.parse(tes);
 					for(var i=0;i<j.length;i++){
 						holder.push(j[i].holder);
@@ -751,6 +755,7 @@ var names = [];
 					}
 					leftLimit = arrstart_date[0];
 					rightLimit = arrend_date[0];
+					names = [];
 					for(var j=0;j<data.names.length;j++) {
 						var tmp = {key : data.names[j], label : data.names[j]}
 						names.push(tmp);
@@ -784,7 +789,7 @@ var names = [];
 						console.log(tes);
 						
 						var arrayList = new Array(tes);
-						
+						holder = [];
 						var j = JSON.parse(tes);
 						for(var i=0;i<j.length;i++){
 							holder.push(j[i].holder);
@@ -801,6 +806,7 @@ var names = [];
 						}
 						leftLimit = arrstart_date[0];
 						rightLimit = arrend_date[0];
+						names = [];
 						for(var j=0;j<data.names.length;j++) {
 							var tmp = {key : data.names[j], label : data.names[j]}
 							names.push(tmp);
