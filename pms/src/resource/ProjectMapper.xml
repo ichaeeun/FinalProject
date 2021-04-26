@@ -98,7 +98,12 @@
 			project_status = #{project_status}
 		WHERE project_no = #{project_no}
 	</update>
-	
+	<!-- public void updateTask(int no);			// 프로젝트에 속한 태스크 완료로 수정 -->
+	<update id="updateTask" parameterType="int">
+		UPDATE PROJECT_TASK 
+		SET TASK_STATUS = '완료'
+		WHERE PROJECT_NO = #{project_no}
+	</update>
 	
 	
 </mapper>  

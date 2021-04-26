@@ -28,7 +28,7 @@ public interface ProjectDao {
 		
 	public void updateProject(pms_project update);		// 프로젝트 수정
 	
-	
+	public void updateTask(int no);			// 프로젝트에 속한 태스크 수정
 	
 	
 }

@@ -61,11 +61,25 @@ $(document).ready(function(){
 			alert("종료일은 시작일보다 이후로 입력하세요!!");
 			return false;
 		}
+		// 프로젝트 상태를 완료로 수정시 태스크도 완료로 설정.
+		if(project_status == "완료"){
+			if(confirm("주의! 프로젝트를 완료하시겠습니까??") == true){ // 확인
+				location.href="${path}/project.do?method=update2&no="+${pms_project.project_no};		
+				alert("프로젝트가 완료되었습니다.");
+				location.href="${path}/main.do?method=main";
+	    	  }else{										
+	    		  return false;
+	    	  }
+		}
+
 		
-			
+		
+		
 		var sch = ProV();
 		console.log("##등록할 데이터 확인 ##");
 		console.log(sch);
+		
+		// ajax 통신 시작
 		$.ajax({
 			type:"post",
 			url:"project.do?method=update",
@@ -75,6 +89,7 @@ $(document).ready(function(){
 				if(data.success=="Y"){
 					console.log(data);
 					alert("수정 성공");
+					
 					location.href="${path}/project.do?method=list&pno="+${mem.pno};
 				}
 			},
