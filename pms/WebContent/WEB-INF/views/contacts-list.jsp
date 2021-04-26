@@ -49,7 +49,7 @@
 		var pwdCheck=0;	
 		var regExp = 
 			new RegExp("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i");
-		signupCheck();
+		signupCheck(); 
 		// name pass 
 /* 		function veriEmail(email){
 			var regExp = 
@@ -166,6 +166,9 @@
 			if(id==""||email==""||pass==""||repass==""||name==""){
 				$("#signupBtn").prop("disabled",true);
 			}
+			if(idCheck==1&&pwdCheck==1&emailCheck==1){
+				$("#signupBtn").prop("disabled",false);
+			}
 			
 		} 	
 			
@@ -241,6 +244,7 @@
   		
 	  		$("#info-mail-modal #mailN").click(function(){
 	  			$("#info-mail-modal").modal("hide");
+	  			window.location.reload();
 	  		})
 				$("#signup-modal [name=name]").val("");
   				$("#signup-modal [name=id]").val("");
@@ -326,7 +330,7 @@
 			//$("[name='projectPno']").click(function(){
  	  		$("#memShow").on("click",".projectAdd",function(){
 	  			var pno = $(this).find("[name=projectPno]").val();
- 	  			alert(pno);
+ 	  			// alert(pno);
  	  			$("#project-modal").modal("show"); 	
  	  			$.ajax({
  	  				type:"post",
