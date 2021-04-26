@@ -162,8 +162,12 @@ public class ManPowerController {
 	}
 	// http://localhost:7080/pms/manpower.do?method=insertProject
 	@PostMapping(params="method=insertProject")
-	public String insertProject(Model d, Member member) {
+	public String insertProject(Model d, Member member,
+			@RequestParam("pno") int pno,
+			@RequestParam("project_no") int project_no) {
 		service.insertProject(member);
+		System.out.println("## json Pno:"+pno);
+		System.out.println("## json project_no:"+project_no);
 		return "pageJsonReport";
 	}
 	

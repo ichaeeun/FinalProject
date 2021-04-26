@@ -46,7 +46,7 @@
 	 	    $("#auth").val(authSession);
 		    if(mem=="") location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동 	
 		    
- 	  		$("#memShow").on("click",".projectAdd",function(){
+/*  	  		$("#memShow").on("click",".projectAdd",function(){
 	  			var pno = $(this).find("[name=projectPno]").val();
  	  			alert(pno);
  	  			$("#project-modal").modal("show"); 	
@@ -70,8 +70,9 @@
 	 	  				alert("에러발생:"+err);
 	 	  			}  				
  	  			})	  		
- 	  			
-				$("#projectBtn").on("click",function(){		
+ 	  		});	 */
+ 	  		
+/* 				$("#projectBtn").on("click",function(){		
 					var project_no = $("#project-modal [name=pro]").val();
 					//alert(pno);
 					//alert(project_no);
@@ -89,8 +90,7 @@
 		  					alert("에러발생:"+err);
 		  				}
 		  			}); 
-				});
-	  		}); 	
+				});	 */
 
 	  		$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
@@ -102,9 +102,8 @@
 
 
 
- 	  		$("#memShow").on("click",".projectAdd",function(){
+  	  		$("#memShow").on("click",".projectAdd",function(){
 	  			var pno = $(this).find("[name=projectPno]").val();
- 	  			alert(pno);
  	  			$("#project-modal").modal("show"); 	
  	  			$.ajax({
  	  				type:"post",
@@ -125,12 +124,10 @@
 	 	  			error:function(err){
 	 	  				alert("에러발생:"+err);
 	 	  			}  				
- 	  			})	  		
+ 	  			});	  		
  	  			
 				$("#projectBtn").on("click",function(){		
 					var project_no = $("#project-modal [name=pro]").val();
-					//alert(pno);
-					//alert(project_no);
  		  			$.ajax({
 		  				type:"post",
 		  				url:"${path}/manpower.do?method=insertProject",
@@ -146,7 +143,7 @@
 		  				}
 		  			}); 
 				});			
- 	  		});	
+ 	  		});	 
 	  	});
 		function goPage(page){
 			// 이전 페이지가 0이면 1

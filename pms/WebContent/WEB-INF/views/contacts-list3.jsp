@@ -55,7 +55,7 @@
 		  	$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
 				var pno = $(this).find('.pno').val();
-				alert(ename);
+				// alert(ename);
 				//alert(pno);
 				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
 			});	
