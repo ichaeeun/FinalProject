@@ -154,6 +154,15 @@ public class RiskController {
       return "riskBoard";
    }
    
+   // http://localhost:7080/pms/risk.do?method=deleteNA
+   @RequestMapping(params="method=deleteNA")
+   public String deleteRiskNA(@RequestParam("no") int no, @RequestParam("risk_no") int risk_no, Model d) {
+	   System.out.println(risk_no+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	   d.addAttribute("proc","delete");
+	   service.deleteRisk(risk_no);
+	   return "redirect:risk.do?method=riskRequest&no="+no;
+   }
+   
    @ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
    public Member showMember(HttpSession session){
       Member m = (Member)session.getAttribute("mem");

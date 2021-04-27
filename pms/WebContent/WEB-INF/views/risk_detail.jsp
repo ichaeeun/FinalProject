@@ -94,7 +94,12 @@
 		    	   var risk_no = $("[name=risk_no]").val();
 		    	   if(confirm("삭제하시겠습니까?")){
 			    	   console.log("test111111111111111111111111111");
-			    	   location.href="${path}/risk.do?method=delete&no=${param.no}&risk_no="+risk_no;
+			    	   var status = $("#status2").text().trim();
+			    	   if(status == '승인'){
+				    		location.href="${path}/risk.do?method=delete&no=${param.no}&risk_no="+risk_no;
+			    	   }else{
+				    		location.href="${path}/risk.do?method=deleteNA&no=${param.no}&risk_no="+risk_no;
+			    	   }
 		    	   }
 		       })
 		       
@@ -200,13 +205,13 @@
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">상태</p>
-                                                            <h5 class="mt-0 text-truncate" name="risk_status">
+                                                            <h5 class="mt-0 text-truncate" id="status2">
                                                                 ${riskboard.risk_status}
                                                             </h5>
                                                         </div>
                                                         <div class="flex-1 overflow-hidden">
                                                             <p class="mb-1">상위 글번호</p>
-                                                            <h5 class="mt-0 text-truncate" name="risk_parent_no">
+                                                            <h5 class="mt-0 text-truncate">
                                                                 ${riskboard.risk_parent_no}
                                                             </h5>
                                                         </div>
@@ -295,11 +300,11 @@
 		                             				<button href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</button>
 		                             			</c:if>
 		                             		</c:if>
-		                             		<c:if test="${mem.name == riskboard.risk_writer}">
+		                             		<c:if test="${mem.name == riskboard.risk_writer || mem.auth == 'pm'}">
 		                             			<c:if test="${riskboard.risk_status == '미승인'}">
 		                             				<button href="" id="uptBtn" type="button" class="btn btn-warning">수정하기</button>
 		                             			</c:if>
-		                             			<button href="" id="delBtn" type="button" class="btn btn-danger">삭제하기</button>
+		                             			<button id="delBtn" type="button" class="btn btn-danger">삭제하기</button>
 		                             		</c:if>
 				       					</li>
 				                	</ul>
