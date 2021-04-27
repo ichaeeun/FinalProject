@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+      uri="http://www.springframework.org/tags/form"%>   
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -13,13 +13,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<style>
-			footer .chatting{display:none;}
-			.uptTextarea{resize:none;
-						width:1560px;
-						height:500px;
-						border-color:"light-grey";}
-		</style>
+      <style>
+         footer .chatting{display:none;}
+         .uptTextarea{resize:none;
+                  width:1560px;
+                  height:500px;
+                  border-color:"light-grey";}
+      </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -32,60 +32,66 @@
         <link href="${path}/Admin/dist/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
         <link href="${path}/Admin/dist/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
         
-		<!-- App css -->
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-		<!-- icons -->
-		<link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-		<script src="${path}/a00_com/jquery.min.js"></script>
-		<script src="${path}/a00_com/popper.min.js"></script>
-		<script src="${path}/a00_com/bootstrap.min.js"></script>
-		<script src="${path}/a00_com/jquery-ui.js"></script>
-		<script type="text/javascript">
-		
-		console.log("${riskboard.fileInfo}");
-		
-			$(document).ready(function(){
-				$("#mainBtn").click(function(){
-					location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
-				});
-				
-				$("#sndBtn").click(function(){
-					$("[name=risk_writer]").val("${mem.name}");
-					var mem = "${mem.auth}";
-					$("[name=risk_no]").val(0);
-					if(mem=='pm') $("[name=risk_status]").val("승인");
-					if(mem=='wk') $("[name=risk_status]").val("미승인");
-					$("form").attr("action", "${path}/risk.do?method=insert&no=${param.no}");
-					$("#riskboard").submit();
-				});
-				$("#uptBtn").click(function(){
-					$("[name=risk_no]").val("${riskboard.risk_no}");
-					$("[name=risk_status]").val("승인");
-					$("[name=risk_writer]").val("${mem.name}");
-					$("form").attr("action", "${path}/risk.do?method=update&no=${param.no}");
-					$("#riskboard").submit();
-				})
-				
-				
-				
-				$("#addFun").click(function(){
-					$("#fileArea").append($(".custom-file").eq(0).clone());
-				});
-				
-				
-			});
-				function rm(obj){
-				var len=$("[type=file]").length;
-					if(len>1){
-						$(obj).parent().remove();
-					}
-				}
+      <!-- App css -->
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/bootstrap-modern-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+      <link href="${path}/Admin/dist/assets/css/modern/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+      <!-- icons -->
+      <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+      <script src="${path}/a00_com/jquery.min.js"></script>
+      <script src="${path}/a00_com/popper.min.js"></script>
+      <script src="${path}/a00_com/bootstrap.min.js"></script>
+      <script src="${path}/a00_com/jquery-ui.js"></script>
+      <script type="text/javascript">
+      
+      console.log("${riskboard.fileInfo}");
+      
+         $(document).ready(function(){
+            $("#mainBtn").click(function(){
+               location.href="${path}/risk.do?method=riskBoard&no=${param.no}";
+            });
+            
+            $("#sndBtn").click(function(){
+            	if($("[name=risk_title]").val() != "" && $("[name=risk_content]").val() != ""){
+		               $("[name=risk_writer]").val("${mem.name}");
+		               var mem = "${mem.auth}";
+		               $("[name=risk_no]").val(0);
+		               if(mem=='pm') $("[name=risk_status]").val("승인");
+		               if(mem=='wk') $("[name=risk_status]").val("미승인");
+		               $("form").attr("action", "${path}/risk.do?method=insert&no=${param.no}");
+		               $("#riskboard").submit();
+	        	}else{
+	        		alert("제목/내용을 모두 입력해주세요.");
+	        	}
+            });
+            $("#uptBtn").click(function(){
+            		if(confirm("수정하시겠습니까?")){
+		               $("[name=risk_no]").val("${riskboard.risk_no}");
+		               $("[name=risk_status]").val("승인");
+		               $("[name=risk_writer]").val("${mem.name}");
+		               $("#riskboard").attr("action", "${path}/risk.do?method=update&no=${param.no}");
+		               $("#riskboard").submit();
+            		}
+            });
+            
+            
+            
+            $("#addFun").click(function(){
+               $("#fileArea").append($(".custom-file").eq(0).clone());
+            });
+            
+            
+         });
+            function rm(obj){
+            var len=$("[type=file]").length;
+               if(len>1){
+                  $(obj).parent().remove();
+               }
+            }
 </script>
 </head>
-	<body class="loading">
+   <body class="loading">
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -107,11 +113,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
-                                	<c:if test="${reply != 'Y'}">
-                                    	<h4 class="page-title">리스크 작성 페이지</h4>
+                                   <c:if test="${reply != 'Y'}">
+                                       <h4 class="page-title">리스크 작성 페이지</h4>
                                     </c:if>
-                                	<c:if test="${reply == 'Y'}">
-                                    	<h4 class="page-title">리스크 답글 페이지</h4>
+                                   <c:if test="${reply == 'Y'}">
+                                       <h4 class="page-title">리스크 답글 페이지</h4>
                                     </c:if>
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
@@ -154,27 +160,27 @@
                                                     <h4 class="header-title">리스크 작성 형식</h4>
                                                     <p class="sub-header">내용을 모두 채워주세요.</p>
                                              <form:form id="riskboard" modelAttribute="riskboard" method="post" enctype="multipart/form-data">
- 	                                            <input type="hidden" name="risk_writer" />
- 	                                            <input type="hidden" name="risk_status" />
- 	                                            <input type="hidden" name="risk_no" value=""/>
- 	                                            <c:if test="${reply == 'Y'}">
- 	                                            	<form:input type="hidden" path="risk_parent_no"/>
- 	                                            </c:if>
+                                                <input type="hidden" name="risk_writer" />
+                                                <input type="hidden" name="risk_status" />
+                                                <input type="hidden" name="risk_no" value=""/>
+                                                <c:if test="${reply == 'Y'}">
+                                                   <form:input type="hidden" path="risk_parent_no"/>
+                                                </c:if>
                                                     <div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="product-name" class="form-label">제목 <span class="text-danger">*</span></label>
                                                                     <form:input path="risk_title" type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요"/>
-                                                            	</div>
+                                                               </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="mb-3">
- <!-- form: <--이걸로 하는 방법을 모름--> 			       	<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label><br>
+ <!-- form: <--이걸로 하는 방법을 모름-->                    <label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label><br>
                                                             <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
 <%--                                                         <form:input path="risk_content" type="hidden"/> --%>
-													<c:if test="${reply != 'Y'}">
+                                       <c:if test="${reply != 'Y'}">
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
@@ -188,8 +194,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-	                                              	</c:if>
-													<c:if test="${reply == 'Y'}">
+                                                    </c:if>
+                                       <c:if test="${reply == 'Y'}">
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
@@ -201,43 +207,43 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-	                                              	</c:if>
-	                                              	
+                                                    </c:if>
+                                                    
                                                     </div>
-                                                   	<div class="tab-pane" id="product-img">
-                                                    	<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
-<%--                                                     	<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts"> --%>
-		                                                    <div id="fileArea">
-			                                                 	<div class="custom-file">
-<%-- 			                                                 	<span>기존 업로드 파일</span>${finf.filename} --%>
-			                                                 		<input name="report" type="file"/>
-			                                                 		<span onclick="rm(this)"> [X] </span><br>
-			                                               		</div>
-		                                               		</div>
-<%-- 		                                               	</c:forEach> --%>
+                                                      <div class="tab-pane" id="product-img">
+                                                       <h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
+<%--                                                        <c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts"> --%>
+                                                          <div id="fileArea">
+                                                             <div class="custom-file">
+<%--                                                              <span>기존 업로드 파일</span>${finf.filename} --%>
+                                                                <input name="report" type="file"/>
+                                                                <span onclick="rm(this)"> [X] </span><br>
+                                                              </div>
+                                                           </div>
+<%--                                                         </c:forEach> --%>
                                                     <!-- Preview -->
-		                                       			<div class="dropzone-previews mt-3" id="file-previews">
-		                                                    <ul class="pager wizard mb-0 list-inline text-end mt-3">
-		                                                        <li class="previous list-inline-item">
-		                                                            <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left">
-		                                                            </i> 리스크 작성 화면으로 </button>
-		                                                        </li>
-		                                                        <c:if test="${update != 'Y'}">
-		                                                        <li class="next list-inline-item">
-		                                                            <button type="button" id="sndBtn" class="btn btn-success">제출
-		                                                            <i class="mdi mdi-arrow-right ms-1"></i></button>
-		                                                        </li>
-		                                                        </c:if>
-		                                                        <c:if test="${update == 'Y'}">
-		                                                        <li class="next list-inline-item">
-		                                                            <button type="button" id="uptBtn" class="btn btn-success">수정
-		                                                            <i class="mdi mdi-arrow-right ms-1"></i></button>
-		                                                        </li>
-		                                                        </c:if>
-		                                                    </ul>
-		                                          		</div>
-	                                                </div>
-	                                                
+                                                      <div class="dropzone-previews mt-3" id="file-previews">
+                                                          <ul class="pager wizard mb-0 list-inline text-end mt-3">
+                                                              <li class="previous list-inline-item">
+                                                                  <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left">
+                                                                  </i> 리스크 작성 화면으로 </button>
+                                                              </li>
+                                                              <c:if test="${update != 'Y'}">
+                                                              <li class="next list-inline-item">
+                                                                  <button type="button" id="sndBtn" class="btn btn-success">제출
+                                                                  <i class="mdi mdi-arrow-right ms-1"></i></button>
+                                                              </li>
+                                                              </c:if>
+                                                              <c:if test="${update == 'Y'}">
+		                                                        		<li class="next list-inline-item">
+		                                                          			<button type="button" id="uptBtn" class="btn btn-success">수정
+		                                                           			<i class="mdi mdi-arrow-right ms-1"></i></button>
+	                                                          			</li>
+                                                              </c:if>
+                                                          </ul>
+                                                      </div>
+                                                   </div>
+                                                   
                                                 </form:form>
                                                 
                                                 </div>

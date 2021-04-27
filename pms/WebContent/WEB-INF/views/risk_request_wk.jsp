@@ -51,7 +51,7 @@
  			var no = $(this).children().eq(6).children().val();
 			console.log($(this).children().eq(6).children().val());	//배열에서 6번째 값의 안에 있는 input의 value값을 가져온다.
  			$('[name=risk_no]').val(risk_no);
- 			$('[name=risk_writer]').val(risk_writer);
+ 			$('[name=risk_writer]').val("${mem.name}");
  			$('[name=no]').val(${ra.project_no});
  			
  			
@@ -149,7 +149,7 @@
                                                         <td>[${ra.risk_category}]</td>
                                                         <td>${ra.risk_status}</td>
                                                         <td>${ra.project_name}<input type="hidden" value="${ra.project_no}"></td>
-                                                        <td><div>${ra.risk_writer}</div></td>
+                                                        <td><div>${mem.name}</div></td>
                                                         <td><fmt:formatDate value="${ra.regdte}"/><input type="hidden" value="${ra.risk_no}"></td>
                                                     </tr>
                                               		</c:forEach>

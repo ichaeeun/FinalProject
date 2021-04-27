@@ -126,7 +126,7 @@ public class RiskService {
 			File tmpFile = null;
 			File orgFile = null;
 			MultipartFile mpf = null;
-			
+
 			File pathFile = new File(risk_uploadTmp);
 			for(File f : pathFile.listFiles()) {
 				System.out.println("삭제할 파일 : "+f.getName());
@@ -171,8 +171,8 @@ public class RiskService {
 				}
 			}
 			
-			dao.updateRisk(upt);
 		}
+		dao.updateRisk(upt);
 	}
 	
 	public void deleteRisk(int risk_no) {

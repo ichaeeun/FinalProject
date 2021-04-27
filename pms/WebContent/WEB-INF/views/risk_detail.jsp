@@ -277,10 +277,15 @@
 				             			<li class="previous list-inline-item">
 				                             <!-- 작성화면 전으로 돌아가는 버튼 -->
 				                    		<c:if test="${mem.auth == 'pm' || mem.auth =='wk'}">
-											<a href="${path}/risk.do?method=riskBoard&no=${param.no}" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+				                    			<c:if test="${riskboard.risk_status == '승인'}">
+													<a href="${path}/risk.do?method=riskBoard&no=${param.no}" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+												</c:if>
+					                    		<c:if test="${riskboard.risk_status == '미승인'}">
+													<a href="${path}/risk.do?method=riskRequest&no=${param.no}" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+												</c:if>
 											</c:if>
 				                    		<c:if test="${mem.auth == 'ceo' || mem.auth =='hp'}">
-											<a href="${path }/risk.do?method=riskBoardAll" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
+												<a href="${path }/risk.do?method=riskBoardAll" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left"></i>목록으로</a>
 											</c:if>
 											<c:if test="${mem.auth == 'pm'}">
 												<c:if test="${riskboard.risk_status == '미승인'}">
@@ -290,8 +295,8 @@
 		                             				<button href="" id="rpBtn" type="button" class="btn btn-primary">답글달기</button>
 		                             			</c:if>
 		                             		</c:if>
-		                             		<c:if test="${mem.auth == 'pm' || mem.name == riskboard.risk_writer}">
-		                             			<c:if test="${riskboard.risk_status == '승인'}">
+		                             		<c:if test="${mem.name == riskboard.risk_writer}">
+		                             			<c:if test="${riskboard.risk_status == '미승인'}">
 		                             				<button href="" id="uptBtn" type="button" class="btn btn-warning">수정하기</button>
 		                             			</c:if>
 		                             			<button href="" id="delBtn" type="button" class="btn btn-danger">삭제하기</button>

@@ -231,10 +231,9 @@
                                                         <td>   
                                              				<c:forEach varStatus="sts" begin="1" end="${rl.level}">
 																<c:if test="${rl.level>1}">&nbsp;&nbsp;&nbsp;</c:if>
-																<c:if test="${rl.level>1 and sts.last}">
-											                  </c:if>
+																<c:if test="${rl.level>1 and sts.last}"></c:if>
 											      			</c:forEach>
-											               <h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
+											         		<h5 class="m-0 d-inline-block align-middle">${rl.risk_title}</h5>
                                                         </td>
                                                         <td>
                                                             <div>${fn:substring(rl.risk_content, 0, 10)}...</div>
