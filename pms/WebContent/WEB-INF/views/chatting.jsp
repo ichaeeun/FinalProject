@@ -34,7 +34,7 @@ table#demo-foo-filtering tr:first-child th { background:  rgba(0, 0, 0, 0.075);}
 <!-- icons -->
 <link href="${path}/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 <%-- j-query --%>
-<script type="text/javascript" src="/springweb/a00_com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="a00_com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
 
 
@@ -55,6 +55,7 @@ var wsocket;
 				// 211.63.89.68
 			wsocket = new WebSocket("ws://localhost:7080/${path}/chat-ws.do?no="+"${no}");
 			wsocket.onopen=function(evt){
+				
 				// 채팅서버에 접속되었을 때, 처리할 내용..
 				console.log(evt)
 				// 접속메시지 전송..

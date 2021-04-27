@@ -85,6 +85,7 @@ SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project
 	and t1.pno = pno AND a.PROJECT_NO = b.PROJECT_NO) AS task_done
 	FROM pms_member t1, PROJECT_TASK t2, pms_project t3 , PMS_MEMBER_PROJECT t4
 	WHERE t3.PROJECT_NO = #{no}
+	AND t2.PROJECT_NO = #{no}
 	AND t4.pno = t1.pno
 	AND t3.PROJECT_NO = t4.PROJECT_NO 
 	ORDER BY pno
