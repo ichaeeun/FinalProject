@@ -74,10 +74,18 @@
 		$("#addSubtaskBtn").click(function(){ //  서브태스크 추가 화면단 처리 
 			var task_no = "${detail.task_no}";
 			var addTask_name = $("#addTask_name").val();
+			var startdte = $("#addTask_startdte").val();
+			var enddte = $("#addTask_enddte").val();
+			var startDate = new Date(startdte);
+			var endDate = new Date(enddte);
 			if(addTask_name==""){
 				alert("사원을 선택하세요");
 				return false;
 			} 
+			if(startDate>endDate){
+				alert("종료일은 시작일 이후로 설정해주세요");
+				return false;
+			}
             
 			var sch = taskVal();
 			console.log(sch);
@@ -112,6 +120,7 @@
 		
 		
 		$("#updateTaskBtn").click(function(){
+			
 			var updateTask_task_priority = $("#updateTask_task_priority").val();
 			var updateTask_task_name = $("#updateTask_task_name").val();
 			var updateTask_name = $("#updateTask_name option:checked").text();
@@ -119,6 +128,14 @@
 			var updateTask_startdte = $("#updateTask_startdte").val();
 			var updateTask_enddte = $("#updateTask_enddte").val();
 			var updateTask_task_content = $("#updateTask_task_content").val();
+			
+			var startDate = new Date(updateTask_startdte);
+			var endDate = new Date(updateTask_enddte);
+			if(startDate>endDate){
+				alert("종료일은 시작일 이후로 설정해주세요");
+				return false;
+			}
+			
 			$("#task_priority").text(updateTask_task_priority);
 			$("#task_name").text(updateTask_task_name);
 			$("#task_content").text(updateTask_task_content);
@@ -167,6 +184,7 @@
 					  // data.모델명
 					  if(data.success=="Y")
 					  	console.log(data);
+					  $("#updateTaskModal").modal("hide");
 				  },
 				  error:function(err){
 					  alert("에러발생: "+err);
@@ -234,6 +252,12 @@
 		 });
 		 
 		 $("#updateSubtaskBtn").click(function(){
+			 var startDate = new Date($("#updateSub_startdte").val());
+			 var endDate = new Date($("#updateSub_enddte").val());
+			 if(startDate>endDate){
+				alert("종료일은 시작일 이후로 설정해주세요");
+				return false;
+			 }
 			 var updatesub={};
 			 updatesub.task_no= $("#updateSub_task_no").val();
 			 updatesub.pno= $("#updateSub_name").val();
@@ -902,7 +926,7 @@
 		                             <div class="modal-footer">
 		                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
 		                              
-		                                <input type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateSubtaskBtn" value="수정"/>
+		                                <input type="button" class="btn btn-info waves-effect waves-light"  id="updateSubtaskBtn" value="수정"/>
 		                            </div>
 		                        </div><!-- /.modal-content -->
 		                    </div><!-- /.modal-dialog -->
@@ -977,7 +1001,7 @@
                             </div>
                              <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
-                                <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal" id="updateTaskBtn">수정</button>
+                                <button type="button" class="btn btn-info waves-effect waves-light"  id="updateTaskBtn">수정</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
