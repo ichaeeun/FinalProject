@@ -1,5 +1,7 @@
 package pms.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +97,11 @@ public class ProjectController {
 		service.updateTask(no);	// 태스크 상태를 모두 완료로 변경 
 		return "project_detail";
 	}
-	
+	// pmlist를 모델값으로 전달
+	@ModelAttribute("pmlist")
+	public ArrayList<Member> pmlist(){
+		return service.pmlist();
+	}
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  
 	public Member showMember(HttpSession session){
 		Member m = (Member)session.getAttribute("mem");

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pms.dao.ProjectDao;
+import pms.dto.Member;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.dto.pms_projectSch;
@@ -98,7 +99,9 @@ public class ProjectService {
 		dao.updateTask(no);		// 해당 프로젝트에 속한 모든태스크 상태를 완료로 변경
 
 	}
-	
-	
+	// 진행중인 프로젝트가 없는 PM의 이름과 번호
+	public ArrayList<Member> pmlist(){
+		return dao.pmlist();
+	}
 	
 }

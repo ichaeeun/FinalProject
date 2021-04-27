@@ -104,6 +104,18 @@
 		SET TASK_STATUS = '완료'
 		WHERE PROJECT_NO = #{project_no}
 	</update>
+	<!-- public ArrayList<Member> pmlist(); -->
+	<select id="pmlist" resultType="Member">
+		SELECT c.NAME, c.PNO
+		FROM PMS_MEMBER c
+		WHERE c.PNO NOT IN 
+			(SELECT a.PNO
+			FROM PMS_MEMBER_PROJECT a, PMS_PROJECT b
+			WHERE a.PROJECT_NO =b.PROJECT_NO	
+			AND b.PROJECT_STATUS = '진행')			
+		AND c.AUTH = 'pm'
+	</select>
+	
 	
 	
 </mapper>  

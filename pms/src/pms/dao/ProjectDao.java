@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import pms.dto.Member;
 import pms.dto.ProjectAdd;
 import pms.dto.pms_project;
 import pms.dto.pms_projectSch;
@@ -29,6 +30,9 @@ public interface ProjectDao {
 	public void updateProject(pms_project update);		// 프로젝트 수정
 	
 	public void updateTask(int no);			// 프로젝트에 속한 태스크 수정
+	
+	public ArrayList<Member> pmlist();		// 진행중인 프로젝트가 없는 pm의 이름번호
+		
 	
 	
 }

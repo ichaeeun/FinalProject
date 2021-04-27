@@ -189,7 +189,14 @@ $(document).ready(function(){
 												<div class="col-md-6">
 													<div class="mb-3">
                                                     	<label for="pm_pno" class="form-label">PM</label>
-                                                        <input type="text" value="${pms_project.pm_pno}" id="pm_pno" class="form-control">
+                                                    	<select id="pm_pno" class="form-control">
+                                                    		<option value="">PM선택</option>
+                                                    		<option value="${pms_project.pm_pno}">${mem.name}</option>
+                                                    		<c:forEach var="pm" items="${pmlist}">
+                                                    			<option value="${pm.pno}">${pm.name}</option>
+                                                    		</c:forEach>
+                                                    	</select>
+                                                        <!-- <input type="text" value="${pms_project.pm_pno}" id="pm_pno" class="form-control"> -->
 													</div>
 													<div class="mb-3">
                                                     	<label for="project_status" class="form-label">프로젝트상태</label>
