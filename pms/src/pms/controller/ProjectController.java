@@ -78,9 +78,22 @@ public class ProjectController {
 	@RequestMapping(params="method=update")
 	public String updateProject(pms_project update, Model d) {
 		System.out.println("수정:"+update.getProject_name());
+		System.out.println("프로젝트의 상태:"+update.getProject_status());
+		System.out.println("프로젝트의 번호:"+update.getProject_no());
+		
+
 		service.updateProject(update);
+		
+		
 		d.addAttribute("success", "Y");
 		return "pageJsonReport";
+	}
+	
+	// 태스크 상태를 모두 완료로 변경
+	@RequestMapping(params="method=update2")
+	public String updateTask(@RequestParam("no") int no, Model d) {
+		service.updateTask(no);	// 태스크 상태를 모두 완료로 변경 
+		return "project_detail";
 	}
 	
 	@ModelAttribute("showprofile")  // 멤버 프로필 사진 공통 어트리뷰트  

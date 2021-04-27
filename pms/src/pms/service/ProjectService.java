@@ -90,8 +90,14 @@ public class ProjectService {
 	}
 	// 프로젝트 수정
 	public void updateProject(pms_project update) {
-		dao.updateProject(update); // 프로젝트 테이블에 정보 입력
-	};
+		dao.updateProject(update);	// 프로젝트 테이블에 정보 입력
+
+	}
+	// 프로젝트의 모든 태스크 완료로 변경
+	public void updateTask(int no) {
+		dao.updateTask(no);		// 해당 프로젝트에 속한 모든태스크 상태를 완료로 변경
+
+	}
 	
 	
 	
