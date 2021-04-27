@@ -72,7 +72,7 @@ function doubleSubmitCheck(){
 
 document.getElementById('startdte').value = new Date().toISOString().substring(0, 10); // 날짜 디폴트 오늘 
 $("#btnAddTask").click(function(){
-	if(doubleSubmitCheck()) return;
+	/* if(doubleSubmitCheck()) return; */
 	// 반복 클릭으로 인한 다중 submit방지
 	 /* $("#addTaskModal>form")[0].reset(); */ // 값 초기화 처리.
 	 // 유효성 검사
@@ -81,30 +81,38 @@ $("#btnAddTask").click(function(){
 	var pnoObj = document.querySelector("#taskFrm [name=pno]");
 	var prioObj = document.querySelector("#taskFrm [name=task_priority]");
 	var endObj = document.querySelector("#taskFrm [name=enddte]");
-	var isValid=true;
+	var startdte = document.querySelector("#taskFrm [name=startdte]").value;
+	var enddte = document.querySelector("#taskFrm [name=enddte]").value;
+	var startDate = new Date(startdte);
+	var endDate = new Date(enddte);
+/* 	var isValid=true; */
+	if(startDate>endDate){
+		alert("종료일은 시작일 이후로 설정해주세요");
+		return false;
+	}
 	if(nameObj.value==""){
 		alert("태스크 이름을 입력해주세요");
 		nameObj.focus();
-		isValid=false;
+		return false;
 	}
 	if(contObj.value==""){
 		alert("태스크 내용을 입력해주세요");
 		contObj.focus();
-		isValid=false;
+		return false;
 	}if(pnoObj.value==""){
 		alert("담당자를 선택해주세요");
 		pnoObj.focus();
-		isValid=false;
+		return false;
 	}if(prioObj.value==""){
 		alert("태스크 중요도를 선택해주세요");
 		prioObj.focus();
-		isValid=false;
+		return false;
 	}if(endObj.value==""){
 		alert("마감날짜를 선택해주세요");
 		endObj.focus();
-		isValid=false;
+		return false;
 	}	
-	if(isValid){
+
 		// 유효성 check에 해당하지 않을 때만, 서버에 요청값으로 전송처리	
 	var sch = addtask(); //  리턴값이 입력된 객체 데이터
 	console.log("##등록할 데이터##");
@@ -133,7 +141,7 @@ $("#btnAddTask").click(function(){
 			  console.log(err);
 		  }		 
 	});  
-	}
+	
 });
 
 function addtask(){

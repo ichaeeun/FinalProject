@@ -24,7 +24,7 @@
                     <ul class="list-unstyled topnav-menu float-end mb-0">
 
                         <li class="d-none d-lg-block">
-                            <form class="app-search">
+                            <form class="app-search" style="display:none;">
                                 <div class="app-search-box dropdown">
                                     <div class="input-group">
                                         <input type="search" class="form-control" placeholder="Search..." id="top-search">
@@ -107,7 +107,7 @@
                             </a>
                         </li>
     
-                        <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
+                        <li class="dropdown d-none d-lg-inline-block topbar-dropdown" style="display:none!important;">
                             <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <i class="fe-grid noti-icon"></i>
                             </a>
@@ -160,7 +160,7 @@
                             </div>
                         </li>
     
-                        <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
+                        <li class="dropdown d-none d-lg-inline-block topbar-dropdown" style="display:none!important;">
                             <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <img src="${path}/Admin/dist/assets/images/flags/us.jpg" alt="user-image" height="14">
                             </a>
@@ -189,7 +189,7 @@
                             </div>
                         </li>
             
-                        <li class="dropdown notification-list topbar-dropdown">
+                        <li class="dropdown notification-list topbar-dropdown"  style="display:none!important;">
                             <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <i class="fe-bell noti-icon"></i>
                                 <span class="badge bg-danger rounded-circle noti-icon-badge">5</span>
@@ -394,16 +394,20 @@
                             </a>
                             <div class="dropdown-menu">
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">
+                                <c:if test="${mem.auth == 'pm'}">
+                                <a href="${path }/project.do?method=project_list" class="dropdown-item">
                                     <i class="fe-briefcase me-1"></i>
                                     <span>New Projects</span>
                                 </a>
+                                </c:if>
     
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">
+                                <c:if test="${mem.auth == 'hp'}">
+                                <a href="${path }/manpower.do?method=contacts_list" class="dropdown-item">
                                     <i class="fe-user me-1"></i>
                                     <span>Create Users</span>
                                 </a>
+                                </c:if>
   
 <!--                                 item
                                 <a href="javascript:void(0);" class="dropdown-item">
