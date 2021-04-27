@@ -58,8 +58,9 @@ var all;
 var title;
 var holder;
 var parent;
+var project_status = "${project.project_status}";
 var createdid = "${mem.auth}";
-   //$(document).ready(function(){
+
 	document.addEventListener('DOMContentLoaded', function(e) {
 		
 		console.log(createdid);
@@ -110,7 +111,7 @@ var createdid = "${mem.auth}";
 		  			    			var pleft = all[i].start;
 		  			    			var pright = all[i].end;
 		  			    		}
-		  		    		}
+		  		    		  }
 		    				  console.log("##등록##");console.log(pleft);console.log(pright);
 		    				  //var pleft = all[0].start;
 		    			      //var pright = all[0].end;
@@ -127,10 +128,10 @@ var createdid = "${mem.auth}";
 		    					  alert("태스크 제목 중복!!\n다른 제목으로 입력해주십시오.");
 		    					  return false;
 		    				  } else if (pleft > sch.start){
-		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.\n"+pleft);
 		    					  return false;
 		    				  } else if(pright < sch.end){
-		    					  alert("부모 태스크의 종료날짜보다 느립니다.");
+		    					  alert("부모 태스크의 종료날짜보다 느립니다.\n"+pright);
 		    					  return false;
 		    				  } else if (sch.start > sch.end){
 		    					  alert("시작날짜가 종료날짜보다 느립니다.");
@@ -143,6 +144,7 @@ var createdid = "${mem.auth}";
 		    				  } 
 		    				  
 		    				  // ajax 처리 ( DB 등록 )
+		    				  
 		    				  $.ajax({
 		    					 type:"post",
 		    					 url:"${path}/cal.do?method=insert&no="+"${no}",
@@ -162,6 +164,7 @@ var createdid = "${mem.auth}";
 		    						 console.log(err);
 		    					 }
 		    				  });
+		    				  
 		    				  $("#schDialog").dialog("close");
 		    			  }
 		    	  };
@@ -184,12 +187,170 @@ var createdid = "${mem.auth}";
 		      },
 		      
 		      eventDrop:function(arg){
-		    	  eventUpt(arg.event);
+		    	  var exProps = arg.event.extendedProps;
+		    	  var start = arg.event.start;
+		    	  start = start.toISOString();
+		    	  var end = arg.event.end;
+		    	  end = end.toISOString();
+		    	  
+		    	  if(arg.event.id == 1){
+			      		alert("프로젝트");
+			      		var leftLimit = all[0].end;
+				    	var rightLimit = all[0].start;
+			    		for(var i=0;i<all.length;i++){
+			    			if(parent[0] == all[i].parent){
+			    				if(leftLimit > all[i].start){
+			    					leftLimit = all[i].start;
+			    				}
+			    				if(rightLimit < all[i].end){
+			    					rightLimit = all[i].end;
+			    				}
+			    			}
+			    		}
+			    		console.log(leftLimit);console.log(rightLimit);
+			    		console.log(leftLimit <start);console.log(rightLimit > end);
+			      		if(leftLimit < start) {
+		    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.\n"+leftLimit);
+				      		  arg.revert();
+		    			} else if(rightLimit > end) {
+		    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.\n"+rightLimit);
+				      		  arg.revert();
+		    			} else
+		    				eventUpt(arg.event);
+			      	  } else if(exProps.parent == parent[0]){
+			      		  alert("태스크");
+				      		var leftLimit = all[0].end;
+		  			    	var rightLimit = all[0].start;
+		  		    		var pleft = all[0].start;
+		  			    	var pright = all[0].end;
+		  		    		// 서브 태스크 범위 못벗어나게
+		  		    		for(var i=0;i<all.length;i++){
+		  		    			if(arg.event.title == all[i].parent){
+		  		    				if(leftLimit > all[i].start){
+		  		    					leftLimit = all[i].start;
+		  		    				}
+		  		    				if(rightLimit < all[i].end){
+		  		    					rightLimit = all[i].end;
+		  		    				}
+		  		    			}
+		  		    		}
+				      		console.log("##태스크##");console.log(leftLimit);console.log(rightLimit);console.log(pleft);console.log(pright);
+				      		console.log(start);console.log(end);
+		  		    		if(start > pleft && end < pright ) {
+			    				  if(leftLimit < start) {
+				    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+				    				  arg.revert();
+				    			  }
+				    			  else if(rightLimit > end) {
+				    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+				    				  arg.revert();
+				    			  }
+		  			  	  } else if(start < pleft || end > pright){
+		  			  			alert("프로젝트의 범위 밖으로 변경하실 수 없습니다.");
+		  			  			arg.revert();
+		  			  	  } else
+		  			  		eventUpt(arg.event);
+			      	  } else {
+			      		  alert("서브태스크");
+				      		for(var i=0;i<all.length;i++){
+		  			    		if(exProps.parent == all[i].title){
+		  			    			pleft = all[i].start;
+		  			    			pright = all[i].end;
+		  			    		}
+				    		  }
+				  	
+						  if(pleft > start){
+							  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+							  arg.revert();
+						  } else if(pright < end){
+							  alert("부모 태스크의 종료날짜보다 느립니다.");
+							  arg.revert();
+						  } else
+							  eventUpt(arg.event);
+			      	  }
+			    	  //eventUpt(arg.event);
+			    	  
 		      },
 		      eventResize:function(arg){
-		    	  eventUpt(arg.event);
+		    	  var exProps = arg.event.extendedProps;
+		    	  var start = arg.event.start;
+		    	  start = start.toISOString();
+		    	  var end = arg.event.end;
+		    	  end = end.toISOString();
+		      	  if(arg.event.id == 1){
+		      		alert("프로젝트");
+		      		var leftLimit = all[0].end;
+			    	var rightLimit = all[0].start;
+		    		for(var i=0;i<all.length;i++){
+		    			if(parent[0] == all[i].parent){
+		    				if(leftLimit > all[i].start){
+		    					leftLimit = all[i].start;
+		    				}
+		    				if(rightLimit < all[i].end){
+		    					rightLimit = all[i].end;
+		    				}
+		    			}
+		    		}
+		      		if(leftLimit < start) {
+	    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+			      		  arg.revert();
+	    			} else if(rightLimit > end) {
+	    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+			      		  arg.revert();
+	    			  } else
+	    				  eventUpt(arg.event);
+		      	  } else if(exProps.parent == parent[0]){
+		      		  alert("태스크");
+			      		var leftLimit = all[0].end;
+	  			    	var rightLimit = all[0].start;
+	  		    		var pleft = all[0].start;
+	  			    	var pright = all[0].end;
+	  		    		// 서브 태스크 범위 못벗어나게
+	  		    		for(var i=0;i<all.length;i++){
+	  		    			if(arg.event.title == all[i].parent){
+	  		    				if(leftLimit > all[i].start){
+	  		    					leftLimit = all[i].start;
+	  		    				}
+	  		    				if(rightLimit < all[i].end){
+	  		    					rightLimit = all[i].end;
+	  		    				}
+	  		    			}
+	  		    		}
+			      		
+	  		    		if(start > pleft && end < pright ) {
+		    				  if(leftLimit < start) {
+			    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+			    				  arg.revert();
+			    			  }
+			    			  else if(rightLimit > end) {
+			    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+			    				  arg.revert();
+			    			  }
+	  			  	  } else if(start < pleft || end > pright){
+	  			  			alert("프로젝트의 범위 밖으로 변경하실 수 없습니다.");
+	  			  			arg.revert();
+	  			  	  } else
+	  			  		eventUpt(arg.event);
+		      	  } else {
+		      		  alert("서브태스크");
+			      		for(var i=0;i<all.length;i++){
+	  			    		if(exProps.parent == all[i].title){
+	  			    			pleft = all[i].start;
+	  			    			pright = all[i].end;
+	  			    		}
+			    		  }
+			  	
+					  if(pleft > start){
+						  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+						  arg.revert();
+					  } else if(pright < end){
+						  alert("부모 태스크의 종료날짜보다 느립니다.");
+						  arg.revert();
+					  } else
+						  eventUpt(arg.event);
+		      	  }
+		    	  //eventUpt(arg.event);
 		      },
-		      
 		      eventClick: function(arg) {
 		      	// 삭제 : 화면에서 삭제
 		      	// event의 날짜 저장
@@ -202,15 +363,11 @@ var createdid = "${mem.auth}";
 		    	console.log("#등록된 일정 클릭#");
 		    	console.log(arg.event);
 		    	detail(arg.event);
-		    	var selectOption = document.getElementById("event-category");
-		    	//selectOption = selectOption.options[selectOption.selectedIndex].value;
-		    	var h = $("#event-category option:selected").val();
-		    	
-				//console.log(selectOption);
-				console.log(h);
+				
 		    	var idx = title.indexOf(arg.event.title);
 		    	title.splice(idx,1);
 		    	// 프로젝트, 태스크 수정 시 날짜 범위 설정
+		    	/*
 		    	if(arg.event.id == 1) { // 프로젝트
 		    		alert("프로젝트 선택");
 		    		var leftLimit = all[0].end;
@@ -260,6 +417,7 @@ var createdid = "${mem.auth}";
 		    		}
 		    		console.log("제한범위");console.log(pleft);console.log(pright);
 		    	}
+		    	*/
 		    	/*
 		    	var tmp = all[0].start;
 		    	console.log(tmp);
@@ -267,21 +425,21 @@ var createdid = "${mem.auth}";
 		    	*/
 		    	var zz = callSch();
 		    	var originalP = zz.parent;
-		    	
+		    	var originalH = zz.holder;
 		    	// 각 form에 값 추가
 		    	// 1. 화면로딩
 		    	//		2번 이상 중복된 함수 사용이 필요한 부분은 모듈로 분리 처리
 		    	
 		    	// 2. 기능별 버튼에 대한 처리
 //		    	$("#schDialog").dialog("open");
-		    	if("${mem.auth}" =="pm"){
+		    	if("${mem.auth}" =="pm" && "${project.project_status}" == "진행"){
 		    	opts.buttons = {
 		    			"수정":function(){
 		    				// 수정 후, json 데이터 가져오기
 		    				// 화면에 form 하위에 있는 요소객체의 값을 가져오는 부분
 		    				var sch = callSch();
 		    				console.log(sch.parent);
-		    				console.log(originalP);
+		    				console.log(parent[0]);
 		    			  // 공통
 	    				 if(!sch.title) {
 	    					  alert("태스크 제목 입력 누락");
@@ -298,6 +456,22 @@ var createdid = "${mem.auth}";
 	    				  }
 	    				 // 프로젝트
 			    		  if(sch.id == 1){
+			    			  alert("프로젝트");
+			    		  
+		    			  	var leftLimit = all[0].end;
+					    	var rightLimit = all[0].start;
+				    		for(var i=0;i<all.length;i++){
+				    			if(parent[0] == all[i].parent){
+				    				if(leftLimit > all[i].start){
+				    					leftLimit = all[i].start;
+				    				}
+				    				if(rightLimit < all[i].end){
+				    					rightLimit = all[i].end;
+				    				}
+				    			}
+				    		}
+				    		console.log("태스크범위");console.log(leftLimit);console.log(rightLimit);
+			    		  	console.log(sch.parent);
 			    			  if(leftLimit < sch.start) {
 			    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
 			    				  return false;
@@ -305,47 +479,77 @@ var createdid = "${mem.auth}";
 			    			  else if(rightLimit > sch.end) {
 			    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
 								  return false;
-			    			  } else if(sch.parent != ""){
+			    			  } else if(sch.parent != null){
 			    				  alert("프로젝트의 부모태스크는 설정하실 수 없습니다.");
 			    				  return false;
-			    			  }
-		    			  } else if(sch.parent == parent[0]){ // 태스크
-		    				  if(leftLimit < sch.start) {
-			    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
-			    				  return false;
-			    			  }
-			    			  else if(rightLimit > sch.end) {
-			    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
-								  return false;
-			    			  }
+			    			  } else if(originalH != sch.holder){
+		    					  alert("프로젝트 담당자는 변경하실 수 없습니다.");
+		    					  return false;
+		    				  }
+		    			  } else if(originalP == parent[0]){ // 태스크
+		    				  alert("태스크");  
+		    			  
+		    				var leftLimit = all[0].end;
+		  			    	var rightLimit = all[0].start;
+		  		    		var pleft = all[0].start;
+		  			    	var pright = all[0].end;
+		  		    		// 서브 태스크 범위 못벗어나게
+		  		    		for(var i=0;i<all.length;i++){
+		  		    			if(arg.event.title == all[i].parent){
+		  		    				if(leftLimit > all[i].start){
+		  		    					leftLimit = all[i].start;
+		  		    				}
+		  		    				if(rightLimit < all[i].end){
+		  		    					rightLimit = all[i].end;
+		  		    				}
+		  		    			}
+		  		    		}
+		  		    		console.log("부모제한범위");console.log(pleft);console.log(pright);
+		  		    		console.log("서브제한범위");console.log(leftLimit);console.log(rightLimit);  
+		  		    		  if(originalP != sch.parent){
+		    					  alert("태스크의 부모는 프로젝트 이외의 것으로 변경하실 수 없습니다.");
+		    					  return false;
+		    				  }
+		    			  	  if(sch.start > pleft && sch.end < pright ) {
+			    				  if(leftLimit < sch.start) {
+				    				  alert("자식 태스크 중 시작날짜가 더 빠른 것이 있습니다.");
+				    				  return false;
+				    			  }
+				    			  else if(rightLimit > sch.end) {
+				    				  alert("자식 태스크 중 종료날짜가 더 느린 것이 있습니다.");
+									  return false;
+				    			  }
+		    			  	  } else if(sch.start < pleft || sch.end > pright){
+		    			  			alert("프로젝트의 범위 밖으로 변경하실 수 없습니다.");
+		    						return false;
+		    			  	  }
+		    			  	  /*
 		    				  if(pleft > sch.start){
 		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
 		    					  return false;
 		    				  } else if(pright < sch.end){
 		    					  alert("부모 태스크의 종료날짜보다 느립니다.");
 		    					  return false;
-		    				  } 
-		    				  if(originalP != sch.parent){
-		    					  alert("태스크의 부모는 프로젝트 이외의 것으로 변경하실 수 없습니다.");
+		    				  } */
+		    			  } else {	// 서브태스크
+		    				alert("서브태스크");  
+		    			  
+		    				  for(var i=0;i<all.length;i++){
+			  			    		if(sch.parent == all[i].title){
+			  			    			pleft = all[i].start;
+			  			    			pright = all[i].end;
+			  			    		}
+		  		    		  }
+	    			  		console.log("서브태스크");
+	    					console.log(pleft);console.log(pright);
+	    			  
+		    				  if(pleft > sch.start){
+		    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
+		    					  return false;
+		    				  } else if(pright < sch.end){
+		    					  alert("부모 태스크의 종료날짜보다 느립니다.");
 		    					  return false;
 		    				  }
-		    			  } else {	// 서브태스크
-		    				  for(var i=0;i<all.length;i++){
-		  			    		if(sch.parent == all[i].title){
-		  			    			pleft = all[i].start;
-		  			    			pright = all[i].end;
-		  			    		}
-		  		    		}
-		    			  		console.log("서브태스크");
-		    					console.log(pleft);console.log(pright);
-		    			  
-			    				  if(pleft > sch.start){
-			    					  alert("부모 태스크의 시작날짜보다 빠릅니다.");
-			    					  return false;
-			    				  } else if(pright < sch.end){
-			    					  alert("부모 태스크의 종료날짜보다 느립니다.");
-			    					  return false;
-			    				  }
 		    			  }
 		    			
 		    			  
@@ -411,7 +615,7 @@ var createdid = "${mem.auth}";
 		    	            	alert("프로젝트는 삭제할 수 없습니다.");
 		    	            	return false;
 		    	            } else {
-		    	            	if(parent[0] == sch.parent) { // 태스크
+		    	            	if(sch.parent == parent[0]) { // 태스크
 		    	            		if(confirm("하위 태스크도 함께 삭제될 수 있습니다.\n계속 진행하시겠습니까?")){
 		    	            			event.remove();
 		    	            			for(var i=0;i<all.length;i++){
@@ -446,6 +650,7 @@ var createdid = "${mem.auth}";
 		    	            		console.log(err);
 		    	            	}
 		    	            })
+		    	            
 		    	            $("#schDialog").dialog("close");
 		    			}
 		    	}
@@ -459,7 +664,7 @@ var createdid = "${mem.auth}";
 		    	*/
 		      },
 		      //editable: true,
-		      editable: (createdid == "pm") ? true:false,
+		      editable: (createdid == "pm" && project_status =="진행") ? true:false,
 		      dayMaxEvents: true, // allow "more" link when too many events
 		      events: function(info, successCallback, failureCallback){
 		    	  // ajax 처리로 데이터를 로딩 시킨다
@@ -508,6 +713,8 @@ var createdid = "${mem.auth}";
 			  sch.allDay = false;
 			  //sch.start = date.start.toISOString();
 			  var tmp = $("[name=start]").val();
+			  console.log("날짜형식 확인");
+			  console.log(tmp);
 			  sch.start = changeDate(tmp);
 			  tmp = $("[name=end]").val();
 			  sch.end = changeDate(tmp);
@@ -520,6 +727,8 @@ var createdid = "${mem.auth}";
 		  }
 		
 		  function changeDate(date){
+			  // 오전 12시 => 00시, 오후 12시 => 12시
+			  console.log("####changeDate#####");  
 			  console.log(date);  
 		  
 			  var parts = date.split('. ');
@@ -533,12 +742,34 @@ var createdid = "${mem.auth}";
 			  var min = time[1];
 			  var sec = time[2];
 			  
-			  if(ampm == "오후"){
-				  hour = Number(hour) + 12;
+			  if(ampm == "오후"){  
+			  	  if(hour == "12")
+				  	hour = 12;
+				  else
+					hour = Number(hour) + 12;
+			  } else{
+				  if(hour =="12")
+					  hour = 0;
 			  }
+			  //console.log("오전,오후 변환");
+			  //console.log(hour);
 			  month = Number(month) - 1;
+			  
+			  
+			  hour = Number(hour) + 9;
+			  //console.log("hour + 9");
+			  //console.log(hour);
+			  //console.log("day변환전");console.log(day);console.log(hour);
+			  if(hour >= 24){
+				  day = Number(day) + 1;
+				  hour = hour % 12;
+			  }
+			  //console.log("day, hour 변환 후");
+			  //console.log(day);console.log(hour);
+			  
 			  var d = new Date(year,month,day,hour,min,sec);  
-		  	
+			  console.log(d);
+			  console.log(d.toISOString());
 			  return d.toISOString();
 		  }
 		  
@@ -590,8 +821,12 @@ var createdid = "${mem.auth}";
 			  $("[name=content]").val(exProps.content);
 			  $("[name=priority]").val(exProps.priority);
 			  $("[name=parent]").val(exProps.parent);
-			  $("[name=start]").val(event.start.toLocaleString());
-			  $("[name=end]").val(event.end.toLocaleString());
+			  var tmps = event.start; tmps.setHours(tmps.getHours() - 9);
+			  $("[name=start]").val(tmps.toLocaleString());
+			  //$("[name=start]").val(event.start.toLocaleString());
+			  var tmpe = event.end; tmpe.setHours(tmpe.getHours() - 9);
+			  $("[name=end]").val(tmpe.toLocaleString());
+			  //$("[name=end]").val(event.end.toLocaleString());
 			  $("[name=allDay]").val(""+event.allDay);
 			  $("[name=backgroundColor]").val(event.backgroundColor);
 			  $("[name=textColor]").val(event.textColor);
@@ -662,17 +897,15 @@ var createdid = "${mem.auth}";
 			  console.log("###데이터 확인###");
 			  console.log(sch.end);
 			  
-			  //sch.start = date.start.toISOString();
-			  //sch.end = date.end.toISOString();
-			  
-			  
-			  //sch.start = date.start.toISOString();
-			  //sch.end = date.end.toISOString();
-			  
 			  console.log("###update 데이터 확인###")
 			  console.log(sch);
 			
-			updateCall(sch);
+			  // 범위 에러 처리 먼저 return false, alert 뜨는지 확인, 적용안되는지 확인
+			  if(sch.id == 1){
+				  alert("project");
+				  return false;
+			  }
+			//updateCall(sch);
 		  }
 		  
 		   $(document).ready(function(){
