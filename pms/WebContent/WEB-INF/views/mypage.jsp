@@ -161,7 +161,7 @@
                                                         </tr>
                                                         <tr> 	
                                                             <th scope="row">아이디 </th>
-                                                            <td class="text-muted"><input  class="form-control" name="id" value="${showprofile.id }"/></td>
+                                                            <td class="text-muted"><input  class="form-control" name="id" value="${showprofile.id }" readonly /></td>
                                                         </tr>
                                                         <tr> 	
                                                             <th scope="row">비밀번호 </th>
