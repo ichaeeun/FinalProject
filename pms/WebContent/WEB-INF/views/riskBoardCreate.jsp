@@ -89,193 +89,207 @@
                   $(obj).parent().remove();
                }
             }
+            
+            function rmOriginFile(fno, rmBtn){
+            	$(fno).val("");
+            	console.log(rmBtn);            	
+            }
 </script>
 </head>
-   <body class="loading">
-
-        <!-- Begin page -->
-        <div id="wrapper">
-            <jsp:include page="top.jsp" flush="false"/>
-            <!-- ========== Left Sidebar Start ========== -->         
-            <jsp:include page="side.jsp" flush="false"/>
-
-            <!-- ============================================================== -->
+	<body class="loading">
+		<!-- Begin page -->
+		<div id="wrapper">
+			<jsp:include page="top.jsp" flush="false"/>
+			<!-- ========== Left Sidebar Start ========== -->         
+			<jsp:include page="side.jsp" flush="false"/>
+			
             <!-- Start Page Content here -->
-            <!-- ============================================================== -->
 
-            <div class="content-page">
-                <div class="content">
+			<div class="content-page">
+				<div class="content">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
+					<!-- Start Content-->
+					<div class="container-fluid">
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box page-title-box-alt">
-                                   <c:if test="${reply != 'Y'}">
-                                       <h4 class="page-title">리스크 작성 페이지</h4>
-                                    </c:if>
-                                   <c:if test="${reply == 'Y'}">
-                                       <h4 class="page-title">리스크 답글 페이지</h4>
-                                    </c:if>
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
-                                            <li class="breadcrumb-item"><a href="${path}/risk.do?method=riskBoard&no=${param.no}">리스크 목록</a></li>
-                                            <li class="breadcrumb-item active">리스크 작성</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+						<!-- start page title -->
+						<div class="row">
+ 							<div class="col-12">
+ 								<div class="page-title-box page-title-box-alt">
+ 									<c:if test="${reply != 'Y'}">
+										<h4 class="page-title">리스크 작성 페이지</h4>
+ 									</c:if>
+ 									<c:if test="${reply == 'Y'}">
+ 										<h4 class="page-title">리스크 답글 페이지</h4>
+ 									</c:if>
+ 									<div class="page-title-right">
+ 										<ol class="breadcrumb m-0">
+											<li class="breadcrumb-item"><a href="${path}/main.do?method=main">메인</a></li>
+											<li class="breadcrumb-item"><a href="${path}/risk.do?method=riskBoard&no=${param.no}">리스크 목록</a></li>
+											<li class="breadcrumb-item active">리스크 작성</li>
+ 										</ol>
+ 									</div>
+ 								</div>
+ 							</div>
+ 						</div>     
+						<!-- end page title --> 
                         
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                        <div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
-                                        <c:if test="${reply != 'Y'}">
-                                            <ul class="twitter-bs-wizard-nav mb-2">
-                                                <li class="nav-item">
-                                                    <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="d-none d-sm-inline">리스크 작성</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                         </c:if>
-                                        <c:if test="${reply == 'Y'}">
-                                            <ul class="twitter-bs-wizard-nav mb-2">
-                                                <li class="nav-item">
-                                                    <a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
-                                                        <span class="d-none d-sm-inline">리스크 답글 작성</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                         </c:if>
-                                            <div class="tab-content twitter-bs-wizard-tab-content">
-                                                <div class="tab-pane" id="general-info">
-                                                    <h4 class="header-title">리스크 작성 형식</h4>
-                                                    <p class="sub-header">내용을 모두 채워주세요.</p>
-                                             <form:form id="riskboard" modelAttribute="riskboard" method="post" enctype="multipart/form-data">
-                                                <input type="hidden" name="risk_writer" />
-                                                <input type="hidden" name="risk_status" />
-                                                <input type="hidden" name="risk_no" value=""/>
-                                                <c:if test="${reply == 'Y'}">
-                                                   <form:input type="hidden" path="risk_parent_no"/>
-                                                </c:if>
-                                                    <div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="mb-3">
-                                                                    <label for="product-name" class="form-label">제목 <span class="text-danger">*</span></label>
-                                                                    <form:input path="risk_title" type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요"/>
-                                                               </div>
+ 						<div class="row">
+ 							<div class="col-lg-12">
+ 								<div class="card">
+ 									<div class="card-body">
+ 										<div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
+	 										<c:if test="${reply != 'Y'}">
+	 											<ul class="twitter-bs-wizard-nav mb-2">
+	 												<li class="nav-item">
+	 													<a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
+	 														<span class="d-none d-sm-inline">리스크 작성</span>
+	 													</a>
+	 												</li>
+	 											</ul>
+	 										</c:if>
+	 										<c:if test="${reply == 'Y'}">
+	 											<ul class="twitter-bs-wizard-nav mb-2">
+	 												<li class="nav-item">
+	 													<a href="#general-info" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
+	 														<span class="d-none d-sm-inline">리스크 답글 작성</span>
+	 													</a>
+	 												</li>
+	 											</ul>
+	 										</c:if>
+ 											<div class="tab-content twitter-bs-wizard-tab-content">
+ 												<div class="tab-pane" id="general-info">
+ 													<h4 class="header-title">리스크 작성 형식</h4>
+ 													<p class="sub-header">내용을 모두 채워주세요.</p>
+ 												<form:form id="riskboard" modelAttribute="riskboard" method="post" enctype="multipart/form-data">
+ 													<input type="hidden" name="risk_writer" />
+ 													<input type="hidden" name="risk_status" />
+ 													<input type="hidden" name="risk_no" value=""/>
+ 													<c:if test="${reply == 'Y'}">
+ 														<form:input type="hidden" path="risk_parent_no"/>
+ 													</c:if>
+ 													<div>
+ 														<div class="row">
+ 															<div class="col-lg-6">
+ 																<div class="mb-3">
+																	<label for="product-name" class="form-label">제목 <span class="text-danger">*</span></label>
+																		<form:input path="risk_title" type="text" id="product-name" class="form-control" placeholder="제목을 입력해주세요"/>
+																</div>
                                                             </div>
-                                                        </div>
+														</div>
 
-                                                        <div class="mb-3">
- <!-- form: <--이걸로 하는 방법을 모름-->                    <label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label><br>
-                                                            <textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
-<%--                                                         <form:input path="risk_content" type="hidden"/> --%>
-                                       <c:if test="${reply != 'Y'}">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="mb-3">
-                                                                    <label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
-                                                                    <form:select path="risk_category" class="form-control select2" id="product-category">
-                                                                        <option value="결제">결제</option>
-                                                                        <option value="커뮤니케이션">커뮤니케이션</option>
-                                                                        <option value="프로젝트 기간">프로젝트 기간</option>
-                                                                        <option value="기타">기타</option>                       
-                                                                    </form:select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                       <c:if test="${reply == 'Y'}">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="mb-3">
-                                                                    <label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
-                                                                    <form:select path="risk_category" class="form-control select2" id="product-category">
-                                                                        <option value="답글">답글</option>
-                                                                        <option value="기타">기타</option>                       
-                                                                    </form:select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
+													<div class="mb-3">
+<!-- form: <--이걸로 하는 방법을 모름-->						<label for="product-description" class="form-label">리스크 내용<span class="text-danger">*</span></label><br>
+														<textarea class="uptTextarea" name="risk_content">${riskboard.risk_content}</textarea>
+														<%--<form:input path="risk_content" type="hidden"/> --%>
+														<c:if test="${reply != 'Y'}">
+															<div class="row">
+																<div class="col-lg-6">
+																	<div class="mb-3">
+																		<label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
+																		<form:select path="risk_category" class="form-control select2" id="product-category">
+																			<option value="결제">결제</option>
+																			<option value="커뮤니케이션">커뮤니케이션</option>
+																			<option value="프로젝트 기간">프로젝트 기간</option>
+																			<option value="기타">기타</option>                       
+																		</form:select>
+																	</div>
+																</div>
+															</div>
+														</c:if>
+														<c:if test="${reply == 'Y'}">
+															<div class="row">
+																<div class="col-lg-6">
+																	<div class="mb-3">
+																		<label for="product-category" class="form-label">리스크 카테고리<span class="text-danger">*</span></label>
+																		<form:select path="risk_category" class="form-control select2" id="product-category">
+																			<option value="답글">답글</option>
+																			<option value="기타">기타</option>                       
+																		</form:select>
+																	</div>
+																</div>
+															</div>
+														</c:if>
+													</div>
                                                     
-                                                    </div>
-                                                      <div class="tab-pane" id="product-img">
-                                                       <h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
-<%--                                                        <c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts"> --%>
-                                                          <div id="fileArea">
-                                                             <div class="custom-file">
-<%--                                                              <span>기존 업로드 파일</span>${finf.filename} --%>
-                                                                <input name="report" type="file"/>
-                                                                <span onclick="rm(this)"> [X] </span><br>
-                                                              </div>
-                                                           </div>
-<%--                                                         </c:forEach> --%>
-                                                    <!-- Preview -->
-                                                      <div class="dropzone-previews mt-3" id="file-previews">
-                                                          <ul class="pager wizard mb-0 list-inline text-end mt-3">
-                                                              <li class="previous list-inline-item">
-                                                                  <button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left">
-                                                                  </i> 리스크 작성 화면으로 </button>
-                                                              </li>
-                                                              <c:if test="${update != 'Y'}">
-                                                              <li class="next list-inline-item">
-                                                                  <button type="button" id="sndBtn" class="btn btn-success">제출
-                                                                  <i class="mdi mdi-arrow-right ms-1"></i></button>
-                                                              </li>
-                                                              </c:if>
-                                                              <c:if test="${update == 'Y'}">
-		                                                        		<li class="next list-inline-item">
-		                                                          			<button type="button" id="uptBtn" class="btn btn-success">수정
-		                                                           			<i class="mdi mdi-arrow-right ms-1"></i></button>
-	                                                          			</li>
-                                                              </c:if>
-                                                          </ul>
-                                                      </div>
-                                                   </div>
-                                                   
-                                                </form:form>
-                                                
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end row -->
-                        
-                    </div> <!-- container -->
+													<div class="tab-pane" id="product-img">
+                                                   	<!-- 기존 파일 -->
+														<c:if test="${update == 'Y'}">
+															<div class="row mb-5">
+		                                              			<h4 class="header-title">기존 업로드 파일</h4>
+		                                                		<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts">
+			                                            			<div id="fileArea">
+			                                                  			<div class="custom-file">
+			                                                     			<div class="row">
+				                                            					<div class="col-3 ml-3">
+				                                                  	        		<input type="text" value="${finf.filename}" style="border: none" readonly
+				                                                  	        			id="org${finf.fno}">
+				                                                          		</div>
+				                                                   				<div class="col-3">
+				                                                        			<span onclick="rmOriginFile(org${finf.fno}, this)"> [X] </span>
+				                                                     			</div>
+			                                                    			</div>
+			                                                    		</div>
+			                                            			</div>
+		                                                        </c:forEach>
+		                                             		</div>
+	                                             		</c:if>
 
-                </div> <!-- content -->
+													<!-- 업데이트 파일 -->
+														<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
+                                                   		<div id="fileArea">
+                                                   			<div class="custom-file">
+                                                   				<input name="report" type="file"/>
+                                                   				<span onclick="rm(this)"> [X] </span><br>
+                                                   			</div>
+                                                   		</div>
 
+													<!-- Preview -->
+														<div class="dropzone-previews mt-3" id="file-previews">
+															<ul class="pager wizard mb-0 list-inline text-end mt-3">
+																<li class="previous list-inline-item">
+																	<button id="mainBtn" type="button" class="btn btn-secondary"><i class="mdi mdi-arrow-left">
+																	</i> 리스크 작성 화면으로 </button>
+																</li>
+																<c:if test="${update != 'Y'}">
+																	<li class="next list-inline-item">
+																		<button type="button" id="sndBtn" class="btn btn-success">제출
+																		<i class="mdi mdi-arrow-right ms-1"></i></button>
+																	</li>
+																</c:if>
+																<c:if test="${update == 'Y'}">
+																	<li class="next list-inline-item">
+																		<button type="button" id="uptBtn" class="btn btn-success">수정
+																		<i class="mdi mdi-arrow-right ms-1"></i></button>
+																	</li>
+																</c:if>
+															</ul>
+														</div>
+													</div>
+												</form:form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- end row -->
+					</div> <!-- container -->
+				</div> <!-- content -->
+				
                 <!-- Footer Start -->
                 <jsp:include page="footer.jsp"/>
                 <!-- end Footer -->
-
-            </div>
+			</div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
 
 
-        </div>
-        <!-- END wrapper -->
+		</div><!-- END wrapper -->
 
         <!-- Right Sidebar -->
-        <div class="right-bar">
+		<div class="right-bar">
             <div data-simplebar class="h-100">
     
                 <!-- Nav tabs -->

@@ -177,6 +177,7 @@ public class RiskService {
 	
 	public void deleteRisk(int risk_no) {
 		dao.deleteRisk(risk_no);
+		dao.deleteFile(risk_no);
 	}
 	
 

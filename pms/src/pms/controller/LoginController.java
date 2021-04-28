@@ -47,8 +47,6 @@ public class LoginController {
 	@Autowired(required = false)
 	private LocaleResolver localeResolver;
 	
-	
-	
 		// http://localhost:7080/pms/main.do?method=loginform
 		@RequestMapping(params="method=loginform")
 		public String loginform(@ModelAttribute("member") Member member) {		

@@ -118,13 +118,10 @@
 			connect by prior risk_no = risk_parent_no
 		)
 	</delete>
-	<!-- 
-	<select id="uptlist" >
-		SELECT a.*, b.* 
-		FROM (SELECT * FROM RISK_FILE rf)a, RISKBOARD b
-		WHERE a.rnum = b.RISK_NO
-	</select>
-	 -->
+	 <delete id="deleteFile" parameterType="int">
+	 	delete from risk_file
+	 	where rnum=#{risk_no}
+	 </delete>
 
 </mapper>  
  
