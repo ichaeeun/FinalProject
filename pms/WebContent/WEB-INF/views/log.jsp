@@ -163,7 +163,7 @@
                                             <c:forEach var="task" items="${taskLog}">                                          
                                                 <tr>
                                                 	<td>${task.regdte}</td>
-                                                    <td>${task.name}님이 <span style="color:#526dee;">${task.task_name}(${task.task_no})</span> 태스크를 생성했습니다.</td>											
+                                                    <td>${task.name}님이 <span style="color:#526dee;">${task.task_name}(${task.task_no})</span> 태스크에 할당되었습니다.</td>											
                                                 </tr>                                             
                                             </c:forEach>     
                                             <c:forEach var="req" items="${reqLog}">                                          
