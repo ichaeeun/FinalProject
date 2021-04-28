@@ -70,6 +70,27 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
+				  plotOptions: {
+					    radialBar: {
+					     dataLabels: {
+					        showOn: "always",
+					        name: {
+					          offsetY: -10,
+					          show: true,
+					          color: "#888",
+					          fontSize: "15px"
+					        },
+					        value: {
+					          color: "#111",
+					          fontSize: "30px",
+					          show: true
+					        }
+					      }
+					    }
+					  },
+				  stroke: {
+					    lineCap: "round",
+					},
 				  series: [${Math.round(totdoingday/totallday*100 )}],
 				  labels: ['프로젝트진행도(${totdoingday}/${totallday})']
 				  
@@ -81,6 +102,27 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
+				  plotOptions: {
+					    radialBar: {
+					     dataLabels: {
+					        showOn: "always",
+					        name: {
+					          offsetY: -10,
+					          show: true,
+					          color: "#888",
+					          fontSize: "15px"
+					        },
+					        value: {
+					          color: "#111",
+					          fontSize: "30px",
+					          show: true
+					        }
+					      }
+					    }
+					  },
+				  stroke: {
+					    lineCap: "round",
+					},
 				  series: [${Math.round(doingtask/alltask*100)}],
 				  labels: ['태스크진행도(${doingtask}/${alltask})'],
 				};
@@ -91,6 +133,27 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
+				  plotOptions: {
+					    radialBar: {
+					     dataLabels: {
+					        showOn: "always",
+					        name: {
+					          offsetY: -10,
+					          show: true,
+					          color: "#888",
+					          fontSize: "15px"
+					        },
+					        value: {
+					          color: "#111",
+					          fontSize: "30px",
+					          show: true
+					        }
+					      }
+					    }
+					  },
+				  stroke: {
+					    lineCap: "round",
+					},
 				  series: [${Math.round(doingrisk/allrisk*100)}],
 				  labels: ['리스크진행도(${doingrisk}/${allrisk})'],
 				};

@@ -98,7 +98,7 @@
 			      height: 250,
 			      type: 'radialBar',
 			  },
-			  series: [Math.round(${task.taskcnt/task.tasktotal*100})],
+			  series: [${Math.round(task.taskcnt/task.tasktotal*100)}],
 			  labels: ['태스크진행도(${task.taskcnt}/${task.tasktotal})']
 			};
 		var chart = new ApexCharts(document.querySelector("#chart2"), options);

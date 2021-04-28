@@ -45,18 +45,24 @@ public class DashBoardController {
 			Date end = df.parse(project.getEnd1());		// 완료일
 			Date today = new Date();					// 현재날짜
 			// 진행도
-			long startday = Math.abs( start.getTime() / (24*60*60*1000) ); // 시작일수(숫자값)
-			long endday = Math.abs( end.getTime() / (24*60*60*1000) ); // 종료일수(숫자값)
-			long todayday = Math.abs( today.getTime() / (24*60*60*1000) ); // 현재일수(숫자값)
-			long allday = endday - startday;			// 분모:프로젝트총숫자
-			// 진행숫자(현재-시작= 진행수)
-			long doday = todayday - startday;			// 분자:프로젝트진행일
-			if(todayday>endday) {	// 만약 오늘날짜가 종료일보다 크다면
-				doday = endday - startday;
+			long startday = Math.abs( start.getTime() / (24*60*60*1000) );	// 시작일수(숫자값)
+			long endday = Math.abs( end.getTime() / (24*60*60*1000) );		// 종료일수(숫자값)
+			long todayday = Math.abs( today.getTime() / (24*60*60*1000) );	// 현재일수(숫자값)
+			long allday = endday - startday;			// 분모: 프로젝트기간. 프기.
+			long doday = 0;
+			if(todayday>startday && todayday<endday) {	// 시작일-오늘-종료일 일때
+				doday = todayday - startday;		// 진행기간. 진기
 			}
+			if(todayday<startday && todayday<endday) {	// 오늘-시작일-종료일 일때
+				doday = 0;							// 진행기간. 진기
+			}
+			if(todayday>startday && todayday>endday) {	// 시작일-종료일-오늘 일때
+				doday = allday;						// 진행기간. 진기
+			}
+				project.setAllday(allday);	// 프로젝트기간
+				project.setDoday(doday);	// 진행기간
 			
-			project.setAllday(allday);
-			project.setDoday(doday);
+			
 			
 			
 		} catch (ParseException e) {

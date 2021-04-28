@@ -67,7 +67,7 @@
 					          offsetY: -10,
 					          show: true,
 					          color: "#888",
-					          fontSize: "13px"
+					          fontSize: "15px"
 					        },
 					        value: {
 					          color: "#111",
@@ -77,8 +77,6 @@
 					      }
 					    }
 					  },
-				  
-				  
 				  stroke: {
 					    lineCap: "round",
 					},
@@ -92,6 +90,7 @@
 				      height: 250,
 				      type: 'radialBar',
 				  },
+				  
 				  series: [${Math.round(task.taskcnt/task.tasktotal*100)}],
 				  labels: ['태스크진행도(${task.taskcnt}/${task.tasktotal})'],
 				};
