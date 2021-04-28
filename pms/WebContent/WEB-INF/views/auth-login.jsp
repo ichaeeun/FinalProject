@@ -53,6 +53,7 @@
          auth varchar2(50)
  
 --%>
+
 	var proc = "${proc}";
 	if(proc == "logout"){
 		alert("로그아웃되었습니다.");

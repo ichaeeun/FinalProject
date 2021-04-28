@@ -49,7 +49,11 @@
 --%>
 
    $(document).ready(function(){
-      
+	   var mem = "${mem.id}";
+	   if(mem==""){
+			alert("세션이 만료되어 로그인화면으로 이동합니다.");
+			location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동
+		}
    });
 </script>
 </head>

@@ -1,8 +1,0 @@
-로컬호스트는 본인 PC를 뜻하는거임
-
-<jsp>
-섭밋을 누를시 서버단으로 데이터 이동
-(폼으로 감쌓진 데이터 get/post)
-post 방식 : 보안적이고 보낼수있는 데이터의 길이가 상관이 없음
-get 방식 : url 뒤에 queryString ?name=홍길동&pass=1922	==> request.getParameter값
-

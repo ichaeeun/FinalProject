@@ -212,29 +212,8 @@
 													</div>
                                                     
 													<div class="tab-pane" id="product-img">
-                                                   	<!-- 기존 파일 -->
-														<c:if test="${update == 'Y'}">
-															<div class="row mb-5">
-		                                              			<h4 class="header-title">기존 업로드 파일</h4>
-		                                                		<c:forEach var="finf" items="${riskboard.fileInfo}" varStatus="sts">
-			                                            			<div id="fileArea">
-			                                                  			<div class="custom-file">
-			                                                     			<div class="row">
-				                                            					<div class="col-3 ml-3">
-				                                                  	        		<input type="text" value="${finf.filename}" style="border: none" readonly
-				                                                  	        			id="org${finf.fno}">
-				                                                          		</div>
-				                                                   				<div class="col-3">
-				                                                        			<span onclick="rmOriginFile(org${finf.fno}, this)"> [X] </span>
-				                                                     			</div>
-			                                                    			</div>
-			                                                    		</div>
-			                                            			</div>
-		                                                        </c:forEach>
-		                                             		</div>
-	                                             		</c:if>
-
 													<!-- 업데이트 파일 -->
+													<c:if test="${update != 'Y'}">
 														<h4 class="header-title">첨부 파일<span id="addFun">[추가]</span></h4>
                                                    		<div id="fileArea">
                                                    			<div class="custom-file">
@@ -242,6 +221,7 @@
                                                    				<span onclick="rm(this)"> [X] </span><br>
                                                    			</div>
                                                    		</div>
+                                                   	</c:if>
 
 													<!-- Preview -->
 														<div class="dropzone-previews mt-3" id="file-previews">

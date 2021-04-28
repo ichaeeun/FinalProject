@@ -41,7 +41,13 @@
 		<script src="${path}/a00_com/bootstrap.min.js"></script>
 		<script src="${path}/a00_com/jquery-ui.js"></script>
 	  <script>
-	  	$(document).ready(function(){	  		
+	  	$(document).ready(function(){
+	 	   var mem = "${mem.id}";
+		   if(mem==""){
+				alert("세션이 만료되어 로그인화면으로 이동합니다.");
+				location.href="${path}/main.do?method=loginform"; // 세션값 없을 때 바로 로그인폼 이동
+			}
+		   
 	  		var part ="";
 	  		$("select option").each(function(){
 	  			if($(this).val()=="${param.part}"){

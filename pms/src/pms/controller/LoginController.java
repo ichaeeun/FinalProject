@@ -91,13 +91,15 @@ public class LoginController {
 			return "auth-login";
 		}
 		
+		
 		// http://localhost:7080/pms/main.do?method=main
 		@RequestMapping(params="method=main")
-		public String main(HttpSession session, @ModelAttribute("sch") MemberSch sch, Model d) {
+		public String main(HttpSession session,@ModelAttribute("member") Member member , @ModelAttribute("sch") MemberSch sch, Model d) {
 			// 세션 값
 			Member m = (Member)session.getAttribute("mem");
+			String page = "auth-login";
+			if(m!=null) {
 			System.out.println(m.getAuth());
-			String page = "";
 			if( m.getAuth().equals("pm")) {	
 				if(service.IsPm(m.getPno())!=null) {
 					m.setProject_no(service.IsPm(m.getPno()).getProject_no());
@@ -224,8 +226,10 @@ public class LoginController {
 			// d.addAttribute("memList1", mservice.memList1(sch.getName())); 
 			d.addAttribute("member", new Member());		
 			d.addAttribute("showprofile",pservice.showProfile(m.getPno()));
+			}
 			return page;		
 		}
+			
 		
 		// http://localhost:7080/pms/main.do?method=choiceLan
 		@RequestMapping(params="method=choiceLan")
