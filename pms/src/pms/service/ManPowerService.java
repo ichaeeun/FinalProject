@@ -191,6 +191,9 @@ public class ManPowerService {
 	public int chEmail(String email) {
 		return dao.chEmail(email);
 	}	
+	public ArrayList<Member> memList2(int pno){
+		return dao.memList2(pno);
+	}
 }
 
 

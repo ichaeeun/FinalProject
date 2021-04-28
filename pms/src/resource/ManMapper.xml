@@ -9,6 +9,12 @@
 		from pms_member
 		where name like '%'||#{name}||'%'
 	</select>
+	<!-- public ArrayList<Member> memList2(int pno); -->
+	<select id="memList2" resultType="member" parameterType="int">		
+		select *
+		from pms_member
+		where pno = #{pno}
+	</select>	
 	<!-- public ArrayList<Member> showMem(MemberSch sch); -->
 	<select id="showMem" parameterType="memsch" resultType="member">
 		select *

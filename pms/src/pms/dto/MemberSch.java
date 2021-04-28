@@ -4,6 +4,7 @@ public class MemberSch {
 	// 1. 검색 속성
 	private String name; // 이름 검색
 	private String part;
+	private int pno;
 	// 2. 페이징 처리
 	private int count; // 총데이터 건수
 	private int pageSize; // 한 페이지에서 보여줄 데이터 건수  pageSize curPage

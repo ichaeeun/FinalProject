@@ -57,7 +57,7 @@
 				var pno = $(this).find('.pno').val();
 				// alert(ename);
 				//alert(pno);
-				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
+				location.href="${path}/manpower.do?method=contacts_profile&pno="+pno;
 			});	
 	  	})
 		function goPage(page){

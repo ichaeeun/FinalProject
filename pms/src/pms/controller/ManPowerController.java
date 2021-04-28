@@ -100,11 +100,10 @@ public class ManPowerController {
 
 	// http://localhost:7080/pms/manpower.do?method=contacts_profile
 	@RequestMapping(params = "method=contacts_profile")
-	public String contacts_profile(Model d, 
-			@RequestParam("ename") String ename, 
+	public String contacts_profile(Model d,
 			@RequestParam("pno") int pno,
 			MemberSch sch) {
-		  d.addAttribute("memDetail",service.memList1(ename)); 
+		  d.addAttribute("memDetail",service.memList2(pno)); 
 		  ArrayList<pms_project> proList = new ArrayList<pms_project>(); 
 		  for(int i=0;i<service.projectpno(pno).size();i++) {
 			  proList.add(service.project(service.projectpno(pno).get(i).getProject_no()));

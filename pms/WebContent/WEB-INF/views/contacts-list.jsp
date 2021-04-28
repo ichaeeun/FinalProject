@@ -194,7 +194,7 @@
  	  		$("#searchBtn").click(function(){
  	  			shName = $("[name=shName]").val();
  	  			console.log(shName);
- 	  			location.href="${path}/manpower.do?method=contacts_list&name="+shName;
+ 	  			location.href="${path}/manpower.do?method=contacts_list&name="+name;
 	  		}) 
 	  		
 	  		//////////// 계정 생성 모달
@@ -253,7 +253,7 @@
 			$("#memShow").on("click",".goDetail",function(){
 				var ename = $(this).find('.text-dark').html();
 				var pno = $(this).find('.pno').val();
-				location.href="${path}/manpower.do?method=contacts_profile&ename="+ename+"&pno="+pno;
+				location.href="${path}/manpower.do?method=contacts_profile&pno="+pno;
 			});	
 	
 	  		/////// 메일 발송	  		

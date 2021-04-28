@@ -15,6 +15,8 @@ import pms.dto.pms_project;
 public interface ManPowerDao {
 	// 전체인원
 	public ArrayList<Member> memList1(String name);
+	public ArrayList<Member> memList2(int pno);
+	
 	// 가용인원 - pno 가져오기
 	public ArrayList<Integer> pnoList(HashMap<String,String> hm);
 	// 가용인원 - 1명 참여 프로젝트 가져오기
