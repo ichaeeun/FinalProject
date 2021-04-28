@@ -16,6 +16,11 @@
 	<c:if test="${mem.auth == 'hp' }"><title>인사담당자</title></c:if>
 	<c:if test="${mem.auth == 'pm' }"><title>프로젝트 매니저</title></c:if>
 	<c:if test="${mem.auth == 'wk' }"><title>개발자</title></c:if>
+	<style type="text/css">
+		.table-responsive{
+			overflow-x:hidden!important;
+		}
+	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 	<meta content="Coderthemes" name="author" />
