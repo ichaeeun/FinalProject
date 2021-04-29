@@ -67,6 +67,10 @@ public interface ManPowerDao {
 	// 계정생성 유효성 체크
 	public int chId(String id);
 	public int chEmail(String email);
+	
+	// 등록한 인원의 pno 가져오기
+	public int getMaxPnoId();
+
 }
 
 

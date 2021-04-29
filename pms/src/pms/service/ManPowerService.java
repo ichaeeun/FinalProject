@@ -194,6 +194,10 @@ public class ManPowerService {
 	public ArrayList<Member> memList2(int pno){
 		return dao.memList2(pno);
 	}
+	
+	public int getMaxPnoId() {
+		return dao.getMaxPnoId();
+	}
 }
 
 

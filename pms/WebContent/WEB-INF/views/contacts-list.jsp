@@ -44,18 +44,18 @@
 			#chEmail{cursor:pointer;}
 		</style>
 	  <script>
-		var idCheck=0;
+		//var idCheck=0;
 		var emailCheck=0;
-		var pwdCheck=0;	
+		//var pwdCheck=0;	
 		var regExp = 
 			new RegExp("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i");
 		signupCheck(); 
 		// name pass 
-/* 		function veriEmail(email){
+ 		function veriEmail(email){
 			var regExp = 
 				new RegExp("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i");
 			return regExp.test(email);
-		} */
+		} 
 		function checkName(){
 			var name = $("#signup-modal [name=name]").val();
 			if(name==""){
@@ -139,7 +139,8 @@
 						}else if(data.email!=""||data.email==0||regExp.test(data.email)){
 							emailCheck=1;
 							$("#chEmail").html("사용 가능한 이메일입니다.").css("color","blue");
-							if(idCheck==1&&pwdCheck==1&emailCheck==1){
+							//if(idCheck==1&&pwdCheck==1&emailCheck==1){
+							if(emailCheck==1){
 								$("#signupBtn").prop("disabled",false);
 								signupCheck();
 							}
@@ -154,19 +155,28 @@
 		}
 		
  		function signupCheck(){
-			var id = $(".mb-3 [name=id]").val();
+			//var id = $(".mb-3 [name=id]").val();
 			var email = $(".mb-3 [name=email]").val();
-			var pass = $(".mb-3 [name=pass]").val();
-			var repass = $(".mb-3 [name=repass]").val();
+			//var pass = $(".mb-3 [name=pass]").val();
+			//var repass = $(".mb-3 [name=repass]").val();
 			var name = $(".mb-3 [name=name]").val();
-			checkName(); checkPass2(); 
-			if(id=="") $("#chId").html("입력 필수 항목입니다.").css("color","red");
+			checkName(); //checkPass2(); 
+			//if(id=="") $("#chId").html("입력 필수 항목입니다.").css("color","red");
 			if(email=="") $("#chEmail").html("입력 필수 항목입니다.").css("color","red");
-			if(repass=="") $("#chPass").html("입력 필수 항목입니다.").css("color","red");
+			//if(repass=="") $("#chPass").html("입력 필수 항목입니다.").css("color","red");
+			/*
 			if(id==""||email==""||pass==""||repass==""||name==""){
 				$("#signupBtn").prop("disabled",true);
 			}
+			
 			if(idCheck==1&&pwdCheck==1&emailCheck==1){
+				$("#signupBtn").prop("disabled",false);
+			}
+			*/
+			if(email==""||name==""){
+				$("#signupBtn").prop("disabled",true);
+			}
+			if(emailCheck==1){
 				$("#signupBtn").prop("disabled",false);
 			}
 			
@@ -202,8 +212,10 @@
 			function addMember(){
 				var add = {};
 				add.name = $("[name=name]").val();
-				add.id = $("[name=id]").val();
-				add.pass = $("[name=pass]").val();
+				//add.id = $("[name=id]").val();
+				//add.pass = $("[name=pass]").val();
+				add.id = 'new';
+				add.pass = '1111';
 				add.auth = $("[name=auth]").val();
 				add.part = $("[name=part]").val();
 				add.email = $("[name=email]").val();
@@ -211,14 +223,30 @@
 			}
   			$("#signupBtn").click(function(){ 	
   				var insert = addMember();
+  				console.log(insert);
   				$.ajax({
   					type:"post",
   					url:"manpower.do?method=add_member",
   					data:insert,
   					dataType:"json",
-  					success:function(){
+  					success:function(data){
   						$("#signup-modal").modal("hide");
-  						$("#info-mail-modal").modal("show");
+  						console.log("###등록성공###");
+  						console.log(data);
+  						// 여기 자동 발송 추가
+		  				var receiver = $("#signup-modal [name=email]").val();
+		  				//var id = $("#signup-modal [name=id]").val();
+		  				var subject = "AZZA 계정 정보입니다.";
+		  				var id = 'azza00'+data.new;
+		  				console.log(id);
+		  				var pass = '1111';
+		  				var content = "회원아이디: "+id+", 비밀번호: "+pass;
+		  				console.log(receiver);console.log(pass);console.log(content);
+		  				$("#sendMail [name=subject]").val(subject);
+		  				$("#sendMail [name=receiver]").val(receiver);
+		  				$("#sendMail [name=content]").val(content);
+		  				$("#sendMail").submit();
+  						//$("#info-mail-modal").modal("show");
   						console.log(insert); 						
   					},
   					error:function(){
@@ -1011,6 +1039,7 @@
                                                                 &nbsp;<span id="chEmail"></span>                      
                                                                 <input onInput="checkEmail()"  name="email" class="form-control" type="text" placeholder="이메일"/>
                                                             </div>   
+                                                            <%--
                                                             <div class="mb-3">
                                                                 <label for="id" class="form-label">아이디</label>
                                                                 &nbsp;<span id="chId"></span>   
@@ -1027,6 +1056,7 @@
                                                                 &nbsp;<span id="chPass" style="color:black;"></span>   
                                                                 <input onInput="checkPass()" name="repass" class="form-control" type="password" placeholder="비밀번호"/>
                                                             </div>                                                            
+                                                             --%>
                                                             <div class="mb-3">
                                                                 <label for="part" class="form-label">부서</label>
                                                                 <select name="part" class="form-control">

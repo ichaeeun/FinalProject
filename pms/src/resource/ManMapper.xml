@@ -114,7 +114,7 @@
 	<!-- public void addMember(Member ins); -->
 	<insert id="addMember" parameterType="member">
 		INSERT INTO PMS_MEMBER 
-		values(pms_pno_seq.nextval,#{id},#{pass},#{name},#{email},#{part},#{auth},'')
+		values(pms_pno_seq.nextval,'azza00'||pms_pno_seq.currval,#{pass},#{name},#{email},#{part},#{auth},'')
 	</insert>
 	<!-- public void deleteMember(int pno) -->
 	<delete id="deleteMember" parameterType="int">
@@ -187,6 +187,10 @@
 	SELECT count(*)
 		FROM PMS_MEMBER
 		WHERE email = #{email}
+	</select>
+	
+	<select id="getMaxPnoId" resultType="int">
+		SELECT max(pno) FROM pms_member
 	</select>
 
 </mapper>   

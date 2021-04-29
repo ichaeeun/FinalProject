@@ -125,7 +125,10 @@ public class ManPowerController {
 	// http://localhost:7080/pms/manpower.do?method=add_member
 	@PostMapping(params = "method=add_member")
 	public String add_member(Member ins, Model d){
+		System.out.println("####등록전번호####: "+service.getMaxPnoId());
 		service.addMember(ins);
+		System.out.println("####등록후번호####: "+service.getMaxPnoId());
+		d.addAttribute("new",service.getMaxPnoId());
 		d.addAttribute("success","Y");		
 		return "pageJsonReport";
 	}
