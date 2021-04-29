@@ -221,27 +221,18 @@ $(document).ready(function(){
                                         <p class="sub-header">
                                             나의 완료된 태스크 리스트 입니다.
                                         </p>
-                                        <div class="mb-2">
-                                            <div class="row row-cols-lg-auto g-2 align-items-center">
-                                                <div class="col-12">
-                                                    <div>
-                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                            <option value="">Show all</option>
-                                                            <option value="High">High</option>
-                                                            <option value="Medium">Medium</option>
-                                                            <option value="Low">Low</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
+                                         <label class="d-inline-flex align-items-center mb-3">
+                                            Show
+                                            <select id="demo-show-entries" class="form-select form-select-sm mx-1">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                            entries
+                                        </label>
                                         <div class="table-responsive">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="demo-foo-pagination" class="table mb-0 table-bordered" data-page-size="7">
                                                 <thead>
                                                 <tr>
                                                 	<th>Task ID</th>

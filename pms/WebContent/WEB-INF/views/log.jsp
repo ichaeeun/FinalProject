@@ -44,10 +44,9 @@
 		<script type="text/javascript">
 
 		$(document).ready(function() {
-
 		    $('#basic-datatabl').DataTable( {
 		        "order": [[ 0, "desc" ]]
-		    } );
+		    });
 		} );
 		</script>
     </head>
