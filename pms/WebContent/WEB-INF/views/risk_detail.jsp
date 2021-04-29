@@ -5,7 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="form"
-		uri="http://www.springframework.org/tags/form"%>   
+		uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/> 
 <fmt:requestEncoding value="UTF-8" /> 
 <!DOCTYPE html>
@@ -117,6 +118,7 @@
 			}
 		});
 	});
+	
 	<%-- input형태로 되어있는게 아니기 때문에 클릭했을때 수정을 할 수 있는 화면으로 가야함 --%>
 </script>
 </head>
@@ -212,9 +214,13 @@
 										<div class="col-lg-4 col-sm-6">
 											<div class="d-flex align-items-start mt-3">
 												<div class="me-2 align-self-center">
-													<img
-														src="${path}/Admin/dist/assets/images/users/avatar-2.jpg"
-														alt="" class="avatar-sm rounded-circle">
+													<c:if test="${empty showprofile.imgpath}">
+														<img src="${path}/Admin/dist/assets/images/users/default.png" alt="user-image" class="rounded-circle" id="img"> 
+													</c:if>
+													<c:if test="${not empty showprofile.imgpath}">
+														<c:set var = "length" value = "${fn:length(showprofile.imgpath)}"/>
+														<img src="${path}/profileImage/${showprofile.imgpath}" alt="user-image" width="160px" height="160px" class="rounded-circle" id="img"> 
+													</c:if>
 												</div>
 												<div class="flex-1 overflow-hidden">
 													<p class="mb-1">상태</p>
@@ -235,9 +241,7 @@
 									<textarea class="uptTextarea" name="risk_content" readonly>${riskboard.risk_content}</textarea>
 								</div>
 								<div class="row">
-									<%--								<c:if test="${riskboard.fileInfo != ''}"> --%>
 									<h4 class="header-title">첨부 파일</h4>
-									<%--								</c:if> --%>
 									<c:forEach var="finf" items="${riskboard.fileInfo}"
 										varStatus="sts">
 										<div class="col-xl-4" name="fnames">
