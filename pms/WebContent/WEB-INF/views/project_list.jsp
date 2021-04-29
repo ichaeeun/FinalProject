@@ -137,7 +137,9 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
+                                
                                     <h4 class="page-title">프로젝트 리스트</h4>
+                                    
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Main</a></li>
@@ -158,7 +160,7 @@
                                         <form:form method="post" action="${path }/taskdetail.do?method=updateSub">
 										<!-- 프로젝트 추가 Modal 창 시작-->
 											<!-- 프로젝트 추가버튼 시작 -->
-											<c:if test="${mem.auth == 'pm' && boardList.size() == 0}"><!-- PM이고 가진 프로젝트리스트 개수가 0일때 활성화 -->
+											<c:if test="${mem.auth == 'pm' && boardList.size() == 0 && done =='N'}"><!-- PM이고 가진 프로젝트리스트 개수가 0일때 활성화 -->
 											
 											<div class="button-list">
 

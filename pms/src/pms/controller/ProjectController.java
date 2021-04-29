@@ -44,6 +44,7 @@ public class ProjectController {
 	@RequestMapping(params="method=list")
 	public String pms_projectList(@ModelAttribute("sch3") pms_project sch3, Model d, int pno) {
 		d.addAttribute("boardList", service.projectList(pno));
+		d.addAttribute("done", "N");
 		return "project_list";
 	}
 	// 멤버번호 pno의 완료 프로젝트 조회
@@ -51,6 +52,7 @@ public class ProjectController {
 	@RequestMapping(params="method=finish_list")
 	public String pms_projectList2(@ModelAttribute("sch4") pms_project sch4, Model d, int pno) {
 		d.addAttribute("boardList", service.projectList2(pno));
+		d.addAttribute("done", "Y");
 		return "project_list";
 	}
 	
