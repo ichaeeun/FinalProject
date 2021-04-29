@@ -195,17 +195,13 @@
 							<div class="md-4"> <h4 class="page-title project_no"> </h4></div>
 							
 							<div class="row">
-						        <div class="col-xl-3 col-md-6">
+						        <div class="col-xl-2 col-md-6">
 						            <div class="card">
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
 						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent"><spring:message code='Total_number_of_projects'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${allproject}</span></h3>
-						                            <p class="mb-0 text-muted">
-						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 5.27%</span>
-						                                <span class="text-nowrap">Since last month</span>  
-						                            </p>
 						                        </div>
 						                        <div class="avatar-sm">
 						                            <span class="avatar-title bg-soft-primary rounded">
@@ -217,17 +213,13 @@
 						            </div>
 						        </div><!-- end col -->
 						
-						        <div class="col-xl-3 col-md-6">
+						        <div class="col-xl-2 col-md-6">
 						            <div class="card">
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
 						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads"><spring:message code='Number_of_projects_in_progress'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${doingproject}</span></h3>
-						                            <p class="mb-0 text-muted">
-						                                <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 3.27%</span>
-						                                <span class="text-nowrap">Since last month</span>  
-						                            </p>
 						                        </div>
 						                        <div class="avatar-sm">
 						                            <span class="avatar-title bg-soft-primary rounded">
@@ -239,17 +231,13 @@
 						            </div>
 						        </div><!-- end col -->
 						
-						        <div class="col-xl-3 col-md-6">
+						        <div class="col-xl-2 col-md-6">
 						            <div class="card">
 						                <div class="card-body">
 						                    <div class="d-flex justify-content-between">
 						                        <div>
 						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals"><spring:message code='Total_number_of_people'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${allmember }</span></h3>
-						                            <p class="mb-0 text-muted">
-						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 8.58%</span>
-						                                <span class="text-nowrap">Since last month</span>  
-						                            </p>
 						                        </div>
 						                        <div class="avatar-sm">
 						                            <span class="avatar-title bg-soft-primary rounded">
@@ -268,10 +256,24 @@
 						                        <div>
 						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue"><spring:message code='Total_number_of_tasks'/></h5>
 						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${alltask }</span></h3>
-						                            <p class="mb-0 text-muted">
-						                                <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 34.61%</span>
-						                                <span class="text-nowrap">Since last month</span>  
-						                            </p>
+						                        </div>
+						                        <div class="avatar-sm">
+						                            <span class="avatar-title bg-soft-primary rounded">
+						                                <i class="ri-money-dollar-box-line font-20 text-primary"></i>
+						                            </span>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div><!-- end col -->
+						        
+						        <div class="col-xl-3 col-md-6">
+						            <div class="card">
+						                <div class="card-body">
+						                    <div class="d-flex justify-content-between">
+						                        <div>
+						                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue"><spring:message code='Total_number_of_risks'/></h5>
+						                            <h3 class="my-2 py-1"><span data-plugin="counterup">${allrisk }</span></h3>
 						                        </div>
 						                        <div class="avatar-sm">
 						                            <span class="avatar-title bg-soft-primary rounded">
