@@ -59,8 +59,17 @@ public class DashBoardController {
 			if(todayday>startday && todayday>endday) {	// 시작일-종료일-오늘 일때
 				doday = allday;						// 진행기간. 진기
 			}
+			
+			
+			if(project.getProject_status().equals("완료")) { // 프로젝트상태가 완료이면
+				doday = allday;				// 진행기간 = 프로젝트기간
+				project.setAllday(allday);	
+				project.setDoday(doday);	
+			}else {
 				project.setAllday(allday);	// 프로젝트기간
 				project.setDoday(doday);	// 진행기간
+			}	
+				
 			
 			
 			
