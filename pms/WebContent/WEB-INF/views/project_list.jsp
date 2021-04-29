@@ -138,9 +138,7 @@
                             <div class="col-12">
                                 <div class="page-title-box page-title-box-alt">
                                 
-                                    <h4 class="page-title"><c:if test="${done=='N'}">진행 </c:if>
-                                    <c:if test="${done!='N'}">완료 </c:if>
-                                    프로젝트 리스트</h4>
+                                    <h4 class="page-title">프로젝트 리스트</h4>
                                     
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
