@@ -77,18 +77,18 @@
 <select id="ViewMem" resultType="view" parameterType="int">
 SELECT DISTINCT t1.pno, t1.NAME, t3.project_name, t3.project_content, t3.project_no,
    (SELECT count(*)
-	FROM PROJECT_TASK a, pms_project b
-	WHERE t1.pno = pno AND a.PROJECT_NO = b.PROJECT_NO) AS task_tot,
-	(SELECT count(*)
-	FROM PROJECT_TASK a, pms_project b
-	where TASK_STATUS = '완료'
-	and t1.pno = pno AND a.PROJECT_NO = b.PROJECT_NO) AS task_done
-	FROM pms_member t1, PROJECT_TASK t2, pms_project t3 , PMS_MEMBER_PROJECT t4
-	WHERE t3.PROJECT_NO = #{no}
-	AND t2.PROJECT_NO = #{no}
-	AND t4.pno = t1.pno
-	AND t3.PROJECT_NO = t4.PROJECT_NO 
-	ORDER BY pno
+   FROM PROJECT_TASK a, pms_project b
+   WHERE t1.pno = pno AND a.PROJECT_NO = b.PROJECT_NO AND a.PROJECT_NO  = #{no} ) AS task_tot,
+   (SELECT count(*)
+   FROM PROJECT_TASK a, pms_project b
+   where TASK_STATUS = '완료'
+   and t1.pno = pno AND a.PROJECT_NO = b.PROJECT_NO AND a.PROJECT_NO = #{no}) AS task_done
+   FROM pms_member t1, PROJECT_TASK t2, pms_project t3 , PMS_MEMBER_PROJECT t4
+   WHERE t3.PROJECT_NO = #{no}
+   AND t2.PROJECT_NO = #{no}
+   AND t4.pno = t1.pno
+   AND t3.PROJECT_NO = t4.PROJECT_NO
+   ORDER BY pno
 </select>
 <!-- 	public void mTaskInsert(Task t); // 메인태스크 추가 -->
 <insert id="mTaskInsert" parameterType="task">
